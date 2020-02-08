@@ -74,21 +74,7 @@
             this.CreateMap<Hero[], BattlefieldGetOpponentsViewModel>()
                 .ForMember(x => x.Opponents, cfg => cfg.MapFrom(x => x));
 
-            this.CreateMap<Fight, FightLogViewModel>()
-                .ForMember(x => x.AttackerId, cfg => cfg.MapFrom(x => x.HeroFights[1].HeroId))
-                .ForMember(x => x.DefenderId, cfg => cfg.MapFrom(x => x.HeroFights[0].HeroId))
-                .ForMember(x => x.AttackerName, cfg => cfg.MapFrom(x => x.HeroFights[1].Hero.Name))
-                .ForMember(x => x.DefenderName, cfg => cfg.MapFrom(x => x.HeroFights[0].Hero.Name))
-                .ForMember(x => x.AttackerAttack, cfg => cfg.MapFrom(x => x.HeroFights[1].Hero.Characteristics.Attack))
-                .ForMember(x => x.AttackerDefense, cfg => cfg.MapFrom(x => x.HeroFights[1].Hero.Characteristics.Defense))
-                .ForMember(x => x.AttackerMastery, cfg => cfg.MapFrom(x => x.HeroFights[1].Hero.Characteristics.Mastery))
-                .ForMember(x => x.AttackerMass, cfg => cfg.MapFrom(x => x.HeroFights[1].Hero.Characteristics.Mass))
-                .ForMember(x => x.DefenderAttack, cfg => cfg.MapFrom(x => x.HeroFights[0].Hero.Characteristics.Attack))
-                .ForMember(x => x.DefenderDefense, cfg => cfg.MapFrom(x => x.HeroFights[0].Hero.Characteristics.Defense))
-                .ForMember(x => x.DefenderMastery, cfg => cfg.MapFrom(x => x.HeroFights[0].Hero.Characteristics.Mastery))
-                .ForMember(x => x.DefenderMass, cfg => cfg.MapFrom(x => x.HeroFights[0].Hero.Characteristics.Mass))
-                .ForMember(x => x.AttackerHits, cfg => cfg.MapFrom(x => x.HitCollection.ToArray()[0]))
-                .ForMember(x => x.DefenderHits, cfg => cfg.MapFrom(x => x.HitCollection.ToArray()[1]));
+            this.CreateMap<Fight, FightLogViewModel>();
 
             this.CreateMap<Chronometer, SideMenuTimersViewComponentModel>();
 

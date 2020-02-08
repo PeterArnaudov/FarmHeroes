@@ -58,17 +58,65 @@
 <div class="row m-auto">
     <div class="col-12">
         <h5 class="text-center text-uppercase">Fight log</h5>
-        @for (int i = 0; i < Model.AttackerHits.Where(x => x.HasValue).Count(); i++)
+        @if (Model.AttackerHitOne.HasValue)
         {
             <div class="border rounded-pill text-left w-75 m-1 pl-3 row">
-                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.AttackerHits[i]] @Model.DefenderName
+                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.AttackerHitOne] @Model.DefenderName
             </div>
-            if (Model.DefenderHits[i].HasValue)
-            {
-                <div class="border rounded-pill text-right w-75 m-1 pr-3 float-right">
-                    @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.DefenderHits[i]] @Model.AttackerName
-                </div>
-            }
+        }
+        @if (Model.DefenderHitOne.HasValue)
+        {
+            <div class="border rounded-pill text-right w-75 m-1 pr-3 float-right">
+                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.DefenderHitOne] @Model.AttackerName
+            </div>
+        }
+        @if (Model.AttackerHitTwo.HasValue)
+        {
+            <div class="border rounded-pill text-left w-75 m-1 pl-3 row">
+                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.AttackerHitTwo] @Model.DefenderName
+            </div>
+        }
+        @if (Model.DefenderHitTwo.HasValue)
+        {
+            <div class="border rounded-pill text-right w-75 m-1 pr-3 float-right">
+                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.DefenderHitTwo] @Model.AttackerName
+            </div>
+        }
+        @if (Model.AttackerHitThree.HasValue)
+        {
+            <div class="border rounded-pill text-left w-75 m-1 pl-3 row">
+                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.AttackerHitThree] @Model.DefenderName
+            </div>
+        }
+        @if (Model.DefenderHitThree.HasValue)
+        {
+            <div class="border rounded-pill text-right w-75 m-1 pr-3 float-right">
+                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.DefenderHitThree] @Model.AttackerName
+            </div>
+        }
+        @if (Model.AttackerHitFour.HasValue)
+        {
+            <div class="border rounded-pill text-left w-75 m-1 pl-3 row">
+                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.AttackerHitFour] @Model.DefenderName
+            </div>
+        }
+        @if (Model.DefenderHitFour.HasValue)
+        {
+            <div class="border rounded-pill text-right w-75 m-1 pr-3 float-right">
+                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.DefenderHitFour] @Model.AttackerName
+            </div>
+        }
+        @if (Model.AttackerHitFive.HasValue)
+        {
+            <div class="border rounded-pill text-left w-75 m-1 pl-3 row">
+                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.AttackerHitFive] @Model.DefenderName
+            </div>
+        }
+        @if (Model.DefenderHitFive.HasValue)
+        {
+            <div class="border rounded-pill text-right w-75 m-1 pr-3 float-right">
+                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.DefenderHitFive] @Model.AttackerName
+            </div>
         }
     </div>
 </div>

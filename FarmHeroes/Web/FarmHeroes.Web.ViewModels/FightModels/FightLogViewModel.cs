@@ -1,7 +1,6 @@
 ﻿namespace FarmHeroes.Web.ViewModels.FightModels
 {
     using FarmHeroes.Data.Models.FightModels;
-    using System;
 
     public class FightLogViewModel
     {
@@ -43,8 +42,24 @@
 
         public int ExperienceGained { get; set; }
 
-        public int?[] AttackerHits { get; set; } = new int?[5];
+        public int? AttackerHitOne { get; set; }
 
-        public int?[] DefenderHits { get; set; } = new int?[5];
+        public int? AttackerHitTwo { get; set; }
+
+        public int? AttackerHitThree { get; set; }
+
+        public int? AttackerHitFour { get; set; }
+
+        public int? AttackerHitFive { get; set; }
+
+        public int? DefenderHitOne { get; set; }
+
+        public int? DefenderHitTwo { get; set; }
+
+        public int? DefenderHitThree { get; set; }
+
+        public int? DefenderHitFour { get; set; }
+
+        public int? DefenderHitFive { get; set; }
     }
 }

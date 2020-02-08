@@ -42,10 +42,7 @@
 
         public async Task<int> InitiateFight(int opponentId)
         {
-            Fight fight = new Fight()
-            {
-                HitCollection = new HitCollection(),
-            };
+            Fight fight = new Fight();
 
             Hero attacker = await this.heroService.GetCurrentHero();
 
@@ -173,16 +170,30 @@
             fight.AttackerHealthLeft = attacker.Health.Current;
             fight.DefenderHealthLeft = defender.Health.Current;
 
-            fight.HitCollection.AttackerHitOne = attackerHits[0];
-            fight.HitCollection.AttackerHitTwo = attackerHits[1];
-            fight.HitCollection.AttackerHitThree = attackerHits[2];
-            fight.HitCollection.AttackerHitFour = attackerHits[3];
-            fight.HitCollection.AttackerHitFive = attackerHits[4];
-            fight.HitCollection.DefenderHitOne = defenderHits[0];
-            fight.HitCollection.DefenderHitTwo = defenderHits[1];
-            fight.HitCollection.DefenderHitThree = defenderHits[2];
-            fight.HitCollection.DefenderHitFour = defenderHits[3];
-            fight.HitCollection.DefenderHitFive = defenderHits[4];
+            fight.AttackerId = attacker.Id;
+            fight.AttackerName = attacker.Name;
+            fight.DefenderId = defender.Id;
+            fight.DefenderName = defender.Name;
+
+            fight.AttackerAttack = attacker.Characteristics.Attack;
+            fight.AttackerDefense = attacker.Characteristics.Defense;
+            fight.AttackerMastery = attacker.Characteristics.Mastery;
+            fight.AttackerMass = attacker.Characteristics.Mass;
+            fight.DefenderAttack = defender.Characteristics.Attack;
+            fight.DefenderDefense = defender.Characteristics.Defense;
+            fight.DefenderMastery = defender.Characteristics.Mastery;
+            fight.DefenderMass = defender.Characteristics.Mass;
+
+            fight.AttackerHitOne = attackerHits[0];
+            fight.AttackerHitTwo = attackerHits[1];
+            fight.AttackerHitThree = attackerHits[2];
+            fight.AttackerHitFour = attackerHits[3];
+            fight.AttackerHitFive = attackerHits[4];
+            fight.DefenderHitOne = defenderHits[0];
+            fight.DefenderHitTwo = defenderHits[1];
+            fight.DefenderHitThree = defenderHits[2];
+            fight.DefenderHitFour = defenderHits[3];
+            fight.DefenderHitFive = defenderHits[4];
 
             Fight fightEntity = this.context.Fights.AddAsync(fight).Result.Entity;
 

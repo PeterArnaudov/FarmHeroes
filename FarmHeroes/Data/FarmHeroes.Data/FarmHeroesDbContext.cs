@@ -72,8 +72,6 @@
 
         public virtual DbSet<HeroFight> HeroFights { get; set; }
 
-        public virtual DbSet<HitCollection> HitCollections { get; set; }
-
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

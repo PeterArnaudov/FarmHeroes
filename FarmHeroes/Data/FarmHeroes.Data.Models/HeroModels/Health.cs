@@ -8,9 +8,9 @@
 
         public int Id { get; set; }
 
-        public long Current { get; set; } = InitialHealth;
+        public int Current { get; set; } = InitialHealth;
 
-        public long Maximum { get; set; } = InitialHealth;
+        public int Maximum { get; set; } = InitialHealth;
 
         public virtual Hero Hero { get; set; }
     }

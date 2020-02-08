@@ -6,27 +6,27 @@
     {
         public int Id { get; set; }
 
-        public long TotalFights { get; set; }
+        public int TotalFights { get; set; }
 
-        public long Wins { get; set; }
+        public int Wins { get; set; }
 
-        public long Losses { get; set; }
+        public int Losses { get; set; }
 
-        public long MaximalGoldSteal { get; set; }
+        public int MaximalGoldSteal { get; set; }
 
-        public long TotalGoldStolen { get; set; }
+        public int TotalGoldStolen { get; set; }
 
-        public long TotalCrystalsStolen { get; set; }
+        public int TotalCrystalsStolen { get; set; }
 
-        public long EarnedOnFarm { get; set; }
+        public int EarnedOnFarm { get; set; }
 
-        public long EarnedOnPatrol { get; set; }
+        public int EarnedOnPatrol { get; set; }
 
-        public long EarnedInMines { get; set; }
+        public int EarnedInMines { get; set; }
 
-        public long MonstersDefeated { get; set; }
+        public int MonstersDefeated { get; set; }
 
-        public long EarnedFromMonsters { get; set; }
+        public int EarnedFromMonsters { get; set; }
 
         public virtual Hero Hero { get; set; }
     }
