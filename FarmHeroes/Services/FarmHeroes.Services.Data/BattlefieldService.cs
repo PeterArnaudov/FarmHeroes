@@ -91,6 +91,11 @@
                 heroes[random.Next(0, heroes.Length)],
             };
 
+            if (opponents.Length == 0)
+            {
+                throw new Exception("There are no heroes that you can attack right now.");
+            }
+
             return opponents;
         }
 
