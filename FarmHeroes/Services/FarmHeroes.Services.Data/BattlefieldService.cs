@@ -83,6 +83,11 @@
                     && x.Chronometer.CannotBeAttackedUntil < DateTime.UtcNow)
                 .ToArrayAsync();
 
+            if (heroes.Length == 0)
+            {
+                throw new Exception("There are no heroes that you can attack right now.");
+            }
+
             Random random = new Random();
             Hero[] opponents = new Hero[]
             {
@@ -90,11 +95,6 @@
                 heroes[random.Next(0, heroes.Length)],
                 heroes[random.Next(0, heroes.Length)],
             };
-
-            if (opponents.Length == 0)
-            {
-                throw new Exception("There are no heroes that you can attack right now.");
-            }
 
             return opponents;
         }
