@@ -11,6 +11,10 @@
 
         Task<TViewModel> GetCurrentHeroHealthViewModel<TViewModel>();
 
+        Task HealCurrentHero(int amount, int gold);
+
+        Task HealCurrentHeroToMaximum(int crystals);
+
         Task<Health> GetHealthById(int id);
 
         Task IncreaseMaximumHealth(int mass);

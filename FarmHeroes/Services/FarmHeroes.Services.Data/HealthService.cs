@@ -13,12 +13,14 @@
     {
         private readonly IMapper mapper;
         private readonly IHeroService heroService;
+        private readonly IResourcePouchService resourcePouchService;
         private readonly FarmHeroesDbContext context;
 
-        public HealthService(IMapper mapper, IHeroService heroService, FarmHeroesDbContext context)
+        public HealthService(IMapper mapper, IHeroService heroService, IResourcePouchService resourcePouchService, FarmHeroesDbContext context)
         {
             this.mapper = mapper;
             this.heroService = heroService;
+            this.resourcePouchService = resourcePouchService;
             this.context = context;
         }
 
@@ -50,6 +52,31 @@
         {
             Health health = await this.GetCurrentHeroHealth();
             health.Maximum = HealthFormulas.CalculateMaximumHealth(mass);
+
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task HealCurrentHero(int amount, int gold)
+        {
+            Health health = await this.GetCurrentHeroHealth();
+
+            await this.resourcePouchService.DecreaseCurrentHeroGold(gold);
+            health.Current += amount;
+
+            if (health.Current > health.Maximum)
+            {
+                health.Current = health.Maximum;
+            }
+
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task HealCurrentHeroToMaximum(int crystals)
+        {
+            Health health = await this.GetCurrentHeroHealth();
+
+            await this.resourcePouchService.DecreaseCurrentHeroCrystals(crystals);
+            health.Current = health.Maximum;
 
             await this.context.SaveChangesAsync();
         }

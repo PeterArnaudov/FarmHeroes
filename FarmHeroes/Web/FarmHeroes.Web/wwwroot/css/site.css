@@ -83,6 +83,14 @@ body {
     right: 10px;
 }
 
+.heal-icon {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    right: 5px;
+    top: 0px;
+}
+
 .fight-log-icon {
     width: 25px;
     height: 25px;

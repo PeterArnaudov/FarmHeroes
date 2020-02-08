@@ -4,6 +4,50 @@
     <div class="text-left m-auto">
         <img src="~/images/icons/health-icon.png" alt="Health" class="col-4 pb-2 d-lg-inline d-md-block m-auto">
         <h4 class="d-lg-inline-block d-none text-center pb-2">Health:</h4>
+        <img src="~/images/icons/heal-icon.png" alt="heal" class="img-fluid mt-lg-2 mt-0 mr-2 heal-icon" data-toggle="modal" data-target="#heal-modal">
+        <div class="modal fade" id="heal-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-uppercase">Heal your hero</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-2">
+                            <img src="~/images/health/pill.png" alt="pill" class="col-3 img-fluid">
+                            <div class="col-5">
+                                <h4 class="text-uppercase">Pill</h4>
+                                <h5>Health: +200</h5>
+                                <h5>Price: 100 <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></h5>
+                            </div>
+                            <a href="/Health/Pill" class="btn btn-success btn-sm col-3 h-100 m-auto">Heal</a>
+                        </div>
+                        <hr class="bg-primary w-75">
+                        <div class="row mb-2">
+                            <img src="~/images/health/elixir.png" alt="elixir" class="col-3 img-fluid">
+                            <div class="col-5">
+                                <h4 class="text-uppercase">Elixir</h4>
+                                <h5>Health: +3000</h5>
+                                <h5>Price: 1000 <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></h5>
+                            </div>
+                            <a href="/Health/Elixir" class="btn btn-success btn-sm col-3 h-100 m-auto">Heal</a>
+                        </div>
+                        <hr class="bg-primary w-75">
+                        <div class="row">
+                            <img src="~/images/health/potion.png" alt="potion" class="col-3 img-fluid">
+                            <div class="col-5">
+                                <h4 class="text-uppercase">Potion</h4>
+                                <h5>Health: +100%</h5>
+                                <h5>Price: 15 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></h5>
+                            </div>
+                            <a href="/Health/Potion" class="btn btn-success btn-sm col-3 h-100 m-auto">Heal</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="progress w-100 m-auto position-relative" data-toggle="tooltip" data-placement="bottom" title="@Model.Current/@Model.Maximum">
             <div class="progress-bar bg-success" role="progressbar" style="width: @Model.Percent%">
                 <strong class="justify-content-center d-flex position-absolute w-100">@Model.Percent%</strong>
