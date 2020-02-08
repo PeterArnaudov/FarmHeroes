@@ -64,10 +64,23 @@
         public async Task<Hero[]> GetOpponents()
         {
             Hero attacker = await this.heroService.GetCurrentHero();
+
+            if (attacker.WorkStatus != WorkStatus.Idle)
+            {
+                throw new Exception("You cannot attack while working.");
+            }
+            else if (attacker.Chronometer.CannotAttackHeroUntil > DateTime.UtcNow)
+            {
+                throw new Exception("You cannot attack right now.");
+            }
+
             int level = attacker.Level.CurrentLevel;
 
             Hero[] heroes = await this.context.Heroes
-                .Where(x => (x.Level.CurrentLevel <= level + 3 || x.Level.CurrentLevel >= level - 3) && x.Id != attacker.Id)
+                .Where(x => (x.Level.CurrentLevel <= level + 3 && x.Level.CurrentLevel >= level - 3)
+                    && x.Id != attacker.Id
+                    && x.Fraction != attacker.Fraction
+                    && x.Chronometer.CannotBeAttackedUntil < DateTime.UtcNow)
                 .ToArrayAsync();
 
             Random random = new Random();

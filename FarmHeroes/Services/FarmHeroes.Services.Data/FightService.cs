@@ -2,11 +2,13 @@
 {
     using AutoMapper;
     using FarmHeroes.Data;
+    using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.FightModels;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.MappingModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Formulas;
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -46,7 +48,35 @@
             };
 
             Hero attacker = await this.heroService.GetCurrentHero();
+
+            if (attacker.WorkStatus != WorkStatus.Idle)
+            {
+                throw new Exception("You cannot attack while working.");
+            }
+            else if (attacker.Chronometer.CannotAttackHeroUntil > DateTime.UtcNow)
+            {
+                throw new Exception("You cannot attack right now.");
+            }
+            else if (attacker.Id == opponentId)
+            {
+                throw new Exception("You cannot attack yourself.");
+            }
+
             Hero defender = await this.heroService.GetHeroById(opponentId);
+
+            if (defender.Fraction == attacker.Fraction)
+            {
+                throw new Exception("You cannot attack a hero from your fraction.");
+            }
+            else if (attacker.Level.CurrentLevel + 3 < defender.Level.CurrentLevel
+                    && attacker.Level.CurrentLevel - 3 > defender.Level.CurrentLevel)
+            {
+                throw new Exception("The hero you attempted to attack is outside of your level range.");
+            }
+            else if (defender.Chronometer.CannotBeAttackedUntil > DateTime.UtcNow)
+            {
+                throw new Exception("You cannot attack a hero that still has defence.");
+            }
 
             int?[] attackerHits = new int?[5];
             int?[] defenderHits = new int?[5];
