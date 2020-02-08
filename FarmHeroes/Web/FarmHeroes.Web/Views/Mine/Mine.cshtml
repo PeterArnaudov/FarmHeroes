@@ -1,0 +1,33 @@
+﻿@model FarmHeroes.Web.ViewModels.MineModels.MineViewModel
+@{
+    ViewData["Title"] = "Mine";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+    <div class="text-center">
+        <img src="~/images/village/mine/mine.jpg" alt="village-image" class="d-block img-fluid ml-auto mr-auto mb-3">
+
+        @if (this.TempData["Collected"] != null)
+        {
+            <div class="alert alert-success fade show" role="alert">
+                You collected @this.TempData["Collected"] crystals.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+
+        @if (!Model.DoesWork)
+        {
+            <p>Dig for 5 minutes and find from 1 to 5 crystals.</p>
+            <a class="btn btn-primary" href="/Mine/Dig">Dig</a>
+        }
+        else
+        {
+            <p>Time left until you finish digging:</p>
+            <vc:timer dom-element-id="work_1" date-time="@Model.WorkUntil"></vc:timer>
+            <p class="text-danger">NOTE: If you cancel the process, you will not receive any rewards.</p>
+            <a class="btn btn-danger" href="/Mine/Cancel">Cancel</a>
+        }
+    </div>
+

@@ -1,0 +1,28 @@
+﻿@model FarmHeroes.Web.ViewModels.ViewComponentsModels.TimerViewComponentModel
+
+<span id="@Model.DomElementId" class="text-white text-center">00:00:00</span>
+
+<script>
+    (function (hours = @Model.TimeSpan.Value.Hours, minutes = @Model.TimeSpan.Value.Minutes, seconds = @Model.TimeSpan.Value.Seconds) {
+        let @(Model.DomElementId + "Interval") = setInterval(function () {
+        document.getElementById('@Model.DomElementId').textContent = (hours < 10 ? `0${hours}` : hours) + ":"
+            + (minutes < 10 ? `0${minutes}` : minutes) + ":"
+            + (seconds < 10 ? `0${seconds}` : seconds);
+
+        if (hours <= 0 && minutes <= 0 && seconds <= 0) {
+            clearInterval(@(Model.DomElementId + "Interval"));
+            document.getElementById("@Model.DomElementId").innerHTML = "00:00:00";
+        }
+
+        seconds--;
+        if (seconds == 0 && minutes != 0) {
+            minutes--;
+            seconds = 59;
+        }
+        if (minutes == 0 && hours != 0) {
+            hours--;
+            minutes = 59;
+        }
+    }, 1000);
+    })();
+</script>

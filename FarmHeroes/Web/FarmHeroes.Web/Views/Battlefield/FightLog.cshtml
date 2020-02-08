@@ -1,0 +1,74 @@
+﻿@model FarmHeroes.Web.ViewModels.FightModels.FightLogViewModel
+@{
+    ViewData["Title"] = "FightLog";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<div class="row m-auto">
+    <div class="col-6">
+        <a href="/Hero/@Model.AttackerId" class="h3 d-block text-center text-white">@Model.AttackerName</a>
+        <img src="~/images/avatars/sheep.jpg" alt="avatar" class="img-fluid d-block m-auto">
+        <div class="text-left">
+            <h5 class="text-center text-uppercase">Characteristics</h5>
+            <p class="m-auto"><img src="~/images/icons/attack-icon.png" class="icon"> @Model.AttackerAttack</p>
+            <p class="m-auto"><img src="~/images/icons/defense-icon.png" class="icon"> @Model.AttackerDefense</p>
+            <p class="m-auto"><img src="~/images/icons/mastery-icon.png" class="icon"> @Model.AttackerMastery</p>
+            <p class="m-auto"><img src="~/images/icons/mass-icon.png" class="icon"> @Model.AttackerMass</p>
+        </div>
+    </div>
+    <div class="col-6">
+        <a href="/Hero/@Model.DefenderId" class="h3 d-block text-center text-white">@Model.DefenderName</a>
+        <img src="~/images/avatars/sheep.jpg" alt="avatar" class="img-fluid d-block m-auto">
+        <div class="text-left">
+            <h5 class="text-center text-uppercase">Characteristics</h5>
+            <p class="m-auto"><img src="~/images/icons/attack-icon.png" class="icon"> @Model.DefenderAttack</p>
+            <p class="m-auto"><img src="~/images/icons/defense-icon.png" class="icon"> @Model.DefenderDefense</p>
+            <p class="m-auto"><img src="~/images/icons/mastery-icon.png" class="icon"> @Model.DefenderMastery</p>
+            <p class="m-auto"><img src="~/images/icons/mass-icon.png" class="icon"> @Model.DefenderMass</p>
+        </div>
+    </div>
+</div>
+<hr class="bg-primary">
+<div class="row mt-4 ml-auto mr-auto">
+    <h5 class="m-auto text-uppercase">Fight summary</h5>
+    <table class="table mt-2">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Damage dealt</th>
+                <th scope="col">Health left</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">@Model.AttackerName</th>
+                <td>@Model.AttackerDamageDealt</td>
+                <td>@Model.AttackerHealthLeft</td>
+            </tr>
+            <tr>
+                <th scope="row">@Model.DefenderName</th>
+                <td>@Model.DefenderDamageDealt</td>
+                <td>@Model.DefenderHealthLeft</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="m-auto"><strong>@Model.WinnerName</strong> won and received @Model.GoldStolen <img src="~/images/icons/gold-icon.png" alt="gold" class="img-fluid icon"> @Model.ExperienceGained <img src="~/images/icons/experience-icon.png" alt="experience" class="img-fluid icon"></p>
+</div>
+<hr class="bg-primary">
+<div class="row m-auto">
+    <div class="col-12">
+        <h5 class="text-center text-uppercase">Fight log</h5>
+        @for (int i = 0; i < Model.AttackerHits.Where(x => x.HasValue).Count(); i++)
+        {
+            <div class="border rounded-pill text-left w-75 m-1 pl-3 row">
+                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.AttackerHits[i]] @Model.DefenderName
+            </div>
+            if (Model.DefenderHits[i].HasValue)
+            {
+                <div class="border rounded-pill text-right w-75 m-1 pr-3 float-right">
+                    @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.DefenderHits[i]] @Model.AttackerName
+                </div>
+            }
+        }
+    </div>
+</div>

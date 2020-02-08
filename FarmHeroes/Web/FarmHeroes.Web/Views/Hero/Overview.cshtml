@@ -1,0 +1,68 @@
+﻿@model FarmHeroes.Web.ViewModels.HeroModels.HeroOverviewViewModel
+@{
+    ViewData["Title"] = "Overview";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+    <div class="row">
+        <a class="col-4 btn btn-outline-primary border-left-0 border-right-0 nav-link" href="/Hero/Overview">Overview</a>
+        <a class="col-4 btn btn-outline-primary nav-link disabled" href="/Hero/Inventory">Inventory</a>
+        <a class="col-4 btn btn-outline-primary border-left-0 border-right-0 nav-link" href="/Statistics/All">Statistics</a>
+    </div>
+<div class="row">
+    <div class="col-2 border-right border-primary m-auto">
+        <img src="https://i.botva.ru/images/items/ico_safe_01.jpg" class="row img-fluid p-1 m-auto">
+        <img src="https://i.botva.ru/images/items/ico_safe_01.jpg" class="row img-fluid p-1 m-auto">
+        <img src="https://i.botva.ru/images/items/ico_safe_01.jpg" class="row img-fluid p-1 m-auto">
+        <img src="https://i.botva.ru/images/items/ico_safe_01.jpg" class="row img-fluid p-1 m-auto">
+    </div>
+    <div class="col-8">
+        <h5 class="text-center m-2">@Model.Name</h5>
+        <img src="~/images/avatars/sheep.jpg" class="row img-fluid m-auto">
+        <p class="text-center m-auto"><img src="~/images/icons/level-icon.png" class="img-fluid icon"> @Model.Level</p>
+        <div class="progress w-50 position-relative mt-1 mb-3 ml-auto mr-auto" data-toggle="tooltip" data-placement="bottom" title="@Model.CurrentExperience/@Model.NeededExperience">
+            <div class="progress-bar bg-info" role="progressbar" style="width: @Model.ExperiencePercent%"></div>
+            <strong class="justify-content-center d-flex position-absolute w-100">
+                @Model.ExperiencePercent%
+            </strong>
+        </div>
+    </div>
+    <div class="col-2 border-left border-primary m-auto">
+        <img src="https://i.botva.ru/images/items/ico_safe_01.jpg" class="row img-fluid p-1 m-auto">
+        <img src="https://i.botva.ru/images/items/ico_safe_01.jpg" class="row img-fluid p-1 m-auto">
+        <img src="https://i.botva.ru/images/items/ico_safe_01.jpg" class="row img-fluid p-1 m-auto">
+        <img src="https://i.botva.ru/images/items/ico_safe_01.jpg" class="row img-fluid p-1 m-auto">
+    </div>
+</div>
+<div class="row p-1">
+    <div class="col-6 text-center">
+        <strong class="text-uppercase">characteristics</strong>
+        <div class="text-left">
+            <img src="~/images/icons/attack-icon.png" class="icon">
+            Attack: @Model.Attack
+        </div>
+        <div class="text-left">
+            <img src="~/images/icons/defense-icon.png" class="icon">
+            Defense: @Model.Defense
+        </div>
+        <div class="text-left">
+            <img src="~/images/icons/mastery-icon.png" class="icon">
+            Mastery: @Model.Mastery
+        </div>
+        <div class="text-left">
+            <img src="~/images/icons/mass-icon.png" class="icon">
+            Mass: @Model.Mass
+        </div>
+    </div>
+    <div class="col-6 text-center">
+        <strong class="text-uppercase">statistics</strong>
+        <div class="text-left">
+            <img src="~/images/icons/fights-icon.png" class="icon">
+            Fights: @Model.Fights
+        </div>
+        <div class="text-left">
+            <img src="~/images/icons/wins-icon.png" class="icon">
+            Wins: @Model.Wins
+        </div>
+    </div>
+</div>

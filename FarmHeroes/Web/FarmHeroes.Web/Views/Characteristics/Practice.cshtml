@@ -1,0 +1,70 @@
+﻿@model FarmHeroes.Web.ViewModels.CharacteristcsModels.CharacteristicsPracticeViewModel
+@{
+    ViewData["Title"] = "Practice";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+@if (this.TempData["Error"] != null)
+{
+    <div class="alert alert-danger fade show" role="alert">
+        @this.TempData["Error"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<div class="row text-center">
+    <div class="col-3">
+        <h4>Attack</h4>
+        <p>@Model.Attack</p>
+    </div>
+    <div class="col-6">
+        <p>Attack determines the damage you inflict on your enemy.</p>
+    </div>
+    <div class="col-3">
+        <p>@Model.AttackPrice <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
+        <a href="/Characteristics/PracticeAttack" class="btn btn-primary badge-pill">Practice</a>
+    </div>
+</div>
+<hr class="bg-primary">
+<div class="row text-center">
+    <div class="col-3">
+        <h4>Defense</h4>
+        <p>@Model.Defense</p>
+    </div>
+    <div class="col-6">
+        <p>Defense determines the damage you block from your enemy.</p>
+    </div>
+    <div class="col-3">
+        <p>@Model.DefensePrice <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
+        <a href="/Characteristics/PracticeDefense" class="btn btn-primary badge-pill">Practice</a>
+    </div>
+</div>
+<hr class="bg-primary">
+<div class="row text-center">
+    <div class="col-3">
+        <h4>Mass</h4>
+        <p>@Model.Mass</p>
+    </div>
+    <div class="col-6">
+        <p>Mass determines the health you have.</p>
+    </div>
+    <div class="col-3">
+        <p>@Model.MassPrice <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
+        <a href="/Characteristics/PracticeMass" class="btn btn-primary badge-pill">Practice</a>
+    </div>
+</div>
+<hr class="bg-primary">
+<div class="row text-center">
+    <div class="col-3">
+        <h4>Mastery</h4>
+        <p>@Model.Mastery</p>
+    </div>
+    <div class="col-6">
+        <p>Mastery determines the chance to critically hit your enemy.</p>
+    </div>
+    <div class="col-3">
+        <p>@Model.MasteryPrice <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
+        <a href="/Characteristics/PracticeMastery" class="btn btn-primary badge-pill">Practice</a>
+    </div>
+</div>

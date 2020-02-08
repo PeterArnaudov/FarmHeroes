@@ -1,0 +1,20 @@
+﻿@model FarmHeroes.Web.ViewModels.ViewComponentsModels.HeroResourcesViewComponentModel
+
+<div class="col-3 d-inline pl-2" data-toggle="tooltip" data-placement="bottom" title="Gold is used to practice and buy things. Earned by fighting other players and monsters or by working.">
+    <div class="row mt-2">
+        <img src="~/images/icons/gold-icon.png" alt="Gold" class="img-fluid col-4">
+        <div class="col-8 text-left m-auto">
+            <h4 class="d-lg-inline-block d-md-none">Gold:</h4>
+            <h4>@Model.Gold</h4>
+        </div>
+    </div>
+</div>
+<div class="col-3 d-inline" data-toggle="tooltip" data-placement="bottom" title="Crystals are used to buy elite things. Earned by mining.">
+    <div class="row mt-2">
+        <img src="~/images/icons/crystal-icon.png" alt="Crystals" class="img-fluid col-4">
+        <div class="col-8 text-left m-auto">
+            <h4 class="d-lg-inline-block d-md-none">Crystals:</h4>
+            <h4>@Model.Crystals</h4>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+﻿@using FarmHeroes.Common
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    @*<meta name="viewport" content="width=device-width, initial-scale=1.0" />*@
+    <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
+
+    <environment names="Development">
+        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+    </environment>
+    <environment names="Staging,Production">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/superhero/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    <div class="wrapper container">
+        <div class="mt-1 row text-center p-2">
+            <h1 class="col-lg-3 d-lg-block d-none m-auto">Farm Heroes</h1>
+            <button class="navbar-toggler btn-outline-primary text-white col-3 d-lg-none d-md-block" aria-pressed="true" type="button" data-toggle="collapse" data-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                MENU
+            </button>
+            <vc:hero-health></vc:hero-health>
+            <vc:hero-resources></vc:hero-resources>
+        </div>
+        <hr class="bg-primary">
+        <div class="row">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent col-lg-2 col-md-12 p-0 h-100">
+                <ul id="menu" class="collapse navbar-collapse list-unstyled flex-column p-1 ">
+                    <h4 class="text-center text-uppercase">Menu</h4>
+                    <li class="nav-item w-100">
+                        <a class="btn btn-primary p-1 nav-link" href="/Hero/Overview">Hero</a>
+                    </li>
+                    <li class="nav-item w-100">
+                        <a class="btn btn-primary p-1 nav-link" href="/Notifications/All">Notifications <span class="badge badge-pill badge-info">3</span></a>
+                    </li>
+                    <li class="nav-item w-100">
+                        <a class="btn btn-primary p-1 nav-link" href="/Characteristics/Practice">Practice</a>
+                    </li>
+                    <li class="nav-item w-100">
+                        <a class="btn btn-primary p-1 nav-link" href="/Village">Village</a>
+                    </li>
+                    <li class="nav-item w-100">
+                        <a class="btn btn-primary p-1 nav-link" href="/Battlefield">Battlefield</a>
+                    </li>
+                    <li class="nav-item w-100">
+                        <a class="btn btn-primary p-1 nav-link" href="/Leaderboards/All">Leaderboards</a>
+                    </li>
+                    <li class="nav-item w-100">
+                        <a class="btn btn-primary p-1 nav-link" href="/Identity/User/Logout">Exit</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="col-lg-8 col-md-12 border border-primary border-top-0 border-bottom-0 border-left-1 border-right-1">
+                @RenderBody()
+            </div>
+            <vc:side-menu-timers></vc:side-menu-timers>
+        </div>
+        <hr class="bg-primary">
+        <footer>
+            <!-- <h6 class="font-weight-bold text-center">CopyRight &copy; PeterArnaudov. All rights reserved.</h6> -->
+            <h6 class="font-weight-bold text-center">Created by <a href="https://softuni.bg/users/profile/show/peterarnaudov">PeterArnaudov</a>.</h6>
+            <div class="text-center">
+                <a href=""><img src="~/images/community/instagram.png" alt="Instagram logo" class="m-2 logo"></a>
+                <a href=""><img src="~/images/community/facebook.png" alt="Facebook logo" class="m-2 logo"></a>
+                <a href=""><img src="~/images/community/linkedin.png" alt="LinkedIn logo" class="m-2 logo"></a>
+                <a href=""><img src="~/images/community/github.png" alt="Github logo" class="m-2 logo"></a>
+            </div>
+            <h6 class="font-weight-bold text-center">Created with educational purpose. Based on <a href="https://www.botva.ru">www.botva.ru</a>.</h6>
+        </footer>
+    </div>
+
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js" asp-append-version="true"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @this.RenderSection("Scripts", required: false)
+</body>
+</html>

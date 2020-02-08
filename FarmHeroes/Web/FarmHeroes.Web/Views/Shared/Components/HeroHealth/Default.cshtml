@@ -1,0 +1,14 @@
+﻿@model FarmHeroes.Web.ViewModels.ViewComponentsModels.HeroHealthViewComponentModel
+
+<div class="col-3 d-inline">
+    <div class="text-left m-auto">
+        <img src="~/images/icons/health-icon.png" alt="Health" class="col-4 pb-2 d-lg-inline d-md-block m-auto">
+        <h4 class="d-lg-inline-block d-none text-center pb-2">Health:</h4>
+        <div class="progress w-100 m-auto position-relative" data-toggle="tooltip" data-placement="bottom" title="@Model.Current/@Model.Maximum">
+            <div class="progress-bar bg-success" role="progressbar" style="width: @Model.Percent%">
+                <strong class="justify-content-center d-flex position-absolute w-100">@Model.Percent%</strong>
+            </div>
+        </div>
+    </div>
+</div>
+

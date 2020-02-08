@@ -1,0 +1,134 @@
+﻿@model FarmHeroes.Web.ViewModels.BattlefieldModels.BattlefieldViewModel
+@{
+    ViewData["Title"] = "Battlefield";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<div class="text-center">
+    <img src="~/images/battlefield/battlefield.jpg" alt="battlefield" class="d-block img-fluid ml-auto mr-auto mb-3">
+
+    @if (this.TempData["Collected"] != null)
+    {
+        <div class="alert alert-success fade show" role="alert">
+            You collected @this.TempData["Collected"] gold.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <div class="row m-auto">
+        <div class="col-6 border-right border-primary">
+            <img src="~/images/battlefield/fight-icon.png" alt="fight" class="img-fluid ml-2 mt-2 area-icon">
+            <h2 class="text-uppercase d-inline">battlefield</h2>
+            <img src="~/images/icons/info-icon.png" alt="info" class="img-fluid ml-2 mt-2 info-icon" data-toggle="tooltip" data-placement="bottom" title="Battle consists of 5 rounds. Winner is determined by damage dealt, however if someone has 1 health left, they lose. The winner steals 10% of their enemy's gold.">
+            <form action="/Battlefield/GetOpponents" method="post">
+                <div class="form-group">
+                    <label for="attackType">Attack type</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Enemy fraction</option>
+                        <option disabled>Enemy cast - Coming soon</option>
+                    </select>
+                </div>
+                @if (Model.CanAttackHero)
+                {
+                    <button type="submit" class="btn btn-primary">Get opponents</button>
+                }
+                else
+                {
+                    if (Model.IsOnPatrol)
+                    {
+                        <span type="submit" class="btn btn-primary disabled">Get opponents</span>
+                    }
+                    else
+                    {
+                        <vc:timer dom-element-id="attackHero_1" date-time="@Model.CannotAttackHeroUntil"></vc:timer>
+                    }
+                }
+            </form>
+        </div>
+        <div class="col-6">
+            <img src="~/images/battlefield/patrol-icon.png" alt="patrol" class="img-fluid ml-2 mt-2 area-icon">
+            <h2 class="text-uppercase">patrol</h2>
+            <p class="m-auto">Spend 10 minutes patrolling around and earn some gold.</p>
+            <p>Today you've been to patrol {{times}}/3 times.</p>
+            @if (Model.CanGoOnPatrol)
+            {
+                <!-- If hero cannot start a patrol, add class disabled to the button; when patrol limit is implemented -->
+                <a href="/Battlefield/Patrol" class="btn btn-primary">Start Patrol</a>
+            }
+            else
+            {
+                if (Model.IsPatrolFinished)
+                {
+                    <a class="btn btn-success" href="/Battlefield/Collect">Collect</a>
+                }
+                else
+                {
+                    <vc:timer dom-element-id="patrol_1" date-time="@Model.PatrolUntil"></vc:timer>
+                }
+            }
+        </div>
+    </div>
+    <hr class="bg-primary">
+    <div class="row mt-2 ml-auto mr-auto">
+        <div class="col-12">
+            <img src="~/images/battlefield/monster-fight-icon.png" alt="patrol" class="img-fluid ml-2 mt-2 area-icon">
+            <h2 class="text-uppercase">monsters</h2>
+            <div class="row">
+                <div class="col-6">
+                    <p>Price: 500 <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
+                    <p>Attack a monster with level between 1 and 3.</p>
+                    @if (Model.CanAttackMonster)
+                    {
+                        <a href="/Battlefield/AttackRandomMonster" class="btn btn-primary">Attack</a>
+                    }
+                    else
+                    {
+                        if (Model.IsOnPatrol)
+                        {
+                            <span class="btn btn-primary disabled">Attack</span>
+                        }
+                        else
+                        {
+                            <vc:timer dom-element-id="attackMonster_1" date-time="@Model.CannotAttackMonsterUntil"></vc:timer>
+
+                        }
+                    }
+                </div>
+                <div class="col-6">
+                    <p>Price: 1 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
+                    <p>Attack a monster with level of your choice.</p>
+                    <form class="form-inline">
+                        <label for="attackType" class="m-auto">Monster level</label>
+                        <select class="form-control-sm m-auto" id="exampleFormControlSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                        </select>
+                        @if (Model.CanAttackMonster)
+                        {
+                            <a href="/Battlefield/AttackMonster" class="btn btn-primary">Attack</a>
+                        }
+                        else
+                        {
+                            if (Model.IsOnPatrol)
+                            {
+                                <span class="btn btn-primary disabled">Attack</span>
+                            }
+                            else
+                            {
+                                <vc:timer dom-element-id="attackMonster_2" date-time="@Model.CannotAttackMonsterUntil"></vc:timer>
+                            }
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
