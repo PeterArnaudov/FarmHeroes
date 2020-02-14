@@ -51,7 +51,7 @@
 
             if (hero.Chronometer.WorkUntil != null)
             {
-                throw new Exception(); // TODO: Add message
+                throw new Exception("You are already working somewhere.");
             }
 
             hero.Chronometer.WorkUntil = DateTime.UtcNow.AddMinutes(minutes);

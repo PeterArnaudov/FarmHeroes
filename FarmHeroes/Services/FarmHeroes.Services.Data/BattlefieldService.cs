@@ -52,7 +52,7 @@
 
             if (hero.WorkStatus != WorkStatus.Battlefield)
             {
-                throw new Exception(); // TODO: Add message
+                throw new Exception("You haven't been on patrol or are still patrolling.");
             }
 
             int experience = BattlefieldFormulas.CalculateExperience(hero.Level.CurrentLevel);
