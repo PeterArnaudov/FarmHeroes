@@ -65,7 +65,7 @@
 
             if (resources.Gold < gold)
             {
-                throw new Exception(); // TODO: Add exception message
+                throw new Exception("You don't have enough gold.");
             }
 
             resources.Gold -= gold;
@@ -79,7 +79,7 @@
 
             if (resources.Gold < gold)
             {
-                throw new Exception(); // TODO: Add exception message
+                throw new Exception("You don't have enough gold.");
             }
 
             resources.Gold -= gold;
@@ -109,7 +109,7 @@
 
             if (resources.Crystals < crystals)
             {
-                throw new Exception(); // TODO: Add exception message
+                throw new Exception("You don't have enough crystals.");
             }
 
             resources.Crystals -= crystals;
@@ -123,7 +123,7 @@
 
             if (resources.Crystals < crystals)
             {
-                throw new Exception(); // TODO: Add exception message
+                throw new Exception("You don't have enough crystals.");
             }
 
             resources.Crystals -= crystals;
