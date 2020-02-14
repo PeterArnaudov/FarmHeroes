@@ -3,6 +3,7 @@
     using System.Diagnostics;
 
     using FarmHeroes.Web.ViewModels;
+    using Microsoft.AspNetCore.Diagnostics;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
@@ -20,8 +21,9 @@
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return this.View(
-                new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
+            var exceptionDetails = this.HttpContext.Features.Get<IExceptionHandlerFeature>();
+
+            return this.View(new ErrorViewModel { ExceptionMessage = exceptionDetails.Error.Message });
         }
     }
 }
