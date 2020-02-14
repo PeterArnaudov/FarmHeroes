@@ -9,7 +9,7 @@
 
     public class MineService : IMineService
     {
-        private const byte DigDuration = 1;
+        private const byte DigDuration = 5;
 
         private readonly IHeroService heroService;
         private readonly IResourcePouchService resourcePouchService;
