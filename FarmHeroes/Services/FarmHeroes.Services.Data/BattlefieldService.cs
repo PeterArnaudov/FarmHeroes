@@ -36,6 +36,13 @@
 
         public async Task StartPatrol()
         {
+            Chronometer chronometer = await this.chronometerService.GetCurrentHeroChronometer();
+
+            if (chronometer.WorkUntil != null)
+            {
+                throw new Exception("You already work somewhere.");
+            }
+
             await this.chronometerService.SetWorkUntil(PatrolDurationInMinutes, WorkStatus.Battlefield);
         }
 
