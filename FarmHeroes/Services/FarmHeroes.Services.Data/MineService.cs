@@ -26,6 +26,13 @@
 
         public async Task InitiateDig()
         {
+            Chronometer chronometer = await this.chronometerService.GetCurrentHeroChronometer();
+
+            if (chronometer.WorkUntil != null)
+            {
+                throw new Exception("You already work somewhere.");
+            }
+
             await this.chronometerService.SetWorkUntil(DigDuration, WorkStatus.Mine);
         }
 
@@ -35,7 +42,7 @@
 
             if (hero.WorkStatus != WorkStatus.Mine)
             {
-                throw new Exception(); // TODO: Add message
+                throw new Exception("You haven't been working in the mines or are still working there.");
             }
 
             Random random = new Random();
