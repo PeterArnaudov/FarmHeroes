@@ -30,6 +30,13 @@
 
         public async Task StartWork()
         {
+            Chronometer chronometer = await this.chronometerService.GetCurrentHeroChronometer();
+
+            if (chronometer.WorkUntil != null)
+            {
+                throw new Exception("You already work somewhere.");
+            }
+
             await this.chronometerService.SetWorkUntil(WorkDurationInMinutes, WorkStatus.Farm);
         }
 
@@ -39,7 +46,7 @@
 
             if (hero.WorkStatus != WorkStatus.Farm)
             {
-                throw new Exception(); // TODO: Add message
+                throw new Exception("You haven't been working on the farm or are still working there.");
             }
 
             int experience = FarmFormulas.CalculateExperience(hero.Level.CurrentLevel, WorkDurationInHours);
