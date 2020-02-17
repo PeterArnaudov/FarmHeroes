@@ -6,6 +6,7 @@
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
+    using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Formulas;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -38,11 +39,6 @@
         {
             Chronometer chronometer = await this.chronometerService.GetCurrentHeroChronometer();
 
-            if (chronometer.WorkUntil != null)
-            {
-                throw new Exception("You already work somewhere.");
-            }
-
             await this.chronometerService.SetWorkUntil(WorkDurationInMinutes, WorkStatus.Farm);
         }
 
@@ -52,7 +48,10 @@
 
             if (hero.WorkStatus != WorkStatus.Farm)
             {
-                throw new Exception("You haven't been working on the farm or are still working there.");
+                throw new FarmHeroesException(
+                    "You haven't been working on the farm or are still working there.",
+                    "You have to cancel or finish your work before trying to collect.",
+                    "/Farm");
             }
 
             int experience = FarmFormulas.CalculateExperience(hero.Level.CurrentLevel, WorkDurationInHours);
