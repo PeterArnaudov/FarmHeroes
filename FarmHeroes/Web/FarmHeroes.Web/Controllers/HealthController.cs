@@ -3,9 +3,10 @@
     using System.Threading.Tasks;
 
     using FarmHeroes.Services.Data.Contracts;
-
+    using FarmHeroes.Web.Filters;
     using Microsoft.AspNetCore.Mvc;
 
+    [ServiceFilterAttribute(typeof(FarmHeroesExceptionFilterAttribute))]
     public class HealthController : BaseController
     {
         private readonly IHealthService healthService;

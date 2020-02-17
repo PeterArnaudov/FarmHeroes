@@ -5,8 +5,13 @@
 }
 
 <div class="alert alert-danger" role="alert">
-    <h4 class="alert-heading">Oups! Something went wrong.</h4>
-    <p>@Model.ExceptionMessage</p>
+    <h4 class="alert-heading">An error occurred while processing your request.</h4>
+    @if (this.Model.ShowRequestId)
+    {
+        <p>
+            <strong>Request ID:</strong> <code>@this.Model.RequestId</code>
+        </p>
+    }
     <hr>
-    <p class="mb-0 text-muted font-italic text-right">You might have gone against the rules and tried to do something not allowed.</p>
+    <p class="mb-0 text-muted font-italic text-right">Please contact the administrator for assistance.</p>
 </div>

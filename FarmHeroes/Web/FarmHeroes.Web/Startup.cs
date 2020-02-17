@@ -22,6 +22,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using FarmHeroes.Web.Filters;
 
     public class Startup
     {
@@ -78,6 +79,8 @@
             services.AddTransient<IChronometerService, ChronometerService>();
             services.AddTransient<IBattlefieldService, BattlefieldService>();
             services.AddTransient<IFightService, FightService>();
+
+            services.AddTransient<FarmHeroesExceptionFilterAttribute>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

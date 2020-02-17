@@ -54,6 +54,22 @@
                 </ul>
             </nav>
             <div class="col-lg-8 col-md-12 border border-primary border-top-0 border-bottom-0 border-left-1 border-right-1">
+                @if (this.TempData["ExceptionMessage"] != null)
+                {
+                    <div class="alert alert-danger disappearing-alert" role="alert">
+                        <h4 class="alert-heading font-weight-bolder">Oups! Something went wrong.</h4>
+                        <p class="mb-0"><span class="font-weight-bold">Cause: </span>@this.TempData["ExceptionMessage"]</p>
+                        <p><span class="font-weight-bold">Instructions: </span>@this.TempData["ExceptionInstructions"]</p>
+                        <hr>
+                        <p class="mb-0 text-muted font-italic text-right">You might have gone against the rules and tried to do something not allowed.</p>
+                    </div>
+                }
+                @if (this.TempData["Collected"] != null)
+                {
+                    <div class="alert alert-success disappearing-alert" role="alert">
+                        <p class="text-center m-0">@this.TempData["Collected"]</p>
+                    </div>
+                }
                 @RenderBody()
             </div>
             <vc:side-menu-timers></vc:side-menu-timers>

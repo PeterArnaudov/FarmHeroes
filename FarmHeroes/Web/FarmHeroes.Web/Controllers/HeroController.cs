@@ -5,10 +5,12 @@
     using AutoMapper;
     using FarmHeroes.Data.Models;
     using FarmHeroes.Services.Data.Contracts;
+    using FarmHeroes.Web.Filters;
     using FarmHeroes.Web.ViewModels.HeroModels;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    [ServiceFilterAttribute(typeof(FarmHeroesExceptionFilterAttribute))]
     public class HeroController : BaseController
     {
         private readonly IHeroService heroService;

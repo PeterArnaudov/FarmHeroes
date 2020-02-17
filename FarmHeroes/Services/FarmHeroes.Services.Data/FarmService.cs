@@ -7,6 +7,8 @@
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Formulas;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public class FarmService : IFarmService
     {
@@ -18,14 +20,18 @@
         private readonly IStatisticsService statisticsService;
         private readonly ILevelService levelService;
         private readonly IChronometerService chronometerService;
+        private readonly ITempDataDictionaryFactory tempDataDictionaryFactory;
+        private readonly IHttpContextAccessor context;
 
-        public FarmService(IHeroService heroService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, ILevelService levelService, IChronometerService chronometerService)
+        public FarmService(IHeroService heroService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, ILevelService levelService, IChronometerService chronometerService, ITempDataDictionaryFactory tempDataDictionaryFactory, IHttpContextAccessor context)
         {
             this.heroService = heroService;
             this.resourcePouchService = resourcePouchService;
             this.statisticsService = statisticsService;
             this.levelService = levelService;
             this.chronometerService = chronometerService;
+            this.tempDataDictionaryFactory = tempDataDictionaryFactory;
+            this.context = context;
         }
 
         public async Task StartWork()
@@ -58,6 +64,10 @@
             await this.resourcePouchService.IncreaseCurrentHeroGold(collected);
             await this.chronometerService.NullifyWorkUntil();
             await this.statisticsService.UpdateStatistics(hero.Statistics);
+
+            this.tempDataDictionaryFactory
+                .GetTempData(this.context.HttpContext)
+                .Add("Collected", $"You earned {collected} gold and gained {experience} experience.");
 
             return collected;
         }

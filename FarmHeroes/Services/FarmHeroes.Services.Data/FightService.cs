@@ -7,6 +7,7 @@
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.MappingModels;
     using FarmHeroes.Services.Data.Contracts;
+    using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Formulas;
     using System;
     using System.Linq;
@@ -48,31 +49,49 @@
 
             if (attacker.WorkStatus != WorkStatus.Idle)
             {
-                throw new Exception("You cannot attack while working.");
+                throw new FarmHeroesException(
+                    "You cannot attack while working.",
+                    "You have to cancel or finish your work before trying to attack.",
+                    "/Battlefield");
             }
             else if (attacker.Chronometer.CannotAttackHeroUntil > DateTime.UtcNow)
             {
-                throw new Exception("You cannot attack right now.");
+                throw new FarmHeroesException(
+                    "You cannot attack right now.",
+                    "You have to wait until you can attack again. Take a rest, do something useful.",
+                    "/Battlefield");
             }
             else if (attacker.Id == opponentId)
             {
-                throw new Exception("You cannot attack yourself.");
+                throw new FarmHeroesException(
+                    "You cannot attack yourself.",
+                    "Who would attack themselves? Go find somebody else!.",
+                    "/Battlefield");
             }
 
             Hero defender = await this.heroService.GetHeroById(opponentId);
 
             if (defender.Fraction == attacker.Fraction)
             {
-                throw new Exception("You cannot attack a hero from your fraction.");
+                throw new FarmHeroesException(
+                    "You cannot attack a hero from your fraction.",
+                    "Don't be a bad player. You can attack only players from the enemy fraction.",
+                    "/Battlefield");
             }
             else if (attacker.Level.CurrentLevel + 3 < defender.Level.CurrentLevel
                     && attacker.Level.CurrentLevel - 3 > defender.Level.CurrentLevel)
             {
-                throw new Exception("The hero you attempted to attack is outside of your level range.");
+                throw new FarmHeroesException(
+                    "The hero you attempted to attack is outside of your level range.",
+                    "You can attack players with 3 levels below or above you, inclusively.",
+                    "/Battlefield");
             }
             else if (defender.Chronometer.CannotBeAttackedUntil > DateTime.UtcNow)
             {
-                throw new Exception("You cannot attack a hero that still has defence.");
+                throw new FarmHeroesException(
+                    "You cannot attack a hero that still has defence.",
+                    "This hero still has defence. After being attacked, one is guaranteed an hour of immunity.",
+                    "/Battlefield");
             }
 
             int?[] attackerHits = new int?[5];

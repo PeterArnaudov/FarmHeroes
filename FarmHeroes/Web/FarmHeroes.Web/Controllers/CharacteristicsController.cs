@@ -6,9 +6,11 @@
     using AutoMapper;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
+    using FarmHeroes.Web.Filters;
     using FarmHeroes.Web.ViewModels.CharacteristcsModels;
     using Microsoft.AspNetCore.Mvc;
 
+    [ServiceFilterAttribute(typeof(FarmHeroesExceptionFilterAttribute))]
     public class CharacteristicsController : BaseController
     {
         private readonly ICharacteristicsService characteristicsService;

@@ -21,9 +21,8 @@
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            var exceptionDetails = this.HttpContext.Features.Get<IExceptionHandlerFeature>();
-
-            return this.View(new ErrorViewModel { ExceptionMessage = exceptionDetails.Error.Message });
+            return this.View(
+                new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
         }
     }
 }

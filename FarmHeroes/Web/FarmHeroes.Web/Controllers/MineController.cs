@@ -7,9 +7,12 @@
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
+    using FarmHeroes.Web.Filters;
     using FarmHeroes.Web.ViewModels.MineModels;
+
     using Microsoft.AspNetCore.Mvc;
 
+    [ServiceFilterAttribute(typeof(FarmHeroesExceptionFilterAttribute))]
     public class MineController : BaseController
     {
         private readonly IHeroService heroService;
@@ -57,8 +60,7 @@
 
         public async Task<IActionResult> Collect()
         {
-            int collected = await this.mineService.Collect();
-            this.TempData["Collected"] = collected;
+            await this.mineService.Collect();
 
             return this.Redirect("/Mine");
         }

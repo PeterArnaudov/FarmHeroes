@@ -6,10 +6,12 @@
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
+    using FarmHeroes.Web.Filters;
     using FarmHeroes.Web.ViewModels.BattlefieldModels;
     using FarmHeroes.Web.ViewModels.FightModels;
     using Microsoft.AspNetCore.Mvc;
 
+    [ServiceFilterAttribute(typeof(FarmHeroesExceptionFilterAttribute))]
     public class BattlefieldController : Controller
     {
         private readonly IHeroService heroService;
@@ -47,8 +49,7 @@
 
         public async Task<IActionResult> Collect()
         {
-            int collected = await this.battlefieldService.Collect();
-            this.TempData["Collected"] = collected;
+            await this.battlefieldService.Collect();
 
             return this.Redirect("/Battlefield");
         }

@@ -8,6 +8,7 @@
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
+    using FarmHeroes.Services.Data.Exceptions;
 
     public class ChronometerService : IChronometerService
     {
@@ -51,7 +52,10 @@
 
             if (hero.Chronometer.WorkUntil != null)
             {
-                throw new Exception("You are already working somewhere.");
+                throw new FarmHeroesException(
+                    "You are already working somewhere.",
+                    "Cancel or finish your current work.",
+                    "/Farm");
             }
 
             hero.Chronometer.WorkUntil = DateTime.UtcNow.AddMinutes(minutes);

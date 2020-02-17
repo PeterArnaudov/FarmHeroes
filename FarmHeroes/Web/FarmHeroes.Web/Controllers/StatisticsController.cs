@@ -6,9 +6,11 @@
     using AutoMapper;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
+    using FarmHeroes.Web.Filters;
     using FarmHeroes.Web.ViewModels.StatisticsModels;
     using Microsoft.AspNetCore.Mvc;
 
+    [ServiceFilterAttribute(typeof(FarmHeroesExceptionFilterAttribute))]
     public class StatisticsController : BaseController
     {
         private readonly IStatisticsService statisticsService;

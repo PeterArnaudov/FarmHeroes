@@ -6,3 +6,5 @@
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
+
+$(".disappearing-alert").fadeOut(5000);

@@ -16,7 +16,7 @@
             this.context = context;
         }
 
-        public async Task CreateInventoryAsync()
+        public async Task CreateInventory()
         {
             Inventory inventory = new Inventory();
             await this.context.Inventories.AddAsync(inventory);

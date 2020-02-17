@@ -7,6 +7,7 @@
     using FarmHeroes.Data;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
+    using FarmHeroes.Services.Data.Exceptions;
 
     public class ResourcePouchService : IResourcePouchService
     {
@@ -65,7 +66,7 @@
 
             if (resources.Gold < gold)
             {
-                throw new Exception("You don't have enough gold.");
+                throw new Exception("The hero doesn't have enough gold.");
             }
 
             resources.Gold -= gold;
@@ -79,7 +80,10 @@
 
             if (resources.Gold < gold)
             {
-                throw new Exception("You don't have enough gold.");
+                throw new FarmHeroesException(
+                    "You don't have enough gold.",
+                    "Go earn yourself some more gold and come back... or steal it. ;)",
+                    "/Battlefield");
             }
 
             resources.Gold -= gold;
@@ -109,7 +113,7 @@
 
             if (resources.Crystals < crystals)
             {
-                throw new Exception("You don't have enough crystals.");
+                throw new Exception("The hero doesn't have enough crystals.");
             }
 
             resources.Crystals -= crystals;
@@ -123,7 +127,10 @@
 
             if (resources.Crystals < crystals)
             {
-                throw new Exception("You don't have enough crystals.");
+                throw new FarmHeroesException(
+                    "You don't have enough gold.",
+                    "Go earn yourself some more crystals and come back.",
+                    "/Mine");
             }
 
             resources.Crystals -= crystals;

@@ -6,17 +6,6 @@
 
 <div class="text-center">
     <img src="~/images/village/farm/farm.jpg" alt="village-image" class="d-block img-fluid ml-auto mr-auto mb-3">
-
-    @if (this.TempData["Collected"] != null)
-    {
-        <div class="alert alert-success fade show" role="alert">
-            You earned @this.TempData["Collected"] gold.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    }
-
     @if (!Model.DoesWork)
     {
         <p>Currently you can work for @Model.Salary <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"> per hour.</p>
