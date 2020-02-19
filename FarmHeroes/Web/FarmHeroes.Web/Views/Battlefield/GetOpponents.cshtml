@@ -5,37 +5,18 @@
 }
 
     <div class="row">
-        <div class="col-3 m-auto text-center">
-            <h5 class="overflow-hidden">@Model.Opponents[0].Name</h5>
-            <img src="~/images/avatars/sheep.jpg" alt="avatar" class="img-fluid mt-2 mb-2">
-            <span class="text-left">
-                <p class="m-auto"><img src="~/images/icons/attack-icon.png" class="icon"> @Model.Opponents[0].Attack</p>
-                <p class="m-auto"><img src="~/images/icons/defense-icon.png" class="icon"> @Model.Opponents[0].Defense</p>
-                <p class="m-auto"><img src="~/images/icons/mastery-icon.png" class="icon"> @Model.Opponents[0].Mastery</p>
-                <p class="m-auto"><img src="~/images/icons/mass-icon.png" class="icon"> @Model.Opponents[0].Mass</p>
-            </span>
-            <a href="/Battlefield/AttackPlayer/@Model.Opponents[0].Id" class="btn btn-primary mt-2">Attack</a>
-        </div>
-        <div class="col-3 m-auto text-center">
-            <h5 class="overflow-hidden">@Model.Opponents[1].Name</h5>
-            <img src="~/images/avatars/sheep.jpg" alt="avatar" class="img-fluid mt-2 mb-2">
-            <span class="text-left">
-                <p class="m-auto"><img src="~/images/icons/attack-icon.png" class="icon"> @Model.Opponents[1].Attack</p>
-                <p class="m-auto"><img src="~/images/icons/defense-icon.png" class="icon"> @Model.Opponents[1].Defense</p>
-                <p class="m-auto"><img src="~/images/icons/mastery-icon.png" class="icon"> @Model.Opponents[1].Mastery</p>
-                <p class="m-auto"><img src="~/images/icons/mass-icon.png" class="icon"> @Model.Opponents[1].Mass</p>
-            </span>
-            <a href="/Battlefield/AttackPlayer/@Model.Opponents[1].Id" class="btn btn-primary mt-2">Attack</a>
-        </div>
-        <div class="col-3 m-auto text-center">
-            <h5 class="overflow-hidden">@Model.Opponents[2].Name</h5>
-            <img src="~/images/avatars/sheep.jpg" alt="avatar" class="img-fluid mt-2 mb-2">
-            <span class="text-left">
-                <p class="m-auto"><img src="~/images/icons/attack-icon.png" class="icon"> @Model.Opponents[2].Attack</p>
-                <p class="m-auto"><img src="~/images/icons/defense-icon.png" class="icon"> @Model.Opponents[2].Defense</p>
-                <p class="m-auto"><img src="~/images/icons/mastery-icon.png" class="icon"> @Model.Opponents[2].Mastery</p>
-                <p class="m-auto"><img src="~/images/icons/mass-icon.png" class="icon"> @Model.Opponents[2].Mass</p>
-            </span>
-            <a href="/Battlefield/AttackPlayer/@Model.Opponents[2].Id" class="btn btn-primary mt-2">Attack</a>
-        </div>
+        @foreach (var opponent in Model.Opponents)
+        {
+            <div class="col-3 m-auto text-center">
+                <h5 class="overflow-hidden">@opponent.Name</h5>
+                <img src="~/images/avatars/sheep.jpg" alt="avatar" class="img-fluid mt-2 mb-2">
+                <span class="text-left">
+                    <p class="m-auto"><img src="~/images/icons/attack-icon.png" class="icon"> @opponent.Attack</p>
+                    <p class="m-auto"><img src="~/images/icons/defense-icon.png" class="icon"> @opponent.Defense</p>
+                    <p class="m-auto"><img src="~/images/icons/mastery-icon.png" class="icon"> @opponent.Mastery</p>
+                    <p class="m-auto"><img src="~/images/icons/mass-icon.png" class="icon"> @opponent.Mass</p>
+                </span>
+                <a href="/Battlefield/AttackPlayer/@opponent.Id" class="btn btn-primary mt-2">Attack</a>
+            </div>
+        }
     </div>

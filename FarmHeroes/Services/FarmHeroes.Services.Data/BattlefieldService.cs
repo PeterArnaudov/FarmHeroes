@@ -81,8 +81,6 @@
         {
             Hero attacker = await this.heroService.GetCurrentHero();
 
-
-
             if (attacker.WorkStatus != WorkStatus.Idle)
             {
                 throw new FarmHeroesException(
@@ -121,7 +119,9 @@
                 heroes[random.Next(0, heroes.Length)],
                 heroes[random.Next(0, heroes.Length)],
                 heroes[random.Next(0, heroes.Length)],
-            };
+            }
+                .Distinct()
+                .ToArray();
 
             return opponents;
         }
