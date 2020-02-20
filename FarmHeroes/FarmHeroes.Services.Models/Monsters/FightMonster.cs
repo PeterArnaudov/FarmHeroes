@@ -1,4 +1,4 @@
-﻿namespace FarmHeroes.Services.Data.Models.Monsters
+﻿namespace FarmHeroes.Services.Models.Monsters
 {
     using FarmHeroes.Data.Models.HeroModels;
 

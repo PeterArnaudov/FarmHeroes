@@ -1,14 +1,16 @@
 ﻿namespace FarmHeroes.Services.Data
 {
+    using System;
+    using System.Threading.Tasks;
+
     using FarmHeroes.Data;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.MonsterModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Formulas;
-    using FarmHeroes.Services.Data.Models.Monsters;
+    using FarmHeroes.Services.Models.Monsters;
+
     using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Threading.Tasks;
 
     public class MonsterService : IMonsterService
     {

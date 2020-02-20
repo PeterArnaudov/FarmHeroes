@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     using FarmHeroes.Data.Models.MonsterModels;
-    using FarmHeroes.Services.Data.Models.Monsters;
+    using FarmHeroes.Services.Models.Monsters;
 
     public interface IMonsterService
     {

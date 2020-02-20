@@ -1,6 +1,11 @@
 ﻿namespace FarmHeroes.Services.Data
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     using AutoMapper;
+
     using FarmHeroes.Data;
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.FightModels;
@@ -10,10 +15,7 @@
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Formulas;
-    using FarmHeroes.Services.Data.Models.Monsters;
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
+    using FarmHeroes.Services.Models.Monsters;
 
     public class FightService : IFightService
     {
