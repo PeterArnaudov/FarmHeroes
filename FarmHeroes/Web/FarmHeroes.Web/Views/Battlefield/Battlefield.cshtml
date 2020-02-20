@@ -70,7 +70,7 @@
                     <p>Attack a monster with level between 1 and 3.</p>
                     @if (Model.CanAttackMonster)
                     {
-                        <a href="/Battlefield/AttackRandomMonster" class="btn btn-primary">Attack</a>
+                        <a href="/Battlefield/AttackMonster" class="btn btn-primary">Attack</a>
                     }
                     else
                     {
@@ -81,28 +81,28 @@
                         else
                         {
                             <vc:timer dom-element-id="attackMonster_1" date-time="@Model.CannotAttackMonsterUntil"></vc:timer>
-
                         }
                     }
                 </div>
                 <div class="col-6">
                     <p>Price: 1 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
                     <p>Attack a monster with level of your choice.</p>
-                    <form class="form-inline">
-                        <label for="attackType" class="m-auto">Monster level</label>
-                        <select class="form-control-sm m-auto" id="exampleFormControlSelect1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                        </select>
+                    <form class="form-inline" action="/Battlefield/AttackMonster">
                         @if (Model.CanAttackMonster)
                         {
-                            <a href="/Battlefield/AttackMonster" class="btn btn-primary">Attack</a>
+                            <label for="attackType" class="m-auto">Monster level</label>
+                            <select class="form-control-sm m-auto" name="monsterLevel">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">Attack</button>
                         }
                         else
                         {
@@ -112,7 +112,7 @@
                             }
                             else
                             {
-                                <vc:timer dom-element-id="attackMonster_2" date-time="@Model.CannotAttackMonsterUntil"></vc:timer>
+                                <span class="m-auto"><vc:timer dom-element-id="attackMonster_2" date-time="@Model.CannotAttackMonsterUntil"></vc:timer></span>
                             }
                         }
                     </form>

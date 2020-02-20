@@ -6,9 +6,11 @@
     using FarmHeroes.Data.Models.FightModels;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.MappingModels;
+    using FarmHeroes.Data.Models.MonsterModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Formulas;
+    using FarmHeroes.Services.Data.Models.Monsters;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
@@ -18,7 +20,12 @@
         private const int Rounds = 5;
         private const int ExperiencePerWin = 4;
         private const int MinutesUntilNextHeroAttack = 15;
+        private const int MinutesUntilNextMonsterAttack = 15;
         private const int MinutesDefenseGranted = 60;
+        private const int RandomMonsterGoldCost = 500;
+        private const int MonsterCrystalCost = 1;
+        private const int MinimalExperiencePerMonsterDefeat = 1;
+        private const int MaximalExperiencePerMonsterDefeat = 4;
 
         private readonly IHeroService heroService;
         private readonly IHealthService healthService;
@@ -26,10 +33,11 @@
         private readonly IChronometerService chronometerService;
         private readonly ILevelService levelService;
         private readonly IStatisticsService statisticsService;
+        private readonly IMonsterService monsterService;
         private readonly FarmHeroesDbContext context;
         private readonly IMapper mapper;
 
-        public FightService(IHeroService heroService, IHealthService healthService, IResourcePouchService resourcePouchService, IChronometerService chronometerService, ILevelService levelService, IStatisticsService statisticsService, FarmHeroesDbContext context, IMapper mapper)
+        public FightService(IHeroService heroService, IHealthService healthService, IResourcePouchService resourcePouchService, IChronometerService chronometerService, ILevelService levelService, IStatisticsService statisticsService, IMonsterService monsterService, FarmHeroesDbContext context, IMapper mapper)
         {
             this.heroService = heroService;
             this.healthService = healthService;
@@ -37,6 +45,7 @@
             this.chronometerService = chronometerService;
             this.levelService = levelService;
             this.statisticsService = statisticsService;
+            this.monsterService = monsterService;
             this.context = context;
             this.mapper = mapper;
         }
@@ -218,6 +227,152 @@
 
             attacker.HeroFights.Add(new HeroFight { Fight = fightEntity, Hero = attacker });
             defender.HeroFights.Add(new HeroFight { Fight = fightEntity, Hero = defender });
+
+            await this.context.SaveChangesAsync();
+
+            return fightEntity.Id;
+        }
+
+        public async Task<int> InitiateMonsterFight(int? monsterLevel)
+        {
+            Random random = new Random();
+            Fight fight = new Fight();
+
+            Hero attacker = await this.heroService.GetCurrentHero();
+
+            if (attacker.WorkStatus != WorkStatus.Idle)
+            {
+                throw new FarmHeroesException(
+                    "You cannot attack while working.",
+                    "You have to cancel or finish your work before trying to attack.",
+                    "/Battlefield");
+            }
+            else if (attacker.Chronometer.CannotAttackMonsterUntil > DateTime.UtcNow)
+            {
+                throw new FarmHeroesException(
+                    "You cannot attack right now.",
+                    "You have to wait until you can attack a monster again. Take a rest, do something useful.",
+                    "/Battlefield");
+            }
+
+            if (monsterLevel == null)
+            {
+                monsterLevel = random.Next(1, 3);
+
+                await this.resourcePouchService.DecreaseGold(attacker.ResourcePouchId, RandomMonsterGoldCost);
+            }
+            else
+            {
+                await this.resourcePouchService.DecreaseCrystals(attacker.ResourcePouchId, MonsterCrystalCost);
+            }
+
+            Monster databaseMonster = await this.monsterService.GetMonsterByLevel((int)monsterLevel);
+            FightMonster monster = await this.monsterService.GenerateFightMonster(databaseMonster);
+
+            int?[] attackerHits = new int?[5];
+            int?[] defenderHits = new int?[5];
+            string winnerName = string.Empty;
+            int goldStolen = 0;
+
+            for (int i = 0; i < Rounds; i++)
+            {
+                int attackerDamage = FightFormulas.CalculateHitDamage(
+                    attacker.Characteristics.Attack,
+                    monster.Characteristics.Defense,
+                    attacker.Characteristics.Mastery,
+                    monster.Characteristics.Mastery);
+
+                monster.Health -= attackerDamage;
+                if (monster.Health < 1)
+                {
+                    monster.Health = 1;
+                }
+
+                attackerHits[i] = attackerDamage;
+
+                if (monster.Health == 1)
+                {
+                    winnerName = attacker.Name;
+                    break;
+                }
+
+                int defenderDamage = FightFormulas.CalculateHitDamage(
+                    monster.Characteristics.Attack,
+                    attacker.Characteristics.Defense,
+                    monster.Characteristics.Mastery,
+                    attacker.Characteristics.Mastery);
+
+                await this.healthService.ReduceHealthById(attacker.HealthId, defenderDamage);
+                defenderHits[i] = defenderDamage;
+
+                if (await this.healthService.CheckIfDead(attacker.HealthId))
+                {
+                    winnerName = monster.Name;
+                    break;
+                }
+            }
+
+            if (string.IsNullOrEmpty(winnerName))
+            {
+                winnerName = attackerHits.Sum() > defenderHits.Sum() ? attacker.Name : monster.Name;
+            }
+
+            if (winnerName == attacker.Name)
+            {
+                goldStolen = MonsterFormulas.CalculateReward(monster.Level, attacker.Level.CurrentLevel);
+
+                await this.resourcePouchService.IncreaseGold(attacker.ResourcePouchId, goldStolen);
+                await this.levelService.GiveHeroExperienceById(attacker.LevelId, random.Next(MinimalExperiencePerMonsterDefeat, MaximalExperiencePerMonsterDefeat));
+
+                attacker.Statistics.EarnedFromMonsters += goldStolen;
+                attacker.Statistics.MonstersDefeated++;
+            }
+            else if (winnerName == monster.Name)
+            {
+                goldStolen = ResourceFormulas.CalculateStolenGold(attacker.ResourcePouch.Gold);
+
+                await this.resourcePouchService.DecreaseGold(attacker.ResourcePouchId, goldStolen);
+            }
+
+            await this.statisticsService.UpdateStatistics(attacker.Statistics);
+
+            await this.chronometerService.SetCannotAttackMonsterUntilById(attacker.ChronometerId, MinutesUntilNextMonsterAttack);
+
+            fight.WinnerName = winnerName;
+            fight.GoldStolen = goldStolen;
+            fight.ExperienceGained = ExperiencePerWin;
+            fight.AttackerDamageDealt = (int)attackerHits.Sum();
+            fight.DefenderDamageDealt = (int)defenderHits.Sum();
+            fight.AttackerHealthLeft = attacker.Health.Current;
+            fight.DefenderHealthLeft = monster.Health;
+
+            fight.AttackerId = attacker.Id;
+            fight.AttackerName = attacker.Name;
+            fight.DefenderName = monster.Name;
+
+            fight.AttackerAttack = attacker.Characteristics.Attack;
+            fight.AttackerDefense = attacker.Characteristics.Defense;
+            fight.AttackerMastery = attacker.Characteristics.Mastery;
+            fight.AttackerMass = attacker.Characteristics.Mass;
+            fight.DefenderAttack = monster.Characteristics.Attack;
+            fight.DefenderDefense = monster.Characteristics.Defense;
+            fight.DefenderMastery = monster.Characteristics.Mastery;
+            fight.DefenderMass = monster.Characteristics.Mass;
+
+            fight.AttackerHitOne = attackerHits[0];
+            fight.AttackerHitTwo = attackerHits[1];
+            fight.AttackerHitThree = attackerHits[2];
+            fight.AttackerHitFour = attackerHits[3];
+            fight.AttackerHitFive = attackerHits[4];
+            fight.DefenderHitOne = defenderHits[0];
+            fight.DefenderHitTwo = defenderHits[1];
+            fight.DefenderHitThree = defenderHits[2];
+            fight.DefenderHitFour = defenderHits[3];
+            fight.DefenderHitFive = defenderHits[4];
+
+            Fight fightEntity = this.context.Fights.AddAsync(fight).Result.Entity;
+
+            attacker.HeroFights.Add(new HeroFight { Fight = fightEntity, Hero = attacker });
 
             await this.context.SaveChangesAsync();
 

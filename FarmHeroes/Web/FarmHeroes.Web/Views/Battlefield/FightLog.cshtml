@@ -17,7 +17,14 @@
         </div>
     </div>
     <div class="col-6">
-        <a href="/Hero/@Model.DefenderId" class="h3 d-block text-center text-white">@Model.DefenderName</a>
+        @if (Model.DefenderId == 0)
+        {
+            <h3 class="d-block text-center text-white">@Model.DefenderName</h3>
+        }
+        else
+        {
+            <a href="/Hero/@Model.DefenderId" class="h3 d-block text-center text-white">@Model.DefenderName</a>
+        }
         <img src="~/images/avatars/sheep.jpg" alt="avatar" class="img-fluid d-block m-auto">
         <div class="text-left">
             <h5 class="text-center text-uppercase">Characteristics</h5>

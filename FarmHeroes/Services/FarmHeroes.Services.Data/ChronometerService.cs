@@ -82,6 +82,14 @@
             await this.context.SaveChangesAsync();
         }
 
+        public async Task SetCannotAttackMonsterUntilById(int id, int minutes)
+        {
+            Chronometer chronometer = await this.GetChronometerById(id);
+            chronometer.CannotAttackMonsterUntil = DateTime.UtcNow.AddMinutes(minutes);
+
+            await this.context.SaveChangesAsync();
+        }
+
         public async Task SetCannotBeAttackedUntilById(int id, int minutes)
         {
             Chronometer chronometer = await this.GetChronometerById(id);

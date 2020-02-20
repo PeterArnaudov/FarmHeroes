@@ -17,6 +17,8 @@
 
         Task SetCannotAttackHeroUntilById(int id, int minutes);
 
+        Task SetCannotAttackMonsterUntilById(int id, int minutes);
+
         Task SetCannotBeAttackedUntilById(int id, int minutes);
     }
 }

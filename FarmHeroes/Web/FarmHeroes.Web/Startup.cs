@@ -79,6 +79,7 @@
             services.AddTransient<IChronometerService, ChronometerService>();
             services.AddTransient<IBattlefieldService, BattlefieldService>();
             services.AddTransient<IFightService, FightService>();
+            services.AddTransient<IMonsterService, MonsterService>();
 
             services.AddTransient<FarmHeroesExceptionFilterAttribute>();
         }

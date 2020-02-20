@@ -70,6 +70,13 @@
             return this.Redirect($"/Battlefield/FightLog/{fightId}");
         }
 
+        public async Task<IActionResult> AttackMonster(int? monsterLevel)
+        {
+            int fightId = await this.fightService.InitiateMonsterFight(monsterLevel);
+
+            return this.Redirect($"/Battlefield/FightLog/{fightId}");
+        }
+
         public async Task<IActionResult> FightLog(int id)
         {
             FightLogViewModel viewModel = await this.fightService.GetFightViewModelById<FightLogViewModel>(id);
