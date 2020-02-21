@@ -1,0 +1,50 @@
+﻿@using FarmHeroes.Common
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    @*<meta name="viewport" content="width=device-width, initial-scale=1.0" />*@
+    <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
+
+    <environment names="Development">
+        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+    </environment>
+    <environment names="Staging,Production">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/superhero/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    @RenderBody()
+    <hr class="bg-primary">
+    <footer>
+        <!-- <h6 class="font-weight-bold text-center">CopyRight &copy; PeterArnaudov. All rights reserved.</h6> -->
+        <h6 class="font-weight-bold text-center">Created by <a href="https://softuni.bg/users/profile/show/peterarnaudov">PeterArnaudov</a>.</h6>
+        <div class="text-center">
+            <a href=""><img src="~/images/community/instagram.png" alt="Instagram logo" class="m-2 logo"></a>
+            <a href=""><img src="~/images/community/facebook.png" alt="Facebook logo" class="m-2 logo"></a>
+            <a href=""><img src="~/images/community/linkedin.png" alt="LinkedIn logo" class="m-2 logo"></a>
+            <a href=""><img src="~/images/community/github.png" alt="Github logo" class="m-2 logo"></a>
+        </div>
+        <h6 class="font-weight-bold text-center">Created with educational purpose. Based on <a href="https://www.botva.ru">www.botva.ru</a>.</h6>
+    </footer>
+
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js" asp-append-version="true"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @this.RenderSection("Scripts", required: false)
+</body>
+</html>
