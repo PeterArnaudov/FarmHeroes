@@ -8,6 +8,8 @@
 
         public string Name { get; set; }
 
+        public string AvatarUrl { get; set; }
+
         public int Attack { get; set; }
 
         public int Defense { get; set; }

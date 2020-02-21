@@ -12,6 +12,14 @@
 
         public string DefenderName { get; set; }
 
+        public int AttackerLevel { get; set; }
+
+        public int DefenderLevel { get; set; }
+
+        public string AttackerAvatarUrl { get; set; }
+
+        public string DefenderAvatarUrl { get; set; }
+
         public int AttackerAttack { get; set; }
 
         public int AttackerDefense { get; set; }

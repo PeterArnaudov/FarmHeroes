@@ -152,6 +152,9 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("AttackerAttack")
                         .HasColumnType("int");
 
+                    b.Property<string>("AttackerAvatarUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("AttackerDamageDealt")
                         .HasColumnType("int");
 
@@ -179,6 +182,9 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("AttackerId")
                         .HasColumnType("int");
 
+                    b.Property<int>("AttackerLevel")
+                        .HasColumnType("int");
+
                     b.Property<int>("AttackerMass")
                         .HasColumnType("int");
 
@@ -190,6 +196,9 @@ namespace FarmHeroes.Data.Migrations
 
                     b.Property<int>("DefenderAttack")
                         .HasColumnType("int");
+
+                    b.Property<string>("DefenderAvatarUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DefenderDamageDealt")
                         .HasColumnType("int");
@@ -216,6 +225,9 @@ namespace FarmHeroes.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("DefenderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DefenderLevel")
                         .HasColumnType("int");
 
                     b.Property<int>("DefenderMass")
@@ -353,6 +365,9 @@ namespace FarmHeroes.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AvatarUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CharacteristicsId")
                         .HasColumnType("int");
@@ -612,6 +627,9 @@ namespace FarmHeroes.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AvatarUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Level")
                         .HasColumnType("int");

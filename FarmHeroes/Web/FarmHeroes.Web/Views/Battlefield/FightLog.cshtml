@@ -6,8 +6,8 @@
 
 <div class="row m-auto">
     <div class="col-6">
-        <a href="/Hero/@Model.AttackerId" class="h3 d-block text-center text-white">@Model.AttackerName</a>
-        <img src="~/images/avatars/sheep.jpg" alt="avatar" class="img-fluid d-block m-auto">
+        <a href="/Hero/@Model.AttackerId" class="h3 d-block text-center text-white">@Model.AttackerName (@Model.AttackerLevel)</a>
+        <img src="@Model.AttackerAvatarUrl" alt="avatar" class="img-fluid d-block m-auto">
         <div class="text-left">
             <h5 class="text-center text-uppercase">Characteristics</h5>
             <p class="m-auto"><img src="~/images/icons/attack-icon.png" class="icon"> @Model.AttackerAttack</p>
@@ -19,13 +19,13 @@
     <div class="col-6">
         @if (Model.DefenderId == 0)
         {
-            <h3 class="d-block text-center text-white">@Model.DefenderName</h3>
+            <h3 class="d-block text-center text-white">@Model.DefenderName (@Model.DefenderLevel)</h3>
         }
         else
         {
-            <a href="/Hero/@Model.DefenderId" class="h3 d-block text-center text-white">@Model.DefenderName</a>
+            <a href="/Hero/@Model.DefenderId" class="h3 d-block text-center text-white">@Model.DefenderName (@Model.DefenderLevel)</a>
         }
-        <img src="~/images/avatars/sheep.jpg" alt="avatar" class="img-fluid d-block m-auto">
+        <img src="@Model.DefenderAvatarUrl" alt="avatar" class="img-fluid d-block m-auto">
         <div class="text-left">
             <h5 class="text-center text-uppercase">Characteristics</h5>
             <p class="m-auto"><img src="~/images/icons/attack-icon.png" class="icon"> @Model.DefenderAttack</p>

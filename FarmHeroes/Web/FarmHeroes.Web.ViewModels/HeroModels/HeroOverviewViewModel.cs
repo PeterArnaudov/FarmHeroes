@@ -6,6 +6,8 @@
     {
         public string Name { get; set; }
 
+        public string AvatarUrl { get; set; }
+
         public int Level { get; set; }
 
         public int CurrentExperience { get; set; }

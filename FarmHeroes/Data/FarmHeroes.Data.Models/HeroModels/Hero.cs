@@ -29,6 +29,8 @@
 
         public virtual ApplicationUser User { get; set; }
 
+        public string AvatarUrl { get; set; }
+
         public Fraction Fraction { get; set; }
 
         public Gender Gender { get; set; }

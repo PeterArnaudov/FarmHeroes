@@ -35,6 +35,7 @@
             Hero hero = await this.heroService.GetCurrentHero();
 
             fightMonster.Name = databaseMonster.Name;
+            fightMonster.AvatarUrl = databaseMonster.AvatarUrl;
             fightMonster.Level = databaseMonster.Level;
             fightMonster.Characteristics = this.GenerateFightMonsterCharacteristics(databaseMonster.StatPercentage, hero.Characteristics);
             fightMonster.Health = hero.Health.Maximum;

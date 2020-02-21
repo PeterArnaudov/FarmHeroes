@@ -204,6 +204,10 @@
             fight.AttackerName = attacker.Name;
             fight.DefenderId = defender.Id;
             fight.DefenderName = defender.Name;
+            fight.AttackerLevel = attacker.Level.CurrentLevel;
+            fight.DefenderLevel = defender.Level.CurrentLevel;
+            fight.AttackerAvatarUrl = attacker.AvatarUrl;
+            fight.DefenderAvatarUrl = defender.AvatarUrl;
 
             fight.AttackerAttack = attacker.Characteristics.Attack;
             fight.AttackerDefense = attacker.Characteristics.Defense;
@@ -261,11 +265,11 @@
             {
                 monsterLevel = random.Next(1, 3);
 
-                await this.resourcePouchService.DecreaseGold(attacker.ResourcePouchId, RandomMonsterGoldCost);
+                await this.resourcePouchService.DecreaseCurrentHeroGold(RandomMonsterGoldCost);
             }
             else
             {
-                await this.resourcePouchService.DecreaseCrystals(attacker.ResourcePouchId, MonsterCrystalCost);
+                await this.resourcePouchService.DecreaseCurrentHeroCrystals(MonsterCrystalCost);
             }
 
             Monster databaseMonster = await this.monsterService.GetMonsterByLevel((int)monsterLevel);
@@ -351,6 +355,10 @@
             fight.AttackerId = attacker.Id;
             fight.AttackerName = attacker.Name;
             fight.DefenderName = monster.Name;
+            fight.AttackerLevel = attacker.Level.CurrentLevel;
+            fight.DefenderLevel = monster.Level;
+            fight.AttackerAvatarUrl = attacker.AvatarUrl;
+            fight.DefenderAvatarUrl = monster.AvatarUrl;
 
             fight.AttackerAttack = attacker.Characteristics.Attack;
             fight.AttackerDefense = attacker.Characteristics.Defense;

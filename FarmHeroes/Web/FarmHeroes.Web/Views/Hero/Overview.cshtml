@@ -18,7 +18,7 @@
     </div>
     <div class="col-8">
         <h5 class="text-center m-2">@Model.Name</h5>
-        <img src="~/images/avatars/sheep.jpg" class="row img-fluid m-auto">
+        <img src="@Model.AvatarUrl" class="row img-fluid m-auto">
         <p class="text-center m-auto"><img src="~/images/icons/level-icon.png" class="img-fluid icon"> @Model.Level</p>
         <div class="progress w-50 position-relative mt-1 mb-3 ml-auto mr-auto" data-toggle="tooltip" data-placement="bottom" title="@Model.CurrentExperience/@Model.NeededExperience">
             <div class="progress-bar bg-info" role="progressbar" style="width: @Model.ExperiencePercent%"></div>

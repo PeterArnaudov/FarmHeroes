@@ -17,10 +17,14 @@
 
     public class HeroService : IHeroService
     {
+        private const string MaleSheepAvatarUrl = "https://i.ibb.co/Dz2WSxT/sheep.jpg";
+        private const string FemaleSheepAvatarUrl = "https://i.ibb.co/znyrzFV/sheep-female.jpg";
+        private const string MalePigAvatarUrl = "https://i.ibb.co/cT9YmHw/pig.jpg";
+        private const string FemalePigAvatarUrl = "https://i.ibb.co/s1B4Bdc/pig-female.jpg";
+
         private readonly FarmHeroesDbContext context;
         private readonly IMapper mapper;
         private readonly IUserService userService;
-        private readonly IChronometerService chronometerService;
 
         public HeroService(FarmHeroesDbContext context, IMapper mapper, IUserService userService)
         {
@@ -34,6 +38,23 @@
             Hero hero = this.mapper.Map<Hero>(inputModel);
             hero.User = await this.userService.GetApplicationUserAsync();
             hero.Name = this.userService.GetUsername();
+
+            if (hero.Fraction == Fraction.Sheep && hero.Gender == Gender.Male)
+            {
+                hero.AvatarUrl = MaleSheepAvatarUrl;
+            }
+            else if (hero.Fraction == Fraction.Sheep && hero.Gender == Gender.Female)
+            {
+                hero.AvatarUrl = FemaleSheepAvatarUrl;
+            }
+            else if (hero.Fraction == Fraction.Pig && hero.Gender == Gender.Male)
+            {
+                hero.AvatarUrl = MalePigAvatarUrl;
+            }
+            else if (hero.Fraction == Fraction.Pig && hero.Gender == Gender.Female)
+            {
+                hero.AvatarUrl = FemalePigAvatarUrl;
+            }
 
             await this.context.Heroes.AddAsync(hero);
             await this.context.SaveChangesAsync();
