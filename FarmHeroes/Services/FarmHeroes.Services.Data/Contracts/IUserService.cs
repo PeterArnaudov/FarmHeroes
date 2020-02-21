@@ -8,6 +8,8 @@
     {
         string GetUsername();
 
-        Task<ApplicationUser> GetApplicationUserAsync();
+        Task<ApplicationUser> GetApplicationUser();
+
+        Task<bool> CurrentUserHasHero();
     }
 }

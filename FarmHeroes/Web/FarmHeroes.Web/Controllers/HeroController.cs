@@ -14,14 +14,21 @@
     public class HeroController : BaseController
     {
         private readonly IHeroService heroService;
+        private readonly IUserService userService;
 
-        public HeroController(IHeroService heroService)
+        public HeroController(IHeroService heroService, IUserService userService)
         {
             this.heroService = heroService;
+            this.userService = userService;
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            if (await this.userService.CurrentUserHasHero())
+            {
+                return this.Redirect("/Hero/Overview");
+            }
+
             return this.View();
         }
 

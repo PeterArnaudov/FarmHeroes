@@ -23,9 +23,16 @@
             return this.context.HttpContext.User?.Identity?.Name;
         }
 
-        public async Task<ApplicationUser> GetApplicationUserAsync()
+        public async Task<ApplicationUser> GetApplicationUser()
         {
             return await this.userManager.GetUserAsync(this.context.HttpContext.User);
+        }
+
+        public async Task<bool> CurrentUserHasHero()
+        {
+            ApplicationUser user = await this.userManager.GetUserAsync(this.context.HttpContext.User);
+
+            return user.Hero != null;
         }
     }
 }
