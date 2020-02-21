@@ -5,42 +5,34 @@
     Layout = "~/Views/Shared/_GuestLayout.cshtml";
 }
 
-<div class="wrapper container">
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-            <h1 class="display-4">Farm Heroes</h1>
-            <p class="lead">You successfully registered. Now you have to create your hero - select its gender and fraction below.</p>
-        </div>
+<div class="row mt-2">
+    <div class="col-4">
+        <img src="https://i.ibb.co/Dz2WSxT/sheep.jpg" alt="sheep" class="img-fluid float-left">
     </div>
-    <div class="row">
-        <div class="col-4">
-            <img src="https://i.ibb.co/Dz2WSxT/sheep.jpg" alt="sheep" class="img-fluid float-left">
-        </div>
-        <div class="col-4">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" class="form-control" placeholder="@User.Identity.Name" disabled>
-                    <small class="form-text text-muted">Your hero name is the same as your username.</small>
-                </div>
-                <label asp-for="Gender">Gender</label>
-                <select asp-for="Gender" required class="form-control form-control-sm">
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-                <span asp-validation-for="Gender" class="text-danger"></span>
-                <label asp-for="Fraction">Fraction</label>
-                <select asp-for="Fraction" required class="form-control form-control-sm">
-                    <option value="Sheep">Sheep</option>
-                    <option value="Pig">Pig</option>
-                </select>
-                <span asp-validation-for="Fraction" class="text-danger"></span>
-                <button type="submit" class="btn btn-primary btn-block mt-3">Create Hero</button>
-            </form>
-        </div>
-        <div class="col-4">
-            <img src="https://i.ibb.co/s1B4Bdc/pig-female.jpg" alt="sheep" class="img-fluid float-right">
-        </div>
+    <div class="col-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" placeholder="@User.Identity.Name" disabled>
+                <small class="form-text text-muted">Your hero name is the same as your username.</small>
+            </div>
+            <label asp-for="Gender">Gender</label>
+            <select asp-for="Gender" required class="form-control form-control-sm">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+            <label asp-for="Fraction">Fraction</label>
+            <select asp-for="Fraction" required class="form-control form-control-sm">
+                <option value="Sheep">Sheep</option>
+                <option value="Pig">Pig</option>
+            </select>
+            <span asp-validation-for="Fraction" class="text-danger"></span>
+            <button type="submit" class="btn btn-primary btn-block mt-3">Create Hero</button>
+        </form>
+    </div>
+    <div class="col-4">
+        <img src="https://i.ibb.co/s1B4Bdc/pig-female.jpg" alt="sheep" class="img-fluid float-right">
     </div>
 </div>

@@ -95,3 +95,12 @@ body {
     width: 25px;
     height: 25px;
 }
+
+.carousel-image {
+    width: 100%;
+    opacity: 0.5;
+}
+
+.bottom-50 {
+    bottom: 50%;
+}
