@@ -3,7 +3,6 @@
     using FarmHeroes.Web.Filters;
     using Microsoft.AspNetCore.Mvc;
 
-    [ServiceFilterAttribute(typeof(FarmHeroesExceptionFilterAttribute))]
     public class VillageController : Controller
     {
         [Route("/Village")]

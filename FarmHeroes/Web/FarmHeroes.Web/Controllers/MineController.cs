@@ -12,7 +12,6 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    [ServiceFilterAttribute(typeof(FarmHeroesExceptionFilterAttribute))]
     public class MineController : BaseController
     {
         private readonly IHeroService heroService;

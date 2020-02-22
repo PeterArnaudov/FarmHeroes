@@ -45,4 +45,10 @@
     <ProjectReference Include="..\FarmHeroes.Web.Infrastructure\FarmHeroes.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\FarmHeroes.Web.ViewModels\FarmHeroes.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\css\custom.css">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

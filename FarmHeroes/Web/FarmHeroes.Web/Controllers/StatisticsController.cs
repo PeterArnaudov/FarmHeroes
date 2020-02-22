@@ -10,7 +10,6 @@
     using FarmHeroes.Web.ViewModels.StatisticsModels;
     using Microsoft.AspNetCore.Mvc;
 
-    [ServiceFilterAttribute(typeof(FarmHeroesExceptionFilterAttribute))]
     public class StatisticsController : BaseController
     {
         private readonly IStatisticsService statisticsService;

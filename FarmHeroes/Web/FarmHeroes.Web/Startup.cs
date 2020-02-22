@@ -23,6 +23,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using FarmHeroes.Web.Filters;
+    using Microsoft.AspNetCore.Mvc;
 
     public class Startup
     {
@@ -51,7 +52,11 @@
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(typeof(AutoValidateAntiforgeryTokenAttribute));
+                options.Filters.Add(typeof(FarmHeroesExceptionFilterAttribute));
+            });
             services.AddRazorPages();
 
             services.AddSingleton(this.configuration);
@@ -81,6 +86,7 @@
             services.AddTransient<IFightService, FightService>();
             services.AddTransient<IMonsterService, MonsterService>();
 
+            // Filters
             services.AddTransient<FarmHeroesExceptionFilterAttribute>();
         }
 

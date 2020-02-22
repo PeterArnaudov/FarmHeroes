@@ -10,7 +10,6 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
-    [ServiceFilterAttribute(typeof(FarmHeroesExceptionFilterAttribute))]
     public class HeroController : BaseController
     {
         private readonly IHeroService heroService;

@@ -10,7 +10,6 @@
     using FarmHeroes.Web.ViewModels.CharacteristcsModels;
     using Microsoft.AspNetCore.Mvc;
 
-    [ServiceFilterAttribute(typeof(FarmHeroesExceptionFilterAttribute))]
     public class CharacteristicsController : BaseController
     {
         private readonly ICharacteristicsService characteristicsService;

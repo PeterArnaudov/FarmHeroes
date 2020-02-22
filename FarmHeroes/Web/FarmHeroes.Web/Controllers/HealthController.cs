@@ -6,7 +6,6 @@
     using FarmHeroes.Web.Filters;
     using Microsoft.AspNetCore.Mvc;
 
-    [ServiceFilterAttribute(typeof(FarmHeroesExceptionFilterAttribute))]
     public class HealthController : BaseController
     {
         private readonly IHealthService healthService;

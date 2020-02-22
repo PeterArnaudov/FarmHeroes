@@ -11,7 +11,6 @@
     using FarmHeroes.Web.ViewModels.FightModels;
     using Microsoft.AspNetCore.Mvc;
 
-    [ServiceFilterAttribute(typeof(FarmHeroesExceptionFilterAttribute))]
     public class BattlefieldController : Controller
     {
         private readonly IHeroService heroService;

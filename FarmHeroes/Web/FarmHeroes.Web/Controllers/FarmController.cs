@@ -10,7 +10,6 @@
     using FarmHeroes.Web.ViewModels.FarmModels;
     using Microsoft.AspNetCore.Mvc;
 
-    [ServiceFilterAttribute(typeof(FarmHeroesExceptionFilterAttribute))]
     public class FarmController : BaseController
     {
         private readonly IHeroService heroService;
