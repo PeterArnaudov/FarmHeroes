@@ -59,7 +59,7 @@
             </tr>
         </tbody>
     </table>
-    <p class="m-auto"><strong>@Model.WinnerName</strong> won and received @Model.GoldStolen <img src="~/images/icons/gold-icon.png" alt="gold" class="img-fluid icon"> @Model.ExperienceGained <img src="~/images/icons/experience-icon.png" alt="experience" class="img-fluid icon"></p>
+    <p class="m-auto"><strong>@Model.WinnerName</strong> won and received @Model.GoldStolen <img src="~/images/icons/gold-icon.png" alt="gold" class="img-fluid icon img-jump"> @Model.ExperienceGained <img src="~/images/icons/experience-icon.png" alt="experience" class="img-fluid icon img-jump"></p>
 </div>
 <hr class="bg-primary">
 <div class="row m-auto">
@@ -68,61 +68,61 @@
         @if (Model.AttackerHitOne.HasValue)
         {
             <div class="border rounded-pill text-left w-75 m-1 pl-3 row">
-                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.AttackerHitOne] @Model.DefenderName
+                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon img-shake"> [@Model.AttackerHitOne] @Model.DefenderName
             </div>
         }
         @if (Model.DefenderHitOne.HasValue)
         {
             <div class="border rounded-pill text-right w-75 m-1 pr-3 float-right">
-                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.DefenderHitOne] @Model.AttackerName
+                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon img-shake"> [@Model.DefenderHitOne] @Model.AttackerName
             </div>
         }
         @if (Model.AttackerHitTwo.HasValue)
         {
             <div class="border rounded-pill text-left w-75 m-1 pl-3 row">
-                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.AttackerHitTwo] @Model.DefenderName
+                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon img-shake"> [@Model.AttackerHitTwo] @Model.DefenderName
             </div>
         }
         @if (Model.DefenderHitTwo.HasValue)
         {
             <div class="border rounded-pill text-right w-75 m-1 pr-3 float-right">
-                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.DefenderHitTwo] @Model.AttackerName
+                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon img-shake"> [@Model.DefenderHitTwo] @Model.AttackerName
             </div>
         }
         @if (Model.AttackerHitThree.HasValue)
         {
             <div class="border rounded-pill text-left w-75 m-1 pl-3 row">
-                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.AttackerHitThree] @Model.DefenderName
+                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon img-shake"> [@Model.AttackerHitThree] @Model.DefenderName
             </div>
         }
         @if (Model.DefenderHitThree.HasValue)
         {
             <div class="border rounded-pill text-right w-75 m-1 pr-3 float-right">
-                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.DefenderHitThree] @Model.AttackerName
+                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon img-shake"> [@Model.DefenderHitThree] @Model.AttackerName
             </div>
         }
         @if (Model.AttackerHitFour.HasValue)
         {
             <div class="border rounded-pill text-left w-75 m-1 pl-3 row">
-                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.AttackerHitFour] @Model.DefenderName
+                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon img-shake"> [@Model.AttackerHitFour] @Model.DefenderName
             </div>
         }
         @if (Model.DefenderHitFour.HasValue)
         {
             <div class="border rounded-pill text-right w-75 m-1 pr-3 float-right">
-                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.DefenderHitFour] @Model.AttackerName
+                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon img-shake"> [@Model.DefenderHitFour] @Model.AttackerName
             </div>
         }
         @if (Model.AttackerHitFive.HasValue)
         {
             <div class="border rounded-pill text-left w-75 m-1 pl-3 row">
-                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.AttackerHitFive] @Model.DefenderName
+                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon img-shake"> [@Model.AttackerHitFive] @Model.DefenderName
             </div>
         }
         @if (Model.DefenderHitFive.HasValue)
         {
             <div class="border rounded-pill text-right w-75 m-1 pr-3 float-right">
-                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon"> [@Model.DefenderHitFive] @Model.AttackerName
+                @Model.DefenderName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon img-shake"> [@Model.DefenderHitFive] @Model.AttackerName
             </div>
         }
     </div>

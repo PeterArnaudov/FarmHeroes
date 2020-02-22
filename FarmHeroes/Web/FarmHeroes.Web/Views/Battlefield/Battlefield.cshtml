@@ -87,7 +87,7 @@
                 <div class="col-6">
                     <p>Price: 1 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
                     <p>Attack a monster with level of your choice.</p>
-                    <form class="form-inline" action="/Battlefield/AttackMonster">
+                    <form class="form-inline" asp-controller="Battlefield" asp-action="AttackMonster">
                         @if (Model.CanAttackMonster)
                         {
                             <label for="attackType" class="m-auto">Monster level</label>
@@ -108,7 +108,7 @@
                         {
                             if (Model.IsOnPatrol)
                             {
-                                <span class="btn btn-primary disabled">Attack</span>
+                                <span class="btn btn-primary m-auto disabled">Attack</span>
                             }
                             else
                             {
