@@ -346,7 +346,7 @@
 
             fight.WinnerName = winnerName;
             fight.GoldStolen = goldStolen;
-            fight.ExperienceGained = ExperiencePerWin;
+            fight.ExperienceGained = monster.Level;
             fight.AttackerDamageDealt = (int)attackerHits.Sum();
             fight.DefenderDamageDealt = (int)defenderHits.Sum();
             fight.AttackerHealthLeft = attacker.Health.Current;
