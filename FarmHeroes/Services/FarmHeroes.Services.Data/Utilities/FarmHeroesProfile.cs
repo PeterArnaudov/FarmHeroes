@@ -20,9 +20,7 @@
     {
         public FarmHeroesProfile()
         {
-            this.CreateMap<HeroCreateInputModel, Hero>()
-                .ForMember(x => x.Gender, cfg => cfg.MapFrom(x => Enum.Parse<Gender>(x.Gender)))
-                .ForMember(x => x.Fraction, cfg => cfg.MapFrom(x => Enum.Parse<Fraction>(x.Fraction)));
+            this.CreateMap<HeroCreateInputModel, Hero>();
 
             this.CreateMap<Hero, HeroOverviewViewModel>()
                 .ForMember(x => x.Name, cfg => cfg.MapFrom(x => x.Name))

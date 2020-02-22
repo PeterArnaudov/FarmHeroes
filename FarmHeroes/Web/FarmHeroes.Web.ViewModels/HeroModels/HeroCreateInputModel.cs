@@ -1,13 +1,13 @@
 ﻿namespace FarmHeroes.Web.ViewModels.HeroModels
 {
-    using System;
+    using FarmHeroes.Data.Models.Enums;
 
     public class HeroCreateInputModel
     {
         public string Name { get; set; }
 
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
 
-        public string Fraction { get; set; }
+        public Fraction Fraction { get; set; }
     }
 }
