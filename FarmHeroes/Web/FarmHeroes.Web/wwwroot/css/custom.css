@@ -1,0 +1,48 @@
+﻿.logo {
+    height: 50px;
+}
+
+.icon {
+    width: 18px;
+    height: 18px;
+}
+
+.village-area {
+    width: 80px;
+    height: 80px;
+}
+
+.area-icon {
+    position: absolute;
+    height: 50px;
+    left: 0;
+}
+
+.info-icon {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    right: 10px;
+}
+
+.heal-icon {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    right: 5px;
+    top: 0px;
+}
+
+.fight-log-icon {
+    width: 25px;
+    height: 25px;
+}
+
+.carousel-image {
+    width: 100%;
+    opacity: 0.5;
+}
+
+.bottom-50 {
+    bottom: 50%;
+}
