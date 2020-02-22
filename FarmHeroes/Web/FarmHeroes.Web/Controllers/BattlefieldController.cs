@@ -53,8 +53,7 @@
             return this.Redirect("/Battlefield");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> GetOpponents()
+        public async Task<IActionResult> GetOpponents(string attackType)
         {
             BattlefieldGetOpponentsViewModel viewModel = await this.battlefieldService
                 .GetOpponentsViewModel<BattlefieldGetOpponentsViewModel>();
