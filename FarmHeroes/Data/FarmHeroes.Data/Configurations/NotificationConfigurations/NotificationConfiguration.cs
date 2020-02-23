@@ -1,8 +1,8 @@
-﻿namespace FarmHeroes.Data.Configurations.HeroConfigurations
+﻿namespace FarmHeroes.Data.Configurations.NotificationConfigurations
 {
     using System;
 
-    using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Data.Models.NotificationModels.HeroModels;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

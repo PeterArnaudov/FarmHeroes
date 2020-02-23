@@ -4,8 +4,9 @@
 
     public enum NotificationType
     {
-        PlayerFight,
+        HeroFight,
         MonsterFight,
         Farm,
+        Patrol,
     }
 }

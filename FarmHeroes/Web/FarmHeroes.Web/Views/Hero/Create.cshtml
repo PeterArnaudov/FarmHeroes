@@ -1,4 +1,5 @@
-﻿@model FarmHeroes.Web.ViewModels.HeroModels.HeroCreateInputModel
+﻿@using FarmHeroes.Data.Models.Enums
+@model FarmHeroes.Web.ViewModels.HeroModels.HeroCreateInputModel
 
 @{
     ViewData["Title"] = "Create";
@@ -7,7 +8,7 @@
 
 <div class="row mt-2">
     <div class="col-4">
-        <img src="https://i.ibb.co/Dz2WSxT/sheep.jpg" alt="sheep" class="img-fluid float-left">
+        <img src="~/images/avatars/sheep-male.jpg" alt="sheep" class="img-fluid float-left">
     </div>
     <div class="col-4">
         <form asp-action="Create">
@@ -18,21 +19,17 @@
                 <small class="form-text text-muted">Your hero name is the same as your username.</small>
             </div>
             <label asp-for="Gender">Gender</label>
-            <select asp-for="Gender" required class="form-control form-control-sm">
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+            <select asp-for="Gender" class="form-control form-control-sm" asp-items="@Html.GetEnumSelectList<Gender>()">
             </select>
             <span asp-validation-for="Gender" class="text-danger"></span>
             <label asp-for="Fraction">Fraction</label>
-            <select asp-for="Fraction" required class="form-control form-control-sm">
-                <option value="Sheep">Sheep</option>
-                <option value="Pig">Pig</option>
+            <select asp-for="Fraction" class="form-control form-control-sm" asp-items="@Html.GetEnumSelectList<Fraction>()">
             </select>
             <span asp-validation-for="Fraction" class="text-danger"></span>
             <button type="submit" class="btn btn-primary btn-block mt-3">Create Hero</button>
         </form>
     </div>
     <div class="col-4">
-        <img src="https://i.ibb.co/s1B4Bdc/pig-female.jpg" alt="sheep" class="img-fluid float-right">
+        <img src="~/images/avatars/pig-female.jpg" alt="sheep" class="img-fluid float-right">
     </div>
 </div>

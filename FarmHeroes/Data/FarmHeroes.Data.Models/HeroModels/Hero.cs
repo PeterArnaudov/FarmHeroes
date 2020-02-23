@@ -6,6 +6,7 @@
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.FightModels;
     using FarmHeroes.Data.Models.MappingModels;
+    using FarmHeroes.Data.Models.NotificationModels.HeroModels;
 
     public class Hero
     {

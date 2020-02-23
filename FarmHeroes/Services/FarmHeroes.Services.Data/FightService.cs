@@ -12,6 +12,7 @@
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.MappingModels;
     using FarmHeroes.Data.Models.MonsterModels;
+    using FarmHeroes.Data.Models.NotificationModels.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Formulas;
@@ -26,8 +27,8 @@
         private const int MinutesDefenseGranted = 60;
         private const int RandomMonsterGoldCost = 500;
         private const int MonsterCrystalCost = 1;
-        private const int MinimalExperiencePerMonsterDefeat = 1;
-        private const int MaximalExperiencePerMonsterDefeat = 4;
+        private const string MonsterFightNotificationImageUrl = "https://i.ibb.co/my7rwD4/monster-fight-notifications.png";
+        private const string HeroFightNotificationImageUrl = "https://i.ibb.co/T12Xb6j/player-battle-notifications.png";
 
         private readonly IHeroService heroService;
         private readonly IHealthService healthService;
@@ -36,10 +37,11 @@
         private readonly ILevelService levelService;
         private readonly IStatisticsService statisticsService;
         private readonly IMonsterService monsterService;
+        private readonly INotificationService notificationService;
         private readonly FarmHeroesDbContext context;
         private readonly IMapper mapper;
 
-        public FightService(IHeroService heroService, IHealthService healthService, IResourcePouchService resourcePouchService, IChronometerService chronometerService, ILevelService levelService, IStatisticsService statisticsService, IMonsterService monsterService, FarmHeroesDbContext context, IMapper mapper)
+        public FightService(IHeroService heroService, IHealthService healthService, IResourcePouchService resourcePouchService, IChronometerService chronometerService, ILevelService levelService, IStatisticsService statisticsService, IMonsterService monsterService, INotificationService notificationService, FarmHeroesDbContext context, IMapper mapper)
         {
             this.heroService = heroService;
             this.healthService = healthService;
@@ -48,6 +50,7 @@
             this.levelService = levelService;
             this.statisticsService = statisticsService;
             this.monsterService = monsterService;
+            this.notificationService = notificationService;
             this.context = context;
             this.mapper = mapper;
         }
@@ -236,6 +239,31 @@
 
             await this.context.SaveChangesAsync();
 
+            Notification attackerNotification = new Notification()
+            {
+                ImageUrl = HeroFightNotificationImageUrl,
+                Title = "Fight log",
+                Link = $"/Battlefield/FightLog/{fightEntity.Id}",
+                Content = $"You attacked {defender.Name}.",
+                Gold = winnerName == attacker.Name ? goldStolen : goldStolen * -1,
+                Experience = winnerName == attacker.Name ? ExperiencePerWin : default(int?),
+                Type = NotificationType.HeroFight,
+                Hero = attacker,
+            };
+            Notification defenderNotification = new Notification()
+            {
+                ImageUrl = HeroFightNotificationImageUrl,
+                Title = "Fight log",
+                Link = $"/Battlefield/FightLog/{fightEntity.Id}",
+                Content = $"{attacker.Name} attacked you.",
+                Gold = winnerName == defender.Name ? goldStolen : goldStolen * -1,
+                Experience = winnerName == defender.Name ? ExperiencePerWin : default(int?),
+                Type = NotificationType.HeroFight,
+                Hero = defender,
+            };
+            await this.notificationService.AddNotification(attackerNotification);
+            await this.notificationService.AddNotification(defenderNotification);
+
             return fightEntity.Id;
         }
 
@@ -328,7 +356,7 @@
                 goldStolen = MonsterFormulas.CalculateReward(monster.Level, attacker.Level.CurrentLevel);
 
                 await this.resourcePouchService.IncreaseGold(attacker.ResourcePouchId, goldStolen);
-                await this.levelService.GiveHeroExperienceById(attacker.LevelId, random.Next(MinimalExperiencePerMonsterDefeat, MaximalExperiencePerMonsterDefeat));
+                await this.levelService.GiveHeroExperienceById(attacker.LevelId, monster.Level);
 
                 attacker.Statistics.EarnedFromMonsters += goldStolen;
                 attacker.Statistics.MonstersDefeated++;
@@ -381,10 +409,21 @@
             fight.DefenderHitFive = defenderHits[4];
 
             Fight fightEntity = this.context.Fights.AddAsync(fight).Result.Entity;
-
             attacker.HeroFights.Add(new HeroFight { Fight = fightEntity, Hero = attacker });
-
             await this.context.SaveChangesAsync();
+
+            Notification notification = new Notification()
+            {
+                ImageUrl = MonsterFightNotificationImageUrl,
+                Title = "Fight log",
+                Link = $"/Battlefield/FightLog/{fightEntity.Id}",
+                Content = $"You attacked {monster.Name}.",
+                Gold = winnerName == attacker.Name ? goldStolen : goldStolen * -1,
+                Experience = winnerName == attacker.Name ? monster.Level : default(int?),
+                Type = NotificationType.MonsterFight,
+                Hero = attacker,
+            };
+            await this.notificationService.AddNotification(notification);
 
             return fightEntity.Id;
         }

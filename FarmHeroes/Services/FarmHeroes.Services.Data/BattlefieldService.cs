@@ -7,6 +7,7 @@
     using FarmHeroes.Data;
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Data.Models.NotificationModels.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Formulas;
@@ -17,24 +18,27 @@
     public class BattlefieldService : IBattlefieldService
     {
         private const int PatrolDurationInMinutes = 10;
+        private const string PatrolNotificationImageUrl = "https://i.ibb.co/4KzhXJD/patrol-notification.png";
 
         private readonly IHeroService heroService;
         private readonly IChronometerService chronometerService;
         private readonly ILevelService levelService;
         private readonly IResourcePouchService resourcePouchService;
         private readonly IStatisticsService statisticsService;
+        private readonly INotificationService notificationService;
         private readonly FarmHeroesDbContext dbContext;
         private readonly IMapper mapper;
         private readonly ITempDataDictionaryFactory tempDataDictionaryFactory;
         private readonly IHttpContextAccessor httpContext;
 
-        public BattlefieldService(IHeroService heroService, IChronometerService chronometerService, ILevelService levelService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, FarmHeroesDbContext dbContext, IMapper mapper, ITempDataDictionaryFactory tempDataDictionaryFactory, IHttpContextAccessor httpContext)
+        public BattlefieldService(IHeroService heroService, IChronometerService chronometerService, ILevelService levelService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, INotificationService notificationService, FarmHeroesDbContext dbContext, IMapper mapper, ITempDataDictionaryFactory tempDataDictionaryFactory, IHttpContextAccessor httpContext)
         {
             this.heroService = heroService;
             this.chronometerService = chronometerService;
             this.levelService = levelService;
             this.resourcePouchService = resourcePouchService;
             this.statisticsService = statisticsService;
+            this.notificationService = notificationService;
             this.dbContext = dbContext;
             this.mapper = mapper;
             this.tempDataDictionaryFactory = tempDataDictionaryFactory;
@@ -73,6 +77,18 @@
             this.tempDataDictionaryFactory
                 .GetTempData(this.httpContext.HttpContext)
                 .Add("Collected", $"You earned {collected} gold and gained {experience} experience.");
+
+            Notification notification = new Notification()
+            {
+                ImageUrl = PatrolNotificationImageUrl,
+                Title = "Patrol report",
+                Content = $"You finished your work on the farm.",
+                Gold = collected,
+                Experience = experience,
+                Type = NotificationType.Patrol,
+                Hero = hero,
+            };
+            await this.notificationService.AddNotification(notification);
 
             return collected;
         }

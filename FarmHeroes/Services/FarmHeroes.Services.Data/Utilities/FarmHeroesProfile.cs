@@ -6,6 +6,7 @@
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.FightModels;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Data.Models.NotificationModels.HeroModels;
     using FarmHeroes.Services.Data.Formulas;
     using FarmHeroes.Web.ViewModels.BattlefieldModels;
     using FarmHeroes.Web.ViewModels.CharacteristcsModels;
@@ -13,6 +14,7 @@
     using FarmHeroes.Web.ViewModels.FightModels;
     using FarmHeroes.Web.ViewModels.HeroModels;
     using FarmHeroes.Web.ViewModels.MineModels;
+    using FarmHeroes.Web.ViewModels.NotificationModels;
     using FarmHeroes.Web.ViewModels.StatisticsModels;
     using FarmHeroes.Web.ViewModels.ViewComponentsModels;
 
@@ -79,6 +81,8 @@
             this.CreateMap<ResourcePouch, HeroResourcesViewComponentModel>();
 
             this.CreateMap<Statistics, StatisticsAllViewModel>();
+
+            this.CreateMap<Notification, NotificationViewModel>();
         }
     }
 }

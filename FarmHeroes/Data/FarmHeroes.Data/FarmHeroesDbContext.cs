@@ -12,6 +12,7 @@
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.MappingModels;
     using FarmHeroes.Data.Models.MonsterModels;
+    using FarmHeroes.Data.Models.NotificationModels.HeroModels;
     using FarmHeroes.Data.Models.ShopModels;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
