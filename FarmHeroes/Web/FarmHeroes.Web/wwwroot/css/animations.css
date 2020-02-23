@@ -71,18 +71,3 @@
         transform: rotateY(0deg);
     }
 }
-
-.img-shake:hover {
-    animation: shake 0.5s;
-    animation-iteration-count: infinite;
-}
-
-.img-jump:hover {
-    animation: jump 1.2s;
-    animation-iteration-count: infinite;
-}
-
-.img-rotate:hover {
-    animation: rotate 5s;
-    animation-iteration-count: infinite;
-}

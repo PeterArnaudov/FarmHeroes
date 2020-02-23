@@ -46,3 +46,22 @@
 .bottom-50 {
     bottom: 50%;
 }
+
+.img-shake:hover {
+    animation: shake 0.5s;
+    animation-iteration-count: infinite;
+}
+
+.img-jump:hover {
+    animation: jump 1.2s;
+    animation-iteration-count: infinite;
+}
+
+.img-rotate:hover {
+    animation: rotate 5s;
+    animation-iteration-count: infinite;
+}
+
+.notification:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

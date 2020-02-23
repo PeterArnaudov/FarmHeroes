@@ -85,6 +85,7 @@
             services.AddTransient<IBattlefieldService, BattlefieldService>();
             services.AddTransient<IFightService, FightService>();
             services.AddTransient<IMonsterService, MonsterService>();
+            services.AddTransient<INotificationService, NotificationService>();
 
             // Filters
             services.AddTransient<FarmHeroesExceptionFilterAttribute>();
