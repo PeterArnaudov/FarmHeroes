@@ -19,15 +19,15 @@
                         <option value="Cast" disabled>Enemy cast - Coming soon</option>
                     </select>
                 </div>
-                @if (Model.CanAttackHero)
+                @if (Model.IsOnPatrol)
                 {
-                    <button type="submit" class="btn btn-primary">Get opponents</button>
+                    <span type="submit" class="btn btn-primary disabled">Get opponents</span>
                 }
                 else
                 {
-                    if (Model.IsOnPatrol)
+                    if (Model.CanAttackHero)
                     {
-                        <span type="submit" class="btn btn-primary disabled">Get opponents</span>
+                        <button type="submit" class="btn btn-primary">Get opponents</button>
                     }
                     else
                     {
@@ -68,15 +68,15 @@
                 <div class="col-6">
                     <p>Price: 500 <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
                     <p>Attack a monster with level between 1 and 3.</p>
-                    @if (Model.CanAttackMonster)
+                    @if (Model.IsOnPatrol)
                     {
-                        <a href="/Battlefield/AttackMonster" class="btn btn-primary">Attack</a>
+                        <span class="btn btn-primary disabled">Attack</span>
                     }
                     else
                     {
-                        if (Model.IsOnPatrol)
+                        if (Model.CanAttackMonster)
                         {
-                            <span class="btn btn-primary disabled">Attack</span>
+                            <a href="/Battlefield/AttackMonster" class="btn btn-primary">Attack</a>
                         }
                         else
                         {
@@ -87,28 +87,28 @@
                 <div class="col-6">
                     <p>Price: 1 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
                     <p>Attack a monster with level of your choice.</p>
-                    <form class="form-inline" asp-controller="Battlefield" asp-action="AttackMonster">
-                        @if (Model.CanAttackMonster)
+                    <form class="form-inline" asp-controller="Battlefield" asp-action="AttackMonster" asp-antiforgery="false" method="get">
+                        @if (Model.IsOnPatrol)
                         {
-                            <label for="attackType" class="m-auto">Monster level</label>
-                            <select class="form-control-sm m-auto" name="monsterLevel">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                            </select>
-                            <button type="submit" class="btn btn-primary">Attack</button>
+                            <span class="btn btn-primary m-auto disabled">Attack</span>
                         }
                         else
                         {
-                            if (Model.IsOnPatrol)
+                            if (Model.CanAttackMonster)
                             {
-                                <span class="btn btn-primary m-auto disabled">Attack</span>
+                                <label for="attackType" class="m-auto">Monster level</label>
+                                <select class="form-control-sm m-auto" name="monsterLevel">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary">Attack</button>
                             }
                             else
                             {

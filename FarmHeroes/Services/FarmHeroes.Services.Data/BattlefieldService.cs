@@ -60,7 +60,7 @@
                     "/Battlefield");
             }
 
-            int experience = BattlefieldFormulas.CalculateExperience(hero.Level.CurrentLevel);
+            int experience = BattlefieldFormulas.CalculatePatrolExperience(hero.Level.CurrentLevel);
             int collected = BattlefieldFormulas.CalculatePatrolGold(hero.Level.CurrentLevel);
 
             hero.Statistics.EarnedOnPatrol += collected;
