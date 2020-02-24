@@ -517,32 +517,6 @@ namespace FarmHeroes.Data.Migrations
                     b.ToTable("Levels");
                 });
 
-            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("HeroId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HeroId");
-
-                    b.ToTable("Notifications");
-                });
-
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.ResourcePouch", b =>
                 {
                     b.Property<int>("Id")
@@ -643,6 +617,50 @@ namespace FarmHeroes.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Monsters");
+                });
+
+            modelBuilder.Entity("FarmHeroes.Data.Models.NotificationModels.HeroModels.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Experience")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Gold")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HeroId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsNew")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HeroId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("FarmHeroes.Data.Models.Setting", b =>
@@ -952,15 +970,6 @@ namespace FarmHeroes.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.Notification", b =>
-                {
-                    b.HasOne("FarmHeroes.Data.Models.HeroModels.Hero", "Hero")
-                        .WithMany("Notifications")
-                        .HasForeignKey("HeroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("FarmHeroes.Data.Models.MappingModels.HeroFight", b =>
                 {
                     b.HasOne("FarmHeroes.Data.Models.FightModels.Fight", "Fight")
@@ -971,6 +980,15 @@ namespace FarmHeroes.Data.Migrations
 
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Hero", "Hero")
                         .WithMany("HeroFights")
+                        .HasForeignKey("HeroId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FarmHeroes.Data.Models.NotificationModels.HeroModels.Notification", b =>
+                {
+                    b.HasOne("FarmHeroes.Data.Models.HeroModels.Hero", "Hero")
+                        .WithMany("Notifications")
                         .HasForeignKey("HeroId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
