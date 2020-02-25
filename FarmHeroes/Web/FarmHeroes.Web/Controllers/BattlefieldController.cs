@@ -1,6 +1,7 @@
 ﻿namespace FarmHeroes.Web.Controllers
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
 
     using FarmHeroes.Data.Models.Enums;
@@ -68,8 +69,13 @@
             return this.Redirect($"/Battlefield/FightLog/{fightId}");
         }
 
-        public async Task<IActionResult> AttackMonster(int? monsterLevel)
+        public async Task<IActionResult> AttackMonster([Range(0, 9)]int? monsterLevel)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.Redirect("/Battlefield");
+            }
+
             int fightId = await this.fightService.InitiateMonsterFight(monsterLevel);
 
             return this.Redirect($"/Battlefield/FightLog/{fightId}");
