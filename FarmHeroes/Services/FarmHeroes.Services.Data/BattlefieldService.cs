@@ -82,7 +82,7 @@
             {
                 ImageUrl = PatrolNotificationImageUrl,
                 Title = "Patrol report",
-                Content = $"You finished your work on the farm.",
+                Content = $"You finished your patrol.",
                 Gold = collected,
                 Experience = experience,
                 Type = NotificationType.Patrol,
