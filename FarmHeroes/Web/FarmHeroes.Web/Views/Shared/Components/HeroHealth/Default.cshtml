@@ -5,7 +5,7 @@
         <img src="~/images/icons/health-icon.png" alt="Health" class="col-4 pb-2 d-lg-inline d-md-block m-auto img-rotate">
         <h4 class="d-lg-inline-block d-none text-center pb-2">Health:</h4>
         <img src="~/images/icons/heal-icon.png" alt="heal" class="img-fluid mt-lg-2 mt-0 mr-2 heal-icon" data-toggle="modal" data-target="#heal-modal">
-        <div class="modal fade" id="heal-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade mt-5" id="heal-modal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -22,7 +22,7 @@
                                 <h5>Health: +200</h5>
                                 <h5>Price: 100 <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></h5>
                             </div>
-                            <a href="/Health/Pill" class="btn btn-success btn-sm col-3 h-100 m-auto">Heal</a>
+                            <button onclick="heal('Pill')" class="btn btn-success btn-sm col-3 h-100 m-auto">Heal</button>
                         </div>
                         <hr class="bg-primary w-75">
                         <div class="row mb-2">
@@ -32,7 +32,7 @@
                                 <h5>Health: +3000</h5>
                                 <h5>Price: 1000 <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></h5>
                             </div>
-                            <a href="/Health/Elixir" class="btn btn-success btn-sm col-3 h-100 m-auto">Heal</a>
+                            <button onclick="heal('Elixir')" class="btn btn-success btn-sm col-3 h-100 m-auto">Heal</button>
                         </div>
                         <hr class="bg-primary w-75">
                         <div class="row">
@@ -42,13 +42,13 @@
                                 <h5>Health: +100%</h5>
                                 <h5>Price: 15 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></h5>
                             </div>
-                            <a href="/Health/Potion" class="btn btn-success btn-sm col-3 h-100 m-auto">Heal</a>
+                            <button onclick="heal('Potion')" class="btn btn-success btn-sm col-3 h-100 m-auto">Heal</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="progress w-100 m-auto position-relative" data-toggle="tooltip" data-placement="bottom" title="@Model.Current/@Model.Maximum">
+        <div id="health-status" class="progress w-100 m-auto position-relative" data-toggle="tooltip" data-placement="bottom" title="@Model.Current/@Model.Maximum">
             <div class="progress-bar bg-success" role="progressbar" style="width: @Model.Percent%">
                 <strong class="justify-content-center d-flex position-absolute w-100">@Model.Percent%</strong>
             </div>
