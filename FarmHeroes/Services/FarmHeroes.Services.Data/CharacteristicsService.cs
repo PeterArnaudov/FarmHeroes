@@ -50,7 +50,7 @@
             return viewModel;
         }
 
-        public async Task IncreaseAttack()
+        public async Task<int> IncreaseAttack()
         {
             Characteristics characteristics = await this.GetCurrentHeroCharacteristicsAsync();
             int goldNeeded = CharacteristicsFormulas.CalculateAttackPrice(characteristics.Attack);
@@ -59,9 +59,11 @@
             characteristics.Attack++;
 
             await this.context.SaveChangesAsync();
+
+            return characteristics.Attack;
         }
 
-        public async Task IncreaseDefense()
+        public async Task<int> IncreaseDefense()
         {
             Characteristics characteristics = await this.GetCurrentHeroCharacteristicsAsync();
             int goldNeeded = CharacteristicsFormulas.CalculateDefensePrice(characteristics.Defense);
@@ -70,9 +72,11 @@
             characteristics.Defense++;
 
             await this.context.SaveChangesAsync();
+
+            return characteristics.Defense;
         }
 
-        public async Task IncreaseMass()
+        public async Task<int> IncreaseMass()
         {
             Characteristics characteristics = await this.GetCurrentHeroCharacteristicsAsync();
             int goldNeeded = CharacteristicsFormulas.CalculateMassPrice(characteristics.Mass);
@@ -83,9 +87,11 @@
             await this.healthService.IncreaseMaximumHealth(characteristics.Mass);
 
             await this.context.SaveChangesAsync();
+
+            return characteristics.Mass;
         }
 
-        public async Task IncreaseMastery()
+        public async Task<int> IncreaseMastery()
         {
             Characteristics characteristics = await this.GetCurrentHeroCharacteristicsAsync();
             int goldNeeded = CharacteristicsFormulas.CalculateMasteryPrice(characteristics.Mastery);
@@ -94,6 +100,8 @@
             characteristics.Mastery++;
 
             await this.context.SaveChangesAsync();
+
+            return characteristics.Mastery;
         }
     }
 }

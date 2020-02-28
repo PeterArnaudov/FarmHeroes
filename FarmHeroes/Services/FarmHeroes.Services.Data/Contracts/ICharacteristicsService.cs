@@ -13,12 +13,12 @@
 
         Task<TViewModel> GetCurrentHeroCharacteristicsViewModelAsync<TViewModel>();
 
-        Task IncreaseAttack();
+        Task<int> IncreaseAttack();
 
-        Task IncreaseDefense();
+        Task<int> IncreaseDefense();
 
-        Task IncreaseMass();
+        Task<int> IncreaseMass();
 
-        Task IncreaseMastery();
+        Task<int> IncreaseMastery();
     }
 }

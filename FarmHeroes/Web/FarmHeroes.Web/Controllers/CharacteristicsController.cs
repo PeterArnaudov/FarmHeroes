@@ -19,40 +19,12 @@
             this.characteristicsService = characteristicsService;
         }
 
-        public async Task<IActionResult> PracticeAsync()
+        public async Task<IActionResult> Practice()
         {
             CharacteristicsPracticeViewModel viewModel =
                 await this.characteristicsService.GetCurrentHeroCharacteristicsViewModelAsync<CharacteristicsPracticeViewModel>();
 
             return this.View(viewModel);
-        }
-
-        public async Task<IActionResult> PracticeAttackAsync()
-        {
-            await this.characteristicsService.IncreaseAttack();
-
-            return this.Redirect("/Characteristics/Practice");
-        }
-
-        public async Task<IActionResult> PracticeDefenseAsync()
-        {
-            await this.characteristicsService.IncreaseDefense();
-
-            return this.Redirect("/Characteristics/Practice");
-        }
-
-        public async Task<IActionResult> PracticeMassAsync()
-        {
-            await this.characteristicsService.IncreaseMass();
-
-            return this.Redirect("/Characteristics/Practice");
-        }
-
-        public async Task<IActionResult> PracticeMasteryAsync()
-        {
-            await this.characteristicsService.IncreaseMastery();
-
-            return this.Redirect("/Characteristics/Practice");
         }
     }
 }
