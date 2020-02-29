@@ -8,3 +8,39 @@ $(function () {
 })
 
 $(".disappearing-alert").fadeOut(5000);
+
+let timerFunction = function (hours, minutes, seconds, id) {
+    if (seconds == 0 && hours > 0 && minutes == 0) {
+        seconds = 59;
+        minutes = 59;
+        hours--;
+    }
+    else if (seconds == 0 && minutes > 0) {
+        seconds = 59;
+        minutes--;
+    }
+
+    let interval = setInterval(function () {
+        if (hours <= 0 && minutes <= 0 && seconds <= 0 || document.getElementById(id) == null || document.getElementById(id).classList.contains("stop")) {
+            clearInterval(interval);
+            document.getElementById(id).innerHTML = "00:00:00";
+            return;
+        }
+
+        document.getElementById(id).textContent = (hours < 10 ? `0${hours}` : hours) + ":"
+            + (minutes < 10 ? `0${minutes}` : minutes) + ":"
+            + (seconds < 10 ? `0${seconds}` : seconds);
+
+        if (seconds > 0) {
+            seconds--;
+        }
+        if (seconds == 0 && minutes != 0) {
+            minutes--;
+            seconds = 59;
+        }
+        if (minutes == 0 && hours != 0) {
+            hours--;
+            minutes = 59;
+        }
+    }, 1000);
+};
