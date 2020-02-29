@@ -9,7 +9,7 @@
             + (minutes < 10 ? `0${minutes}` : minutes) + ":"
             + (seconds < 10 ? `0${seconds}` : seconds);
 
-        if (hours <= 0 && minutes <= 0 && seconds <= 0) {
+            if (hours <= 0 && minutes <= 0 && seconds <= 0 || document.getElementById("@Model.DomElementId").classList.contains("stop")) {
             clearInterval(@(Model.DomElementId + "Interval"));
             document.getElementById("@Model.DomElementId").innerHTML = "00:00:00";
         }

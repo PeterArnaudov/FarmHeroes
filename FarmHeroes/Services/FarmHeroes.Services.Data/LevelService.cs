@@ -19,6 +19,13 @@
             this.heroService = heroService;
         }
 
+        public async Task<int> GetCurrentHeroLevel()
+        {
+            Hero hero = await this.heroService.GetCurrentHero();
+
+            return hero.Level.CurrentLevel;
+        }
+
         public async Task GiveCurrentHeroExperience(int experience)
         {
             Hero hero = await this.heroService.GetCurrentHero();

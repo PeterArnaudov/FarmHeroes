@@ -11,6 +11,7 @@
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Formulas;
+    using FarmHeroes.Web.ViewModels.ResourcePouchModels;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.EntityFrameworkCore;
@@ -45,15 +46,18 @@
             this.httpContext = httpContext;
         }
 
-        public async Task StartPatrol()
+        public async Task<int> StartPatrol()
         {
             Chronometer chronometer = await this.chronometerService.GetCurrentHeroChronometer();
 
             await this.chronometerService.SetWorkUntil(PatrolDurationInMinutes, WorkStatus.Battlefield);
+
+            return PatrolDurationInMinutes;
         }
 
-        public async Task<int> Collect()
+        public async Task<CollectedResourcesViewModel> Collect()
         {
+            CollectedResourcesViewModel collectedResources = new CollectedResourcesViewModel();
             Hero hero = await this.heroService.GetCurrentHero();
 
             if (hero.WorkStatus != WorkStatus.Battlefield)
@@ -64,33 +68,29 @@
                     "/Battlefield");
             }
 
-            int experience = BattlefieldFormulas.CalculatePatrolExperience(hero.Level.CurrentLevel);
-            int collected = BattlefieldFormulas.CalculatePatrolGold(hero.Level.CurrentLevel);
+            collectedResources.Experience = BattlefieldFormulas.CalculatePatrolExperience(hero.Level.CurrentLevel);
+            collectedResources.Gold = BattlefieldFormulas.CalculatePatrolGold(hero.Level.CurrentLevel);
 
-            hero.Statistics.EarnedOnPatrol += collected;
+            hero.Statistics.EarnedOnPatrol += collectedResources.Gold;
 
-            await this.levelService.GiveCurrentHeroExperience(experience);
-            await this.resourcePouchService.IncreaseCurrentHeroGold(collected);
+            await this.levelService.GiveCurrentHeroExperience(collectedResources.Experience);
+            await this.resourcePouchService.IncreaseCurrentHeroGold(collectedResources.Gold);
             await this.chronometerService.NullifyWorkUntil();
             await this.statisticsService.UpdateStatistics(hero.Statistics);
-
-            this.tempDataDictionaryFactory
-                .GetTempData(this.httpContext.HttpContext)
-                .Add("Collected", $"You earned {collected} gold and gained {experience} experience.");
 
             Notification notification = new Notification()
             {
                 ImageUrl = PatrolNotificationImageUrl,
                 Title = "Patrol report",
                 Content = $"You finished your patrol.",
-                Gold = collected,
-                Experience = experience,
+                Gold = collectedResources.Gold,
+                Experience = collectedResources.Experience,
                 Type = NotificationType.Patrol,
                 Hero = hero,
             };
             await this.notificationService.AddNotification(notification);
 
-            return collected;
+            return collectedResources;
         }
 
         public async Task<Hero[]> GetOpponents()

@@ -6,17 +6,27 @@
 
 <div class="text-center">
     <img src="~/images/village/farm/farm.jpg" alt="village-image" class="d-block img-fluid ml-auto mr-auto mb-3">
-    @if (!Model.DoesWork)
-    {
-        <p>Currently you can work for @Model.Salary <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"> per hour.</p>
-        <p>Work duration on the farm is 4 hours. Not less, not more.</p>
-        <a class="btn btn-primary" href="/Farm/Work">Work</a>
-    }
-    else
-    {
-        <p>Time left until you finish work on the farm:</p>
-        <vc:timer dom-element-id="work_1" date-time="@Model.WorkUntil"></vc:timer>
-        <p class="text-danger">NOTE: If you cancel the work, you will not receive any rewards.</p>
-        <a class="btn btn-danger" href="/Farm/Cancel">Cancel</a>
-    }
+    <div id="work-body">
+        @if (!Model.DoesWork)
+        {
+            <p>Currently you can work for @Model.Salary <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"> per hour.</p>
+            <p>Work duration on the farm is 4 hours. Not less, not more.</p>
+            <button onclick="startWork('farm')" class="btn btn-primary">Work</button>
+        }
+        else
+        {
+            if (Model.IsWorkFinished)
+            {
+                <p class="text-success">You finished working! Click the button below to collect your salary.</p>
+                <button class="btn btn-success" onclick="collect('farm')">Cancel</button>
+            }
+            else
+            {
+                <p class="mb-1">Time left until you finish work:</p>
+                <vc:timer dom-element-id="work_1" date-time="@Model.WorkUntil"></vc:timer>
+                <p class="text-danger">NOTE: If you cancel the work, you will not receive any rewards.</p>
+                <button class="btn btn-danger" onclick="cancelWork('farm')">Cancel</button>
+            }
+        }
+    </div>
 </div>

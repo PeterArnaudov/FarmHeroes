@@ -68,6 +68,14 @@
         {
             Hero hero = await this.heroService.GetCurrentHero();
 
+            if (hero.WorkStatus == WorkStatus.Battlefield && hero.Chronometer.WorkUntil > DateTime.UtcNow)
+            {
+                throw new FarmHeroesException(
+                    "You cannot cancel patrol.",
+                    "Finish your patrol.",
+                    "/Battlefield");
+            }
+
             hero.Chronometer.WorkUntil = null;
             hero.WorkStatus = WorkStatus.Idle;
 

@@ -27,7 +27,7 @@
                 {
                     if (Model.CanAttackHero)
                     {
-                        <button type="submit" class="btn btn-primary">Get opponents</button>
+                        <button id="attack-hero-button" type="submit" class="btn btn-primary">Get opponents</button>
                     }
                     else
                     {
@@ -41,22 +41,24 @@
             <h2 class="text-uppercase">patrol</h2>
             <p class="m-auto">Spend 10 minutes patrolling around and earn some gold.</p>
             <p>Today you've been to patrol {{times}}/3 times.</p>
-            @if (Model.CanGoOnPatrol)
-            {
-                <!-- If hero cannot start a patrol, add class disabled to the button; when patrol limit is implemented -->
-                <a href="/Battlefield/Patrol" class="btn btn-primary">Start Patrol</a>
-            }
-            else
-            {
-                if (Model.IsPatrolFinished)
+            <div id="work-body">
+                @if (Model.CanGoOnPatrol)
                 {
-                    <a class="btn btn-success" href="/Battlefield/Collect">Collect</a>
+                    <!-- If hero cannot start a patrol, add class disabled to the button; when patrol limit is implemented -->
+                    <button onclick="startWork('battlefield')" class="btn btn-primary">Start Patrol</button>
                 }
                 else
                 {
-                    <vc:timer dom-element-id="patrol_1" date-time="@Model.PatrolUntil"></vc:timer>
+                    if (Model.IsPatrolFinished)
+                    {
+                        <button onclick="collect('battlefield')" class="btn btn-success">Collect</button>
+                    }
+                    else
+                    {
+                        <vc:timer dom-element-id="patrol_1" date-time="@Model.PatrolUntil"></vc:timer>
+                    }
                 }
-            }
+            </div>
         </div>
     </div>
     <hr class="bg-primary">
@@ -76,7 +78,7 @@
                     {
                         if (Model.CanAttackMonster)
                         {
-                            <a href="/Battlefield/AttackMonster" class="btn btn-primary">Attack</a>
+                            <a id="attack-random-monster-button" href="/Battlefield/AttackMonster" class="btn btn-primary">Attack</a>
                         }
                         else
                         {
@@ -108,7 +110,7 @@
                                     <option value="8">8</option>
                                     <option value="9">9</option>
                                 </select>
-                                <button type="submit" class="btn btn-primary">Attack</button>
+                                <button id="attack-monster-button" type="submit" class="btn btn-primary">Attack</button>
                             }
                             else
                             {

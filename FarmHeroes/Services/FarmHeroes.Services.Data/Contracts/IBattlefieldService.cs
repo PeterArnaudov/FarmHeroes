@@ -3,12 +3,13 @@
     using System.Threading.Tasks;
 
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Web.ViewModels.ResourcePouchModels;
 
     public interface IBattlefieldService
     {
-        Task StartPatrol();
+        Task<int> StartPatrol();
 
-        Task<int> Collect();
+        Task<CollectedResourcesViewModel> Collect();
 
         Task<Hero[]> GetOpponents();
 

@@ -7,6 +7,7 @@
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
+    using FarmHeroes.Web.ViewModels.ResourcePouchModels;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
@@ -31,7 +32,7 @@
             this.context = context;
         }
 
-        public async Task InitiateDig()
+        public async Task<int> InitiateDig()
         {
             Chronometer chronometer = await this.chronometerService.GetCurrentHeroChronometer();
 
@@ -44,10 +45,13 @@
             }
 
             await this.chronometerService.SetWorkUntil(DigDuration, WorkStatus.Mine);
+
+            return DigDuration;
         }
 
-        public async Task<int> Collect()
+        public async Task<CollectedResourcesViewModel> Collect()
         {
+            CollectedResourcesViewModel collectedResources = new CollectedResourcesViewModel();
             Hero hero = await this.heroService.GetCurrentHero();
 
             if (hero.WorkStatus != WorkStatus.Mine)
@@ -59,18 +63,14 @@
             }
 
             Random random = new Random();
-            int collected = random.Next(1, 5);
-            hero.Statistics.EarnedInMines += collected;
+            collectedResources.Crystals = random.Next(1, 5);
+            hero.Statistics.EarnedInMines += collectedResources.Crystals;
 
-            await this.resourcePouchService.IncreaseCurrentHeroCrystals(collected);
+            await this.resourcePouchService.IncreaseCurrentHeroCrystals(collectedResources.Crystals);
             await this.chronometerService.NullifyWorkUntil();
             await this.statisticsService.UpdateStatistics(hero.Statistics);
 
-            this.tempDataDictionaryFactory
-                .GetTempData(this.context.HttpContext)
-                .Add("Collected", $"You collected {collected} crystals.");
-
-            return collected;
+            return collectedResources;
         }
 
         public async Task CancelDig()

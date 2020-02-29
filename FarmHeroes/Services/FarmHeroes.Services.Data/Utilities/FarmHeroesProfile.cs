@@ -45,11 +45,13 @@
 
             this.CreateMap<Hero, MineViewModel>()
                 .ForMember(x => x.WorkUntil, cfg => cfg.MapFrom(x => x.Chronometer.WorkUntil))
-                .ForMember(x => x.DoesWork, cfg => cfg.MapFrom(x => x.WorkStatus == WorkStatus.Mine));
+                .ForMember(x => x.DoesWork, cfg => cfg.MapFrom(x => x.WorkStatus == WorkStatus.Mine))
+                .ForMember(x => x.IsWorkFinished, cfg => cfg.MapFrom(x => x.Chronometer.WorkUntil < DateTime.UtcNow && x.WorkStatus == WorkStatus.Mine));
 
             this.CreateMap<Hero, FarmViewModel>()
                 .ForMember(x => x.WorkUntil, cfg => cfg.MapFrom(x => x.Chronometer.WorkUntil))
                 .ForMember(x => x.DoesWork, cfg => cfg.MapFrom(x => x.WorkStatus == WorkStatus.Farm))
+                .ForMember(x => x.IsWorkFinished, cfg => cfg.MapFrom(x => x.Chronometer.WorkUntil < DateTime.UtcNow && x.WorkStatus == WorkStatus.Farm))
                 .ForMember(x => x.Salary, cfg => cfg.MapFrom(x => FarmFormulas.CalculateFarmSalaryPerHour(x.Level.CurrentLevel)));
 
             this.CreateMap<Hero, BattlefieldViewModel>()

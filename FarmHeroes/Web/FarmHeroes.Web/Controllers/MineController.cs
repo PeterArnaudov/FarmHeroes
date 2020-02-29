@@ -37,38 +37,7 @@
 
             MineViewModel viewModel = await this.heroService.GetCurrentHeroViewModel<MineViewModel>();
 
-            if (viewModel.WorkUntil < DateTime.UtcNow && hero.WorkStatus == WorkStatus.Mine)
-            {
-                return this.Redirect("/Mine/Result");
-            }
-
             return this.View(viewModel);
-        }
-
-        public async Task<IActionResult> Dig()
-        {
-            await this.mineService.InitiateDig();
-
-            return this.Redirect("/Mine");
-        }
-
-        public IActionResult Result()
-        {
-            return this.View();
-        }
-
-        public async Task<IActionResult> Collect()
-        {
-            await this.mineService.Collect();
-
-            return this.Redirect("/Mine");
-        }
-
-        public async Task<IActionResult> Cancel()
-        {
-            await this.mineService.CancelDig();
-
-            return this.Redirect("/Mine");
         }
     }
 }

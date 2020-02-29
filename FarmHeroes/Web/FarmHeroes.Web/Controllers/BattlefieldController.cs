@@ -40,20 +40,6 @@
             return this.View(viewModel);
         }
 
-        public async Task<IActionResult> Patrol()
-        {
-            await this.battlefieldService.StartPatrol();
-
-            return this.Redirect("/Battlefield");
-        }
-
-        public async Task<IActionResult> Collect()
-        {
-            await this.battlefieldService.Collect();
-
-            return this.Redirect("/Battlefield");
-        }
-
         public async Task<IActionResult> GetOpponents(string attackType)
         {
             BattlefieldGetOpponentsViewModel viewModel = await this.battlefieldService

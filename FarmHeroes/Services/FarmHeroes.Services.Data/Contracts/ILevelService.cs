@@ -5,6 +5,8 @@
 
     public interface ILevelService
     {
+        Task<int> GetCurrentHeroLevel();
+
         Task GiveCurrentHeroExperience(int experience);
 
         Task GiveHeroExperienceById(int id, int experience);

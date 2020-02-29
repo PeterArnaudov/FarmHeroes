@@ -33,38 +33,7 @@
 
             FarmViewModel viewModel = await this.heroService.GetCurrentHeroViewModel<FarmViewModel>();
 
-            if (viewModel.WorkUntil < DateTime.UtcNow && hero.WorkStatus == WorkStatus.Farm)
-            {
-                return this.Redirect("/Farm/Result");
-            }
-
             return this.View(viewModel);
-        }
-
-        public async Task<IActionResult> Work()
-        {
-            await this.farmService.StartWork();
-
-            return this.Redirect("/Farm");
-        }
-
-        public IActionResult Result()
-        {
-            return this.View();
-        }
-
-        public async Task<IActionResult> Collect()
-        {
-            await this.farmService.Collect();
-
-            return this.Redirect("/Farm");
-        }
-
-        public async Task<IActionResult> Cancel()
-        {
-            await this.farmService.CancelWork();
-
-            return this.Redirect("/Farm");
         }
     }
 }
