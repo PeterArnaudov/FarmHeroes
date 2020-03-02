@@ -16,7 +16,8 @@
 
             builder.HasMany(es => es.Equipped)
                 .WithOne(he => he.EquippedSet)
-                .HasForeignKey(he => he.EquippedSetId);
+                .HasForeignKey(he => he.EquippedSetId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

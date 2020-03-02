@@ -16,7 +16,8 @@
 
             builder.HasOne(he => he.Inventory)
                 .WithMany(i => i.Items)
-                .HasForeignKey(he => he.InventoryId);
+                .HasForeignKey(he => he.InventoryId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(he => he.InventoryId)
                 .IsRequired();

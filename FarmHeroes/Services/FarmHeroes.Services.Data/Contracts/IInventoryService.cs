@@ -10,6 +10,8 @@
 
         Task Upgrade();
 
+        Task Trash(int id);
+
         Task InsertEquipment(HeroEquipment heroEquipment);
     }
 }

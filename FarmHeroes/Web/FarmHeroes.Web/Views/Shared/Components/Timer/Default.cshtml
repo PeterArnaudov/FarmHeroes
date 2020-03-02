@@ -11,7 +11,7 @@
 
             if (hours <= 0 && minutes <= 0 && seconds <= 0 || document.getElementById("@Model.DomElementId").classList.contains("stop")) {
             clearInterval(@(Model.DomElementId + "Interval"));
-            document.getElementById("@Model.DomElementId").innerHTML = "00:00:00";
+                document.getElementById("@Model.DomElementId").innerHTML = "00:00:00";
         }
 
         seconds--;

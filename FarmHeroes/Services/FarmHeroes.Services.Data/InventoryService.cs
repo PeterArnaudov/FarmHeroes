@@ -1,6 +1,7 @@
 ﻿namespace FarmHeroes.Services.Data
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
     using FarmHeroes.Data;
@@ -68,6 +69,24 @@
             await this.resourcePouchService.DecreaseCurrentHeroCrystals(InventoryFormulas.CalculateUpgradeCost(inventory.MaximumCapacity));
 
             inventory.MaximumCapacity++;
+
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task Trash(int id)
+        {
+            Inventory inventory = await this.GetCurrentHeroInventory();
+            HeroEquipment itemToRemove = inventory.Items.Find(i => i.Id == id);
+
+            if (itemToRemove == null)
+            {
+                throw new FarmHeroesException(
+                    "You cannot trash an item that isn't in your inventory.",
+                    "Choose an item from your inventory.",
+                    "/Inventory");
+            }
+
+            this.context.HeroEquipments.Remove(itemToRemove);
 
             await this.context.SaveChangesAsync();
         }

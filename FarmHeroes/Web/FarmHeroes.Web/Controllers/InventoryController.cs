@@ -38,5 +38,12 @@
 
             return this.Redirect("/Inventory");
         }
+
+        public async Task<IActionResult> Trash(int id)
+        {
+            await this.inventoryService.Trash(id);
+
+            return this.Redirect("/Inventory");
+        }
     }
 }
