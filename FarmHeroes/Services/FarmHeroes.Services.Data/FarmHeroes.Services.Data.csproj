@@ -27,6 +27,7 @@
     <ProjectReference Include="..\..\Data\FarmHeroes.Data\FarmHeroes.Data.csproj" />
     <ProjectReference Include="..\..\FarmHeroes.Services.Models\FarmHeroes.Services.Models.csproj" />
     <ProjectReference Include="..\..\Web\FarmHeroes.Web.ViewModels\FarmHeroes.Web.ViewModels.csproj" />
+    <ProjectReference Include="..\FarmHeroes.Services.Models\FarmHeroes.Services.Models.csproj" />
   </ItemGroup>
 
 </Project>
