@@ -32,30 +32,9 @@
             return this.Redirect("/Inventory");
         }
 
-        public async Task<IActionResult> EquipHelmet(int id)
+        public async Task<IActionResult> Equip(int id)
         {
-            await this.equipmentService.EquipHelmet(id);
-
-            return this.Redirect("/Inventory");
-        }
-
-        public async Task<IActionResult> EquipArmor(int id)
-        {
-            await this.equipmentService.EquipArmor(id);
-
-            return this.Redirect("/Inventory");
-        }
-
-        public async Task<IActionResult> EquipWeapon(int id)
-        {
-            await this.equipmentService.EquipWeapon(id);
-
-            return this.Redirect("/Inventory");
-        }
-
-        public async Task<IActionResult> EquipShield(int id)
-        {
-            await this.equipmentService.EquipShield(id);
+            await this.equipmentService.Equip(id);
 
             return this.Redirect("/Inventory");
         }

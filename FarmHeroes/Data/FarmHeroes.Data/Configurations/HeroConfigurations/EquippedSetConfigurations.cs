@@ -14,37 +14,9 @@
 
             builder.HasKey(es => es.Id);
 
-            builder.HasOne(es => es.Helmet)
-                .WithOne(h => h.EquippedSet)
-                .HasForeignKey<EquippedSet>(es => es.HelmetId);
-
-            builder.HasOne(es => es.Armor)
-                .WithOne(a => a.EquippedSet)
-                .HasForeignKey<EquippedSet>(es => es.ArmorId);
-
-            builder.HasOne(es => es.Weapon)
-                .WithOne(w => w.EquippedSet)
-                .HasForeignKey<EquippedSet>(es => es.WeaponId);
-
-            builder.HasOne(es => es.Shield)
-                .WithOne(s => s.EquippedSet)
-                .HasForeignKey<EquippedSet>(es => es.ShieldId);
-
-            builder.HasOne(c => c.Hero)
-                .WithOne(h => h.EquippedSet)
-                .HasForeignKey<Hero>(h => h.EquippedSetId);
-
-            builder.Property(es => es.HelmetId)
-                .IsRequired(false);
-
-            builder.Property(es => es.ArmorId)
-                .IsRequired(false);
-
-            builder.Property(es => es.WeaponId)
-                .IsRequired(false);
-
-            builder.Property(es => es.ShieldId)
-                .IsRequired(false);
+            builder.HasMany(es => es.Equipped)
+                .WithOne(he => he.EquippedSet)
+                .HasForeignKey(he => he.EquippedSetId);
         }
     }
 }

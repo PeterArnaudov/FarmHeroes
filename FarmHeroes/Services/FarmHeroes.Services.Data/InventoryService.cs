@@ -45,7 +45,7 @@
                 throw new FarmHeroesException(
                     "You don't have enough space in your inventory.",
                     "Upgrade your inventory or free up some space by selling something you don't need.",
-                    "/Inventory");
+                    $"/Shop/{heroEquipment.Type.ToString()}");
             }
 
             inventory.Items.Add(heroEquipment);

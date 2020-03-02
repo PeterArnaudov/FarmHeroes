@@ -465,32 +465,17 @@
 
         private int CalculateAttackFromSet(EquippedSet equippedSet)
         {
-            int? bonusAttack = (equippedSet.Helmet == null ? 0 : equippedSet.Helmet.Attack) +
-                (equippedSet.Armor == null ? 0 : equippedSet.Armor.Attack) +
-                (equippedSet.Weapon == null ? 0 : equippedSet.Weapon.Attack) +
-                (equippedSet.Shield == null ? 0 : equippedSet.Shield.Attack);
-
-            return bonusAttack ?? 0;
+            return equippedSet.Equipped.Sum(x => x.Attack);
         }
 
         private int CalculateDefenseFromSet(EquippedSet equippedSet)
         {
-            int? bonusDefense = (equippedSet.Helmet == null ? 0 : equippedSet.Helmet.Defense) +
-                (equippedSet.Armor == null ? 0 : equippedSet.Armor.Defense) +
-                (equippedSet.Weapon == null ? 0 : equippedSet.Weapon.Defense) +
-                (equippedSet.Shield == null ? 0 : equippedSet.Shield.Defense);
-
-            return bonusDefense ?? 0;
+            return equippedSet.Equipped.Sum(x => x.Defense);
         }
 
         private int CalculateMasteryFromSet(EquippedSet equippedSet)
         {
-            int? bonusMastery = (equippedSet.Helmet == null ? 0 : equippedSet.Helmet.Mastery) +
-                (equippedSet.Armor == null ? 0 : equippedSet.Armor.Mastery) +
-                (equippedSet.Weapon == null ? 0 : equippedSet.Weapon.Mastery) +
-                (equippedSet.Shield == null ? 0 : equippedSet.Shield.Mastery);
-
-            return bonusMastery ?? 0;
+            return equippedSet.Equipped.Sum(x => x.Mastery);
         }
     }
 }

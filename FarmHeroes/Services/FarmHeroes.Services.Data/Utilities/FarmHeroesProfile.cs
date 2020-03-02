@@ -39,7 +39,11 @@
                 .ForMember(x => x.Mass, cfg => cfg.MapFrom(x => x.Characteristics.Mass))
                 .ForMember(x => x.Mastery, cfg => cfg.MapFrom(x => x.Characteristics.Mastery))
                 .ForMember(x => x.Fights, cfg => cfg.MapFrom(x => x.Statistics.TotalFights))
-                .ForMember(x => x.Wins, cfg => cfg.MapFrom(x => x.Statistics.Wins));
+                .ForMember(x => x.Wins, cfg => cfg.MapFrom(x => x.Statistics.Wins))
+                .ForMember(x => x.EquippedSetHelmet, cfg => cfg.MapFrom(x => x.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Helmet)))
+                .ForMember(x => x.EquippedSetArmor, cfg => cfg.MapFrom(x => x.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Armor)))
+                .ForMember(x => x.EquippedSetWeapon, cfg => cfg.MapFrom(x => x.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Weapon)))
+                .ForMember(x => x.EquippedSetShield, cfg => cfg.MapFrom(x => x.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Shield)));
 
             this.CreateMap<Characteristics, CharacteristicsPracticeViewModel>()
                 .ForMember(x => x.AttackPrice, cfg => cfg.MapFrom(x => CharacteristicsFormulas.CalculateAttackPrice(x.Attack)))

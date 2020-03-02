@@ -1,18 +1,13 @@
 ﻿namespace FarmHeroes.Services.Data.Contracts
 {
+    using FarmHeroes.Data.Models.Enums;
     using System;
     using System.Threading.Tasks;
 
     public interface IShopService
     {
-        Task<T> GetShopViewModel<T>(string type);
+        Task<T> GetShopViewModel<T>(EquipmentType type);
 
-        Task SellHelmet(int id);
-
-        Task SellArmor(int id);
-
-        Task SellWeapon(int id);
-
-        Task SellShield(int id);
+        Task<string> Sell(int id);
     }
 }

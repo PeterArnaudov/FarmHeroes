@@ -1,5 +1,6 @@
 ﻿namespace FarmHeroes.Web.Controllers
 {
+    using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Web.ViewModels.InventoryModels;
     using FarmHeroes.Web.ViewModels.ShopModels;
@@ -16,64 +17,19 @@
             this.shopService = shopService;
         }
 
-        [Route("/Shop/Helmets")]
-        public async Task<IActionResult> HelmetShop()
+        [Route("/Shop/{type}")]
+        public async Task<IActionResult> Shop(EquipmentType type)
         {
-            ShopViewModel viewModel = await this.shopService.GetShopViewModel<ShopViewModel>("Helmet");
+            ShopViewModel viewModel = await this.shopService.GetShopViewModel<ShopViewModel>(type);
 
             return this.View(viewModel);
         }
 
-        public async Task<IActionResult> BuyHelmet(int id)
+        public async Task<IActionResult> Buy(int id)
         {
-            await this.shopService.SellHelmet(id);
+            string type = await this.shopService.Sell(id);
 
-            return this.Redirect("/Shop/Helmets");
-        }
-
-        [Route("/Shop/Armor")]
-        public async Task<IActionResult> ArmorShop()
-        {
-            ShopViewModel viewModel = await this.shopService.GetShopViewModel<ShopViewModel>("Armor");
-
-            return this.View(viewModel);
-        }
-
-        public async Task<IActionResult> BuyArmor(int id)
-        {
-            await this.shopService.SellArmor(id);
-
-            return this.Redirect("/Shop/Armor");
-        }
-
-        [Route("/Shop/Weapons")]
-        public async Task<IActionResult> WeaponShop()
-        {
-            ShopViewModel viewModel = await this.shopService.GetShopViewModel<ShopViewModel>("Weapon");
-
-            return this.View(viewModel);
-        }
-
-        public async Task<IActionResult> BuyWeapon(int id)
-        {
-            await this.shopService.SellWeapon(id);
-
-            return this.Redirect("/Shop/Weapons");
-        }
-
-        [Route("/Shop/Shields")]
-        public async Task<IActionResult> ShieldShop()
-        {
-            ShopViewModel viewModel = await this.shopService.GetShopViewModel<ShopViewModel>("Weapon");
-
-            return this.View(viewModel);
-        }
-
-        public async Task<IActionResult> BuyShield(int id)
-        {
-            await this.shopService.SellShield(id);
-
-            return this.Redirect("/Shop/Shields");
+            return this.Redirect($"/Shop/{type}");
         }
     }
 }

@@ -70,10 +70,10 @@
                         <p class="mb-0 text-muted font-italic text-right">You might have gone against the rules and tried to do something not allowed.</p>
                     </div>
                 }
-                @if (this.TempData["Collected"] != null)
+                @if (this.TempData["Alert"] != null)
                 {
                     <div class="alert alert-success disappearing-alert" role="alert">
-                        <p class="text-center m-0">@this.TempData["Collected"]</p>
+                        <p class="text-center m-0">@this.TempData["Alert"]</p>
                     </div>
                 }
                 @RenderBody()

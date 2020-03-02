@@ -1,10 +1,13 @@
 ﻿namespace FarmHeroes.Data.Models.ShopModels
 {
+    using FarmHeroes.Data.Models.Enums;
     using System;
 
-    public abstract class ShopEquipment
+    public class ShopEquipment
     {
         public int Id { get; set; }
+
+        public EquipmentType Type { get; set; }
 
         public string Name { get; set; }
 

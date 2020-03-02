@@ -10,12 +10,6 @@
 
         Task<EquippedSet> GetEquippedSetById(int id);
 
-        Task EquipHelmet(int id);
-
-        Task EquipArmor(int id);
-
-        Task EquipWeapon(int id);
-
-        Task EquipShield(int id);
+        Task Equip(int id);
     }
 }

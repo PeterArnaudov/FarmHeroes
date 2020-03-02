@@ -308,35 +308,7 @@ namespace FarmHeroes.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ArmorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HelmetId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ShieldId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("WeaponId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ArmorId")
-                        .IsUnique()
-                        .HasFilter("[ArmorId] IS NOT NULL");
-
-                    b.HasIndex("HelmetId")
-                        .IsUnique()
-                        .HasFilter("[HelmetId] IS NOT NULL");
-
-                    b.HasIndex("ShieldId")
-                        .IsUnique()
-                        .HasFilter("[ShieldId] IS NOT NULL");
-
-                    b.HasIndex("WeaponId")
-                        .IsUnique()
-                        .HasFilter("[WeaponId] IS NOT NULL");
 
                     b.ToTable("EquippedSets");
                 });
@@ -454,9 +426,8 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("Defense")
                         .HasColumnType("int");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("EquippedSetId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -478,13 +449,16 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("RequiredLevel")
                         .HasColumnType("int");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("EquippedSetId");
 
                     b.HasIndex("InventoryId");
 
                     b.ToTable("HeroEquipments");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("HeroEquipment");
                 });
 
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.Inventory", b =>
@@ -714,10 +688,6 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("Defense")
                         .HasColumnType("int");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -735,11 +705,12 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("RequiredLevel")
                         .HasColumnType("int");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("ShopEquipments");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ShopEquipment");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -846,81 +817,6 @@ namespace FarmHeroes.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroArmor", b =>
-                {
-                    b.HasBaseType("FarmHeroes.Data.Models.HeroModels.HeroEquipment");
-
-                    b.HasDiscriminator().HasValue("HeroArmor");
-                });
-
-            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroHelmet", b =>
-                {
-                    b.HasBaseType("FarmHeroes.Data.Models.HeroModels.HeroEquipment");
-
-                    b.HasDiscriminator().HasValue("HeroHelmet");
-                });
-
-            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroShield", b =>
-                {
-                    b.HasBaseType("FarmHeroes.Data.Models.HeroModels.HeroEquipment");
-
-                    b.HasDiscriminator().HasValue("HeroShield");
-                });
-
-            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroWeapon", b =>
-                {
-                    b.HasBaseType("FarmHeroes.Data.Models.HeroModels.HeroEquipment");
-
-                    b.HasDiscriminator().HasValue("HeroWeapon");
-                });
-
-            modelBuilder.Entity("FarmHeroes.Data.Models.ShopModels.ShopArmor", b =>
-                {
-                    b.HasBaseType("FarmHeroes.Data.Models.ShopModels.ShopEquipment");
-
-                    b.HasDiscriminator().HasValue("ShopArmor");
-                });
-
-            modelBuilder.Entity("FarmHeroes.Data.Models.ShopModels.ShopHelmet", b =>
-                {
-                    b.HasBaseType("FarmHeroes.Data.Models.ShopModels.ShopEquipment");
-
-                    b.HasDiscriminator().HasValue("ShopHelmet");
-                });
-
-            modelBuilder.Entity("FarmHeroes.Data.Models.ShopModels.ShopShield", b =>
-                {
-                    b.HasBaseType("FarmHeroes.Data.Models.ShopModels.ShopEquipment");
-
-                    b.HasDiscriminator().HasValue("ShopShield");
-                });
-
-            modelBuilder.Entity("FarmHeroes.Data.Models.ShopModels.ShopWeapon", b =>
-                {
-                    b.HasBaseType("FarmHeroes.Data.Models.ShopModels.ShopEquipment");
-
-                    b.HasDiscriminator().HasValue("ShopWeapon");
-                });
-
-            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.EquippedSet", b =>
-                {
-                    b.HasOne("FarmHeroes.Data.Models.HeroModels.HeroArmor", "Armor")
-                        .WithOne("EquippedSet")
-                        .HasForeignKey("FarmHeroes.Data.Models.HeroModels.EquippedSet", "ArmorId");
-
-                    b.HasOne("FarmHeroes.Data.Models.HeroModels.HeroHelmet", "Helmet")
-                        .WithOne("EquippedSet")
-                        .HasForeignKey("FarmHeroes.Data.Models.HeroModels.EquippedSet", "HelmetId");
-
-                    b.HasOne("FarmHeroes.Data.Models.HeroModels.HeroShield", "Shield")
-                        .WithOne("EquippedSet")
-                        .HasForeignKey("FarmHeroes.Data.Models.HeroModels.EquippedSet", "ShieldId");
-
-                    b.HasOne("FarmHeroes.Data.Models.HeroModels.HeroWeapon", "Weapon")
-                        .WithOne("EquippedSet")
-                        .HasForeignKey("FarmHeroes.Data.Models.HeroModels.EquippedSet", "WeaponId");
-                });
-
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.Hero", b =>
                 {
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Characteristics", "Characteristics")
@@ -978,6 +874,10 @@ namespace FarmHeroes.Data.Migrations
 
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroEquipment", b =>
                 {
+                    b.HasOne("FarmHeroes.Data.Models.HeroModels.EquippedSet", "EquippedSet")
+                        .WithMany("Equipped")
+                        .HasForeignKey("EquippedSetId");
+
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Inventory", "Inventory")
                         .WithMany("Items")
                         .HasForeignKey("InventoryId")

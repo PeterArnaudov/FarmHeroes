@@ -51,21 +51,9 @@
 
         public virtual DbSet<Characteristics> Characteristics { get; set; }
 
-        public virtual DbSet<HeroHelmet> HeroHelmets { get; set; }
+        public virtual DbSet<HeroEquipment> HeroEquipments { get; set; }
 
-        public virtual DbSet<HeroArmor> HeroArmors { get; set; }
-
-        public virtual DbSet<HeroWeapon> HeroWeapons { get; set; }
-
-        public virtual DbSet<HeroShield> HeroShields { get; set; }
-
-        public virtual DbSet<ShopHelmet> ShopHelmets { get; set; }
-
-        public virtual DbSet<ShopArmor> ShopArmors { get; set; }
-
-        public virtual DbSet<ShopWeapon> ShopWeapons { get; set; }
-
-        public virtual DbSet<ShopShield> ShopShields { get; set; }
+        public virtual DbSet<ShopEquipment> ShopEquipments { get; set; }
 
         public virtual DbSet<Monster> Monsters { get; set; }
 
