@@ -7,13 +7,13 @@
 
     public class Inventory
     {
-        private const int InitialItemsCap = 5;
+        private const int InitialItemsCapacity = 5;
 
         public int Id { get; set; }
 
-        public int ItemsCap { get; set; } = InitialItemsCap;
+        public int MaximumCapacity { get; set; } = InitialItemsCapacity;
 
-        public virtual List<HeroEquipment> Storage { get; set; } = new List<HeroEquipment>();
+        public virtual List<HeroEquipment> Items { get; set; } = new List<HeroEquipment>();
 
         public virtual Hero Hero { get; set; }
     }

@@ -14,7 +14,7 @@
 
             builder.HasKey(i => i.Id);
 
-            builder.HasMany(i => i.Storage)
+            builder.HasMany(i => i.Items)
                 .WithOne(e => e.Inventory)
                 .HasForeignKey(e => e.InventoryId);
 

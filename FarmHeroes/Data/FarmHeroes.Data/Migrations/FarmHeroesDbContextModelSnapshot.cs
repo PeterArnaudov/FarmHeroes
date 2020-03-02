@@ -448,7 +448,10 @@ namespace FarmHeroes.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Bonus")
+                    b.Property<int>("Attack")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Defense")
                         .HasColumnType("int");
 
                     b.Property<string>("Discriminator")
@@ -465,12 +468,15 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("Level")
                         .HasColumnType("int");
 
+                    b.Property<int>("Mastery")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("RequiredLevel")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("RequiredLevel")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -488,7 +494,7 @@ namespace FarmHeroes.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ItemsCap")
+                    b.Property<int>("MaximumCapacity")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -702,7 +708,10 @@ namespace FarmHeroes.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Bonus")
+                    b.Property<int>("Attack")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Defense")
                         .HasColumnType("int");
 
                     b.Property<string>("Discriminator")
@@ -713,12 +722,18 @@ namespace FarmHeroes.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Mastery")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("RequiredLevel")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequiredLevel")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -964,7 +979,7 @@ namespace FarmHeroes.Data.Migrations
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroEquipment", b =>
                 {
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Inventory", "Inventory")
-                        .WithMany("Storage")
+                        .WithMany("Items")
                         .HasForeignKey("InventoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

@@ -2,24 +2,81 @@
 {
     using System;
     using System.Threading.Tasks;
-
+    using AutoMapper;
     using FarmHeroes.Data;
     using FarmHeroes.Data.Common.Repositories;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Services.Data.Contracts;
+    using FarmHeroes.Services.Data.Exceptions;
+    using FarmHeroes.Services.Data.Formulas;
 
-    public class InventoryService
+    public class InventoryService : IInventoryService
     {
-        private readonly FarmHeroesDbContext context;
+        private const int MaximumCapacityPossible = 20;
 
-        public InventoryService(FarmHeroesDbContext context)
+        private readonly IHeroService heroService;
+        private readonly IResourcePouchService resourcePouchService;
+        private readonly FarmHeroesDbContext context;
+        private readonly IMapper mapper;
+
+        public InventoryService(IHeroService heroService, IResourcePouchService resourcePouchService, FarmHeroesDbContext context, IMapper mapper)
         {
+            this.heroService = heroService;
+            this.resourcePouchService = resourcePouchService;
             this.context = context;
+            this.mapper = mapper;
         }
 
-        public async Task CreateInventory()
+        public async Task<T> GetCurrentHeroInventoryViewModel<T>()
         {
-            Inventory inventory = new Inventory();
-            await this.context.Inventories.AddAsync(inventory);
+            Hero hero = await this.heroService.GetCurrentHero();
+
+            T viewModel = this.mapper.Map<T>(hero.Inventory);
+
+            return viewModel;
+        }
+
+        public async Task InsertEquipment(HeroEquipment heroEquipment)
+        {
+            Inventory inventory = await this.GetCurrentHeroInventory();
+
+            if (inventory.Items.Count == inventory.MaximumCapacity)
+            {
+                throw new FarmHeroesException(
+                    "You don't have enough space in your inventory.",
+                    "Upgrade your inventory or free up some space by selling something you don't need.",
+                    "/Inventory");
+            }
+
+            inventory.Items.Add(heroEquipment);
+
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task Upgrade()
+        {
+            Inventory inventory = await this.GetCurrentHeroInventory();
+
+            if (inventory.MaximumCapacity == MaximumCapacityPossible)
+            {
+                throw new FarmHeroesException(
+                    "You've reached the maximum possible upgrade of the inventory.",
+                    "You cannot upgrade futher.",
+                    "/Inventory");
+            }
+
+            await this.resourcePouchService.DecreaseCurrentHeroCrystals(InventoryFormulas.CalculateUpgradeCost(inventory.MaximumCapacity));
+
+            inventory.MaximumCapacity++;
+
+            await this.context.SaveChangesAsync();
+        }
+
+        private async Task<Inventory> GetCurrentHeroInventory()
+        {
+            Hero hero = await this.heroService.GetCurrentHero();
+
+            return hero.Inventory;
         }
     }
 }

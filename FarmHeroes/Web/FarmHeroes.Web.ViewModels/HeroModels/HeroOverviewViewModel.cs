@@ -1,5 +1,6 @@
 ﻿namespace FarmHeroes.Web.ViewModels.HeroModels
 {
+    using FarmHeroes.Web.ViewModels.EquipmentModels;
     using System;
 
     public class HeroOverviewViewModel
@@ -15,6 +16,14 @@
         public int NeededExperience { get; set; }
 
         public double ExperiencePercent { get; set; }
+
+        public EquipmentViewModel EquippedSetHelmet { get; set; }
+
+        public EquipmentViewModel EquippedSetArmor{ get; set; }
+
+        public EquipmentViewModel EquippedSetWeapon { get; set; }
+
+        public EquipmentViewModel EquippedSetShield { get; set; }
 
         public long Attack { get; set; }
 

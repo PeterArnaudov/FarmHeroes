@@ -8,9 +8,15 @@
 
         public string Name { get; set; }
 
-        public byte RequiredLevel { get; set; }
+        public int Price { get; set; }
 
-        public int Bonus { get; set; }
+        public int RequiredLevel { get; set; }
+
+        public int Attack { get; set; }
+
+        public int Defense { get; set; }
+
+        public int Mastery { get; set; }
 
         public string ImageUrl { get; set; }
     }

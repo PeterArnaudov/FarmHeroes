@@ -86,6 +86,9 @@
             services.AddTransient<IFightService, FightService>();
             services.AddTransient<IMonsterService, MonsterService>();
             services.AddTransient<INotificationService, NotificationService>();
+            services.AddTransient<IInventoryService, InventoryService>();
+            services.AddTransient<IShopService, ShopService>();
+            services.AddTransient<IEquipmentService, EquipmentService>();
 
             // Filters
             services.AddTransient<FarmHeroesExceptionFilterAttribute>();
@@ -112,7 +115,7 @@
             if (env.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                //app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
             else

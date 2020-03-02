@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
+    using FarmHeroes.Data.Seeding.EquipmentSeeders;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
@@ -27,6 +27,8 @@
                           {
                               new RolesSeeder(),
                               new MonstersSeeder(),
+                              new HelmetsSeeder(),
+                              new WeaponsSeeder(),
                           };
 
             foreach (var seeder in seeders)

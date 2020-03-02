@@ -128,7 +128,7 @@
             if (resources.Crystals < crystals)
             {
                 throw new FarmHeroesException(
-                    "You don't have enough gold.",
+                    "You don't have enough crystals.",
                     "Go earn yourself some more crystals and come back.",
                     "/Mine");
             }

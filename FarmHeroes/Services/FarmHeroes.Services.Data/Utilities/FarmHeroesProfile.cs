@@ -7,14 +7,18 @@
     using FarmHeroes.Data.Models.FightModels;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.NotificationModels.HeroModels;
+    using FarmHeroes.Data.Models.ShopModels;
     using FarmHeroes.Services.Data.Formulas;
     using FarmHeroes.Web.ViewModels.BattlefieldModels;
     using FarmHeroes.Web.ViewModels.CharacteristcsModels;
+    using FarmHeroes.Web.ViewModels.EquipmentModels;
     using FarmHeroes.Web.ViewModels.FarmModels;
     using FarmHeroes.Web.ViewModels.FightModels;
     using FarmHeroes.Web.ViewModels.HeroModels;
+    using FarmHeroes.Web.ViewModels.InventoryModels;
     using FarmHeroes.Web.ViewModels.MineModels;
     using FarmHeroes.Web.ViewModels.NotificationModels;
+    using FarmHeroes.Web.ViewModels.ShopModels;
     using FarmHeroes.Web.ViewModels.StatisticsModels;
     using FarmHeroes.Web.ViewModels.ViewComponentsModels;
 
@@ -75,6 +79,16 @@
 
             this.CreateMap<Hero[], BattlefieldGetOpponentsViewModel>()
                 .ForMember(x => x.Opponents, cfg => cfg.MapFrom(x => x));
+
+            this.CreateMap<Inventory, InventoryViewModel>()
+                .ForMember(x => x.UpgradeCost, cfg => cfg.MapFrom(x => InventoryFormulas.CalculateUpgradeCost(x.MaximumCapacity)));
+
+            this.CreateMap<ShopEquipment[], ShopViewModel>()
+                .ForMember(x => x.Items, cfg => cfg.MapFrom(x => x));
+
+            this.CreateMap<ShopEquipment, EquipmentViewModel>();
+
+            this.CreateMap<HeroEquipment, EquipmentViewModel>();
 
             this.CreateMap<Fight, FightLogViewModel>();
 

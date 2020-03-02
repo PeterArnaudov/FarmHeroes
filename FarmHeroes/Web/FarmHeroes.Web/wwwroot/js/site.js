@@ -4,7 +4,9 @@
 // Write your JavaScript code.
 
 $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip({
+        html: true
+    })
 })
 
 $(".disappearing-alert").fadeOut(5000);
@@ -24,6 +26,11 @@ let timerFunction = function (hours, minutes, seconds, id) {
         if (hours <= 0 && minutes <= 0 && seconds <= 0 || document.getElementById(id) == null || document.getElementById(id).classList.contains("stop")) {
             clearInterval(interval);
             document.getElementById(id).innerHTML = "00:00:00";
+
+            if (!document.getElementById(id).classList.contains("stop")) {
+                location.reload();
+            }
+
             return;
         }
 
@@ -43,4 +50,14 @@ let timerFunction = function (hours, minutes, seconds, id) {
             minutes = 59;
         }
     }, 1000);
+};
+
+let showActions = function (target) {
+    let actions = target.children[1];
+    if (actions.classList.contains("d-none")) {
+        actions.classList.remove("d-none");
+    }
+    else {
+        actions.classList.add("d-none");
+    }
 };
