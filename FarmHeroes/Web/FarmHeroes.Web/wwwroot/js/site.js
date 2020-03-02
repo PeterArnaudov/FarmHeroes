@@ -26,11 +26,14 @@ let timerFunction = function (hours, minutes, seconds, id) {
         if (hours <= 0 && minutes <= 0 && seconds <= 0 || document.getElementById(id) == null || document.getElementById(id).classList.contains("stop")) {
             clearInterval(interval);
             document.getElementById(id).innerHTML = "00:00:00";
+<<<<<<< HEAD
 
             if (!document.getElementById(id).classList.contains("stop")) {
                 location.reload();
             }
 
+=======
+>>>>>>> 22401d1bb9a129522af0d8cd7180dac0380b8e52
             return;
         }
 
@@ -50,6 +53,7 @@ let timerFunction = function (hours, minutes, seconds, id) {
             minutes = 59;
         }
     }, 1000);
+<<<<<<< HEAD
 };
 
 let showActions = function (target) {
@@ -60,4 +64,6 @@ let showActions = function (target) {
     else {
         actions.classList.add("d-none");
     }
+=======
+>>>>>>> 22401d1bb9a129522af0d8cd7180dac0380b8e52
 };
