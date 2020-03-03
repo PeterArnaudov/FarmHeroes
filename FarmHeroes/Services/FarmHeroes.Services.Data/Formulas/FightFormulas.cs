@@ -1,6 +1,9 @@
 ﻿namespace FarmHeroes.Services.Data.Formulas
 {
+    using FarmHeroes.Data.Models.Enums;
+    using FarmHeroes.Data.Models.HeroModels;
     using System;
+    using System.Linq;
 
     public static class FightFormulas
     {
@@ -28,5 +31,26 @@
 
             return heroCritChance >= neededChance ? true : false;
         };
-}
+
+        public static Func<EquippedSet, int> CalculateAttackFromSet = (equippedSet) =>
+        {
+            int? level = equippedSet.Equipped.Find(x => x.Type == EquipmentType.Weapon)?.Level;
+            double? percent = 1 + (level / 100d);
+            return (int)(equippedSet.Equipped.Sum(x => x.Attack) * percent ?? 1);
+        };
+
+        public static Func<EquippedSet, int> CalculateDefenseFromSet = (equippedSet) =>
+        {
+            int? level = equippedSet.Equipped.Find(x => x.Type == EquipmentType.Shield)?.Level;
+            double? percent = 1 + (level / 100d);
+            return (int)(equippedSet.Equipped.Sum(x => x.Defense) * percent ?? 1);
+        };
+
+        public static Func<EquippedSet, int> CalculateMasteryFromSet = (equippedSet) =>
+        {
+            int? level = equippedSet.Equipped.Find(x => x.Type == EquipmentType.Helmet)?.Level;
+            double? percent = 1 + (level / 100d);
+            return (int)(equippedSet.Equipped.Sum(x => x.Mastery) * percent ?? 1);
+        };
+    }
 }

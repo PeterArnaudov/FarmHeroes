@@ -88,6 +88,7 @@
             services.AddTransient<IInventoryService, InventoryService>();
             services.AddTransient<IShopService, ShopService>();
             services.AddTransient<IEquipmentService, EquipmentService>();
+            services.AddTransient<ISmithService, SmithService>();
 
             // Filters
             services.AddTransient<FarmHeroesExceptionFilterAttribute>();

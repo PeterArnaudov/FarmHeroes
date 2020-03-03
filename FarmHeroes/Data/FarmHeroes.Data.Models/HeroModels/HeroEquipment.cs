@@ -18,7 +18,7 @@
 
         public int Mastery { get; set; }
 
-        public int Level { get; set; } = 1;
+        public int Level { get; set; }
 
         public string ImageUrl { get; set; }
 

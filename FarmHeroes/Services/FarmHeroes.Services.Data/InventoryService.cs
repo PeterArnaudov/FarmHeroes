@@ -10,6 +10,8 @@
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Formulas;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public class InventoryService : IInventoryService
     {
@@ -19,13 +21,24 @@
         private readonly IResourcePouchService resourcePouchService;
         private readonly FarmHeroesDbContext context;
         private readonly IMapper mapper;
+        private readonly IHttpContextAccessor httpContext;
+        private readonly ITempDataDictionaryFactory tempDataDictionaryFactory;
 
-        public InventoryService(IHeroService heroService, IResourcePouchService resourcePouchService, FarmHeroesDbContext context, IMapper mapper)
+        public InventoryService(IHeroService heroService, IResourcePouchService resourcePouchService, FarmHeroesDbContext context, IMapper mapper, IHttpContextAccessor httpContext, ITempDataDictionaryFactory tempDataDictionaryFactory)
         {
             this.heroService = heroService;
             this.resourcePouchService = resourcePouchService;
             this.context = context;
             this.mapper = mapper;
+            this.httpContext = httpContext;
+            this.tempDataDictionaryFactory = tempDataDictionaryFactory;
+        }
+
+        public async Task<Inventory> GetCurrentHeroInventory()
+        {
+            Hero hero = await this.heroService.GetCurrentHero();
+
+            return hero.Inventory;
         }
 
         public async Task<T> GetCurrentHeroInventoryViewModel<T>()
@@ -71,6 +84,10 @@
             inventory.MaximumCapacity++;
 
             await this.context.SaveChangesAsync();
+
+            this.tempDataDictionaryFactory
+                .GetTempData(this.httpContext.HttpContext)
+                .Add("Alert", $"You upgraded your inventory successfully.");
         }
 
         public async Task Trash(int id)
@@ -89,13 +106,10 @@
             this.context.HeroEquipments.Remove(itemToRemove);
 
             await this.context.SaveChangesAsync();
-        }
 
-        private async Task<Inventory> GetCurrentHeroInventory()
-        {
-            Hero hero = await this.heroService.GetCurrentHero();
-
-            return hero.Inventory;
+            this.tempDataDictionaryFactory
+                .GetTempData(this.httpContext.HttpContext)
+                .Add("Alert", $"You trashed {itemToRemove.Name}.");
         }
     }
 }

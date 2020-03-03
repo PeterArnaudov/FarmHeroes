@@ -6,6 +6,8 @@
 
     public interface IInventoryService
     {
+        Task<Inventory> GetCurrentHeroInventory();
+
         Task<T> GetCurrentHeroInventoryViewModel<T>();
 
         Task Upgrade();

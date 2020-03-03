@@ -5,6 +5,8 @@
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
@@ -13,11 +15,15 @@
     {
         private readonly IHeroService heroService;
         private readonly FarmHeroesDbContext context;
+        private readonly IHttpContextAccessor httpContext;
+        private readonly ITempDataDictionaryFactory tempDataDictionaryFactory;
 
-        public EquipmentService(IHeroService heroService, FarmHeroesDbContext context)
+        public EquipmentService(IHeroService heroService, FarmHeroesDbContext context, IHttpContextAccessor httpContext, ITempDataDictionaryFactory tempDataDictionaryFactory)
         {
             this.heroService = heroService;
             this.context = context;
+            this.httpContext = httpContext;
+            this.tempDataDictionaryFactory = tempDataDictionaryFactory;
         }
 
         public async Task<EquippedSet> GetCurrentHeroEquipedSet()
@@ -56,6 +62,10 @@
             equippedSet.Equipped.Add(heroEquipment);
 
             await this.context.SaveChangesAsync();
+
+            this.tempDataDictionaryFactory
+                .GetTempData(this.httpContext.HttpContext)
+                .Add("Alert", $"You equipped {heroEquipment.Name}.");
         }
 
         private async Task<HeroEquipment> GetHeroEquipmentById(int id)

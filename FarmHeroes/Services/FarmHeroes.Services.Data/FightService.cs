@@ -113,13 +113,13 @@
             EquippedSet attackerSet = await this.equipmentService.GetCurrentHeroEquipedSet();
             EquippedSet defenderSet = await this.equipmentService.GetEquippedSetById(defender.EquippedSetId);
 
-            int attackerAttack = attacker.Characteristics.Attack + this.CalculateAttackFromSet(attackerSet);
-            int attackerDefense = attacker.Characteristics.Defense + this.CalculateDefenseFromSet(attackerSet);
-            int attackerMastery = attacker.Characteristics.Mastery + this.CalculateMasteryFromSet(attackerSet);
+            int attackerAttack = attacker.Characteristics.Attack + FightFormulas.CalculateAttackFromSet(attackerSet);
+            int attackerDefense = attacker.Characteristics.Defense + FightFormulas.CalculateDefenseFromSet(attackerSet);
+            int attackerMastery = attacker.Characteristics.Mastery + FightFormulas.CalculateMasteryFromSet(attackerSet);
             int attackerMass = attacker.Characteristics.Mass;
-            int defenderAttack = defender.Characteristics.Attack + this.CalculateAttackFromSet(defenderSet);
-            int defenderDefense = defender.Characteristics.Defense + this.CalculateDefenseFromSet(defenderSet);
-            int defenderMastery = defender.Characteristics.Mastery + this.CalculateMasteryFromSet(defenderSet);
+            int defenderAttack = defender.Characteristics.Attack + FightFormulas.CalculateAttackFromSet(defenderSet);
+            int defenderDefense = defender.Characteristics.Defense + FightFormulas.CalculateDefenseFromSet(defenderSet);
+            int defenderMastery = defender.Characteristics.Mastery + FightFormulas.CalculateMasteryFromSet(defenderSet);
             int defenderMass = defender.Characteristics.Mass;
             int?[] attackerHits = new int?[5];
             int?[] defenderHits = new int?[5];
@@ -318,9 +318,9 @@
 
             EquippedSet attackerSet = await this.equipmentService.GetCurrentHeroEquipedSet();
 
-            int attackerAttack = attacker.Characteristics.Attack + this.CalculateAttackFromSet(attackerSet);
-            int attackerDefense = attacker.Characteristics.Defense + this.CalculateDefenseFromSet(attackerSet);
-            int attackerMastery = attacker.Characteristics.Mastery + this.CalculateMasteryFromSet(attackerSet);
+            int attackerAttack = attacker.Characteristics.Attack + FightFormulas.CalculateAttackFromSet(attackerSet);
+            int attackerDefense = attacker.Characteristics.Defense + FightFormulas.CalculateDefenseFromSet(attackerSet);
+            int attackerMastery = attacker.Characteristics.Mastery + FightFormulas.CalculateMasteryFromSet(attackerSet);
             int attackerMass = attacker.Characteristics.Mass;
 
             int?[] attackerHits = new int?[5];
@@ -461,21 +461,6 @@
             TViewModel viewModel = this.mapper.Map<TViewModel>(fight);
 
             return viewModel;
-        }
-
-        private int CalculateAttackFromSet(EquippedSet equippedSet)
-        {
-            return equippedSet.Equipped.Sum(x => x.Attack);
-        }
-
-        private int CalculateDefenseFromSet(EquippedSet equippedSet)
-        {
-            return equippedSet.Equipped.Sum(x => x.Defense);
-        }
-
-        private int CalculateMasteryFromSet(EquippedSet equippedSet)
-        {
-            return equippedSet.Equipped.Sum(x => x.Mastery);
         }
     }
 }

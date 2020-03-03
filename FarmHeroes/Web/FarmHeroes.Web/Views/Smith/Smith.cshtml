@@ -1,0 +1,33 @@
+﻿@model FarmHeroes.Web.ViewModels.SmithModels.SmithViewModel
+@{
+    ViewData["Title"] = "Smith";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<div>
+    <img src="~/images/village/smith/smith.jpg" alt="village-image" class="d-block img-fluid ml-auto mr-auto mb-3">
+    <img src="~/images/icons/info-icon.png" alt="info" class="img-fluid ml-2 mt-2 info-icon" data-toggle="tooltip" data-placement="bottom" title="Upgrading equipment increases the characteristics you receive from all equipped items by percent equal to their level.<br><br>Helmets give extra mastery.<br>Armor gives extra dexterity.<br>Weapons give extra attack.<br>Shields give extra defense.">
+</div>
+
+@foreach (var item in Model.Items)
+{
+    <div class="row mt-2">
+        <img src="@item.ImageUrl" alt="weapon-1" class="col-2">
+        <div class="col-8 m-auto">
+            <p><span class="text-uppercase">@item.Name</span> | Level: @item.Level/25</p>
+            <p class="m-auto">
+                Stats: @if (item.Attack > 0)
+                {<span>@item.Attack <img src="~/images/icons/attack-icon.png" alt="attack" class="icon"></span>}
+                @if (item.Defense > 0)
+                {<span>@item.Defense <img src="~/images/icons/defense-icon.png" alt="defense" class="icon"></span>}
+                @if (item.Mastery > 0)
+                {<span>@item.Mastery <img src="~/images/icons/mastery-icon.png" alt="mastery" class="icon"></span>}
+            </p>
+            <p class="m-auto">Upgrade cost: @item.UpgradeCost <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
+        </div>
+        <div class="col-2 m-auto text-center">
+            <a href="/Smith/Upgrade/@item.Id" class="btn btn-primary btn-block">Upgrade</a>
+        </div>
+    </div>
+}
+

@@ -19,6 +19,7 @@
     using FarmHeroes.Web.ViewModels.MineModels;
     using FarmHeroes.Web.ViewModels.NotificationModels;
     using FarmHeroes.Web.ViewModels.ShopModels;
+    using FarmHeroes.Web.ViewModels.SmithModels;
     using FarmHeroes.Web.ViewModels.StatisticsModels;
     using FarmHeroes.Web.ViewModels.ViewComponentsModels;
 
@@ -87,8 +88,14 @@
             this.CreateMap<Inventory, InventoryViewModel>()
                 .ForMember(x => x.UpgradeCost, cfg => cfg.MapFrom(x => InventoryFormulas.CalculateUpgradeCost(x.MaximumCapacity)));
 
+            this.CreateMap<HeroEquipment, SmithEquipmentViewModel>()
+                .ForMember(x => x.UpgradeCost, cfg => cfg.MapFrom(x => SmithFormulas.CalculateEquipmentUpgradeCost(x)));
+
             this.CreateMap<ShopEquipment[], ShopViewModel>()
                 .ForMember(x => x.Items, cfg => cfg.MapFrom(x => x));
+
+            this.CreateMap<Inventory, SmithViewModel>()
+                .ForMember(x => x.Items, cfg => cfg.MapFrom(x => x.Items));
 
             this.CreateMap<ShopEquipment, EquipmentViewModel>();
 
