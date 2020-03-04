@@ -27,79 +27,58 @@
         [HttpGet("HealPill")]
         public async Task<ActionResult<object>> HealPill()
         {
-            try
+            await this.healthService.HealCurrentHero(PillHealAmount, PillCost);
+
+            Health health = await this.healthService.GetCurrentHeroHealth();
+            ResourcePouch resources = await this.resourcePouchService.GetCurrentHeroResources();
+
+            object result = new
             {
-                await this.healthService.HealCurrentHero(PillHealAmount, PillCost);
+                health.Current,
+                health.Maximum,
+                resources.Gold,
+                resources.Crystals,
+            };
 
-                Health health = await this.healthService.GetCurrentHeroHealth();
-                ResourcePouch resources = await this.resourcePouchService.GetCurrentHeroResources();
-
-                object result = new
-                {
-                    health.Current,
-                    health.Maximum,
-                    resources.Gold,
-                    resources.Crystals,
-                };
-
-                return result;
-            }
-            catch
-            {
-                return this.BadRequest();
-            }
+            return result;
         }
 
         [HttpGet("HealElixir")]
         public async Task<ActionResult<object>> HealElixir()
         {
-            try
+            await this.healthService.HealCurrentHero(ElixirHealAmount, ElixirCost);
+
+            Health health = await this.healthService.GetCurrentHeroHealth();
+            ResourcePouch resources = await this.resourcePouchService.GetCurrentHeroResources();
+
+            object result = new
             {
-                await this.healthService.HealCurrentHero(ElixirHealAmount, ElixirCost);
+                health.Current,
+                health.Maximum,
+                resources.Gold,
+                resources.Crystals,
+            };
 
-                Health health = await this.healthService.GetCurrentHeroHealth();
-                ResourcePouch resources = await this.resourcePouchService.GetCurrentHeroResources();
-
-                object result = new
-                {
-                    health.Current,
-                    health.Maximum,
-                    resources.Gold,
-                    resources.Crystals,
-                };
-
-                return result;
-            }
-            catch
-            {
-                return this.BadRequest();
-            }
+            return result;
         }
 
         [HttpGet("HealPotion")]
         public async Task<ActionResult<object>> HealPotion()
         {
-            try
+            await this.healthService.HealCurrentHeroToMaximum(PotionCost);
+
+            Health health = await this.healthService.GetCurrentHeroHealth();
+            ResourcePouch resources = await this.resourcePouchService.GetCurrentHeroResources();
+
+            object result = new
             {
-                await this.healthService.HealCurrentHeroToMaximum(PotionCost);
+                health.Current,
+                health.Maximum,
+                resources.Gold,
+                resources.Crystals,
+            };
 
-                Health health = await this.healthService.GetCurrentHeroHealth();
-                ResourcePouch resources = await this.resourcePouchService.GetCurrentHeroResources();
-
-                object result = new
-                {
-                    health.Current,
-                    health.Maximum,
-                    resources.Gold,
-                    resources.Crystals,
-                };
-
-                return result;
-            }
-            catch
-            {
-                return this.BadRequest();
-            }
+            return result;
         }
     }
 }

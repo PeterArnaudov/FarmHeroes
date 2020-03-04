@@ -23,92 +23,64 @@
         [HttpGet("PracticeAttack")]
         public async Task<ActionResult<object>> PracticeAttack()
         {
-            try
-            {
-                int attack = await this.characteristicsService.IncreaseAttack();
+            int attack = await this.characteristicsService.IncreaseAttack();
 
-                object result = new
-                {
-                    Stat = attack,
-                    Price = CharacteristicsFormulas.CalculateAttackPrice(attack),
-                    this.resourcePouchService.GetCurrentHeroResources().Result.Gold,
-                };
-
-                return result;
-            }
-            catch
+            object result = new
             {
-                return this.BadRequest();
-            }
+                Stat = attack,
+                Price = CharacteristicsFormulas.CalculateAttackPrice(attack),
+                this.resourcePouchService.GetCurrentHeroResources().Result.Gold,
+            };
+
+            return result;
         }
 
         [HttpGet("PracticeDefense")]
         public async Task<ActionResult<object>> PracticeDefense()
         {
-            try
-            {
-                int defense = await this.characteristicsService.IncreaseDefense();
+            int defense = await this.characteristicsService.IncreaseDefense();
 
-                object result = new
-                {
-                    Stat = defense,
-                    Price = CharacteristicsFormulas.CalculateDefensePrice(defense),
-                    this.resourcePouchService.GetCurrentHeroResources().Result.Gold,
-                };
-
-                return result;
-            }
-            catch
+            object result = new
             {
-                return this.BadRequest();
-            }
+                Stat = defense,
+                Price = CharacteristicsFormulas.CalculateDefensePrice(defense),
+                this.resourcePouchService.GetCurrentHeroResources().Result.Gold,
+            };
+
+            return result;
         }
 
         [HttpGet("PracticeMass")]
         public async Task<ActionResult<object>> PracticeMass()
         {
-            try
-            {
-                int mass = await this.characteristicsService.IncreaseMass();
-                Health health = await this.healthService.GetCurrentHeroHealth();
+            int mass = await this.characteristicsService.IncreaseMass();
+            Health health = await this.healthService.GetCurrentHeroHealth();
 
-                object result = new
-                {
-                    Stat = mass,
-                    Price = CharacteristicsFormulas.CalculateMassPrice(mass),
-                    this.resourcePouchService.GetCurrentHeroResources().Result.Gold,
-                    health.Current,
-                    health.Maximum,
-                };
-
-                return result;
-            }
-            catch
+            object result = new
             {
-                return this.BadRequest();
-            }
+                Stat = mass,
+                Price = CharacteristicsFormulas.CalculateMassPrice(mass),
+                this.resourcePouchService.GetCurrentHeroResources().Result.Gold,
+                health.Current,
+                health.Maximum,
+            };
+
+            return result;
         }
 
         [HttpGet("PracticeMastery")]
         public async Task<ActionResult<object>> PracticeMastery()
         {
-            try
-            {
-                int mastery = await this.characteristicsService.IncreaseMastery();
+            int mastery = await this.characteristicsService.IncreaseMastery();
 
-                object result = new
-                {
-                    Stat = mastery,
-                    Price = CharacteristicsFormulas.CalculateDefensePrice(mastery),
-                    this.resourcePouchService.GetCurrentHeroResources().Result.Gold,
-                };
-
-                return result;
-            }
-            catch
+            object result = new
             {
-                return this.BadRequest();
-            }
+                Stat = mastery,
+                Price = CharacteristicsFormulas.CalculateDefensePrice(mastery),
+                this.resourcePouchService.GetCurrentHeroResources().Result.Gold,
+            };
+
+            return result;
         }
     }
 }

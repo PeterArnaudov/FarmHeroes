@@ -28,8 +28,6 @@
         [HttpGet("StartWork/{location}")]
         public async Task<ActionResult<object>> StartWork(string location)
         {
-            try
-            {
                 int hours = 0;
                 int minutes = 0;
                 int seconds = 0;
@@ -54,19 +52,12 @@
                     Seconds = seconds,
                 };
 
-                return result;
-            }
-            catch
-            {
-                return this.BadRequest();
-            }
+            return result;
         }
 
         [HttpGet("Collect/{location}")]
         public async Task<ActionResult<CollectedResourcesViewModel>> Collect(string location)
         {
-            try
-            {
                 CollectedResourcesViewModel collectedResources = new CollectedResourcesViewModel();
 
                 if (location == "farm")
@@ -83,18 +74,11 @@
                 }
 
                 return collectedResources;
-            }
-            catch
-            {
-                return this.BadRequest();
-            }
         }
 
         [HttpGet("CancelWork")]
         public async Task<ActionResult<object>> CancelWork()
         {
-            try
-            {
                 await this.chronometerService.NullifyWorkUntil();
 
                 object result = new
@@ -103,11 +87,6 @@
                 };
 
                 return result;
-            }
-            catch
-            {
-                return this.BadRequest();
-            }
         }
     }
 }

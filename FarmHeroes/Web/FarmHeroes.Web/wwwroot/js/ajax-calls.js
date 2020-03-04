@@ -15,12 +15,10 @@
             $('#current-gold').text(data.gold);
             $('#current-crystals').text(data.crystals);
         })
-        .fail(() => {
-            if ($('.alert-danger').length == 0) {
-                let $alert = $(`<div class='alert alert-danger alert-dismissible fade show' role='alert'>You don't have enough ${type == "Potion" ? 'crystals' : 'gold'}.<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
-                $(".modal-body").prepend($alert);
-                $alert.fadeOut(2000, function () { $(this).remove() });
-            }
+        .fail((error) => {
+            let $alert = $(`<div class='alert alert-danger alert-dismissible fade show' role='alert'><h4 class='alert-heading font-weight-bolder'>Oups! Something went wrong.</h4><p class='mb-0'><span class='font-weight-bold'>Cause: </span>Not enough resources.</p><p><span class='font-weight-bold'>Instructions: </span>You don't have enough resources.</p><hr><p class='mb-0 text-muted font-italic text-right'>You might have gone against the rules and tried to do something not allowed.</p><button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
+            $("#view-body").prepend($alert);
+            $alert.fadeOut(2000, function () { $(this).remove() });
         });
 };
 
@@ -45,12 +43,10 @@ function practice(stat) {
                 $('#health-status > div > strong').text(`${Math.floor(data.current / data.maximum * 100)}%`);
             }
         })
-        .fail(() => {
-            if ($('.alert-danger').length == 0) {
-                let $alert = $(`<div class='alert alert-danger alert-dismissible fade show' role='alert'>You don't have enough gold.<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
-                $("#view-body").prepend($alert);
-                $alert.fadeOut(2000, function () { $(this).remove() });
-            }
+        .fail((error) => {
+            let $alert = $(`<div class='alert alert-danger alert-dismissible fade show' role='alert'><h4 class='alert-heading font-weight-bolder'>Oups! Something went wrong.</h4><p class='mb-0'><span class='font-weight-bold'>Cause: </span>Not enough resources.</p><p><span class='font-weight-bold'>Instructions: </span>You don't have enough resources.</p><hr><p class='mb-0 text-muted font-italic text-right'>You might have gone against the rules and tried to do something not allowed.</p><button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
+            $("#view-body").prepend($alert);
+            $alert.fadeOut(2000, function () { $(this).remove() });
         });
 };
 
@@ -85,8 +81,8 @@ function startWork(location) {
             timerFunction(data.hours, data.minutes, data.seconds, location);
             timerFunction(data.hours, data.minutes, data.seconds, "work_0");
         })
-        .fail(() => {
-            let $alert = $(`<div class='alert alert-danger alert-dismissible fade show' role='alert'>You can't start working right now.<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
+        .fail((error) => {
+            let $alert = $(`<div class='alert alert-danger alert-dismissible fade show' role='alert'><h4 class='alert-heading font-weight-bolder'>Oups! Something went wrong.</h4><p class='mb-0'><span class='font-weight-bold'>Cause: </span>${error.responseJSON.message}</p><p><span class='font-weight-bold'>Instructions: </span>${error.responseJSON.instructions}</p><hr><p class='mb-0 text-muted font-italic text-right'>You might have gone against the rules and tried to do something not allowed.</p><button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
             $("#view-body").prepend($alert);
             $alert.fadeOut(2000, function () { $(this).remove() });
         });
@@ -125,8 +121,8 @@ function cancelWork(location) {
             $('#work_0').addClass("stop");
             $('#work_0').text("00:00:00");
         })
-        .fail(() => {
-            let $alert = $(`<div class='alert alert-danger alert-dismissible fade show' role='alert'>You can't stop working.<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
+        .fail((error) => {
+            let $alert = $(`<div class='alert alert-danger alert-dismissible fade show' role='alert'><h4 class='alert-heading font-weight-bolder'>Oups! Something went wrong.</h4><p class='mb-0'><span class='font-weight-bold'>Cause: </span>${error.responseJSON.message}</p><p><span class='font-weight-bold'>Instructions: </span>${error.responseJSON.instructions}</p><hr><p class='mb-0 text-muted font-italic text-right'>You might have gone against the rules and tried to do something not allowed.</p><button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
             $("#view-body").prepend($alert);
             $alert.fadeOut(2000, function () { $(this).remove() });
         });
@@ -166,8 +162,8 @@ function collect(location) {
             $('#current-gold').text(Number($('#current-gold').text()) + Number(data.gold));
             $('#current-crystals').text(Number($('#current-crystals').text()) + Number(data.crystals));
         })
-        .fail(() => {
-            let $alert = $(`<div class='alert alert-danger alert-dismissible fade show' role='alert'>You can't collect your rewards.<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
+        .fail((error) => {
+            let $alert = $(`<div class='alert alert-danger alert-dismissible fade show' role='alert'><h4 class='alert-heading font-weight-bolder'>Oups! Something went wrong.</h4><p class='mb-0'><span class='font-weight-bold'>Cause: </span>${error.responseJSON.message}</p><p><span class='font-weight-bold'>Instructions: </span>${error.responseJSON.instructions}</p><hr><p class='mb-0 text-muted font-italic text-right'>You might have gone against the rules and tried to do something not allowed.</p><button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
             $("#view-body").prepend($alert);
             $alert.fadeOut(2000, function () { $(this).remove() });
         });
