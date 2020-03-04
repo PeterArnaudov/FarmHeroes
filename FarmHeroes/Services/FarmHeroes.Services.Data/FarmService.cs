@@ -84,10 +84,5 @@
 
             return collectedResources;
         }
-
-        public async Task CancelWork()
-        {
-            await this.chronometerService.NullifyWorkUntil();
-        }
     }
 }

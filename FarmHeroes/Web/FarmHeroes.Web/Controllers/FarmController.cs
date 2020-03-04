@@ -13,12 +13,10 @@
     public class FarmController : BaseController
     {
         private readonly IHeroService heroService;
-        private readonly IFarmService farmService;
 
-        public FarmController(IHeroService heroService, IFarmService farmService)
+        public FarmController(IHeroService heroService)
         {
             this.heroService = heroService;
-            this.farmService = farmService;
         }
 
         [Route("/Farm")]

@@ -48,8 +48,6 @@
 
         public async Task<int> StartPatrol()
         {
-            Chronometer chronometer = await this.chronometerService.GetCurrentHeroChronometer();
-
             await this.chronometerService.SetWorkUntil(PatrolDurationInMinutes, WorkStatus.Battlefield);
 
             return PatrolDurationInMinutes;

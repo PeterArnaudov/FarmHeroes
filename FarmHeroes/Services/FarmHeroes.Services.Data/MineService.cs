@@ -8,8 +8,6 @@
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Web.ViewModels.ResourcePouchModels;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
     public class MineService : IMineService
     {
@@ -30,16 +28,6 @@
 
         public async Task<int> InitiateDig()
         {
-            Chronometer chronometer = await this.chronometerService.GetCurrentHeroChronometer();
-
-            if (chronometer.WorkUntil != null)
-            {
-                throw new FarmHeroesException(
-                    "You already work somewhere.",
-                    "You should cancel your current work before trying to start digging.",
-                    "/Mine");
-            }
-
             await this.chronometerService.SetWorkUntil(DigDuration, WorkStatus.Mine);
 
             return DigDuration;
@@ -80,11 +68,6 @@
             await this.statisticsService.UpdateStatistics(hero.Statistics);
 
             return collectedResources;
-        }
-
-        public async Task CancelDig()
-        {
-            await this.chronometerService.NullifyWorkUntil();
         }
     }
 }

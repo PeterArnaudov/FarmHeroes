@@ -9,7 +9,5 @@
         Task<int> InitiateDig();
 
         Task<CollectedResourcesViewModel> Collect();
-
-        Task CancelDig();
     }
 }

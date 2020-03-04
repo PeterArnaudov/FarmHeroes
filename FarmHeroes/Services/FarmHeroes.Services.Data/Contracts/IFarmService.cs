@@ -9,7 +9,5 @@
         Task<int> StartWork();
 
         Task<CollectedResourcesViewModel> Collect();
-
-        Task CancelWork();
     }
 }
