@@ -6,15 +6,18 @@
 
 <img src="~/images/village/shop/shop.jpg" alt="village-image" class="d-block img-fluid ml-auto mr-auto mb-3">
 <div class="row">
-    <a href="/Shop/Helmet" class="col-3 btn btn-outline-primary border-left-0 border-right-0">Helmets</a>
-    <a href="/Shop/Armor" class="col-3 btn btn-outline-primary">Armor</a>
-    <a href="/Shop/Weapon" class="col-3 btn btn-outline-primary border-left-0 border-right-0">Weapons</a>
-    <a href="/Shop/Shield" class="col-3 btn btn-outline-primary border-right-0">Shields</a>
+    <span class="col-1"></span>
+    <a href="/Shop/Helmet" class="col-2 btn btn-outline-primary border-left-0 border-right-0">Helmets</a>
+    <a href="/Shop/Armor" class="col-2 btn btn-outline-primary">Armor</a>
+    <a href="/Shop/Weapon" class="col-2 btn btn-outline-primary border-left-0 border-right-0">Weapons</a>
+    <a href="/Shop/Shield" class="col-2 btn btn-outline-primary border-right-0">Shields</a>
+    <a href="/Shop/Amulet" class="col-2 btn btn-outline-primary border-right-0">Amulets</a>
+    <span class="col-1"></span>
 </div>
 @foreach (var item in Model.Items)
 {
     <div class="row mt-2">
-        <img src="@item.ImageUrl" alt="weapon-1" class="img-fluid col-2 item-image">
+        <img src="@item.ImageUrl" alt="equipment" class="img-fluid col-2 item-image">
         <div class="col-8 m-auto">
             <p><span class="text-uppercase">@item.Name</span> | Required level: @item.RequiredLevel</p>
             <p class="m-auto">

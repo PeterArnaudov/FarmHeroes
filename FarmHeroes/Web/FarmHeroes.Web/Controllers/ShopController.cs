@@ -25,11 +25,26 @@
             return this.View(viewModel);
         }
 
+        [Route("/Shop/Amulet")]
+        public async Task<IActionResult> AmuletShop()
+        {
+            AmuletShopViewModel viewModel = await this.shopService.GetAmuletShopViewModel<AmuletShopViewModel>();
+
+            return this.View(viewModel);
+        }
+
         public async Task<IActionResult> Buy(int id)
         {
             string type = await this.shopService.Sell(id);
 
             return this.Redirect($"/Shop/{type}");
+        }
+
+        public async Task<IActionResult> BuyAmulet(int id)
+        {
+            await this.shopService.SellAmulet(id);
+
+            return this.Redirect("/Shop/Amulet");
         }
     }
 }

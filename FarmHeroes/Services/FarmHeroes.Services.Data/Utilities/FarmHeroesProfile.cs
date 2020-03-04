@@ -1,7 +1,7 @@
 ﻿namespace Farmheroes.Services.Data.Utilities
 {
     using System;
-
+    using System.Linq;
     using AutoMapper;
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.FightModels;
@@ -91,15 +91,26 @@
             this.CreateMap<HeroEquipment, SmithEquipmentViewModel>()
                 .ForMember(x => x.UpgradeCost, cfg => cfg.MapFrom(x => SmithFormulas.CalculateEquipmentUpgradeCost(x)));
 
+            this.CreateMap<HeroAmulet, SmithAmuletViewModel>()
+                .ForMember(x => x.UpgradeCost, cfg => cfg.MapFrom(x => SmithFormulas.CalculateAmuletUpgradeCost(x)));
+
             this.CreateMap<ShopEquipment[], ShopViewModel>()
                 .ForMember(x => x.Items, cfg => cfg.MapFrom(x => x));
 
+            this.CreateMap<ShopAmulet[], AmuletShopViewModel>()
+                .ForMember(x => x.Items, cfg => cfg.MapFrom(x => x));
+
             this.CreateMap<Inventory, SmithViewModel>()
-                .ForMember(x => x.Items, cfg => cfg.MapFrom(x => x.Items));
+                .ForMember(x => x.Items, cfg => cfg.MapFrom(x => x.Items.Where(x => x.Level < 25)))
+                .ForMember(x => x.Amulets, cfg => cfg.MapFrom(x => x.Amulets.Where(x => x.Level < 100)));
 
             this.CreateMap<ShopEquipment, EquipmentViewModel>();
 
             this.CreateMap<HeroEquipment, EquipmentViewModel>();
+
+            this.CreateMap<ShopAmulet, AmuletViewModel>();
+
+            this.CreateMap<HeroAmulet, AmuletViewModel>();
 
             this.CreateMap<Fight, FightLogViewModel>();
 

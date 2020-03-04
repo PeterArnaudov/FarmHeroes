@@ -11,5 +11,7 @@
         public int UpgradeCost { get; set; }
 
         public List<HeroEquipment> Items { get; set; }
+
+        public List<HeroAmulet> Amulets { get; set; }
     }
 }

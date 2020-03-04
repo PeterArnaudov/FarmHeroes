@@ -11,5 +11,7 @@
         Task<EquippedSet> GetEquippedSetById(int id);
 
         Task Equip(int id);
+
+        Task EquipAmulet(int id);
     }
 }

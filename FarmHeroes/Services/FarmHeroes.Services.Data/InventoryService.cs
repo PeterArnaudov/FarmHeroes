@@ -67,6 +67,15 @@
             await this.context.SaveChangesAsync();
         }
 
+        public async Task InsertAmulet(HeroAmulet heroAmulet)
+        {
+            Inventory inventory = await this.GetCurrentHeroInventory();
+
+            inventory.Amulets.Add(heroAmulet);
+
+            await this.context.SaveChangesAsync();
+        }
+
         public async Task Upgrade()
         {
             Inventory inventory = await this.GetCurrentHeroInventory();
@@ -94,8 +103,17 @@
         {
             Inventory inventory = await this.GetCurrentHeroInventory();
             HeroEquipment itemToRemove = inventory.Items.Find(i => i.Id == id);
+            HeroAmulet amuletToRemove = inventory.Amulets.Find(a => a.Id == id);
 
-            if (itemToRemove == null)
+            if (itemToRemove != null)
+            {
+                this.context.HeroEquipments.Remove(itemToRemove);
+            }
+            else if (amuletToRemove != null)
+            {
+                this.context.HeroAmulets.Remove(amuletToRemove);
+            }
+            else
             {
                 throw new FarmHeroesException(
                     "You cannot trash an item that isn't in your inventory.",
@@ -103,13 +121,11 @@
                     "/Inventory");
             }
 
-            this.context.HeroEquipments.Remove(itemToRemove);
-
             await this.context.SaveChangesAsync();
 
             this.tempDataDictionaryFactory
                 .GetTempData(this.httpContext.HttpContext)
-                .Add("Alert", $"You trashed {itemToRemove.Name}.");
+                .Add("Alert", $"You trashed the desired item successfully.");
         }
     }
 }

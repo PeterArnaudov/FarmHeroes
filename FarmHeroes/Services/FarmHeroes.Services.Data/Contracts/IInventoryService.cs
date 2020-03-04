@@ -15,5 +15,7 @@
         Task Trash(int id);
 
         Task InsertEquipment(HeroEquipment heroEquipment);
+
+        Task InsertAmulet(HeroAmulet heroAmulet);
     }
 }

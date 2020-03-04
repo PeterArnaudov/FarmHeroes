@@ -2,8 +2,8 @@
 {
     using FarmHeroes.Web.ViewModels.EquipmentModels;
 
-    public class ShopViewModel
+    public class AmuletShopViewModel
     {
-        public EquipmentViewModel[] Items { get; set; }
+        public AmuletViewModel[] Items { get; set; }
     }
 }

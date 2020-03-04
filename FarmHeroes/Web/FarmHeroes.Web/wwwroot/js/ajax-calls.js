@@ -138,7 +138,7 @@ function collect(location) {
         url: `/api/Work/Collect/${location}`
     })
         .done((data) => {
-            let $alert = $(`<div class='alert alert-success alert-dismissible fade show' role='alert'>You collected ${data.gold > 0 ? data.gold + ' <img src="https://i.ibb.co/pydK7G8/gold-icon.png" alt="gold" class="icon">' : ' '}${data.crystals > 0 ? data.crystals + ' <img src="https://i.ibb.co/16YwfNK/crystal-icon.png" alt="crystals" class="icon">' : ' '}${data.experience > 0 ? data.experience + ' <img src="https://i.ibb.co/Zc9nWH1/experience-icon.png" alt="experience" class="icon">' : ''}<img>.<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
+            let $alert = $(`<div class='alert alert-success alert-dismissible fade show' role='alert'>You collected ${data.gold > 0 ? data.gold + ' <img src="https://i.ibb.co/pydK7G8/gold-icon.png" alt="gold" class="icon">' : ' '}${data.crystals > 0 ? data.crystals + ' <img src="https://i.ibb.co/16YwfNK/crystal-icon.png" alt="crystals" class="icon">' : ' '}${data.experience > 0 ? data.experience + ' <img src="https://i.ibb.co/Zc9nWH1/experience-icon.png" alt="experience" class="icon">' : ''}<img>.${data.amuletActivated == true ? ' Your amulet activated.' : ''}<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
             $("#view-body").prepend($alert);
             $alert.fadeOut(5000, function () { $(this).remove() });
 

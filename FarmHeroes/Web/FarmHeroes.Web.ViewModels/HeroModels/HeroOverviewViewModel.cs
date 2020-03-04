@@ -25,6 +25,8 @@
 
         public EquipmentViewModel EquippedSetShield { get; set; }
 
+        public AmuletViewModel EquippedSetAmulet { get; set; }
+
         public long Attack { get; set; }
 
         public long Defense { get; set; }

@@ -68,11 +68,41 @@
                 .Add("Alert", $"You equipped {heroEquipment.Name}.");
         }
 
+        public async Task EquipAmulet(int id)
+        {
+            Hero hero = await this.heroService.GetCurrentHero();
+            HeroAmulet heroAmulet = await this.GetHeroAmuletById(id);
+            EquippedSet equippedSet = await this.GetCurrentHeroEquipedSet();
+
+            if (hero.InventoryId != heroAmulet.InventoryId)
+            {
+                throw new FarmHeroesException(
+                    "You cannot equip an item that isn't yours.",
+                    "Go buy yourself items.",
+                    "/Inventory");
+            }
+
+            equippedSet.Amulet = heroAmulet;
+
+            await this.context.SaveChangesAsync();
+
+            this.tempDataDictionaryFactory
+                .GetTempData(this.httpContext.HttpContext)
+                .Add("Alert", $"You equipped {heroAmulet.Name}.");
+        }
+
         private async Task<HeroEquipment> GetHeroEquipmentById(int id)
         {
             HeroEquipment heroEquipment = await this.context.HeroEquipments.FindAsync(id);
 
             return heroEquipment;
+        }
+
+        private async Task<HeroAmulet> GetHeroAmuletById(int id)
+        {
+            HeroAmulet heroAmulet = await this.context.HeroAmulets.FindAsync(id);
+
+            return heroAmulet;
         }
     }
 }

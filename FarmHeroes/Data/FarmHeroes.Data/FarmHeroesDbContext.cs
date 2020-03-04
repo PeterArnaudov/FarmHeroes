@@ -55,6 +55,10 @@
 
         public virtual DbSet<ShopEquipment> ShopEquipments { get; set; }
 
+        public virtual DbSet<HeroAmulet> HeroAmulets { get; set; }
+
+        public virtual DbSet<ShopAmulet> ShopAmulets { get; set; }
+
         public virtual DbSet<Monster> Monsters { get; set; }
 
         public virtual DbSet<Fight> Fights { get; set; }

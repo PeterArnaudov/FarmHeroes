@@ -12,7 +12,7 @@
 @foreach (var item in Model.Items)
 {
     <div class="row mt-2">
-        <img src="@item.ImageUrl" alt="weapon-1" class="col-2">
+        <img src="@item.ImageUrl" alt="equipment" class="col-2">
         <div class="col-8 m-auto">
             <p><span class="text-uppercase">@item.Name</span> | Level: @item.Level/25</p>
             <p class="m-auto">
@@ -29,5 +29,23 @@
             <a href="/Smith/Upgrade/@item.Id" class="btn btn-primary btn-block">Upgrade</a>
         </div>
     </div>
+}
+@if (Model.Amulets.Length > 0)
+{
+    <hr class="bg-primary" />
+    @foreach (var item in Model.Amulets)
+    {
+        <div class="row mt-2">
+            <img src="@item.ImageUrl" alt="amulet" class="img-fluid col-2 item-image">
+            <div class="col-8 m-auto">
+                <p><span class="text-uppercase">@item.Name</span> | Current chance: @item.Bonus% | Next level: @(item.Bonus + (item.Level == 99 ? item.InitialBonus * 101 : item.InitialBonus))%</p>
+                <p class="m-auto">@item.Description</p>
+                <p class="m-auto">Upgrade cost: @item.UpgradeCost <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
+            </div>
+            <div class="col-2 m-auto text-center">
+                <a href="/Smith/UpgradeAmulet/@item.Id" class="btn btn-primary btn-block">Upgrade</a>
+            </div>
+        </div>
+    }
 }
 

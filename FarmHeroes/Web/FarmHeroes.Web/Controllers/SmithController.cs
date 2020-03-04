@@ -31,5 +31,12 @@
 
             return this.Redirect("/Smith");
         }
+
+        public async Task<IActionResult> UpgradeAmulet(int id)
+        {
+            await this.smithService.UpgradeAmulet(id);
+
+            return this.Redirect("/Smith");
+        }
     }
 }

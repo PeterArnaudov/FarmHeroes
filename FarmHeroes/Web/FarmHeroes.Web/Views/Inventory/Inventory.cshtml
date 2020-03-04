@@ -23,7 +23,7 @@
 <div class="row ml-1 mr-1">
     @if (Model.Items.Count > 0)
     {
-        @foreach (var item in Model.Items)
+        foreach (var item in Model.Items)
         {
             <div class="position-relative equipment-box m-2" onclick="showActions(this)">
                 <img src="@item.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="top" title="@item.Name<br><img src='https://i.ibb.co/6m3nn3N/level-icon.png' class='icon'>: @item.Level@if (item.Attack > 0) {<br><span><img src='https://i.ibb.co/5Y7N5hL/attack-icon.png' class='icon'>: @item.Attack</span>}@if (item.Defense > 0) {<br><span><img src='https://i.ibb.co/cF6vWNY/defense-icon.png' class='icon'>: @item.Defense</span>}@if (item.Mastery > 0) {<br><span><img src='https://i.ibb.co/6R3WBy5/mastery-icon.png' class='icon'>: @item.Mastery</span>}">
@@ -36,7 +36,23 @@
     }
     else
     {
-        <p class="m-auto">You have no items in your inventory.</p>
+        <p class="m-auto">You have no equipment in your inventory.</p>
+    }
+</div>
+<div class="row ml-1 mr-1">
+    @if (Model.Amulets.Count > 0)
+    {
+        <hr class="bg-primary">
+        foreach (var item in Model.Amulets)
+        {
+            <div class="position-relative equipment-box m-2" onclick="showActions(this)">
+                <img src="@item.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="top" title="@item.Name<br><img src='https://i.ibb.co/6m3nn3N/level-icon.png' class='icon'>: @item.Level (@item.Bonus%)<br><br>@item.Description">
+                <div class="d-none">
+                    <a href="/Inventory/EquipAmulet/@item.Id" class="btn btn-sm btn-primary badge-pill d-block mb-1">Equip</a>
+                    <a href="/Inventory/Trash/@item.Id" class="btn btn-sm btn-danger badge-pill d-block">Trash</a>
+                </div>
+            </div>
+        }
     }
 </div>
 

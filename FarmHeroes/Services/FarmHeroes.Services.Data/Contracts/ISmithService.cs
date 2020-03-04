@@ -6,5 +6,7 @@
     public interface ISmithService
     {
         Task Upgrade(int id);
+
+        Task UpgradeAmulet(int id);
     }
 }

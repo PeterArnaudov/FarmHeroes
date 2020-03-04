@@ -9,5 +9,7 @@
         public int Crystals { get; set; }
 
         public int Experience { get; set; }
+
+        public bool AmuletActivated { get; set; }
     }
 }

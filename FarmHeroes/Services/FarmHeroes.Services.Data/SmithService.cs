@@ -13,6 +13,7 @@
     public class SmithService : ISmithService
     {
         private const int HeroEquipmentMaximumLevel = 25;
+        private const int HeroAmuletMaximumLevel = 100;
 
         private readonly IInventoryService inventoryService;
         private readonly IResourcePouchService resourcePouchService;
@@ -59,6 +60,39 @@
             this.tempDataDictionaryFactory
                     .GetTempData(this.httpContext.HttpContext)
                     .Add("Alert", $"You upgraded {heroEquipment.Name}.");
+        }
+
+        public async Task UpgradeAmulet(int id)
+        {
+            Inventory inventory = await this.inventoryService.GetCurrentHeroInventory();
+            HeroAmulet heroAmulet = inventory.Amulets.Find(i => i.Id == id);
+
+            if (heroAmulet == null)
+            {
+                throw new FarmHeroesException(
+                    "You cannot upgrade an item that isn't in your inventory.",
+                    "Choose an item from your inventory.",
+                    "/Smith");
+            }
+            else if (heroAmulet.Level == HeroAmuletMaximumLevel)
+            {
+                throw new FarmHeroesException(
+                    "This item is already upgraded to its maximum level.",
+                    "Choose an item that isn't fully upgraded.",
+                    "/Smith");
+            }
+
+            int cost = SmithFormulas.CalculateAmuletUpgradeCost(heroAmulet);
+            await this.resourcePouchService.DecreaseCurrentHeroCrystals(cost);
+
+            heroAmulet.Bonus += heroAmulet.Level == HeroAmuletMaximumLevel - 1 ? heroAmulet.InitialBonus * 101 : heroAmulet.InitialBonus;
+            heroAmulet.Level++;
+
+            await this.context.SaveChangesAsync();
+
+            this.tempDataDictionaryFactory
+                    .GetTempData(this.httpContext.HttpContext)
+                    .Add("Alert", $"You upgraded {heroAmulet.Name}.");
         }
     }
 }

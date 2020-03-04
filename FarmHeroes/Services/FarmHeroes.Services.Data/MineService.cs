@@ -19,17 +19,13 @@
         private readonly IResourcePouchService resourcePouchService;
         private readonly IStatisticsService statisticsService;
         private readonly IChronometerService chronometerService;
-        private readonly ITempDataDictionaryFactory tempDataDictionaryFactory;
-        private readonly IHttpContextAccessor context;
 
-        public MineService(IHeroService heroService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, IChronometerService chronometerService, ITempDataDictionaryFactory tempDataDictionaryFactory, IHttpContextAccessor context)
+        public MineService(IHeroService heroService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, IChronometerService chronometerService)
         {
             this.heroService = heroService;
             this.resourcePouchService = resourcePouchService;
             this.statisticsService = statisticsService;
             this.chronometerService = chronometerService;
-            this.tempDataDictionaryFactory = tempDataDictionaryFactory;
-            this.context = context;
         }
 
         public async Task<int> InitiateDig()
@@ -53,6 +49,7 @@
         {
             CollectedResourcesViewModel collectedResources = new CollectedResourcesViewModel();
             Hero hero = await this.heroService.GetCurrentHero();
+            HeroAmulet heroAmulet = hero.EquippedSet.Amulet;
 
             if (hero.WorkStatus != WorkStatus.Mine)
             {
@@ -64,6 +61,18 @@
 
             Random random = new Random();
             collectedResources.Crystals = random.Next(1, 5);
+
+            if (heroAmulet.Name == "Crystal Digger")
+            {
+                double chance = random.Next(0, 100);
+
+                if (heroAmulet.Bonus >= chance)
+                {
+                    collectedResources.Crystals *= 2;
+                    collectedResources.AmuletActivated = true;
+                }
+            }
+
             hero.Statistics.EarnedInMines += collectedResources.Crystals;
 
             await this.resourcePouchService.IncreaseCurrentHeroCrystals(collectedResources.Crystals);

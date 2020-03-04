@@ -8,6 +8,10 @@
     {
         Task<T> GetShopViewModel<T>(EquipmentType type);
 
+        Task<T> GetAmuletShopViewModel<T>();
+
         Task<string> Sell(int id);
+
+        Task SellAmulet(int id);
     }
 }

@@ -10,6 +10,10 @@
 
         public virtual List<HeroEquipment> Equipped { get; set; } = new List<HeroEquipment>();
 
+        public int? AmuletId { get; set; }
+
+        public virtual HeroAmulet Amulet { get; set; }
+
         public virtual Hero Hero { get; set; }
     }
 }

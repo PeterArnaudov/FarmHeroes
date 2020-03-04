@@ -47,6 +47,15 @@
             return viewModel;
         }
 
+        public async Task<T> GetAmuletShopViewModel<T>()
+        {
+            ShopAmulet[] shopAmulets = await this.context.ShopAmulets.ToArrayAsync();
+
+            T viewModel = this.mapper.Map<T>(shopAmulets);
+
+            return viewModel;
+        }
+
         public async Task<string> Sell(int id)
         {
             ShopEquipment shopEquipment = await this.context.ShopEquipments.FindAsync(id);
@@ -80,6 +89,29 @@
                 .Add("Alert", $"You bought {heroEquipment.Name}.");
 
             return heroEquipment.Type.ToString();
+        }
+
+        public async Task SellAmulet(int id)
+        {
+            ShopAmulet shopAmulet = await this.context.ShopAmulets.FindAsync(id);
+
+            await this.resourcePouchService.DecreaseCurrentHeroCrystals(shopAmulet.InitialPrice);
+
+            HeroAmulet heroAmulet = new HeroAmulet
+            {
+                Name = shopAmulet.Name,
+                Description = shopAmulet.Description,
+                ImageUrl = shopAmulet.ImageUrl,
+                InitialPrice = shopAmulet.InitialPrice,
+                InitialBonus = shopAmulet.InitialBonus,
+                Bonus = shopAmulet.InitialBonus,
+            };
+
+            await this.inventoryService.InsertAmulet(heroAmulet);
+
+            this.tempDataDictionaryFactory
+                .GetTempData(this.httpContext.HttpContext)
+                .Add("Alert", $"You bought {heroAmulet.Name}.");
         }
     }
 }

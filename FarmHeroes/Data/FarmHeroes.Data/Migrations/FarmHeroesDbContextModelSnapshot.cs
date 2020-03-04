@@ -308,7 +308,14 @@ namespace FarmHeroes.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("AmuletId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("AmuletId")
+                        .IsUnique()
+                        .HasFilter("[AmuletId] IS NOT NULL");
 
                     b.ToTable("EquippedSets");
                 });
@@ -411,6 +418,47 @@ namespace FarmHeroes.Data.Migrations
                         .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Heroes");
+                });
+
+            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroAmulet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Bonus")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("InitialBonus")
+                        .HasColumnType("float");
+
+                    b.Property<int>("InitialPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InventoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InventoryId");
+
+                    b.ToTable("HeroAmulets");
                 });
 
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroEquipment", b =>
@@ -675,6 +723,36 @@ namespace FarmHeroes.Data.Migrations
                     b.ToTable("Settings");
                 });
 
+            modelBuilder.Entity("FarmHeroes.Data.Models.ShopModels.ShopAmulet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("InitialBonus")
+                        .HasColumnType("float");
+
+                    b.Property<int>("InitialPrice")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShopAmulets");
+                });
+
             modelBuilder.Entity("FarmHeroes.Data.Models.ShopModels.ShopEquipment", b =>
                 {
                     b.Property<int>("Id")
@@ -817,6 +895,14 @@ namespace FarmHeroes.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.EquippedSet", b =>
+                {
+                    b.HasOne("FarmHeroes.Data.Models.HeroModels.HeroAmulet", "Amulet")
+                        .WithOne("EquippedSet")
+                        .HasForeignKey("FarmHeroes.Data.Models.HeroModels.EquippedSet", "AmuletId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.Hero", b =>
                 {
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Characteristics", "Characteristics")
@@ -872,11 +958,21 @@ namespace FarmHeroes.Data.Migrations
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "UserId");
                 });
 
+            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroAmulet", b =>
+                {
+                    b.HasOne("FarmHeroes.Data.Models.HeroModels.Inventory", "Inventory")
+                        .WithMany("Amulets")
+                        .HasForeignKey("InventoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroEquipment", b =>
                 {
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.EquippedSet", "EquippedSet")
                         .WithMany("Equipped")
-                        .HasForeignKey("EquippedSetId");
+                        .HasForeignKey("EquippedSetId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Inventory", "Inventory")
                         .WithMany("Items")

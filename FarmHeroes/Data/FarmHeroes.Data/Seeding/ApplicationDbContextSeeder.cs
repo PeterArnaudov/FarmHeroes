@@ -29,6 +29,7 @@
                               new MonstersSeeder(),
                               new HelmetsSeeder(),
                               new WeaponsSeeder(),
+                              new AmuletsSeeder(),
                           };
 
             foreach (var seeder in seeders)
