@@ -39,11 +39,12 @@
         <p class="m-auto">You have no equipment in your inventory.</p>
     }
 </div>
+
 <div class="row ml-1 mr-1">
     @if (Model.Amulets.Count > 0)
     {
-        <hr class="bg-primary">
-        foreach (var item in Model.Amulets)
+        <hr class="bg-primary col-11" />
+        @foreach (var item in Model.Amulets)
         {
             <div class="position-relative equipment-box m-2" onclick="showActions(this)">
                 <img src="@item.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="top" title="@item.Name<br><img src='https://i.ibb.co/6m3nn3N/level-icon.png' class='icon'>: @item.Level (@item.Bonus%)<br><br>@item.Description">
