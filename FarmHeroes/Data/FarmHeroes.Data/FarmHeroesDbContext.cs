@@ -29,8 +29,6 @@
         {
         }
 
-        public DbSet<Setting> Settings { get; set; }
-
         public virtual DbSet<Hero> Heroes { get; set; }
 
         public virtual DbSet<Notification> Notifications { get; set; }
