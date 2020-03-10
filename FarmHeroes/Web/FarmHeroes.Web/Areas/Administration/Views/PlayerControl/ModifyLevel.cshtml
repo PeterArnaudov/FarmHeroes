@@ -1,0 +1,29 @@
+﻿@model FarmHeroes.Web.ViewModels.LevelModels.LevelModifyInputModel
+@{
+    ViewData["Title"] = "Modify Level";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+    <form asp-action="ModifyLevel">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group d-none">
+            <label asp-for="Name">Name</label>
+            <input asp-for="Name">
+        </div>
+        <div class="form-group">
+            <label asp-for="LevelCurrentLevel">Current Level</label>
+            <input asp-for="LevelCurrentLevel">
+            <small class="form-text text-muted">You are advised not to change the current level of a hero. The properties below won't change automatically based on the new level.</small>
+        </div>
+        <div class="form-group">
+            <label asp-for="LevelCurrentExperience">Current Experience</label>
+            <input asp-for="LevelCurrentExperience">
+        </div>
+        <div class="form-group">
+            <label asp-for="LevelNeededExperience">Needed Experience</label>
+            <input asp-for="LevelNeededExperience">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mt-3">Modify</button>
+    </form>
+<a class="btn btn-primary mt-3" asp-area="Administration" asp-controller="PlayerControl" asp-action="ModifyHero" asp-route-name="@Model.Name">Go Back</a>
+

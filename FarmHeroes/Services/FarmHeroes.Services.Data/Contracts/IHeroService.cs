@@ -21,6 +21,10 @@
 
         Task<TViewModel> GetHeroViewModelById<TViewModel>(int id);
 
+        Task<TViewModel> GetHeroViewModelByName<TViewModel>(string name);
+
         Task<bool> ValidateCurrentHeroLocation(WorkStatus workStatus);
+
+        Task UpdateBasicInfo(HeroModifyBasicInfoInputModel inputModel);
     }
 }

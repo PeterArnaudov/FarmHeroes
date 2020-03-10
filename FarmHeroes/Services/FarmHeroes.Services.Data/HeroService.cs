@@ -94,12 +94,46 @@
             return this.mapper.Map<TViewModel>(hero);
         }
 
+        public async Task<TViewModel> GetHeroViewModelByName<TViewModel>(string name)
+        {
+            Hero hero = await this.context.Heroes.SingleOrDefaultAsync(x => x.Name == name);
+
+            return this.mapper.Map<TViewModel>(hero);
+        }
+
         public async Task<bool> ValidateCurrentHeroLocation(WorkStatus workStatus)
         {
             Hero hero = await this.GetCurrentHero();
             bool validLocation = hero.WorkStatus == WorkStatus.Idle || workStatus == hero.WorkStatus;
 
             return validLocation;
+        }
+
+        public async Task UpdateBasicInfo(HeroModifyBasicInfoInputModel inputModel)
+        {
+            Hero hero = await this.GetHeroByName(inputModel.Name);
+
+            hero.Fraction = inputModel.Fraction;
+            hero.Gender = inputModel.Gender;
+
+            if (hero.Fraction == Fraction.Sheep && hero.Gender == Gender.Male)
+            {
+                hero.AvatarUrl = MaleSheepAvatarUrl;
+            }
+            else if (hero.Fraction == Fraction.Sheep && hero.Gender == Gender.Female)
+            {
+                hero.AvatarUrl = FemaleSheepAvatarUrl;
+            }
+            else if (hero.Fraction == Fraction.Pig && hero.Gender == Gender.Male)
+            {
+                hero.AvatarUrl = MalePigAvatarUrl;
+            }
+            else if (hero.Fraction == Fraction.Pig && hero.Gender == Gender.Female)
+            {
+                hero.AvatarUrl = FemalePigAvatarUrl;
+            }
+
+            await this.context.SaveChangesAsync();
         }
     }
 }

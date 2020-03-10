@@ -1,0 +1,33 @@
+﻿@model FarmHeroes.Web.ViewModels.ChronometerModels.ChronometerModifyInputModel
+@{
+    ViewData["Title"] = "Modify Level";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+    <form asp-action="ModifyChronometer">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group d-none">
+            <label asp-for="Name">Name</label>
+            <input asp-for="Name">
+        </div>
+        <div class="form-group">
+            <label asp-for="ChronometerWorkUntil">Work until</label>
+            <input asp-for="ChronometerWorkUntil">
+            <small class="form-text text-muted">Leave blank to cancel the hero's current work.</small>
+        </div>
+        <div class="form-group">
+            <label asp-for="ChronometerCannotAttackHeroUntil">Cannot attack hero until</label>
+            <input asp-for="ChronometerCannotAttackHeroUntil">
+        </div>
+        <div class="form-group">
+            <label asp-for="ChronometerCannotBeAttackedUntil">Defense until</label>
+            <input asp-for="ChronometerCannotBeAttackedUntil">
+        </div>
+        <div class="form-group">
+            <label asp-for="ChronometerCannotAttackMonsterUntil">Cannot attack monster until</label>
+            <input asp-for="ChronometerCannotAttackMonsterUntil">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mt-3">Modify</button>
+    </form>
+<a class="btn btn-primary mt-3" asp-area="Administration" asp-controller="PlayerControl" asp-action="ModifyHero" asp-route-name="@Model.Name">Go Back</a>
+

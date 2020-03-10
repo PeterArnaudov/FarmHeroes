@@ -8,6 +8,7 @@
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
+    using FarmHeroes.Web.ViewModels.ResourcePouchModels;
 
     public class ResourcePouchService : IResourcePouchService
     {
@@ -134,6 +135,16 @@
             }
 
             resources.Crystals -= crystals;
+
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task UpdateResourcePouch(ResourcePouchModifyInputModel inputModel)
+        {
+            Hero hero = await this.heroService.GetHeroByName(inputModel.Name);
+
+            hero.ResourcePouch.Gold = inputModel.ResourcePouchGold;
+            hero.ResourcePouch.Crystals = inputModel.ResourcePouchCrystals;
 
             await this.context.SaveChangesAsync();
         }

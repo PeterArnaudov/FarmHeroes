@@ -1,0 +1,24 @@
+﻿@model FarmHeroes.Web.ViewModels.HeroModels.HeroModifyBasicInfoInputModel
+@{
+    ViewData["Title"] = "Modify Basic Info";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<form asp-action="ModifyBasicInfo">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group d-none">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name">
+    </div>
+    <label asp-for="Gender">Gender</label>
+    <select asp-for="Gender" class="form-control form-control-sm" asp-items="@Html.GetEnumSelectList<FarmHeroes.Data.Models.Enums.Gender>()">
+    </select>
+    <span asp-validation-for="Gender" class="text-danger"></span>
+    <label asp-for="Fraction">Fraction</label>
+    <select asp-for="Fraction" class="form-control form-control-sm" asp-items="@Html.GetEnumSelectList<FarmHeroes.Data.Models.Enums.Fraction>()">
+    </select>
+    <span asp-validation-for="Fraction" class="text-danger"></span>
+    <button type="submit" class="btn btn-primary btn-block mt-3">Modify</button>
+</form>
+<a class="btn btn-primary mt-3" asp-area="Administration" asp-controller="PlayerControl" asp-action="ModifyHero" asp-route-name="@Model.Name">Go Back</a>
+

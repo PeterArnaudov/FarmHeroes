@@ -1,5 +1,6 @@
 ﻿namespace FarmHeroes.Services.Data.Contracts
 {
+    using FarmHeroes.Web.ViewModels.LevelModels;
     using System;
     using System.Threading.Tasks;
 
@@ -14,5 +15,7 @@
         Task LevelUpCurrentHero();
 
         Task LevelUpHeroById(int id);
+
+        Task UpdateLevel(LevelModifyInputModel inputModel);
     }
 }

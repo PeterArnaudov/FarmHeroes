@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Find Hero";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<p>Enter the desired username and press the button.</p>
+<form asp-action="ModifyHero">
+    <div class="form-group">
+        <label for="name">Username</label>
+        <input name="name" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Modify Hero</button>
+</form>
+<a class="btn btn-primary mt-3" asp-area="Administration" asp-controller="PlayerControl" asp-action="Index">Go Back</a>
+

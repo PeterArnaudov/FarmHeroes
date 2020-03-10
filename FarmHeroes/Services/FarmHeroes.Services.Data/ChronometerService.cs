@@ -9,6 +9,7 @@
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
+    using FarmHeroes.Web.ViewModels.ChronometerModels;
 
     public class ChronometerService : IChronometerService
     {
@@ -102,6 +103,23 @@
         {
             Chronometer chronometer = await this.GetChronometerById(id);
             chronometer.CannotBeAttackedUntil = DateTime.UtcNow.AddMinutes(minutes);
+
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task UpdateChronometer(ChronometerModifyInputModel inputModel)
+        {
+            Hero hero = await this.heroService.GetHeroByName(inputModel.Name);
+
+            hero.Chronometer.WorkUntil = inputModel.ChronometerWorkUntil;
+            hero.Chronometer.CannotAttackHeroUntil = inputModel.ChronometerCannotAttackHeroUntil;
+            hero.Chronometer.CannotBeAttackedUntil = inputModel.ChronometerCannotBeAttackedUntil;
+            hero.Chronometer.CannotAttackMonsterUntil = inputModel.ChronometerCannotAttackMonsterUntil;
+
+            if (hero.Chronometer.WorkUntil == null)
+            {
+                hero.WorkStatus = WorkStatus.Idle;
+            }
 
             await this.context.SaveChangesAsync();
         }

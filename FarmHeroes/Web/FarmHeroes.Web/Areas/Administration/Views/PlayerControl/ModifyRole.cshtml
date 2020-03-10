@@ -1,0 +1,39 @@
+﻿@model string
+@inject Microsoft.AspNetCore.Identity.UserManager<FarmHeroes.Data.Models.ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Modify Role";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<h1>@Model - Users: @this.UserManager.GetUsersInRoleAsync(Model).Result.Count</h1>
+<p>To add user to this role, enter their username below and press the button.</p>
+<form asp-action="Promote">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input name="username" class="form-control" />
+    </div>
+    <div class="form-group d-none">
+        <label for="roleName">Role</label>
+        <input class="form-control" name="roleName" value="@Model" />
+    </div>
+    <button type="submit" class="btn btn-primary">Add to role</button>
+</form>
+<table class="table table-hover mt-3">
+    <thead>
+        <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in this.UserManager.GetUsersInRoleAsync(Model).Result)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td><a asp-area="Administration" asp-controller="PlayerControl" asp-action="Demote" asp-route-roleName="@Model" asp-route-username="@user.UserName" class="btn btn-danger">Demote</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-primary mt-3" asp-area="Administration" asp-controller="PlayerControl" asp-action="Roles">Go Back</a>
+

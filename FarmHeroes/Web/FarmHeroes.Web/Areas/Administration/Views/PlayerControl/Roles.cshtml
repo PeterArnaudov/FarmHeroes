@@ -1,0 +1,28 @@
+﻿@inject Microsoft.AspNetCore.Identity.RoleManager<FarmHeroes.Data.Models.ApplicationRole> RoleManager
+@inject Microsoft.AspNetCore.Identity.UserManager<FarmHeroes.Data.Models.ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Roles";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Users</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in this.RoleManager.Roles)
+        {
+            <tr>
+                <td>@role.Name</td>
+                <td>@this.UserManager.GetUsersInRoleAsync(role.Name).Result.Count</td>
+                <td><a asp-area="Administration" asp-controller="PlayerControl" asp-action="ModifyRole" asp-route-roleName="@role.Name" class="btn btn-primary">Modify</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-primary mt-3" asp-area="Administration" asp-controller="PlayerControl" asp-action="Index">Go Back</a>
+

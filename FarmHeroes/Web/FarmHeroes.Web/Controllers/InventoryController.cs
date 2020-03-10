@@ -2,10 +2,12 @@
 {
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Web.ViewModels.InventoryModels;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Threading.Tasks;
 
+    [Authorize]
     public class InventoryController : BaseController
     {
         private readonly IInventoryService inventoryService;

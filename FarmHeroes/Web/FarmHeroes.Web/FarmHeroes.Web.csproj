@@ -51,4 +51,8 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Administration\Views\GameControl\" />
+  </ItemGroup>
 </Project>

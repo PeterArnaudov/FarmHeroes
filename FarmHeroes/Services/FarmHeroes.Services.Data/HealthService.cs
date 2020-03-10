@@ -8,6 +8,7 @@
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Formulas;
+    using FarmHeroes.Web.ViewModels.HealthModels;
 
     public class HealthService : IHealthService
     {
@@ -99,6 +100,16 @@
             Health health = await this.GetHealthById(id);
 
             return health.Current == 1;
+        }
+
+        public async Task UpdateHealth(HealthModifyInputModel inputModel)
+        {
+            Hero hero = await this.heroService.GetHeroByName(inputModel.Name);
+
+            hero.Health.Current = inputModel.HealthCurrent;
+            hero.Health.Maximum = inputModel.HealthMaximum;
+
+            await this.context.SaveChangesAsync();
         }
     }
 }

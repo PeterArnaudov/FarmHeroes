@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Web.ViewModels.CharacteristcsModels;
 
     public interface ICharacteristicsService
     {
@@ -20,5 +21,7 @@
         Task<int> IncreaseMass();
 
         Task<int> IncreaseMastery();
+
+        Task UpdateCharacteristics(CharacteristicsModifyInputModel inputModel);
     }
 }

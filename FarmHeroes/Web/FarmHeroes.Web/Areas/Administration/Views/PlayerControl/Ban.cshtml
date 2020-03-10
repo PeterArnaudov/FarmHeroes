@@ -1,0 +1,25 @@
+﻿@model FarmHeroes.Web.ViewModels.UserModels.BanInputModel
+@{
+    ViewData["Title"] = "Ban";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<p>Fill the form below to ban someone. If you want to unban him - set it to a past time.</p>
+<form asp-action="Ban">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <div class="form-group">
+            <label asp-for="Username"></label>
+            <input asp-for="Username" class="form-control" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="BanUntil"></label>
+        <input asp-for="BanUntil" class="form-control" placeholder="dd.MM.yyyy hh:mm" />
+        <span asp-validation-for="BanUntil" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-danger">Ban</button>
+</form>
+<a class="btn btn-primary mt-3" asp-area="Administration" asp-controller="PlayerControl" asp-action="Index">Go Back</a>
+

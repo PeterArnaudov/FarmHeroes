@@ -11,13 +11,17 @@
     using FarmHeroes.Services.Data.Formulas;
     using FarmHeroes.Web.ViewModels.BattlefieldModels;
     using FarmHeroes.Web.ViewModels.CharacteristcsModels;
+    using FarmHeroes.Web.ViewModels.ChronometerModels;
     using FarmHeroes.Web.ViewModels.EquipmentModels;
     using FarmHeroes.Web.ViewModels.FarmModels;
     using FarmHeroes.Web.ViewModels.FightModels;
+    using FarmHeroes.Web.ViewModels.HealthModels;
     using FarmHeroes.Web.ViewModels.HeroModels;
     using FarmHeroes.Web.ViewModels.InventoryModels;
+    using FarmHeroes.Web.ViewModels.LevelModels;
     using FarmHeroes.Web.ViewModels.MineModels;
     using FarmHeroes.Web.ViewModels.NotificationModels;
+    using FarmHeroes.Web.ViewModels.ResourcePouchModels;
     using FarmHeroes.Web.ViewModels.ShopModels;
     using FarmHeroes.Web.ViewModels.SmithModels;
     using FarmHeroes.Web.ViewModels.StatisticsModels;
@@ -103,6 +107,18 @@
             this.CreateMap<Inventory, SmithViewModel>()
                 .ForMember(x => x.Items, cfg => cfg.MapFrom(x => x.Items.Where(x => x.Level < 25)))
                 .ForMember(x => x.Amulets, cfg => cfg.MapFrom(x => x.Amulets.Where(x => x.Level < 100)));
+
+            this.CreateMap<Hero, HeroModifyBasicInfoInputModel>();
+
+            this.CreateMap<Hero, LevelModifyInputModel>();
+
+            this.CreateMap<Hero, HealthModifyInputModel>();
+
+            this.CreateMap<Hero, ResourcePouchModifyInputModel>();
+
+            this.CreateMap<Hero, CharacteristicsModifyInputModel>();
+
+            this.CreateMap<Hero, ChronometerModifyInputModel>();
 
             this.CreateMap<ShopEquipment, EquipmentViewModel>();
 

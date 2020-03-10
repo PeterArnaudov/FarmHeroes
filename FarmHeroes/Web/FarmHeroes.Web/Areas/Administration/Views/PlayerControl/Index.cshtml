@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "Player Control";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<div class="row">
+    <a class="col-4 btn btn-outline-primary border-left-0 border-right-0 nav-link" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+    <a class="col-4 btn btn-outline-primary nav-link" asp-area="Administration" asp-controller="PlayerControl" asp-action="Index" disabled>Player control</a>
+    <a class="col-4 btn btn-outline-primary border-left-0 border-right-0 nav-link" asp-area="Administration" asp-controller="GameControl" asp-action="Index">Game control</a>
+</div>
+<a class="btn btn-block btn-primary mt-3" asp-area="Administration" asp-controller="PlayerControl" asp-action="Ban">Ban</a>
+<a class="btn btn-block btn-primary" asp-area="Administration" asp-controller="PlayerControl" asp-action="Roles">Roles</a>
+<a class="btn btn-block btn-primary" asp-area="Administration" asp-controller="PlayerControl" asp-action="FindHero">Modify Heroes</a>
+

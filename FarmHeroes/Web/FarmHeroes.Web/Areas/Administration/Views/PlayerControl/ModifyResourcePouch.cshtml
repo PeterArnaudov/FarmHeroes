@@ -1,0 +1,24 @@
+﻿@model FarmHeroes.Web.ViewModels.ResourcePouchModels.ResourcePouchModifyInputModel
+@{
+    ViewData["Title"] = "Modify Resources";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<form asp-action="ModifyResourcePouch">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group d-none">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name">
+    </div>
+    <div class="form-group">
+        <label asp-for="ResourcePouchGold">Gold</label>
+        <input asp-for="ResourcePouchGold">
+    </div>
+    <div class="form-group">
+        <label asp-for="ResourcePouchCrystals">Crystals</label>
+        <input asp-for="ResourcePouchCrystals">
+    </div>
+    <button type="submit" class="btn btn-primary btn-block mt-3">Modify</button>
+</form>
+<a class="btn btn-primary mt-3" asp-area="Administration" asp-controller="PlayerControl" asp-action="ModifyHero" asp-route-name="@Model.Name">Go Back</a>
+

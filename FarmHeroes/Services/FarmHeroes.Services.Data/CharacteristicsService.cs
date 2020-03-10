@@ -8,6 +8,7 @@
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Formulas;
+    using FarmHeroes.Web.ViewModels.CharacteristcsModels;
 
     public class CharacteristicsService : ICharacteristicsService
     {
@@ -102,6 +103,18 @@
             await this.context.SaveChangesAsync();
 
             return characteristics.Mastery;
+        }
+
+        public async Task UpdateCharacteristics(CharacteristicsModifyInputModel inputModel)
+        {
+            Hero hero = await this.heroService.GetHeroByName(inputModel.Name);
+
+            hero.Characteristics.Attack = inputModel.CharacteristicsAttack;
+            hero.Characteristics.Defense = inputModel.CharacteristicsDefense;
+            hero.Characteristics.Mastery = inputModel.CharacteristicsMastery;
+            hero.Characteristics.Mass = inputModel.CharacteristicsMass;
+
+            await this.context.SaveChangesAsync();
         }
     }
 }

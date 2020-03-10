@@ -35,82 +35,92 @@
                 <ul id="menu" class="collapse navbar-collapse list-unstyled flex-column p-1 ">
                     <h4 class="text-center text-uppercase">Menu</h4>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link" asp-controller="Hero" asp-action="Overview">Hero</a>
+                        <a class="btn btn-primary p-1 nav-link" asp-area="" asp-controller="Hero" asp-action="Overview">Hero</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link" asp-controller="Notifications" asp-action="All">Notifications <vc:new-notifications-count></vc:new-notifications-count></a>
+                        <a class="btn btn-primary p-1 nav-link" asp-area="" asp-controller="Notifications" asp-action="All">Notifications <vc:new-notifications-count></vc:new-notifications-count></a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link" asp-controller="Characteristics" asp-action="Practice">Practice</a>
+                        <a class="btn btn-primary p-1 nav-link" asp-area="" asp-controller="Characteristics" asp-action="Practice">Practice</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link" asp-controller="Village" asp-action="Village">Village</a>
+                        <a class="btn btn-primary p-1 nav-link" asp-area="" asp-controller="Village" asp-action="Village">Village</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link" asp-controller="Battlefield" asp-action="Battlefield">Battlefield</a>
+                        <a class="btn btn-primary p-1 nav-link" asp-area="" asp-controller="Battlefield" asp-action="Battlefield">Battlefield</a>
                     </li>
                     <li class="nav-item w-100">
                         <a class="btn btn-primary p-1 nav-link" href="/Leaderboards/All">Leaderboards</a>
                     </li>
+                    <li class="nav-item w-100">
+                        <a class="btn btn-primary p-1 nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a>
+                    </li>
+                    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                    {
+                        <li class="nav-item w-100">
+                            <a class="btn btn-primary p-1 nav-link" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">Administration</a>
+                        </li>
+                    }
                     <li class="nav-item w-100">
                         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
                             <button type="submit" class="btn btn-primary p-1 w-100 nav-link">Exit</button>
                         </form>
                     </li>
                 </ul>
-            </nav>
-            <div id="view-body" class="col-lg-8 col-md-12 border border-primary border-top-0 border-bottom-0 border-left-1 border-right-1">
-                @if (this.TempData["ExceptionMessage"] != null)
-                {
-                    <div class="alert alert-danger disappearing-alert" role="alert">
-                        <h4 class="alert-heading font-weight-bolder">Oups! Something went wrong.</h4>
-                        <p class="mb-0"><span class="font-weight-bold">Cause: </span>@this.TempData["ExceptionMessage"]</p>
-                        <p><span class="font-weight-bold">Instructions: </span>@this.TempData["ExceptionInstructions"]</p>
-                        <hr>
-                        <p class="mb-0 text-muted font-italic text-right">You might have gone against the rules and tried to do something not allowed.</p>
-                    </div>
-                }
-                @if (this.TempData["Alert"] != null)
-                {
-                    <div class="alert alert-success disappearing-alert" role="alert">
-                        <p class="text-center m-0">@this.TempData["Alert"]</p>
-                    </div>
-                }
-                @RenderBody()
+                </nav>
+                <div id="view-body" class="col-lg-8 col-md-12 border border-primary border-top-0 border-bottom-0 border-left-1 border-right-1">
+                    @if (this.TempData["ExceptionMessage"] != null)
+                    {
+                        <div class="alert alert-danger disappearing-alert" role="alert">
+                            <h4 class="alert-heading font-weight-bolder">Oups! Something went wrong.</h4>
+                            <p class="mb-0"><span class="font-weight-bold">Cause: </span>@this.TempData["ExceptionMessage"]</p>
+                            <p><span class="font-weight-bold">Instructions: </span>@this.TempData["ExceptionInstructions"]</p>
+                            <hr>
+                            <p class="mb-0 text-muted font-italic text-right">You might have gone against the rules and tried to do something not allowed.</p>
+                        </div>
+                    }
+                    @if (this.TempData["Alert"] != null)
+                    {
+                        <div class="alert alert-success disappearing-alert" role="alert">
+                            <p class="text-center m-0">@this.TempData["Alert"]</p>
+                        </div>
+                    }
+                    <partial name="_CookieConsentPartial" />
+                    @RenderBody()
+                </div>
+                <vc:side-menu-timers></vc:side-menu-timers>
             </div>
-            <vc:side-menu-timers></vc:side-menu-timers>
+            <hr class="bg-primary">
+            <footer>
+                <!-- <h6 class="font-weight-bold text-center">CopyRight &copy; PeterArnaudov. All rights reserved.</h6> -->
+                <h6 class="font-weight-bold text-center">Created by <a href="https://softuni.bg/users/profile/show/peterarnaudov">PeterArnaudov</a>.</h6>
+                <div class="text-center">
+                    <a href=""><img src="~/images/community/instagram.png" alt="Instagram logo" class="m-2 logo"></a>
+                    <a href=""><img src="~/images/community/facebook.png" alt="Facebook logo" class="m-2 logo"></a>
+                    <a href=""><img src="~/images/community/linkedin.png" alt="LinkedIn logo" class="m-2 logo"></a>
+                    <a href=""><img src="~/images/community/github.png" alt="Github logo" class="m-2 logo"></a>
+                </div>
+                <h6 class="font-weight-bold text-center">Created with educational purpose. Based on <a href="https://www.botva.ru">www.botva.ru</a>.</h6>
+            </footer>
         </div>
-        <hr class="bg-primary">
-        <footer>
-            <!-- <h6 class="font-weight-bold text-center">CopyRight &copy; PeterArnaudov. All rights reserved.</h6> -->
-            <h6 class="font-weight-bold text-center">Created by <a href="https://softuni.bg/users/profile/show/peterarnaudov">PeterArnaudov</a>.</h6>
-            <div class="text-center">
-                <a href=""><img src="~/images/community/instagram.png" alt="Instagram logo" class="m-2 logo"></a>
-                <a href=""><img src="~/images/community/facebook.png" alt="Facebook logo" class="m-2 logo"></a>
-                <a href=""><img src="~/images/community/linkedin.png" alt="LinkedIn logo" class="m-2 logo"></a>
-                <a href=""><img src="~/images/community/github.png" alt="Github logo" class="m-2 logo"></a>
-            </div>
-            <h6 class="font-weight-bold text-center">Created with educational purpose. Based on <a href="https://www.botva.ru">www.botva.ru</a>.</h6>
-        </footer>
-    </div>
 
-    <environment names="Development">
-        <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
-        <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js" asp-append-version="true"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        <script src="~/js/ajax-calls.js" asp-append-version="true"></script>
-    </environment>
-    <environment names="Staging,Production">
-        <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-        <script src="~/js/ajax-calls.js" asp-append-version="true"></script>
-    </environment>
+        <environment names="Development">
+            <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+            <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js" asp-append-version="true"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+            <script src="~/js/ajax-calls.js" asp-append-version="true"></script>
+        </environment>
+        <environment names="Staging,Production">
+            <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+            <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+            <script src="~/js/site.min.js" asp-append-version="true"></script>
+            <script src="~/js/ajax-calls.js" asp-append-version="true"></script>
+        </environment>
 
-    @this.RenderSection("Scripts", required: false)
-</body>
+        @this.RenderSection("Scripts", required: false)
+    </body>
 </html>

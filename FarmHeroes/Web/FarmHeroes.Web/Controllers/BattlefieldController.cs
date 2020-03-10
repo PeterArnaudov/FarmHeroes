@@ -10,8 +10,10 @@
     using FarmHeroes.Web.Filters;
     using FarmHeroes.Web.ViewModels.BattlefieldModels;
     using FarmHeroes.Web.ViewModels.FightModels;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class BattlefieldController : Controller
     {
         private readonly IHeroService heroService;

@@ -4,6 +4,7 @@
 
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Web.ViewModels.ChronometerModels;
 
     public interface IChronometerService
     {
@@ -20,5 +21,7 @@
         Task SetCannotAttackMonsterUntilById(int id, int minutes);
 
         Task SetCannotBeAttackedUntilById(int id, int minutes);
+
+        Task UpdateChronometer(ChronometerModifyInputModel inputModel);
     }
 }

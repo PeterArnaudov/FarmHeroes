@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Web.ViewModels.ResourcePouchModels;
 
     public interface IResourcePouchService
     {
@@ -28,5 +29,7 @@
         Task DecreaseCrystals(int id, int crystals);
 
         Task DecreaseCurrentHeroCrystals(int crystals);
+
+        Task UpdateResourcePouch(ResourcePouchModifyInputModel inputModel);
     }
 }

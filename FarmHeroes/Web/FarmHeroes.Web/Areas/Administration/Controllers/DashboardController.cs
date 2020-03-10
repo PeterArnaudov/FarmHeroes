@@ -1,22 +1,18 @@
-﻿//namespace FarmHeroes.Web.Areas.Administration.Controllers
-//{
-//    using FarmHeroes.Services.Data;
-//    using FarmHeroes.Web.ViewModels.Administration.Dashboard;
-//    using Microsoft.AspNetCore.Mvc;
+﻿namespace FarmHeroes.Web.Areas.Administration.Controllers
+{
+    using FarmHeroes.Services.Data;
+    using FarmHeroes.Web.ViewModels.Administration.Dashboard;
+    using Microsoft.AspNetCore.Mvc;
 
-//    public class DashboardController : AdministrationController
-//    {
-//        private readonly ISettingsService settingsService;
+    public class DashboardController : AdministrationController
+    {
+        public DashboardController()
+        {
+        }
 
-//        public DashboardController(ISettingsService settingsService)
-//        {
-//            this.settingsService = settingsService;
-//        }
-
-//        public IActionResult Index()
-//        {
-//            var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
-//            return this.View(viewModel);
-//        }
-//    }
-//}
+        public IActionResult Index()
+        {
+            return this.View();
+        }
+    }
+}

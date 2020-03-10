@@ -1,0 +1,32 @@
+﻿@model FarmHeroes.Web.ViewModels.CharacteristcsModels.CharacteristicsModifyInputModel
+@{
+    ViewData["Title"] = "Modify Characteristics";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+    <form asp-action="ModifyCharacteristics">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group d-none">
+            <label asp-for="Name">Name</label>
+            <input asp-for="Name">
+        </div>
+        <div class="form-group">
+            <label asp-for="CharacteristicsAttack">Attack</label>
+            <input asp-for="CharacteristicsAttack">
+        </div>
+        <div class="form-group">
+            <label asp-for="CharacteristicsDefense">Defense</label>
+            <input asp-for="CharacteristicsDefense">
+        </div>
+        <div class="form-group">
+            <label asp-for="CharacteristicsMastery">Mastery</label>
+            <input asp-for="CharacteristicsMastery">
+        </div>
+        <div class="form-group">
+            <label asp-for="CharacteristicsMass">Mass</label>
+            <input asp-for="CharacteristicsMass">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mt-3">Modify</button>
+    </form>
+<a class="btn btn-primary mt-3" asp-area="Administration" asp-controller="PlayerControl" asp-action="ModifyHero" asp-route-name="@Model.Name">Go Back</a>
+

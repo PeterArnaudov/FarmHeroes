@@ -8,8 +8,10 @@
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Web.Filters;
     using FarmHeroes.Web.ViewModels.CharacteristcsModels;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class CharacteristicsController : BaseController
     {
         private readonly ICharacteristicsService characteristicsService;

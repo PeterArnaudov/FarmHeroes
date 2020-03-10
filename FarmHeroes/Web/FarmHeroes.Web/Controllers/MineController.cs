@@ -9,9 +9,10 @@
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Web.Filters;
     using FarmHeroes.Web.ViewModels.MineModels;
-
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class MineController : BaseController
     {
         private readonly IHeroService heroService;

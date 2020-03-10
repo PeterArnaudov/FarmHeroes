@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Web.ViewModels.HealthModels;
 
     public interface IHealthService
     {
@@ -22,5 +23,7 @@
         Task ReduceHealthById(int id, int damage);
 
         Task<bool> CheckIfDead(int id);
+
+        Task UpdateHealth(HealthModifyInputModel inputModel);
     }
 }

@@ -1,0 +1,24 @@
+﻿@model FarmHeroes.Web.ViewModels.HealthModels.HealthModifyInputModel
+@{
+    ViewData["Title"] = "Modify Health";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<form asp-action="ModifyHealth">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group d-none">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name">
+    </div>
+    <div class="form-group">
+        <label asp-for="HealthCurrent">Current Health</label>
+        <input asp-for="HealthCurrent">
+    </div>
+    <div class="form-group">
+        <label asp-for="HealthMaximum">Maximum Health</label>
+        <input asp-for="HealthMaximum">
+    </div>
+    <button type="submit" class="btn btn-primary btn-block mt-3">Modify</button>
+</form>
+<a class="btn btn-primary mt-3" asp-area="Administration" asp-controller="PlayerControl" asp-action="ModifyHero" asp-route-name="@Model.Name">Go Back</a>
+

@@ -2,10 +2,12 @@
 {
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Web.ViewModels.NotificationModels;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Threading.Tasks;
 
+    [Authorize]
     public class NotificationsController : BaseController
     {
         private readonly INotificationService notificationService;

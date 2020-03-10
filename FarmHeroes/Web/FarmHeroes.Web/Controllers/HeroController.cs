@@ -3,22 +3,29 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
+    using FarmHeroes.Data;
     using FarmHeroes.Data.Models;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Web.Filters;
     using FarmHeroes.Web.ViewModels.HeroModels;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class HeroController : BaseController
     {
         private readonly IHeroService heroService;
         private readonly IUserService userService;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly FarmHeroesDbContext context;
 
-        public HeroController(IHeroService heroService, IUserService userService)
+        public HeroController(IHeroService heroService, IUserService userService, UserManager<ApplicationUser> userManager, FarmHeroesDbContext context)
         {
             this.heroService = heroService;
             this.userService = userService;
+            this.userManager = userManager;
+            this.context = context;
         }
 
         public async Task<IActionResult> Create()

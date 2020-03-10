@@ -4,10 +4,12 @@
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Web.ViewModels.InventoryModels;
     using FarmHeroes.Web.ViewModels.ShopModels;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Threading.Tasks;
 
+    [Authorize]
     public class ShopController : BaseController
     {
         private readonly IShopService shopService;
