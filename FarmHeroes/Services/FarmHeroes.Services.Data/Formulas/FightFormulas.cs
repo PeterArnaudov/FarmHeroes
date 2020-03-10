@@ -36,21 +36,27 @@
         {
             int? level = equippedSet.Equipped.Find(x => x.Type == EquipmentType.Weapon)?.Level;
             double? percent = 1 + (level / 100d);
-            return (int)(equippedSet.Equipped.Sum(x => x.Attack) * percent ?? 1);
+            double actualPercent = percent ?? 1;
+            int equipmentBonus = equippedSet.Equipped.Sum(x => x.Attack);
+            return (int)(equipmentBonus * actualPercent);
         };
 
         public static Func<EquippedSet, int> CalculateDefenseFromSet = (equippedSet) =>
         {
             int? level = equippedSet.Equipped.Find(x => x.Type == EquipmentType.Shield)?.Level;
             double? percent = 1 + (level / 100d);
-            return (int)(equippedSet.Equipped.Sum(x => x.Defense) * percent ?? 1);
+            double actualPercent = percent ?? 1;
+            int equipmentBonus = equippedSet.Equipped.Sum(x => x.Defense);
+            return (int)(equipmentBonus * actualPercent);
         };
 
         public static Func<EquippedSet, int> CalculateMasteryFromSet = (equippedSet) =>
         {
             int? level = equippedSet.Equipped.Find(x => x.Type == EquipmentType.Helmet)?.Level;
             double? percent = 1 + (level / 100d);
-            return (int)(equippedSet.Equipped.Sum(x => x.Mastery) * percent ?? 1);
+            double actualPercent = percent ?? 1;
+            int equipmentBonus = equippedSet.Equipped.Sum(x => x.Mastery);
+            return (int)(equipmentBonus * actualPercent);
         };
     }
 }
