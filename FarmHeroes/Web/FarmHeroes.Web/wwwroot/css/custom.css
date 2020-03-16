@@ -11,48 +11,6 @@
     width: 60px;
 }
 
-.equipment-box {
-    position: relative;
-}
-
-.equipment-image {
-    opacity: 1;
-    display: block;
-    transition: .5s ease;
-    backface-visibility: hidden;
-}
-
-.equipment-middle {
-    transition: .5s ease;
-    opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
-}
-
-.equipment-box:hover .equipment-image {
-    opacity: 0.5;
-}
-
-.equipment-box:hover .equipment-middle {
-    opacity: 1;
-}
-
-.equipment-text {
-    color: lightgray;
-    font-size: 14px;
-    text-transform: uppercase;
-    text-decoration: none;
-}
-
-.equipment-text:hover {
-    color: lightgray;
-    text-decoration: none;
-}
-
 .village-area {
     width: 80px;
     height: 80px;
@@ -92,6 +50,10 @@
 
 .bottom-50 {
     bottom: 50%;
+}
+
+.opacity-30 {
+    opacity: 0.3;
 }
 
 .img-shake:hover {
