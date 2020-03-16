@@ -17,6 +17,7 @@
     using FarmHeroes.Web.ViewModels.FightModels;
     using FarmHeroes.Web.ViewModels.HealthModels;
     using FarmHeroes.Web.ViewModels.HeroModels;
+    using FarmHeroes.Web.ViewModels.HutModels;
     using FarmHeroes.Web.ViewModels.InventoryModels;
     using FarmHeroes.Web.ViewModels.LevelModels;
     using FarmHeroes.Web.ViewModels.MineModels;
@@ -103,6 +104,9 @@
 
             this.CreateMap<ShopAmulet[], AmuletShopViewModel>()
                 .ForMember(x => x.Items, cfg => cfg.MapFrom(x => x));
+
+            this.CreateMap<ShopBonus[], HutBonusesViewModel>()
+                .ForMember(x => x.Bonuses, cfg => cfg.MapFrom(x => x));
 
             this.CreateMap<Inventory, SmithViewModel>()
                 .ForMember(x => x.Items, cfg => cfg.MapFrom(x => x.Items.Where(x => x.Level < 25)))

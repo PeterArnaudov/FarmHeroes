@@ -1,0 +1,21 @@
+﻿@model FarmHeroes.Web.ViewModels.HutModels.HutBonusesViewModel
+@{
+    ViewData["Title"] = "Hut";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+@foreach (var bonus in Model.Bonuses)
+{
+    <div class="row mt-2">
+        <img src="@bonus.ImageUrl" alt="bonus" class="img-fluid col-3 item-image">
+        <div class="col-7 m-auto">
+            <p><span class="text-uppercase">@bonus.Name</span></p>
+            <p class="m-auto">@bonus.Description Extend the rent of your safe with @bonus.Days days.</p>
+            <p class="m-auto">Price: @bonus.CrystalsPrice <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
+        </div>
+        <div class="col-2 m-auto text-center">
+            <a href="/Hut/Extend/@bonus.Name.Replace(" ", string.Empty)" class="btn btn-primary btn-block">Activate</a>
+        </div>
+    </div>
+}
+

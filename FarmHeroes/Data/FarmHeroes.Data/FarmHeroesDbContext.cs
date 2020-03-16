@@ -57,6 +57,10 @@
 
         public virtual DbSet<ShopAmulet> ShopAmulets { get; set; }
 
+        public virtual DbSet<HeroBonus> HeroBonuses { get; set; }
+
+        public virtual DbSet<ShopBonus> ShopBonuses { get; set; }
+
         public virtual DbSet<Monster> Monsters { get; set; }
 
         public virtual DbSet<Fight> Fights { get; set; }
@@ -139,3 +143,4 @@
         }
     }
 }
+

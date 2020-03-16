@@ -461,6 +461,44 @@ namespace FarmHeroes.Data.Migrations
                     b.ToTable("HeroAmulets");
                 });
 
+            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroBonus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("ActiveUntil")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Bonus")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HeroId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HeroId");
+
+                    b.ToTable("HeroBonuses");
+                });
+
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroEquipment", b =>
                 {
                     b.Property<int>("Id")
@@ -691,38 +729,6 @@ namespace FarmHeroes.Data.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("FarmHeroes.Data.Models.Setting", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Settings");
-                });
-
             modelBuilder.Entity("FarmHeroes.Data.Models.ShopModels.ShopAmulet", b =>
                 {
                     b.Property<int>("Id")
@@ -751,6 +757,45 @@ namespace FarmHeroes.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ShopAmulets");
+                });
+
+            modelBuilder.Entity("FarmHeroes.Data.Models.ShopModels.ShopBonus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AttainableFrom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CrystalsPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Days")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("InitialBonus")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("IsPermanent")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShopBonuses");
                 });
 
             modelBuilder.Entity("FarmHeroes.Data.Models.ShopModels.ShopEquipment", b =>
@@ -963,6 +1008,15 @@ namespace FarmHeroes.Data.Migrations
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Inventory", "Inventory")
                         .WithMany("Amulets")
                         .HasForeignKey("InventoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroBonus", b =>
+                {
+                    b.HasOne("FarmHeroes.Data.Models.HeroModels.Hero", "Hero")
+                        .WithMany("Bonuses")
+                        .HasForeignKey("HeroId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

@@ -90,6 +90,7 @@
             services.AddTransient<IEquipmentService, EquipmentService>();
             services.AddTransient<ISmithService, SmithService>();
             services.AddTransient<IDashboardService, DashboardService>();
+            services.AddTransient<IBonusService, BonusService>();
 
             // Filters
             services.AddTransient<FarmHeroesExceptionFilterAttribute>();

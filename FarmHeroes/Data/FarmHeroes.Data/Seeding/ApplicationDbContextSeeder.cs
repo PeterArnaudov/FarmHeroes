@@ -30,6 +30,7 @@
                               new HelmetsSeeder(),
                               new WeaponsSeeder(),
                               new AmuletsSeeder(),
+                              new BonusesSeeder(),
                           };
 
             foreach (var seeder in seeders)

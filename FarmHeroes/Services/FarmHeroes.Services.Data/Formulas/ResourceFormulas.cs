@@ -4,6 +4,6 @@
 
     public static class ResourceFormulas
     {
-        public static Func<int, int> CalculateStolenGold = (amount) => (int)(amount * 0.1);
+        public static Func<int, double, int> CalculateStolenGold = (amount, safe) => (int)(amount * 0.1 * (1 - safe));
     }
 }
