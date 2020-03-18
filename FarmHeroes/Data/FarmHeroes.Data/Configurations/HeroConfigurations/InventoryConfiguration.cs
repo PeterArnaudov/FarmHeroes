@@ -24,6 +24,11 @@
                 .HasForeignKey(a => a.InventoryId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasMany(i => i.Bonuses)
+                .WithOne(b => b.Inventory)
+                .HasForeignKey(b => b.InventoryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasOne(c => c.Hero)
                 .WithOne(h => h.Inventory)
                 .HasForeignKey<Hero>(h => h.InventoryId);

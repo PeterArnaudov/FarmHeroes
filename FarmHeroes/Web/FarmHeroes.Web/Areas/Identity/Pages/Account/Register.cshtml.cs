@@ -7,7 +7,8 @@
     using System.Text;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
-
+    using FarmHeroes.Common;
+    using FarmHeroes.Data;
     using FarmHeroes.Data.Models;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
@@ -25,17 +26,20 @@
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly FarmHeroesDbContext context;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            FarmHeroesDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            this.context = context;
         }
 
         [BindProperty]
@@ -76,6 +80,12 @@
         {
             // returnUrl = returnUrl ?? Url.Content("~/");
             returnUrl = "/Hero/Create";
+
+            if (this.context.Heroes.Select(h => h.Name).Any(n => n == this.Input.Username))
+            {
+                this.ModelState.AddModelError("Username", "User already exists with this username.");
+            }
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = Input.Username, Email = Input.Email, Hero = null };
@@ -94,6 +104,11 @@
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    if (this._userManager.GetUsersInRoleAsync(GlobalConstants.AdministratorRoleName).Result.Count == 0)
+                    {
+                        await this._userManager.AddToRoleAsync(user, GlobalConstants.AdministratorRoleName);
+                    }
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

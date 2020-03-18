@@ -57,3 +57,15 @@
     }
 </div>
 
+<div class="row ml-1 mr-1">
+    @if (Model.Bonuses.Count > 0)
+    {
+        <hr class="bg-primary col-11" />
+        @foreach (var item in Model.Bonuses)
+        {
+            <div class="position-relative equipment-box m-2">
+                <img src="@item.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="top" title="@item.Name<br><img src='https://i.ibb.co/6m3nn3N/level-icon.png' class='icon'>: @item.Level (@item.Bonus%)<br>Time left: @(item.ActiveUntil == DateTime.MaxValue ? "Permanent" : $"{(item.ActiveUntil - DateTime.UtcNow).Days} days {(item.ActiveUntil - DateTime.UtcNow).Hours} hours")<br><br>@item.Description">
+            </div>
+        }
+    }
+</div>

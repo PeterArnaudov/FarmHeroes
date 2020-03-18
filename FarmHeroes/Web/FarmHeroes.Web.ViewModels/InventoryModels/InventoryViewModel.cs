@@ -13,5 +13,7 @@
         public List<HeroEquipment> Items { get; set; }
 
         public List<HeroAmulet> Amulets { get; set; }
+
+        public List<HeroBonus> Bonuses { get; set; }
     }
 }

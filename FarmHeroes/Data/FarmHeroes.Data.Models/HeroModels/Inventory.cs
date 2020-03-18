@@ -17,6 +17,8 @@
 
         public virtual List<HeroAmulet> Amulets { get; set; } = new List<HeroAmulet>();
 
+        public virtual List<HeroBonus> Bonuses { get; set; } = new List<HeroBonus>();
+
         public virtual Hero Hero { get; set; }
     }
 }

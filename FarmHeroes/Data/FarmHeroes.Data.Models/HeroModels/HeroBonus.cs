@@ -22,8 +22,8 @@
 
         public DateTime ActiveUntil { get; set; }
 
-        public int HeroId { get; set; }
+        public int InventoryId { get; set; }
 
-        public virtual Hero Hero { get; set; }
+        public virtual Inventory Inventory { get; set; }
     }
 }

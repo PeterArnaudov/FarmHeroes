@@ -13,9 +13,9 @@
 
             builder.HasKey(b => b.Id);
 
-            builder.HasOne(b => b.Hero)
-                .WithMany(h => h.Bonuses)
-                .HasForeignKey(b => b.HeroId);
+            builder.HasOne(b => b.Inventory)
+                .WithMany(i => i.Bonuses)
+                .HasForeignKey(b => b.InventoryId);
         }
     }
 }

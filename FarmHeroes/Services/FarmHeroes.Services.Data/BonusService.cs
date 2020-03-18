@@ -54,11 +54,11 @@
             }
 
             Hero hero = await this.heroService.GetCurrentHero();
-            HeroBonus heroBonus = hero.Bonuses.SingleOrDefault(b => b.Name == shopBonus.Name);
+            HeroBonus heroBonus = hero.Inventory.Bonuses.SingleOrDefault(b => b.Name == shopBonus.Name);
 
             if (heroBonus == null)
             {
-                hero.Bonuses.Add(this.GenerateHeroBonus(shopBonus));
+                hero.Inventory.Bonuses.Add(this.GenerateHeroBonus(shopBonus));
             }
             else
             {

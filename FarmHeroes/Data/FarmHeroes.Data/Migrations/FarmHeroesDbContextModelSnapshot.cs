@@ -477,11 +477,11 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HeroId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("InventoryId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Level")
                         .HasColumnType("int");
@@ -494,7 +494,7 @@ namespace FarmHeroes.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HeroId");
+                    b.HasIndex("InventoryId");
 
                     b.ToTable("HeroBonuses");
                 });
@@ -1000,7 +1000,8 @@ namespace FarmHeroes.Data.Migrations
 
                     b.HasOne("FarmHeroes.Data.Models.ApplicationUser", "User")
                         .WithOne("Hero")
-                        .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "UserId");
+                        .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroAmulet", b =>
@@ -1014,9 +1015,9 @@ namespace FarmHeroes.Data.Migrations
 
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroBonus", b =>
                 {
-                    b.HasOne("FarmHeroes.Data.Models.HeroModels.Hero", "Hero")
+                    b.HasOne("FarmHeroes.Data.Models.HeroModels.Inventory", "Inventory")
                         .WithMany("Bonuses")
-                        .HasForeignKey("HeroId")
+                        .HasForeignKey("InventoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

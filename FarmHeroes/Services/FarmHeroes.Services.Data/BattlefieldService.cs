@@ -116,7 +116,8 @@
                 .Where(x => (x.Level.CurrentLevel <= level + 3 && x.Level.CurrentLevel >= level - 3)
                     && x.Id != attacker.Id
                     && x.Fraction != attacker.Fraction
-                    && x.Chronometer.CannotBeAttackedUntil < DateTime.UtcNow)
+                    && x.Chronometer.CannotBeAttackedUntil < DateTime.UtcNow
+                    && x.UserId != null)
                 .ToArrayAsync();
 
             if (heroes.Length == 0)

@@ -11,10 +11,16 @@
     </div>
 <div class="row">
     <div class="col-2 border-right border-primary m-auto">
-        <img src="https://i.botva.ru/images/items/ico_safe_01.jpg" class="row img-fluid p-1 m-auto">
-        <img src="https://i.botva.ru/images/items/ico_safe_01.jpg" class="row img-fluid p-1 m-auto">
-        <img src="https://i.botva.ru/images/items/ico_safe_01.jpg" class="row img-fluid p-1 m-auto">
-        <img src="https://i.botva.ru/images/items/ico_safe_01.jpg" class="row img-fluid p-1 m-auto">
+        @if (Model.EquippedSetAmulet != null)
+        {
+            <div class="position-relative equipment-box m-2">
+                <img src="@Model.EquippedSetAmulet.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="left" title="@Model.EquippedSetAmulet.Name<br><img src='https://i.ibb.co/6m3nn3N/level-icon.png' class='icon'>: @Model.EquippedSetAmulet.Level (@Model.EquippedSetAmulet.Bonus%)<br><br>@Model.EquippedSetAmulet.Description">
+            </div>
+        }
+        else
+        {
+            <img src="https://i.ibb.co/q9kC8Mh/no-amulet.png" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" />
+        }
     </div>
     <div class="col-8">
         <h5 class="text-center m-2">@Model.Name</h5>
@@ -37,16 +43,6 @@
         else
         {
             <img src="https://i.ibb.co/tZkyKyC/no-helmet.png" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" />
-        }
-        @if (Model.EquippedSetAmulet != null)
-        {
-            <div class="position-relative equipment-box m-2">
-                <img src="@Model.EquippedSetAmulet.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="left" title="@Model.EquippedSetAmulet.Name<br><img src='https://i.ibb.co/6m3nn3N/level-icon.png' class='icon'>: @Model.EquippedSetAmulet.Level (@Model.EquippedSetAmulet.Bonus%)<br><br>@Model.EquippedSetAmulet.Description">
-            </div>
-        }
-        else
-        {
-            <img src="https://i.ibb.co/q9kC8Mh/no-amulet.png" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" />
         }
         @if (Model.EquippedSetArmor != null)
         {

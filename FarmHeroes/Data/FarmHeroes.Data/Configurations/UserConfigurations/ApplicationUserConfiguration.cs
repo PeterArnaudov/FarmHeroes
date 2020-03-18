@@ -31,7 +31,8 @@
 
             builder.HasOne(e => e.Hero)
                 .WithOne(h => h.User)
-                .HasForeignKey<Hero>(h => h.UserId);
+                .HasForeignKey<Hero>(h => h.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

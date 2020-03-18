@@ -70,8 +70,6 @@
 
         public virtual Chronometer Chronometer { get; set; }
 
-        public virtual List<HeroBonus> Bonuses { get; set; } = new List<HeroBonus>();
-
         public virtual List<Notification> Notifications { get; set; } = new List<Notification>();
 
         public virtual List<HeroFight> HeroFights { get; set; } = new List<HeroFight>();
