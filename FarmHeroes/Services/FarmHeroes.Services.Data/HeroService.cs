@@ -17,10 +17,10 @@
 
     public class HeroService : IHeroService
     {
-        private const string MaleSheepAvatarUrl = "https://i.ibb.co/Dz2WSxT/sheep.jpg";
-        private const string FemaleSheepAvatarUrl = "https://i.ibb.co/znyrzFV/sheep-female.jpg";
-        private const string MalePigAvatarUrl = "https://i.ibb.co/cT9YmHw/pig.jpg";
-        private const string FemalePigAvatarUrl = "https://i.ibb.co/s1B4Bdc/pig-female.jpg";
+        private const string MaleSheepAvatarUrl = "/images/avatars/sheep-male.jpg";
+        private const string FemaleSheepAvatarUrl = "/images/avatars/sheep-female.jpg";
+        private const string MalePigAvatarUrl = "/images/avatars/pig-male.jpg";
+        private const string FemalePigAvatarUrl = "/images/avatars/pig-female.jpg";
 
         private readonly FarmHeroesDbContext context;
         private readonly IMapper mapper;

@@ -16,7 +16,7 @@
 
             ShopAmulet[] amulets = new ShopAmulet[]
             {
-                new ShopAmulet() { Name = "Crystal Digger", Description = "Gives you chance to double the crystals you collect from the mines.", InitialBonus = 0.5, InitialPrice = 25, ImageUrl = "https://i.ibb.co/ScyVMsN/amulet-1.jpg" },
+                new ShopAmulet() { Name = "Crystal Digger", Description = "Gives you chance to double the crystals you collect from the mines.", InitialBonus = 0.5, InitialPrice = 25, ImageUrl = "/images/equipment/amulets/amulet_1.jpg" },
             };
 
             await dbContext.ShopAmulets.AddRangeAsync(amulets);
