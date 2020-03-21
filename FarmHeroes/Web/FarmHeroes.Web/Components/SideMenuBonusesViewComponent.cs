@@ -7,19 +7,19 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    public class SideMenuAmuletsViewComponent : ViewComponent
+    public class SideMenuBonusesViewComponent : ViewComponent
     {
         private readonly IInventoryService inventoryService;
 
-        public SideMenuAmuletsViewComponent(IInventoryService inventoryService)
+        public SideMenuBonusesViewComponent(IInventoryService inventoryService)
         {
             this.inventoryService = inventoryService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            SideMenuAmuletsViewComponentModel viewModel =
-                await this.inventoryService.GetCurrentHeroInventoryViewModel<SideMenuAmuletsViewComponentModel>();
+            SideMenuBonusesViewComponentModel viewModel =
+                await this.inventoryService.GetCurrentHeroInventoryViewModel<SideMenuBonusesViewComponentModel>();
 
             return this.View(viewModel);
         }

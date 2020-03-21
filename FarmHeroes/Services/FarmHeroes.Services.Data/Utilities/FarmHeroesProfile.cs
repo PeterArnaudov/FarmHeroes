@@ -132,11 +132,15 @@
 
             this.CreateMap<HeroAmulet, AmuletViewModel>();
 
+            this.CreateMap<HeroBonus, BonusViewModel>();
+
             this.CreateMap<Fight, FightLogViewModel>();
 
             this.CreateMap<Chronometer, SideMenuTimersViewComponentModel>();
 
             this.CreateMap<Inventory, SideMenuAmuletsViewComponentModel>();
+
+            this.CreateMap<Inventory, SideMenuBonusesViewComponentModel>();
 
             this.CreateMap<ResourcePouch, HeroResourcesViewComponentModel>();
 

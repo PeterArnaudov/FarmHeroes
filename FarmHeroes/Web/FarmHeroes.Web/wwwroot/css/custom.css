@@ -64,6 +64,14 @@
     opacity: 0.3;
 }
 
+.side-menu-effects {
+    height: auto;
+    max-height: 150px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #d2c5eb #6610f2;
+}
+
 .img-shake:hover {
     animation: shake 0.5s;
     animation-iteration-count: infinite;
