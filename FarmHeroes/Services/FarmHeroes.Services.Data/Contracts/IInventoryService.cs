@@ -10,6 +10,8 @@
 
         Task<T> GetCurrentHeroInventoryViewModel<T>();
 
+        Task<T> GetCurrentHeroAmuletsViewModel<T>();
+
         Task Upgrade();
 
         Task Trash(int id);

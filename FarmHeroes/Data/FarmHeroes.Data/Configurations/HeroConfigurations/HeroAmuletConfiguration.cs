@@ -15,7 +15,7 @@
             builder.HasOne(ha => ha.EquippedSet)
                 .WithOne(es => es.Amulet)
                 .HasForeignKey<EquippedSet>(es => es.AmuletId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasOne(ha => ha.Inventory)
                 .WithMany(i => i.Amulets)

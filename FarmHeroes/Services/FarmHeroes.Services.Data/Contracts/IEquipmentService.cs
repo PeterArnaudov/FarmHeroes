@@ -1,6 +1,7 @@
 ﻿namespace FarmHeroes.Services.Data.Contracts
 {
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Web.ViewModels.EquipmentModels;
     using System;
     using System.Threading.Tasks;
 
@@ -12,6 +13,6 @@
 
         Task Equip(int id);
 
-        Task EquipAmulet(int id);
+        Task<AmuletViewModel> EquipAmulet(int id);
     }
 }

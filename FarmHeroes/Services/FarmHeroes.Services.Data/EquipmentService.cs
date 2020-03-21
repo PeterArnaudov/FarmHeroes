@@ -1,10 +1,12 @@
 ﻿namespace FarmHeroes.Services.Data
 {
+    using AutoMapper;
     using FarmHeroes.Data;
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
+    using FarmHeroes.Web.ViewModels.EquipmentModels;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using System;
@@ -17,13 +19,15 @@
         private readonly FarmHeroesDbContext context;
         private readonly IHttpContextAccessor httpContext;
         private readonly ITempDataDictionaryFactory tempDataDictionaryFactory;
+        private readonly IMapper mapper;
 
-        public EquipmentService(IHeroService heroService, FarmHeroesDbContext context, IHttpContextAccessor httpContext, ITempDataDictionaryFactory tempDataDictionaryFactory)
+        public EquipmentService(IHeroService heroService, FarmHeroesDbContext context, IHttpContextAccessor httpContext, ITempDataDictionaryFactory tempDataDictionaryFactory, IMapper mapper)
         {
             this.heroService = heroService;
             this.context = context;
             this.httpContext = httpContext;
             this.tempDataDictionaryFactory = tempDataDictionaryFactory;
+            this.mapper = mapper;
         }
 
         public async Task<EquippedSet> GetCurrentHeroEquipedSet()
@@ -68,13 +72,13 @@
                 .Add("Alert", $"You equipped {heroEquipment.Name}.");
         }
 
-        public async Task EquipAmulet(int id)
+        public async Task<AmuletViewModel> EquipAmulet(int id)
         {
             Hero hero = await this.heroService.GetCurrentHero();
             HeroAmulet heroAmulet = await this.GetHeroAmuletById(id);
             EquippedSet equippedSet = await this.GetCurrentHeroEquipedSet();
 
-            if (hero.InventoryId != heroAmulet.InventoryId)
+            if (heroAmulet == null || hero.InventoryId != heroAmulet.InventoryId)
             {
                 throw new FarmHeroesException(
                     "You cannot equip an item that isn't yours.",
@@ -86,9 +90,7 @@
 
             await this.context.SaveChangesAsync();
 
-            this.tempDataDictionaryFactory
-                .GetTempData(this.httpContext.HttpContext)
-                .Add("Alert", $"You equipped {heroAmulet.Name}.");
+            return this.mapper.Map<AmuletViewModel>(heroAmulet);
         }
 
         private async Task<HeroEquipment> GetHeroEquipmentById(int id)

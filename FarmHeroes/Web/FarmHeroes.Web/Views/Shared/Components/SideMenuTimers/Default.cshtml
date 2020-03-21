@@ -1,17 +1,16 @@
 ﻿@model FarmHeroes.Web.ViewModels.ViewComponentsModels.SideMenuTimersViewComponentModel
 
-<ul class="nav flex-column text-center p-1 col-2 d-lg-block d-none">
-    <h4 class="text-uppercase">Timers</h4>
-    <span>Current work:</span>
-    <li class="nav-item">
-        <vc:timer dom-element-id="work_0" date-time="@Model.WorkUntil"></vc:timer>
-    </li>
-    <span>Until fight:</span>
-    <li class="nav-item">
-        <vc:timer dom-element-id="attack_0" date-time="@Model.CannotAttackHeroUntil"></vc:timer>
-    </li>
-    <span>Defense duration:</span>
-    <li class="nav-item">
-        <vc:timer dom-element-id="defense_0" date-time="@Model.CannotBeAttackedUntil"></vc:timer>
-    </li>
-</ul>
+
+<h4 class="text-uppercase">Timers</h4>
+<span>Current work:</span>
+<li class="nav-item">
+    <vc:timer dom-element-id="work_0" date-time="@Model.WorkUntil"></vc:timer>
+</li>
+<span>Until fight:</span>
+<li class="nav-item">
+    <vc:timer dom-element-id="attack_0" date-time="@Model.CannotAttackHeroUntil"></vc:timer>
+</li>
+<span>Defense duration:</span>
+<li class="nav-item">
+    <vc:timer dom-element-id="defense_0" date-time="@Model.CannotBeAttackedUntil"></vc:timer>
+</li>

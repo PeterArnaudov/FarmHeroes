@@ -945,7 +945,7 @@ namespace FarmHeroes.Data.Migrations
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.HeroAmulet", "Amulet")
                         .WithOne("EquippedSet")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.EquippedSet", "AmuletId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.Hero", b =>

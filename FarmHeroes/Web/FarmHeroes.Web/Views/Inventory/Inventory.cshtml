@@ -49,7 +49,7 @@
             <div class="position-relative equipment-box m-2" onclick="showActions(this)">
                 <img src="@item.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="top" title="@item.Name<br><img src='/images/icons/level-icon.png' class='icon'>: @item.Level (@item.Bonus%)<br><br>@item.Description">
                 <div class="d-none">
-                    <a href="/Inventory/EquipAmulet/@item.Id" class="btn btn-sm btn-primary badge-pill d-block mb-1">Equip</a>
+                    <a class="btn btn-sm btn-primary badge-pill d-block mb-1" onclick="equipAmulet('@item.Id')">Equip</a>
                     <a href="/Inventory/Trash/@item.Id" class="btn btn-sm btn-danger badge-pill d-block">Trash</a>
                 </div>
             </div>

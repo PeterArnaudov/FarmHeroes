@@ -76,6 +76,15 @@
             await this.context.SaveChangesAsync();
         }
 
+        public async Task<T> GetCurrentHeroAmuletsViewModel<T>()
+        {
+            Inventory inventory = await this.GetCurrentHeroInventory();
+
+            T viewModel = this.mapper.Map<T>(inventory);
+
+            return viewModel;
+        }
+
         public async Task Upgrade()
         {
             Inventory inventory = await this.GetCurrentHeroInventory();

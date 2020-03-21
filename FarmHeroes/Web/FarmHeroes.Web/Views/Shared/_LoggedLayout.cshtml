@@ -67,60 +67,63 @@
                         </form>
                     </li>
                 </ul>
-                </nav>
-                <div id="view-body" class="col-lg-8 col-md-12 border border-primary border-top-0 border-bottom-0 border-left-1 border-right-1">
-                    @if (this.TempData["ExceptionMessage"] != null)
-                    {
-                        <div class="alert alert-danger disappearing-alert" role="alert">
-                            <h4 class="alert-heading font-weight-bolder">Oups! Something went wrong.</h4>
-                            <p class="mb-0"><span class="font-weight-bold">Cause: </span>@this.TempData["ExceptionMessage"]</p>
-                            <p><span class="font-weight-bold">Instructions: </span>@this.TempData["ExceptionInstructions"]</p>
-                            <hr>
-                            <p class="mb-0 text-muted font-italic text-right">You might have gone against the rules and tried to do something not allowed.</p>
-                        </div>
-                    }
-                    @if (this.TempData["Alert"] != null)
-                    {
-                        <div class="alert alert-success disappearing-alert" role="alert">
-                            <p class="text-center m-0">@this.TempData["Alert"]</p>
-                        </div>
-                    }
-                    <partial name="_CookieConsentPartial" />
-                    @RenderBody()
-                </div>
-                <vc:side-menu-timers></vc:side-menu-timers>
+            </nav>
+            <div id="view-body" class="col-lg-8 col-md-12 border border-primary border-top-0 border-bottom-0 border-left-1 border-right-1">
+                @if (this.TempData["ExceptionMessage"] != null)
+                {
+                    <div class="alert alert-danger disappearing-alert" role="alert">
+                        <h4 class="alert-heading font-weight-bolder">Oups! Something went wrong.</h4>
+                        <p class="mb-0"><span class="font-weight-bold">Cause: </span>@this.TempData["ExceptionMessage"]</p>
+                        <p><span class="font-weight-bold">Instructions: </span>@this.TempData["ExceptionInstructions"]</p>
+                        <hr>
+                        <p class="mb-0 text-muted font-italic text-right">You might have gone against the rules and tried to do something not allowed.</p>
+                    </div>
+                }
+                @if (this.TempData["Alert"] != null)
+                {
+                    <div class="alert alert-success disappearing-alert" role="alert">
+                        <p class="text-center m-0">@this.TempData["Alert"]</p>
+                    </div>
+                }
+                <partial name="_CookieConsentPartial" />
+                @RenderBody()
             </div>
-            <hr class="bg-primary">
-            <footer>
-                <!-- <h6 class="font-weight-bold text-center">CopyRight &copy; PeterArnaudov. All rights reserved.</h6> -->
-                <h6 class="font-weight-bold text-center">Created by <a href="https://softuni.bg/users/profile/show/peterarnaudov">PeterArnaudov</a>.</h6>
-                <div class="text-center">
-                    <a href=""><img src="~/images/community/instagram.png" alt="Instagram logo" class="m-2 logo"></a>
-                    <a href=""><img src="~/images/community/facebook.png" alt="Facebook logo" class="m-2 logo"></a>
-                    <a href=""><img src="~/images/community/linkedin.png" alt="LinkedIn logo" class="m-2 logo"></a>
-                    <a href=""><img src="~/images/community/github.png" alt="Github logo" class="m-2 logo"></a>
-                </div>
-                <h6 class="font-weight-bold text-center">Created with educational purpose. Based on <a href="https://www.botva.ru">www.botva.ru</a>.</h6>
-            </footer>
+            <ul class="nav flex-column text-center p-1 col-2 d-lg-block d-none">
+                <vc:side-menu-timers></vc:side-menu-timers>
+                <vc:side-menu-amulets></vc:side-menu-amulets>
+            </ul>
         </div>
+        <hr class="bg-primary">
+        <footer>
+            <!-- <h6 class="font-weight-bold text-center">CopyRight &copy; PeterArnaudov. All rights reserved.</h6> -->
+            <h6 class="font-weight-bold text-center">Created by <a href="https://softuni.bg/users/profile/show/peterarnaudov">PeterArnaudov</a>.</h6>
+            <div class="text-center">
+                <a href=""><img src="~/images/community/instagram.png" alt="Instagram logo" class="m-2 logo"></a>
+                <a href=""><img src="~/images/community/facebook.png" alt="Facebook logo" class="m-2 logo"></a>
+                <a href=""><img src="~/images/community/linkedin.png" alt="LinkedIn logo" class="m-2 logo"></a>
+                <a href=""><img src="~/images/community/github.png" alt="Github logo" class="m-2 logo"></a>
+            </div>
+            <h6 class="font-weight-bold text-center">Created with educational purpose. Based on <a href="https://www.botva.ru">www.botva.ru</a>.</h6>
+        </footer>
+    </div>
 
-        <environment names="Development">
-            <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
-            <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
-            <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js" asp-append-version="true"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-            <script src="~/js/ajax-calls.js" asp-append-version="true"></script>
-        </environment>
-        <environment names="Staging,Production">
-            <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-            <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
-            <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
-            <script src="~/js/site.min.js" asp-append-version="true"></script>
-            <script src="~/js/ajax-calls.js" asp-append-version="true"></script>
-        </environment>
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js" asp-append-version="true"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/ajax-calls.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/js/ajax-calls.js" asp-append-version="true"></script>
+    </environment>
 
-        @this.RenderSection("Scripts", required: false)
-    </body>
+    @this.RenderSection("Scripts", required: false)
+</body>
 </html>

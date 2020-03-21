@@ -136,6 +136,8 @@
 
             this.CreateMap<Chronometer, SideMenuTimersViewComponentModel>();
 
+            this.CreateMap<Inventory, SideMenuAmuletsViewComponentModel>();
+
             this.CreateMap<ResourcePouch, HeroResourcesViewComponentModel>();
 
             this.CreateMap<Statistics, StatisticsAllViewModel>();
