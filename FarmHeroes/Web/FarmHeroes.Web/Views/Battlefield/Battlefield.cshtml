@@ -21,7 +21,7 @@
                 </div>
                 @if (Model.IsOnPatrol)
                 {
-                    <span type="submit" class="btn btn-primary disabled">Get opponents</span>
+                    <button id="attack-hero-button" type="submit" class="btn btn-primary disabled" disabled>Get opponents</button>
                 }
                 else
                 {
@@ -72,13 +72,13 @@
                     <p>Attack a monster with level between 1 and 3.</p>
                     @if (Model.IsOnPatrol)
                     {
-                        <span class="btn btn-primary disabled">Attack</span>
+                        <a id="attack-random-monster-button" asp-controller="Battlefield" asp-action="AttackMonster" class="btn btn-primary disabled" disabled>Attack</a>
                     }
                     else
                     {
                         if (Model.CanAttackMonster)
                         {
-                            <a id="attack-random-monster-button" href="/Battlefield/AttackMonster" class="btn btn-primary">Attack</a>
+                            <a id="attack-random-monster-button" asp-controller="Battlefield" asp-action="AttackMonster" class="btn btn-primary">Attack</a>
                         }
                         else
                         {
@@ -90,26 +90,26 @@
                     <p>Price: 1 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
                     <p>Attack a monster with level of your choice.</p>
                     <form class="form-inline" asp-controller="Battlefield" asp-action="AttackMonster" asp-antiforgery="false" method="get">
+                        <label for="attackType" class="m-auto">Monster level</label>
+                        <select class="form-control-sm m-auto" name="monsterLevel">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
                         @if (Model.IsOnPatrol)
                         {
-                            <span class="btn btn-primary m-auto disabled">Attack</span>
+                            <button id="attack-monster-button" type="submit" class="btn btn-primary disabled" disabled>Attack</button>
                         }
                         else
                         {
                             if (Model.CanAttackMonster)
                             {
-                                <label for="attackType" class="m-auto">Monster level</label>
-                                <select class="form-control-sm m-auto" name="monsterLevel">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                </select>
                                 <button id="attack-monster-button" type="submit" class="btn btn-primary">Attack</button>
                             }
                             else

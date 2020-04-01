@@ -157,6 +157,12 @@ function collect(location) {
                 let $button = $(`<button onclick="startWork('battlefield')" class="btn btn-primary">Start Patrol</button>`);
 
                 $('#work-body').append($button);
+                $('#attack-hero-button').removeClass('disabled');
+                $('#attack-hero-button').removeAttr('disabled');
+                $('#attack-monster-button').removeClass('disabled');
+                $('#attack-monster-button').removeAttr('disabled');
+                $('#attack-random-monster-button').removeClass('disabled');
+                $('#attack-random-monster-button').removeAttr('disabled');
             }
 
             $('#current-gold').text(Number($('#current-gold').text()) + Number(data.gold));
