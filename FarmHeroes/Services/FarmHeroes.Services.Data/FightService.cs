@@ -27,8 +27,8 @@
         private const int MinutesDefenseGranted = 60;
         private const int RandomMonsterGoldCost = 500;
         private const int MonsterCrystalCost = 1;
-        private const string MonsterFightNotificationImageUrl = "https://i.ibb.co/my7rwD4/monster-fight-notifications.png";
-        private const string HeroFightNotificationImageUrl = "https://i.ibb.co/T12Xb6j/player-battle-notifications.png";
+        private const string MonsterFightNotificationImageUrl = "/images/notifications/monster-fight-notification.png";
+        private const string HeroFightNotificationImageUrl = "/images/notifications/hero-battle-notification.png";
 
         private readonly IHeroService heroService;
         private readonly IHealthService healthService;

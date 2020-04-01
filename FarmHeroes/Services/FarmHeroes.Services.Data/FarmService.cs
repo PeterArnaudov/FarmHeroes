@@ -17,7 +17,7 @@
     {
         private const int WorkDurationInMinutes = 240;
         private const int WorkDurationInHours = WorkDurationInMinutes / 60;
-        private const string FarmNotificationImageUrl = "https://i.ibb.co/NrVTpR3/farm-notifications.png";
+        private const string FarmNotificationImageUrl = "/images/notifications/farm-notification.png";
 
         private readonly IHeroService heroService;
         private readonly IResourcePouchService resourcePouchService;

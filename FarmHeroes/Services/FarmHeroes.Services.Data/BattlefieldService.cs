@@ -19,7 +19,7 @@
     public class BattlefieldService : IBattlefieldService
     {
         private const int PatrolDurationInMinutes = 10;
-        private const string PatrolNotificationImageUrl = "https://i.ibb.co/4KzhXJD/patrol-notification.png";
+        private const string PatrolNotificationImageUrl = "/images/notifications/patrol-notification.png";
 
         private readonly IHeroService heroService;
         private readonly IChronometerService chronometerService;

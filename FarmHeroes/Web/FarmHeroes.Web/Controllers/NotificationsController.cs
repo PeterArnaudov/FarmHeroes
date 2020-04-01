@@ -17,7 +17,7 @@
             this.notificationService = notificationService;
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> Index()
         {
             NotificationViewModel[] viewModel = await this.notificationService.GetAllNotifications<NotificationViewModel[]>();
 
