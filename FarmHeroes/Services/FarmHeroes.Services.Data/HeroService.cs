@@ -37,7 +37,7 @@
         {
             Hero hero = this.mapper.Map<Hero>(inputModel);
             hero.User = await this.userService.GetApplicationUser();
-            hero.Name = this.userService.GetUsername();
+            hero.Name = hero.User.UserName;
 
             if (hero.Fraction == Fraction.Sheep && hero.Gender == Gender.Male)
             {
@@ -63,9 +63,8 @@
         public async Task<Hero> GetCurrentHero()
         {
             ApplicationUser user = await this.userService.GetApplicationUser();
-            Hero hero = await this.context.Heroes.SingleOrDefaultAsync(x => x.User == user);
 
-            return hero;
+            return user.Hero;
         }
 
         public async Task<Hero> GetHeroById(int id)

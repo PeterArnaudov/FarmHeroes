@@ -3,7 +3,6 @@
     using System.ComponentModel.DataAnnotations;
 
     using FarmHeroes.Data.Models.Enums;
-
     using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public class HeroCreateInputModel
