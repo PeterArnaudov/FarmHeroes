@@ -8,6 +8,7 @@
 
     using FarmHeroes.Data.Common.Models;
     using FarmHeroes.Data.Models;
+    using FarmHeroes.Data.Models.Chat;
     using FarmHeroes.Data.Models.FightModels;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.MappingModels;
@@ -66,6 +67,8 @@
         public virtual DbSet<Fight> Fights { get; set; }
 
         public virtual DbSet<HeroFight> HeroFights { get; set; }
+
+        public virtual DbSet<Message> Messages { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 

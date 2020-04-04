@@ -24,6 +24,7 @@
     using Microsoft.Extensions.Hosting;
     using FarmHeroes.Web.Filters;
     using Microsoft.AspNetCore.Mvc;
+    using FarmHeroes.Web.Hubs;
 
     public class Startup
     {
@@ -44,6 +45,7 @@
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<FarmHeroesDbContext>();
+            services.AddSignalR();
 
             services.Configure<CookiePolicyOptions>(
                 options =>
@@ -91,6 +93,7 @@
             services.AddTransient<ISmithService, SmithService>();
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IBonusService, BonusService>();
+            services.AddTransient<IChatService, ChatService>();
 
             // Filters
             services.AddTransient<FarmHeroesExceptionFilterAttribute>();
@@ -134,6 +137,12 @@
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSignalR(
+                routes =>
+                {
+                    routes.MapHub<ChatHub>("/chatter");
+                });
 
             app.UseEndpoints(
                 endpoints =>

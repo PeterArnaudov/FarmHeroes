@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using AutoMapper;
+    using FarmHeroes.Data.Models.Chat;
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.FightModels;
     using FarmHeroes.Data.Models.HeroModels;
@@ -11,6 +12,7 @@
     using FarmHeroes.Services.Data.Formulas;
     using FarmHeroes.Web.ViewModels.BattlefieldModels;
     using FarmHeroes.Web.ViewModels.CharacteristcsModels;
+    using FarmHeroes.Web.ViewModels.ChatModels;
     using FarmHeroes.Web.ViewModels.ChronometerModels;
     using FarmHeroes.Web.ViewModels.EquipmentModels;
     using FarmHeroes.Web.ViewModels.FarmModels;

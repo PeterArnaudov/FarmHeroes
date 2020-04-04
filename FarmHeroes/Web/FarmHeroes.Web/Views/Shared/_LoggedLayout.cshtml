@@ -53,6 +53,9 @@
                         <a class="btn btn-primary p-1 nav-link" href="/Leaderboards/All">Leaderboards</a>
                     </li>
                     <li class="nav-item w-100">
+                        <a class="btn btn-primary p-1 nav-link" asp-area="" asp-controller="Chat" asp-action="Index">Chat</a>
+                    </li>
+                    <li class="nav-item w-100">
                         <a class="btn btn-primary p-1 nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a>
                     </li>
                     @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
@@ -115,6 +118,7 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/js/ajax-calls.js" asp-append-version="true"></script>
+        <script src="~/lib/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
@@ -123,6 +127,7 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
         <script src="~/js/ajax-calls.js" asp-append-version="true"></script>
+        <script src="~/lib/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>
     </environment>
 
     @this.RenderSection("Scripts", required: false)

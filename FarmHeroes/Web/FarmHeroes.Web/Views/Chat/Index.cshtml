@@ -1,0 +1,32 @@
+﻿@model FarmHeroes.Web.ViewModels.ChatModels.ChatViewModel
+@{
+    ViewData["Title"] = "Chat";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<div id="chat-messages" class="m-2">
+    @foreach (var message in Model.Messages)
+	{
+    <div class="row mt-2 notification">
+        <div class="col-9">
+            <div class="row">
+                <small class="align-top pl-3 chat-message"><strong>@message.Sender:</strong></small>
+            </div>
+            <div class="row">
+                <small class="pl-3 align-top">@message.Text</small>
+            </div>
+        </div>
+        <div class="col-3">
+            <small class="float-right">@message.CreatedOn</small>
+        </div>
+    </div>
+	}
+</div>
+<div class="mt-3 d-flex justify-content-start">
+    <input class="w-75 ml-4 pl-3" type="text" id="message-input" placeholder="Type a message" />
+    <button id="send-message-button" class="ml-4 btn btn-dark btn-lg">Send</button>
+</div>
+
+@section Scripts {
+    <script src="~/js/chat.js" asp-append-version="true"></script>
+}

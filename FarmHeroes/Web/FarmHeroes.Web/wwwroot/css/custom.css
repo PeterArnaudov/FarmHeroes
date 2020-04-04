@@ -90,3 +90,16 @@
 .notification:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+.chat-message {
+    max-height: none;
+}
+
+#chat-messages {
+    height: 400px;
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #d2c5eb #6610f2;
+}

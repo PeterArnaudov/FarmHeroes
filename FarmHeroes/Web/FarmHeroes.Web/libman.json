@@ -3,6 +3,13 @@
   "defaultProvider": "jsdelivr",
   "libraries": [
     {
+      "library": "@aspnet/signalr@1.1.4",
+      "destination": "wwwroot/lib/signalr/",
+      "files": [
+        "dist/browser/signalr.min.js"
+      ]
+    },
+    {
       "library": "jquery@3.4.1",
       "destination": "wwwroot/lib/jquery/",
       "files": [
