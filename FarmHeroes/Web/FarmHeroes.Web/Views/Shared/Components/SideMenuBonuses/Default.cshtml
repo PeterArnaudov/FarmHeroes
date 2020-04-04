@@ -5,7 +5,7 @@
     <hr class="bg-primary w-75" />
     <li class="nav-item side-menu-effects">
         <h5 class="text-uppercase">Effects</h5>
-        @foreach (var bonus in Model.Bonuses.Where(x => x.ActiveUntil != DateTime.MaxValue))
+        @foreach (var bonus in Model.Bonuses.Where(x => x.ActiveUntil != DateTime.MaxValue && x.ActiveUntil > DateTime.UtcNow))
         {
             <div class="text-left">
                 <img src="@bonus.ImageUrl" alt="bonus" class="img-fluid amulet-icon" data-toggle="tooltip" data-placement="right" title="@bonus.Name">
