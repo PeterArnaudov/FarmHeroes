@@ -1,0 +1,56 @@
+﻿@model FarmHeroes.Web.ViewModels.NotificationModels.NotificationViewModel[]
+@{
+    ViewData["Title"] = "Notifications";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+@if (Model.Length == 0)
+{
+    <img src="~/images/notifications/postman.png" alt="postman" class="d-block mt-5 ml-auto mr-auto">
+    <p class="text-center">You have no notifications currently.</p>
+}
+else
+{
+    @foreach (var notification in @Model)
+    {
+        <div class="row mt-2 notification">
+            <div class="col-1">
+                <img src="@notification.ImageUrl" alt="notification">
+            </div>
+            <div class="col-8">
+                <div class="row">
+                    <small class="align-top">
+                        <strong>@notification.Title</strong>
+                        @if (notification.IsNew)
+                        {
+                            <span class="badge badge-pill badge-light">NEW</span>
+                        }
+                    </small>
+                </div>
+                <div class="row">
+                    <small class="align-top">
+                        @if (notification.Link != null)
+                        {
+                            <a href="@notification.Link" class="text-primary">@notification.Content</a>
+                        }
+                        else
+                        {
+                            <span>@notification.Content</span>
+                        }
+                        @if (notification.Gold.HasValue)
+                        {
+                            @notification.Gold <img src="~/images/icons/gold-icon.png" alt="gold" class="icon img-jump">
+                        }
+                        @if (notification.Experience.HasValue)
+                        {
+                            @notification.Experience <img src="~/images/icons/experience-icon.png" alt="experience" class="icon img-jump">
+                        }
+                    </small>
+                </div>
+            </div>
+            <div class="col-3">
+                <small class="float-right">@notification.CreatedOn</small>
+            </div>
+        </div>
+    }
+}
