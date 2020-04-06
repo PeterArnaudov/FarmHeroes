@@ -62,7 +62,9 @@
             }
             else
             {
-                heroBonus.ActiveUntil = shopBonus.IsPermanent ? DateTime.MaxValue : heroBonus.ActiveUntil.AddDays(shopBonus.Days);
+                heroBonus.ActiveUntil = shopBonus.IsPermanent ? DateTime.MaxValue
+                    : heroBonus.ActiveUntil < DateTime.UtcNow ? DateTime.UtcNow.AddDays(shopBonus.Days)
+                    : heroBonus.ActiveUntil.AddDays(shopBonus.Days);
             }
 
             await this.resourcePouchService.DecreaseCurrentHeroCrystals(shopBonus.CrystalsPrice);
