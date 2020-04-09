@@ -8,5 +8,6 @@
         MonsterFight,
         Farm,
         Patrol,
+        Other,
     }
 }

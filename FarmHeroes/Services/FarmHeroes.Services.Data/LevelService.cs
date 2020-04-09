@@ -4,20 +4,26 @@
     using System.Threading.Tasks;
 
     using FarmHeroes.Data;
+    using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Data.Models.NotificationModels.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Formulas;
     using FarmHeroes.Web.ViewModels.LevelModels;
 
     public class LevelService : ILevelService
     {
+        private const string LevelNotificationImageUrl = "/images/notifications/level-notification.png";
+
         private readonly FarmHeroesDbContext context;
         private readonly IHeroService heroService;
+        private readonly INotificationService notificationService;
 
-        public LevelService(FarmHeroesDbContext context, IHeroService heroService)
+        public LevelService(FarmHeroesDbContext context, IHeroService heroService, INotificationService notificationService)
         {
             this.context = context;
             this.heroService = heroService;
+            this.notificationService = notificationService;
         }
 
         public async Task<int> GetCurrentHeroLevel()
@@ -80,6 +86,16 @@
             hero.Level.NeededExperience = LevelFormulas.CalculateNextExperienceNeeded(hero.Level.NeededExperience);
             hero.Level.CurrentLevel++;
 
+            Notification notification = new Notification()
+            {
+                ImageUrl = LevelNotificationImageUrl,
+                Title = "Level up",
+                Content = $"You just reached level {hero.Level.CurrentLevel}. Congratulations!",
+                Type = NotificationType.Other,
+                Hero = hero,
+            };
+            await this.notificationService.AddNotification(notification);
+
             await this.context.SaveChangesAsync();
         }
 
@@ -97,6 +113,16 @@
             hero.Level.CurrentExperience = experienceLeft;
             hero.Level.NeededExperience = LevelFormulas.CalculateNextExperienceNeeded(hero.Level.NeededExperience);
             hero.Level.CurrentLevel++;
+
+            Notification notification = new Notification()
+            {
+                ImageUrl = LevelNotificationImageUrl,
+                Title = "Level up",
+                Content = $"You just reached level {hero.Level.CurrentLevel}. Congratulations!",
+                Type = NotificationType.Other,
+                Hero = hero,
+            };
+            await this.notificationService.AddNotification(notification);
 
             await this.context.SaveChangesAsync();
         }
