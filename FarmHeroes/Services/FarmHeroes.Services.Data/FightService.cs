@@ -327,6 +327,15 @@
             int attackerMastery = (int)((attacker.Characteristics.Mastery + FightFormulas.CalculateMasteryFromSet(attackerSet)) * (1 + attacker.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus)));
             int attackerMass = attacker.Characteristics.Mass;
 
+            HeroAmulet heroAmulet = attacker.EquippedSet.Amulet;
+
+            if (heroAmulet.Name == "Undergrounder")
+            {
+                attackerAttack = (int)(attackerAttack * (1 + (heroAmulet.Bonus / 100)));
+                attackerDefense = (int)(attackerDefense * (1 + (heroAmulet.Bonus / 100)));
+                attackerMastery = (int)(attackerMastery * (1 + (heroAmulet.Bonus / 100)));
+            }
+
             int?[] attackerHits = new int?[5];
             int?[] defenderHits = new int?[5];
             string winnerName = string.Empty;
