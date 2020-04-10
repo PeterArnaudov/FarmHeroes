@@ -48,9 +48,24 @@
 
         public async Task<int> StartPatrol()
         {
-            await this.chronometerService.SetWorkUntil(PatrolDurationInSeconds, WorkStatus.Battlefield);
+            int durationInSeconds = PatrolDurationInSeconds;
 
-            return PatrolDurationInSeconds;
+            Hero hero = await this.heroService.GetCurrentHero();
+            Random random = new Random();
+
+            if (hero.EquippedSet.Amulet?.Name == "Speedster")
+            {
+                double chanceNeeded = random.Next(0, 100);
+
+                if (hero.EquippedSet.Amulet.Bonus >= chanceNeeded)
+                {
+                    durationInSeconds = 10;
+                }
+            }
+
+            await this.chronometerService.SetWorkUntil(durationInSeconds, WorkStatus.Battlefield);
+
+            return durationInSeconds;
         }
 
         public async Task<CollectedResourcesViewModel> Collect()
