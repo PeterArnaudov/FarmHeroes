@@ -50,7 +50,7 @@
             Random random = new Random();
             collectedResources.Crystals = random.Next(1, 5);
 
-            if (heroAmulet.Name == "Crystal Digger")
+            if (heroAmulet?.Name == "Crystal Digger")
             {
                 double chance = random.Next(0, 100);
 

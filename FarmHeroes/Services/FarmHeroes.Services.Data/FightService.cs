@@ -133,8 +133,8 @@
                     defenderDefense,
                     attackerMastery,
                     defenderMastery,
-                    attackerSet.Amulet.Name == "Criticum" ? attackerSet.Amulet.Bonus : 0,
-                    attackerSet.Amulet.Name == "Fatty" ? attackerSet.Amulet.Bonus : 0);
+                    attackerSet.Amulet?.Name == "Criticum" ? attackerSet.Amulet.Bonus : 0,
+                    attackerSet.Amulet?.Name == "Fatty" ? attackerSet.Amulet.Bonus : 0);
 
                 await this.healthService.ReduceHealthById(defender.HealthId, attackerDamage);
                 attackerHits[i] = attackerDamage;
@@ -150,8 +150,8 @@
                     attackerDefense,
                     defenderMastery,
                     attackerMastery,
-                    defenderSet.Amulet.Name == "Criticum" ? defenderSet.Amulet.Bonus : 0,
-                    defenderSet.Amulet.Name == "Fatty" ? defenderSet.Amulet.Bonus : 0);
+                    defenderSet.Amulet?.Name == "Criticum" ? defenderSet.Amulet.Bonus : 0,
+                    defenderSet.Amulet?.Name == "Fatty" ? defenderSet.Amulet.Bonus : 0);
 
                 await this.healthService.ReduceHealthById(attacker.HealthId, defenderDamage);
                 defenderHits[i] = defenderDamage;
@@ -333,7 +333,7 @@
 
             HeroAmulet heroAmulet = attacker.EquippedSet.Amulet;
 
-            if (heroAmulet.Name == "Undergrounder")
+            if (heroAmulet?.Name == "Undergrounder")
             {
                 attackerAttack = (int)(attackerAttack * (1 + (heroAmulet.Bonus / 100)));
                 attackerDefense = (int)(attackerDefense * (1 + (heroAmulet.Bonus / 100)));
@@ -352,8 +352,8 @@
                     monster.Characteristics.Defense,
                     attackerMastery,
                     monster.Characteristics.Mastery,
-                    attackerSet.Amulet.Name == "Criticum" ? attackerSet.Amulet.Bonus : 0,
-                    attackerSet.Amulet.Name == "Fatty" ? attackerSet.Amulet.Bonus : 0);
+                    attackerSet.Amulet?.Name == "Criticum" ? attackerSet.Amulet.Bonus : 0,
+                    attackerSet.Amulet?.Name == "Fatty" ? attackerSet.Amulet.Bonus : 0);
 
                 monster.Health -= attackerDamage;
                 if (monster.Health < 1)
