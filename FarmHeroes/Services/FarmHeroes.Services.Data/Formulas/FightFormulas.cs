@@ -32,9 +32,9 @@
 
         public static Func<int, int, double, bool> IsCrit = (attackerMastery, defenderMastery, amuletBonus) =>
         {
-            double heroCritChance = Random.NextDouble() * attackerMastery / (attackerMastery + defenderMastery);
+            double heroCritChance = Random.Next(0, 100) * attackerMastery / (attackerMastery + defenderMastery);
             heroCritChance *= 1 + (amuletBonus / 100);
-            double neededChance = Random.NextDouble();
+            double neededChance = Random.Next(0, 100);
 
             return heroCritChance >= neededChance ? true : false;
         };
