@@ -60,8 +60,9 @@
                     "/Farm");
             }
 
+            HeroAmulet heroAmulet = hero.EquippedSet.Amulet;
             collectedResources.Experience = FarmFormulas.CalculateExperience(hero.Level.CurrentLevel, WorkDurationInHours);
-            collectedResources.Gold = FarmFormulas.CalculateGoldEarned(hero.Level.CurrentLevel, WorkDurationInHours);
+            collectedResources.Gold = FarmFormulas.CalculateGoldEarned(hero.Level.CurrentLevel, WorkDurationInHours, heroAmulet.Name == "Laborium" ? heroAmulet.Bonus : 0);
 
             hero.Statistics.EarnedOnFarm += collectedResources.Gold;
 

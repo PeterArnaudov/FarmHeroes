@@ -20,6 +20,7 @@
                 new ShopAmulet() { Name = "Undergrounder", Description = "Increases your characteristics when fighting with monsters.", InitialBonus = 0.125, InitialPrice = 50, ImageUrl = "/images/equipment/amulets/amulet_2.jpg" },
                 new ShopAmulet() { Name = "Criticum", Description = "Increases your chance to inflict a critical strike on your opponent.", InitialBonus = 0.25, InitialPrice = 10, ImageUrl = "/images/equipment/amulets/amulet_3.jpg" },
                 new ShopAmulet() { Name = "Fatty", Description = "Increases the amount of blocked damage from your opponent's hits.", InitialBonus = 0.125, InitialPrice = 15, ImageUrl = "/images/equipment/amulets/amulet_4.jpg" },
+                new ShopAmulet() { Name = "Laborium", Description = "Increases your farm salary.", InitialBonus = 2.5, InitialPrice = 30, ImageUrl = "/images/equipment/amulets/amulet_5.jpg" },
             };
 
             await dbContext.ShopAmulets.AddRangeAsync(amulets);
