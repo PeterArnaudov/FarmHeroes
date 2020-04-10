@@ -15,8 +15,8 @@
 
     public class FarmService : IFarmService
     {
-        private const int WorkDurationInMinutes = 240;
-        private const int WorkDurationInHours = WorkDurationInMinutes / 60;
+        private const int WorkDurationInSeconds = 14400;
+        private const int WorkDurationInHours = WorkDurationInSeconds / 60;
         private const string FarmNotificationImageUrl = "/images/notifications/farm-notification.png";
 
         private readonly IHeroService heroService;
@@ -42,9 +42,9 @@
 
         public async Task<int> StartWork()
         {
-            await this.chronometerService.SetWorkUntil(WorkDurationInMinutes, WorkStatus.Farm);
+            await this.chronometerService.SetWorkUntil(WorkDurationInSeconds, WorkStatus.Farm);
 
-            return WorkDurationInHours;
+            return WorkDurationInSeconds;
         }
 
         public async Task<CollectedResourcesViewModel> Collect()

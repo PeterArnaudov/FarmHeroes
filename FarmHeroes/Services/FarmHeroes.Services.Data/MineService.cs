@@ -11,7 +11,7 @@
 
     public class MineService : IMineService
     {
-        private const byte DigDuration = 5;
+        private const int DigDurationInSeconds = 300;
 
         private readonly IHeroService heroService;
         private readonly IResourcePouchService resourcePouchService;
@@ -28,9 +28,9 @@
 
         public async Task<int> InitiateDig()
         {
-            await this.chronometerService.SetWorkUntil(DigDuration, WorkStatus.Mine);
+            await this.chronometerService.SetWorkUntil(DigDurationInSeconds, WorkStatus.Mine);
 
-            return DigDuration;
+            return DigDurationInSeconds;
         }
 
         public async Task<CollectedResourcesViewModel> Collect()

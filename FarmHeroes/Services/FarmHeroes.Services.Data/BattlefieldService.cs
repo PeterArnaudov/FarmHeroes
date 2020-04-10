@@ -18,7 +18,7 @@
 
     public class BattlefieldService : IBattlefieldService
     {
-        private const int PatrolDurationInMinutes = 10;
+        private const int PatrolDurationInSeconds = 600;
         private const string PatrolNotificationImageUrl = "/images/notifications/patrol-notification.png";
 
         private readonly IHeroService heroService;
@@ -48,9 +48,9 @@
 
         public async Task<int> StartPatrol()
         {
-            await this.chronometerService.SetWorkUntil(PatrolDurationInMinutes, WorkStatus.Battlefield);
+            await this.chronometerService.SetWorkUntil(PatrolDurationInSeconds, WorkStatus.Battlefield);
 
-            return PatrolDurationInMinutes;
+            return PatrolDurationInSeconds;
         }
 
         public async Task<CollectedResourcesViewModel> Collect()

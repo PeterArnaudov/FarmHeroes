@@ -47,7 +47,7 @@
             return chronometer;
         }
 
-        public async Task SetWorkUntil(int minutes, WorkStatus workStatus)
+        public async Task SetWorkUntil(int seconds, WorkStatus workStatus)
         {
             Hero hero = await this.heroService.GetCurrentHero();
 
@@ -59,7 +59,7 @@
                     "/Farm");
             }
 
-            hero.Chronometer.WorkUntil = DateTime.UtcNow.AddMinutes(minutes);
+            hero.Chronometer.WorkUntil = DateTime.UtcNow.AddSeconds(seconds);
             hero.WorkStatus = workStatus;
 
             await this.context.SaveChangesAsync();
@@ -83,26 +83,26 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task SetCannotAttackHeroUntilById(int id, int minutes)
+        public async Task SetCannotAttackHeroUntilById(int id, int seconds)
         {
             Chronometer chronometer = await this.GetChronometerById(id);
-            chronometer.CannotAttackHeroUntil = DateTime.UtcNow.AddMinutes(minutes);
+            chronometer.CannotAttackHeroUntil = DateTime.UtcNow.AddSeconds(seconds);
 
             await this.context.SaveChangesAsync();
         }
 
-        public async Task SetCannotAttackMonsterUntilById(int id, int minutes)
+        public async Task SetCannotAttackMonsterUntilById(int id, int seconds)
         {
             Chronometer chronometer = await this.GetChronometerById(id);
-            chronometer.CannotAttackMonsterUntil = DateTime.UtcNow.AddMinutes(minutes);
+            chronometer.CannotAttackMonsterUntil = DateTime.UtcNow.AddSeconds(seconds);
 
             await this.context.SaveChangesAsync();
         }
 
-        public async Task SetCannotBeAttackedUntilById(int id, int minutes)
+        public async Task SetCannotBeAttackedUntilById(int id, int seconds)
         {
             Chronometer chronometer = await this.GetChronometerById(id);
-            chronometer.CannotBeAttackedUntil = DateTime.UtcNow.AddMinutes(minutes);
+            chronometer.CannotBeAttackedUntil = DateTime.UtcNow.AddSeconds(seconds);
 
             await this.context.SaveChangesAsync();
         }

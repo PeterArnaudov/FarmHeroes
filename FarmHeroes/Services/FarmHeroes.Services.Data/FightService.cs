@@ -22,9 +22,9 @@
     {
         private const int Rounds = 5;
         private const int ExperiencePerWin = 4;
-        private const int MinutesUntilNextHeroAttack = 15;
-        private const int MinutesUntilNextMonsterAttack = 15;
-        private const int MinutesDefenseGranted = 60;
+        private const int SecondsUntilNextHeroAttack = 900;
+        private const int SecondsUntilNextMonsterAttack = 900;
+        private const int SecondsDefenseGranted = 3600;
         private const int RandomMonsterGoldCost = 500;
         private const int MonsterCrystalCost = 1;
         private const string MonsterFightNotificationImageUrl = "/images/notifications/monster-fight-notification.png";
@@ -213,8 +213,8 @@
             await this.statisticsService.UpdateStatistics(attacker.Statistics);
             await this.statisticsService.UpdateStatistics(defender.Statistics);
 
-            await this.chronometerService.SetCannotAttackHeroUntilById(attacker.ChronometerId, MinutesUntilNextHeroAttack);
-            await this.chronometerService.SetCannotBeAttackedUntilById(defender.ChronometerId, MinutesDefenseGranted);
+            await this.chronometerService.SetCannotAttackHeroUntilById(attacker.ChronometerId, SecondsUntilNextHeroAttack);
+            await this.chronometerService.SetCannotBeAttackedUntilById(defender.ChronometerId, SecondsDefenseGranted);
 
             fight.WinnerName = winnerName;
             fight.GoldStolen = goldStolen;
@@ -412,7 +412,7 @@
 
             await this.statisticsService.UpdateStatistics(attacker.Statistics);
 
-            await this.chronometerService.SetCannotAttackMonsterUntilById(attacker.ChronometerId, MinutesUntilNextMonsterAttack);
+            await this.chronometerService.SetCannotAttackMonsterUntilById(attacker.ChronometerId, SecondsUntilNextMonsterAttack);
 
             fight.WinnerName = winnerName;
             fight.GoldStolen = goldStolen;

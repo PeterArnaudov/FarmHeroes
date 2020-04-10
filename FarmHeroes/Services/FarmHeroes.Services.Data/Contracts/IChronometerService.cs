@@ -12,15 +12,15 @@
 
         Task<TViewModel> GetCurrentHeroChronometerViewModel<TViewModel>();
 
-        Task SetWorkUntil(int minutes, WorkStatus workStatus);
+        Task SetWorkUntil(int seconds, WorkStatus workStatus);
 
         Task NullifyWorkUntil();
 
-        Task SetCannotAttackHeroUntilById(int id, int minutes);
+        Task SetCannotAttackHeroUntilById(int id, int seconds);
 
-        Task SetCannotAttackMonsterUntilById(int id, int minutes);
+        Task SetCannotAttackMonsterUntilById(int id, int seconds);
 
-        Task SetCannotBeAttackedUntilById(int id, int minutes);
+        Task SetCannotBeAttackedUntilById(int id, int seconds);
 
         Task UpdateChronometer(ChronometerModifyInputModel inputModel);
     }

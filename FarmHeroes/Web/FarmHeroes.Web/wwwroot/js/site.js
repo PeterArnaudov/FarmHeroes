@@ -11,7 +11,11 @@ $(function () {
 
 $(".disappearing-alert").fadeOut(5000);
 
-let timerFunction = function (hours, minutes, seconds, id) {
+let timerFunction = function (seconds, id) {
+    let hours = Math.floor(seconds / 3600);
+    let minutes = Math.floor(seconds % 3600 / 60);
+    seconds = Math.floor(seconds % 3600 % 60);
+
     if (seconds == 0 && hours > 0 && minutes == 0) {
         seconds = 59;
         minutes = 59;
