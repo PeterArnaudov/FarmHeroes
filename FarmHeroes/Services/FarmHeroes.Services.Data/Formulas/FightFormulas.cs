@@ -12,13 +12,19 @@
         public static Func<int, bool, int> CalculateDamage = (attack, isCrit) =>
             isCrit ? (int)(attack * (Random.Next(75, 150) / 100d) * 1.5) : (int)(attack * (Random.Next(75, 150) / 100d));
 
-        public static Func<int, int> CalculateBlocked = (defense) => (int)(defense * (Random.Next(50, 100) / 100d));
-
-        public static Func<int, int, int, int, double, int> CalculateHitDamage = (attackerAttack, defenderDefense, attackerMastery, defenderMastery, amuletBonus) =>
+        public static Func<int, double, int> CalculateBlocked = (defense, blockAmuletBonus) =>
         {
-            bool isCrit = IsCrit(attackerMastery, defenderMastery, amuletBonus);
+            int blocked = (int)(defense * (Random.Next(50, 100) / 100d));
+            blocked = (int)(blocked * (1 + (blockAmuletBonus / 100)));
+
+            return blocked;
+        };
+
+        public static Func<int, int, int, int, double, double, int> CalculateHitDamage = (attackerAttack, defenderDefense, attackerMastery, defenderMastery, critAmuletBonus, blockAmuletBonus) =>
+        {
+            bool isCrit = IsCrit(attackerMastery, defenderMastery, critAmuletBonus);
             int attackerDamage = CalculateDamage(attackerAttack, isCrit);
-            int damageBlocked = CalculateBlocked(defenderDefense);
+            int damageBlocked = CalculateBlocked(defenderDefense, blockAmuletBonus);
             int hitDamage = attackerDamage - damageBlocked;
 
             return hitDamage < 0 ? 0 : hitDamage;
@@ -26,7 +32,8 @@
 
         public static Func<int, int, double, bool> IsCrit = (attackerMastery, defenderMastery, amuletBonus) =>
         {
-            double heroCritChance = Random.NextDouble() * attackerMastery / (attackerMastery + defenderMastery) * (1 + (amuletBonus / 100));
+            double heroCritChance = Random.NextDouble() * attackerMastery / (attackerMastery + defenderMastery);
+            heroCritChance *= 1 + (amuletBonus / 100);
             double neededChance = Random.NextDouble();
 
             return heroCritChance >= neededChance ? true : false;
