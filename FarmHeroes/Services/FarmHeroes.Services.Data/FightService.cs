@@ -132,7 +132,8 @@
                     attackerAttack,
                     defenderDefense,
                     attackerMastery,
-                    defenderMastery);
+                    defenderMastery,
+                    attackerSet.Amulet.Name == "Criticum" ? attackerSet.Amulet.Bonus : 0);
 
                 await this.healthService.ReduceHealthById(defender.HealthId, attackerDamage);
                 attackerHits[i] = attackerDamage;
@@ -147,7 +148,8 @@
                     defenderAttack,
                     attackerDefense,
                     defenderMastery,
-                    attackerMastery);
+                    attackerMastery,
+                    defenderSet.Amulet.Name == "Criticum" ? defenderSet.Amulet.Bonus : 0);
 
                 await this.healthService.ReduceHealthById(attacker.HealthId, defenderDamage);
                 defenderHits[i] = defenderDamage;
@@ -347,7 +349,8 @@
                     attackerAttack,
                     monster.Characteristics.Defense,
                     attackerMastery,
-                    monster.Characteristics.Mastery);
+                    monster.Characteristics.Mastery,
+                    attackerSet.Amulet.Name == "Criticum" ? attackerSet.Amulet.Bonus : 0);
 
                 monster.Health -= attackerDamage;
                 if (monster.Health < 1)
@@ -367,7 +370,8 @@
                     monster.Characteristics.Attack,
                     attackerDefense,
                     monster.Characteristics.Mastery,
-                    attackerMastery);
+                    attackerMastery,
+                    0);
 
                 await this.healthService.ReduceHealthById(attacker.HealthId, defenderDamage);
                 defenderHits[i] = defenderDamage;

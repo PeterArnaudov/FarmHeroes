@@ -14,9 +14,9 @@
 
         public static Func<int, int> CalculateBlocked = (defense) => (int)(defense * (Random.Next(50, 100) / 100d));
 
-        public static Func<int, int, int, int, int> CalculateHitDamage = (attackerAttack, defenderDefense, attackerMastery, defenderMastery) =>
+        public static Func<int, int, int, int, double, int> CalculateHitDamage = (attackerAttack, defenderDefense, attackerMastery, defenderMastery, amuletBonus) =>
         {
-            bool isCrit = IsCrit(attackerMastery, defenderMastery);
+            bool isCrit = IsCrit(attackerMastery, defenderMastery, amuletBonus);
             int attackerDamage = CalculateDamage(attackerAttack, isCrit);
             int damageBlocked = CalculateBlocked(defenderDefense);
             int hitDamage = attackerDamage - damageBlocked;
@@ -24,9 +24,9 @@
             return hitDamage < 0 ? 0 : hitDamage;
         };
 
-        public static Func<int, int, bool> IsCrit = (attackerMastery, defenderMastery) =>
+        public static Func<int, int, double, bool> IsCrit = (attackerMastery, defenderMastery, amuletBonus) =>
         {
-            double heroCritChance = Random.NextDouble() * attackerMastery / (attackerMastery + defenderMastery);
+            double heroCritChance = Random.NextDouble() * attackerMastery / (attackerMastery + defenderMastery) * (1 + (amuletBonus / 100));
             double neededChance = Random.NextDouble();
 
             return heroCritChance >= neededChance ? true : false;
