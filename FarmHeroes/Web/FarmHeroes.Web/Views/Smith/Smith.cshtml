@@ -38,7 +38,7 @@
         <div class="row mt-2">
             <img src="@item.ImageUrl" alt="amulet" class="img-fluid col-2 item-image">
             <div class="col-8 m-auto">
-                <p><span class="text-uppercase">@item.Name</span> | Current chance: @item.Bonus% | Next level: @(item.Bonus + (item.Level == 99 ? item.InitialBonus * 101 : item.InitialBonus))%</p>
+                <p><span class="text-uppercase">@item.Name</span> <small>| Current chance: @item.Bonus% | Next level: @(item.Bonus + (item.Level == 99 ? item.InitialBonus * 101 : item.InitialBonus))%</small></p>
                 <p class="m-auto">@item.Description</p>
                 <p class="m-auto">Upgrade cost: @item.UpgradeCost <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
             </div>
