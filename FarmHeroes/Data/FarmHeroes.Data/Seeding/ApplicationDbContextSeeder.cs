@@ -29,6 +29,7 @@
                               new MonstersSeeder(),
                               new HelmetsSeeder(),
                               new WeaponsSeeder(),
+                              new ShieldsSeeder(),
                               new AmuletsSeeder(),
                               new BonusesSeeder(),
                           };
