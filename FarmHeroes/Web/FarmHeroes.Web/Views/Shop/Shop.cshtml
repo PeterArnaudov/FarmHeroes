@@ -21,11 +21,11 @@
         <div class="col-8 m-auto">
             <p><span class="text-uppercase">@item.Name</span> | Required level: @item.RequiredLevel</p>
             <p class="m-auto">
-                Stats: @if (item.Attack > 0)
+                Stats: @if (item.Attack != 0)
                 {<span>@item.Attack.ToString("N0") <img src="~/images/icons/attack-icon.png" alt="attack" class="icon"></span>}
-                @if (item.Defense > 0)
+                @if (item.Defense != 0)
                 {<span>@item.Defense.ToString("N0") <img src="~/images/icons/defense-icon.png" alt="defense" class="icon"></span>}
-                @if (item.Mastery > 0)
+                @if (item.Mastery != 0)
                 {<span>@item.Mastery.ToString("N0") <img src="~/images/icons/mastery-icon.png" alt="mastery" class="icon"></span>}
             </p>
             <p class="m-auto">Price: @item.Price.ToString("N0") <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
