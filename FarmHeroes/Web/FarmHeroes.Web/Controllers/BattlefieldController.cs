@@ -27,8 +27,7 @@
             this.fightService = fightService;
         }
 
-        [Route("/Battlefield")]
-        public async Task<IActionResult> Battlefield()
+        public async Task<IActionResult> Index()
         {
             Hero hero = await this.heroService.GetCurrentHero();
 

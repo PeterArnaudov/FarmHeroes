@@ -69,7 +69,7 @@
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = "/Hero/Overview")
+        public async Task<IActionResult> OnPostAsync(string returnUrl = "/Hero")
         {
             //returnUrl = returnUrl ?? Url.Content("~/");
 

@@ -16,8 +16,7 @@
             this.bonusService = bonusService;
         }
 
-        [Route("/Hut")]
-        public async Task<IActionResult> Hut()
+        public async Task<IActionResult> Index()
         {
             HutBonusesViewModel viewModel = await this.bonusService.GetBonusesViewModelForLocation<HutBonusesViewModel>("Hut");
 

@@ -7,8 +7,7 @@
     [Authorize]
     public class VillageController : Controller
     {
-        [Route("/Village")]
-        public IActionResult Village()
+        public IActionResult Index()
         {
             return this.View();
         }

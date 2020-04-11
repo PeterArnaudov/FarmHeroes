@@ -12,7 +12,7 @@
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                return this.Redirect("/Hero/Overview");
+                return this.Redirect("/Hero");
             }
 
             return this.View();

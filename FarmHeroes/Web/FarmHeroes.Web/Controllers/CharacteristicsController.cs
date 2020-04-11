@@ -21,7 +21,7 @@
             this.characteristicsService = characteristicsService;
         }
 
-        public async Task<IActionResult> Practice()
+        public async Task<IActionResult> Index()
         {
             CharacteristicsPracticeViewModel viewModel =
                 await this.characteristicsService.GetCurrentHeroCharacteristicsViewModelAsync<CharacteristicsPracticeViewModel>();

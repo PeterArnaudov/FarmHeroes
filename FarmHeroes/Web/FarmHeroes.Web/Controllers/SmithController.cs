@@ -19,8 +19,7 @@
             this.inventoryService = inventoryService;
         }
 
-        [Route("/Smith")]
-        public async Task<IActionResult> Smith()
+        public async Task<IActionResult> Index()
         {
             SmithViewModel viewModel = await this.inventoryService.GetCurrentHeroInventoryViewModel<SmithViewModel>();
 

@@ -21,7 +21,7 @@
             this.statisticsService = statisticsService;
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> Index()
         {
             StatisticsAllViewModel viewModel = await this.statisticsService.GetCurrentHeroStatisticsViewModel<StatisticsAllViewModel>();
 

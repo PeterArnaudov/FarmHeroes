@@ -26,8 +26,7 @@
             this.mapper = mapper;
         }
 
-        [Route("/Mine")]
-        public async Task<IActionResult> Mine()
+        public async Task<IActionResult> Index()
         {
             Hero hero = await this.heroService.GetCurrentHero();
 

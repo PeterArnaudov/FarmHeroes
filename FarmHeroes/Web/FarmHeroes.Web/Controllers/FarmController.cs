@@ -21,8 +21,7 @@
             this.heroService = heroService;
         }
 
-        [Route("/Farm")]
-        public async Task<IActionResult> Farm()
+        public async Task<IActionResult> Index()
         {
             Hero hero = await this.heroService.GetCurrentHero();
 

@@ -28,11 +28,23 @@
             this.context = context;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            HeroOverviewViewModel viewModel = await this.heroService.GetCurrentHeroViewModel<HeroOverviewViewModel>();
+
+            if (viewModel == null)
+            {
+                return this.Redirect("/Hero/Create");
+            }
+
+            return this.View(viewModel);
+        }
+
         public async Task<IActionResult> Create()
         {
             if (await this.userService.CurrentUserHasHero())
             {
-                return this.Redirect("/Hero/Overview");
+                return this.Redirect("/Hero");
             }
 
             return this.View();
@@ -48,19 +60,7 @@
 
             await this.heroService.CreateHero(inputModel);
 
-            return this.Redirect("/Hero/Overview");
-        }
-
-        public async Task<IActionResult> Overview()
-        {
-            HeroOverviewViewModel viewModel = await this.heroService.GetCurrentHeroViewModel<HeroOverviewViewModel>();
-
-            if (viewModel == null)
-            {
-                return this.Redirect("/Hero/Create");
-            }
-
-            return this.View(viewModel);
+            return this.Redirect("/Hero");
         }
     }
 }
