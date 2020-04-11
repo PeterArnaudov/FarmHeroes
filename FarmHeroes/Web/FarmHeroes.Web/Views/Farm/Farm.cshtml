@@ -9,7 +9,7 @@
     <div id="work-body">
         @if (!Model.DoesWork)
         {
-            <p>Currently you can work for @Model.Salary <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"> per hour.</p>
+            <p>Currently you can work for @Model.Salary.ToString("N0") <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"> per hour.</p>
             <p>Work duration on the farm is 4 hours. Not less, not more.</p>
             <button onclick="startWork('farm')" class="btn btn-primary">Work</button>
         }

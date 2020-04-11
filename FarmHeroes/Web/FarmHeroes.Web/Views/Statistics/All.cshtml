@@ -19,47 +19,47 @@
     <tbody>
         <tr>
             <th>Total fights</th>
-            <td>@Model.TotalFights</td>
+            <td>@Model.TotalFights.ToString("N0")</td>
         </tr>
         <tr>
             <th>Total losses</th>
-            <td>@Model.Losses</td>
+            <td>@Model.Losses.ToString("N0")</td>
         </tr>
         <tr>
             <th>Total wins</th>
-            <td>@Model.Wins</td>
+            <td>@Model.Wins.ToString("N0")</td>
         </tr>
         <tr>
             <th>Maximal gold steal</th>
-            <td>@Model.MaximalGoldSteal <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></td>
+            <td>@Model.MaximalGoldSteal.ToString("N0") <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></td>
         </tr>
         <tr>
             <th>Total gold stolen</th>
-            <td>@Model.TotalGoldStolen <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></td>
+            <td>@Model.TotalGoldStolen.ToString("N0") <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></td>
         </tr>
         <tr>
             <th>Total crystals stolen</th>
-            <td>@Model.TotalCrystalsStolen <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></td>
+            <td>@Model.TotalCrystalsStolen.ToString("N0") <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></td>
         </tr>
         <tr>
             <th>Earned gold on the farm</th>
-            <td>@Model.EarnedOnFarm <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></td>
+            <td>@Model.EarnedOnFarm.ToString("N0") <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></td>
         </tr>
         <tr>
             <th>Earned gold on patrol</th>
-            <td>@Model.EarnedOnPatrol <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></td>
+            <td>@Model.EarnedOnPatrol.ToString("N0") <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></td>
         </tr>
         <tr>
             <th>Earned crystals in the mines</th>
-            <td>@Model.EarnedInMines <img src="~/images/icons/crystal-icon.png" alt="crystals" class="icon"></td>
+            <td>@Model.EarnedInMines.ToString("N0") <img src="~/images/icons/crystal-icon.png" alt="crystals" class="icon"></td>
         </tr>
         <tr>
             <th>Monsters defeated</th>
-            <td>@Model.MonstersDefeated</td>
+            <td>@Model.MonstersDefeated.ToString("N0")</td>
         </tr>
         <tr>
             <th>Earned gold from monsters</th>
-            <td>@Model.EarnedFromMonsters <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></td>
+            <td>@Model.EarnedFromMonsters.ToString("N0") <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></td>
         </tr>
     </tbody>
 </table>

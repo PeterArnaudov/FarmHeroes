@@ -9,11 +9,11 @@
                 $(".modal-body").prepend($alert);
                 $alert.fadeOut(2000, function () { $(this).remove() });
             }
-            $('#health-status').attr('data-original-title', `${data.current}/${data.maximum}`);
+            $('#health-status').attr('data-original-title', `${numberWithSeparator(data.current)}/${numberWithSeparator(data.maximum)}`);
             $('#health-status > div').css('width', `${Math.floor(data.current / data.maximum * 100)}%`);
             $('#health-status > div > strong').text(`${Math.floor(data.current / data.maximum * 100)}%`);
-            $('#current-gold').text(data.gold);
-            $('#current-crystals').text(data.crystals);
+            $('#current-gold').text(numberWithSeparator(data.gold));
+            $('#current-crystals').text(numberWithSeparator(data.crystals));
         })
         .fail((error) => {
             let $alert = $(`<div class='alert alert-danger alert-dismissible fade show' role='alert'><h4 class='alert-heading font-weight-bolder'>Oups! Something went wrong.</h4><p class='mb-0'><span class='font-weight-bold'>Cause: </span>Not enough resources.</p><p><span class='font-weight-bold'>Instructions: </span>You don't have enough resources.</p><hr><p class='mb-0 text-muted font-italic text-right'>You might have gone against the rules and tried to do something not allowed.</p><button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
@@ -33,9 +33,9 @@ function practice(stat) {
                 $("#view-body").prepend($alert);
                 $alert.fadeOut(2000, function () { $(this).remove() });
             }
-            $(`#current-${stat}`).text(data.stat);
-            $(`#${stat}-price`).text(data.price);
-            $('#current-gold').text(data.gold);
+            $(`#current-${stat}`).text(numberWithSeparator(data.stat));
+            $(`#${stat}-price`).text(numberWithSeparator(data.price));
+            $('#current-gold').text(numberWithSeparator(data.gold));
 
             if (stat == 'mass') {
                 $('#health-status').attr('data-original-title', `${data.current}/${data.maximum}`);
@@ -165,8 +165,8 @@ function collect(location) {
                 $('#attack-random-monster-button').removeAttr('disabled');
             }
 
-            $('#current-gold').text(Number($('#current-gold').text()) + Number(data.gold));
-            $('#current-crystals').text(Number($('#current-crystals').text()) + Number(data.crystals));
+            $('#current-gold').text(numberWithSeparator(Number($('#current-gold').text().replace(/\s/g, "")) + Number(data.gold)));
+            $('#current-crystals').text(numberWithSeparator(Number($('#current-crystals').text().replace(/\s/g, "")) + Number(data.crystals)));
         })
         .fail((error) => {
             let $alert = $(`<div class='alert alert-danger alert-dismissible fade show' role='alert'><h4 class='alert-heading font-weight-bolder'>Oups! Something went wrong.</h4><p class='mb-0'><span class='font-weight-bold'>Cause: </span>${error.responseJSON.message}</p><p><span class='font-weight-bold'>Instructions: </span>${error.responseJSON.instructions}</p><hr><p class='mb-0 text-muted font-italic text-right'>You might have gone against the rules and tried to do something not allowed.</p><button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
@@ -191,3 +191,7 @@ function equipAmulet(id) {
             $alert.fadeOut(2000, function () { $(this).remove() });
         });
 };
+
+function numberWithSeparator(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}

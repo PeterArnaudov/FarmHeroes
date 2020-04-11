@@ -17,13 +17,13 @@
             <p><span class="text-uppercase">@item.Name</span> | Level: @item.Level/25</p>
             <p class="m-auto">
                 Stats: @if (item.Attack > 0)
-                {<span>@item.Attack <img src="~/images/icons/attack-icon.png" alt="attack" class="icon"></span>}
+                {<span>@item.Attack.ToString("N0") <img src="~/images/icons/attack-icon.png" alt="attack" class="icon"></span>}
                 @if (item.Defense > 0)
-                {<span>@item.Defense <img src="~/images/icons/defense-icon.png" alt="defense" class="icon"></span>}
+                {<span>@item.Defense.ToString("N0") <img src="~/images/icons/defense-icon.png" alt="defense" class="icon"></span>}
                 @if (item.Mastery > 0)
-                {<span>@item.Mastery <img src="~/images/icons/mastery-icon.png" alt="mastery" class="icon"></span>}
+                {<span>@item.Mastery.ToString("N0") <img src="~/images/icons/mastery-icon.png" alt="mastery" class="icon"></span>}
             </p>
-            <p class="m-auto">Upgrade cost: @item.UpgradeCost <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
+            <p class="m-auto">Upgrade cost: @item.UpgradeCost.ToString("N0") <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
         </div>
         <div class="col-2 m-auto text-center">
             <a href="/Smith/Upgrade/@item.Id" class="btn btn-primary btn-block">Upgrade</a>
@@ -40,7 +40,7 @@
             <div class="col-8 m-auto">
                 <p><span class="text-uppercase">@item.Name</span> <small>| Current chance: @item.Bonus% | Next level: @(item.Bonus + (item.Level == 99 ? item.InitialBonus * 101 : item.InitialBonus))%</small></p>
                 <p class="m-auto">@item.Description</p>
-                <p class="m-auto">Upgrade cost: @item.UpgradeCost <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
+                <p class="m-auto">Upgrade cost: @item.UpgradeCost.ToString("N0") <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
             </div>
             <div class="col-2 m-auto text-center">
                 <a href="/Smith/UpgradeAmulet/@item.Id" class="btn btn-primary btn-block">Upgrade</a>

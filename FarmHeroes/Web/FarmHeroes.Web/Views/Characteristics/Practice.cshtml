@@ -16,13 +16,13 @@
 <div class="row text-center">
     <div class="col-3">
         <h4>Attack</h4>
-        <p id="current-attack">@Model.Attack</p>
+        <p id="current-attack">@Model.Attack.ToString("N0")</p>
     </div>
     <div class="col-6">
         <p>Attack determines the damage you inflict on your enemy.</p>
     </div>
     <div class="col-3">
-        <p><span id="attack-price">@Model.AttackPrice</span> <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
+        <p><span id="attack-price">@Model.AttackPrice.ToString("N0")</span> <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
         <button onclick="practice('attack')" class="btn btn-primary badge-pill">Practice</button>
     </div>
 </div>
@@ -30,13 +30,13 @@
 <div class="row text-center">
     <div class="col-3">
         <h4>Defense</h4>
-        <p id="current-defense">@Model.Defense</p>
+        <p id="current-defense">@Model.Defense.ToString("N0")</p>
     </div>
     <div class="col-6">
         <p>Defense determines the damage you block from your enemy.</p>
     </div>
     <div class="col-3">
-        <p><span id="defense-price">@Model.DefensePrice</span> <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
+        <p><span id="defense-price">@Model.DefensePrice.ToString("N0")</span> <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
         <button onclick="practice('defense')" class="btn btn-primary badge-pill">Practice</button>
     </div>
 </div>
@@ -44,13 +44,13 @@
 <div class="row text-center">
     <div class="col-3">
         <h4>Mass</h4>
-        <p id="current-mass">@Model.Mass</p>
+        <p id="current-mass">@Model.Mass.ToString("N0")</p>
     </div>
     <div class="col-6">
         <p>Mass determines the health you have.</p>
     </div>
     <div class="col-3">
-        <p><span id="mass-price">@Model.MassPrice</span> <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
+        <p><span id="mass-price">@Model.MassPrice.ToString("N0")</span> <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
         <button onclick="practice('mass')" class="btn btn-primary badge-pill">Practice</button>
     </div>
 </div>
@@ -58,13 +58,13 @@
 <div class="row text-center">
     <div class="col-3">
         <h4>Mastery</h4>
-        <p id="current-mastery">@Model.Mastery</p>
+        <p id="current-mastery">@Model.Mastery.ToString("N0")</p>
     </div>
     <div class="col-6">
         <p>Mastery determines the chance to critically hit your enemy.</p>
     </div>
     <div class="col-3">
-        <p><span id="mastery-price">@Model.MasteryPrice</span> <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
+        <p><span id="mastery-price">@Model.MasteryPrice.ToString("N0")</span> <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
         <button onclick="practice('mastery')" class="btn btn-primary badge-pill">Practice</button>
     </div>
 </div>

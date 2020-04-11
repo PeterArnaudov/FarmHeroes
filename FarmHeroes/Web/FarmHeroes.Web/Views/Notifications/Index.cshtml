@@ -39,11 +39,11 @@ else
                         }
                         @if (notification.Gold.HasValue)
                         {
-                            @notification.Gold <img src="~/images/icons/gold-icon.png" alt="gold" class="icon img-jump">
+                            @notification.Gold?.ToString("N0") <img src="~/images/icons/gold-icon.png" alt="gold" class="icon img-jump">
                         }
                         @if (notification.Experience.HasValue)
                         {
-                            @notification.Experience <img src="~/images/icons/experience-icon.png" alt="experience" class="icon img-jump">
+                            @notification.Experience?.ToString("N0") <img src="~/images/icons/experience-icon.png" alt="experience" class="icon img-jump">
                         }
                     </small>
                 </div>

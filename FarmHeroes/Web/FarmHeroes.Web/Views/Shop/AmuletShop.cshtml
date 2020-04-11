@@ -21,7 +21,7 @@
         <div class="col-8 m-auto">
             <p><span class="text-uppercase">@item.Name</span> <small>| Initial chance: @item.InitialBonus% | Maximum chance: @(item.InitialBonus * 200)%</small></p>
             <p class="m-auto">@item.Description</p>
-            <p class="m-auto">Price: @item.InitialPrice <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
+            <p class="m-auto">Price: @item.InitialPrice.ToString("N0") <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
         </div>
         <div class="col-2 m-auto text-center">
             <a href="/Shop/BuyAmulet/@item.Id" class="btn btn-primary btn-block">Buy</a>
