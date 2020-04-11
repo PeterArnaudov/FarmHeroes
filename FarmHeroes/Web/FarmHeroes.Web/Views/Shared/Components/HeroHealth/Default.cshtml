@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <div id="health-status" class="progress w-100 m-auto position-relative" data-toggle="tooltip" data-placement="bottom" title="@Model.Current/@Model.Maximum">
+        <div id="health-status" class="progress w-100 m-auto position-relative" data-toggle="tooltip" data-placement="bottom" title="@Model.Current.ToString("N0")/@Model.Maximum.ToString("N0")">
             <div class="progress-bar bg-success" role="progressbar" style="width: @Model.Percent%">
                 <strong class="justify-content-center d-flex position-absolute w-100">@Model.Percent%</strong>
             </div>
