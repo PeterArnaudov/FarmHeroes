@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "Not Found - 404";
+    if (this.User.Identity.IsAuthenticated)
+    {
+        Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_GuestLayout.cshtml";
+    }
+}
+
+<img src="~/images/errors/error-image.png" class="img-fluid d-block m-auto" />
+<div class="text-center w-50 m-auto">
+    <h1 class="text-uppercase">Page not found</h1>
+    <hr class="bg-primary w-75" />
+    <small>There are no sheep and pigs, you shouldn't be here too. Although you can inform the administrators in order to prevent more sheep and pigs access this place.</small>
+</div>
+

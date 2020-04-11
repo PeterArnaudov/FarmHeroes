@@ -1,0 +1,25 @@
+﻿@model ErrorViewModel
+@{
+    this.ViewData["Title"] = "Unknown Error";
+    if (this.User.Identity.IsAuthenticated)
+    {
+        Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_GuestLayout.cshtml";
+    }
+}
+
+<img src="~/images/errors/error-image.png" class="img-fluid d-block m-auto" />
+<div class="text-center w-50 m-auto">
+    <h1 class="text-uppercase">Unknown Error</h1>
+    <hr class="bg-primary w-75" />
+    @if (this.Model.ShowRequestId)
+    {
+        <p>
+            <strong>Request ID:</strong> <span class="text-info">@this.Model.RequestId</span>
+        </p>
+    }
+    <small>An unknown error occurred while processing your request. Please contact an administrator for assistance. Provide the request ID to help fix this issue.</small>
+</div>
