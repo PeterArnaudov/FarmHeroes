@@ -113,13 +113,13 @@
             EquippedSet attackerSet = await this.equipmentService.GetCurrentHeroEquipedSet();
             EquippedSet defenderSet = await this.equipmentService.GetEquippedSetById(defender.EquippedSetId);
 
-            int attackerAttack = (int)((attacker.Characteristics.Attack + FightFormulas.CalculateAttackFromSet(attackerSet)) * (1 + attacker.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus)));
-            int attackerDefense = (int)((attacker.Characteristics.Defense + FightFormulas.CalculateDefenseFromSet(attackerSet)) * (1 + attacker.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus)));
-            int attackerMastery = (int)((attacker.Characteristics.Mastery + FightFormulas.CalculateMasteryFromSet(attackerSet)) * (1 + attacker.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus)));
+            int attackerAttack = FightFormulas.CalculateAttack(attacker);
+            int attackerDefense = FightFormulas.CalculateDefense(attacker);
+            int attackerMastery = FightFormulas.CalculateMastery(attacker);
             int attackerMass = attacker.Characteristics.Mass;
-            int defenderAttack = (int)((defender.Characteristics.Attack + FightFormulas.CalculateAttackFromSet(defenderSet)) * (1 + defender.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus)));
-            int defenderDefense = (int)((defender.Characteristics.Defense + FightFormulas.CalculateDefenseFromSet(defenderSet)) * (1 + defender.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus)));
-            int defenderMastery = (int)((defender.Characteristics.Mastery + FightFormulas.CalculateMasteryFromSet(defenderSet)) * (1 + defender.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus)));
+            int defenderAttack = FightFormulas.CalculateAttack(defender);
+            int defenderDefense = FightFormulas.CalculateDefense(defender);
+            int defenderMastery = FightFormulas.CalculateMastery(defender);
             int defenderMass = defender.Characteristics.Mass;
             int?[] attackerHits = new int?[5];
             int?[] defenderHits = new int?[5];
@@ -172,7 +172,7 @@
             {
                 goldStolen = ResourceFormulas.CalculateStolenGold(
                     defender.ResourcePouch.Gold,
-                    this.CheckSafeAvailability(defender));
+                    this.GetSafeBonus(defender));
 
                 await this.resourcePouchService.IncreaseGold(attacker.ResourcePouchId, goldStolen);
                 await this.resourcePouchService.DecreaseGold(defender.ResourcePouchId, goldStolen);
@@ -191,7 +191,7 @@
             {
                 goldStolen = ResourceFormulas.CalculateStolenGold(
                     attacker.ResourcePouch.Gold,
-                    this.CheckSafeAvailability(attacker));
+                    this.GetSafeBonus(attacker));
 
                 await this.resourcePouchService.IncreaseGold(defender.ResourcePouchId, goldStolen);
                 await this.resourcePouchService.DecreaseGold(attacker.ResourcePouchId, goldStolen);
@@ -326,9 +326,9 @@
 
             EquippedSet attackerSet = await this.equipmentService.GetCurrentHeroEquipedSet();
 
-            int attackerAttack = (int)((attacker.Characteristics.Attack + FightFormulas.CalculateAttackFromSet(attackerSet)) * (1 + attacker.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus)));
-            int attackerDefense = (int)((attacker.Characteristics.Defense + FightFormulas.CalculateDefenseFromSet(attackerSet)) * (1 + attacker.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus)));
-            int attackerMastery = (int)((attacker.Characteristics.Mastery + FightFormulas.CalculateMasteryFromSet(attackerSet)) * (1 + attacker.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus)));
+            int attackerAttack = FightFormulas.CalculateAttack(attacker);
+            int attackerDefense = FightFormulas.CalculateDefense(attacker);
+            int attackerMastery = FightFormulas.CalculateMastery(attacker);
             int attackerMass = attacker.Characteristics.Mass;
 
             HeroAmulet heroAmulet = attacker.EquippedSet.Amulet;
@@ -405,7 +405,7 @@
             {
                 goldStolen = ResourceFormulas.CalculateStolenGold(
                     attacker.ResourcePouch.Gold,
-                    this.CheckSafeAvailability(attacker));
+                    this.GetSafeBonus(attacker));
 
                 await this.resourcePouchService.DecreaseGold(attacker.ResourcePouchId, goldStolen);
             }
@@ -485,7 +485,7 @@
             return viewModel;
         }
 
-        private double CheckSafeAvailability(Hero hero)
+        private double GetSafeBonus(Hero hero)
         {
             HeroBonus safe = hero.Inventory.Bonuses.SingleOrDefault(b => b.Name == "Gold Safe");
 

@@ -3,6 +3,7 @@
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     public static class FightFormulas
@@ -39,31 +40,49 @@
             return heroCritChance >= neededChance ? true : false;
         };
 
-        public static Func<EquippedSet, int> CalculateAttackFromSet = (equippedSet) =>
+        public static Func<Hero, int> CalculateAttack = (hero) =>
         {
-            int? level = equippedSet.Equipped.Find(x => x.Type == EquipmentType.Weapon)?.Level;
-            double? percent = 1 + (level / 100d);
-            double actualPercent = percent ?? 1;
-            int equipmentBonus = equippedSet.Equipped.Sum(x => x.Attack);
-            return (int)(equipmentBonus * actualPercent);
+            int attackFromCharacteristics = hero.Characteristics.Attack;
+
+            int? weaponLevel = hero.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Weapon)?.Level;
+            double percentFromWeaponLevel = weaponLevel == null ? 1 : 1 + ((int)weaponLevel / 100d);
+            int attackFromSet = (int)(hero.EquippedSet.Equipped.Sum(x => x.Attack) * percentFromWeaponLevel);
+
+            int attack = attackFromCharacteristics + attackFromSet;
+
+            double percentFromBonuses = 1 + hero.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus);
+
+            return (int)(attack * percentFromBonuses);
         };
 
-        public static Func<EquippedSet, int> CalculateDefenseFromSet = (equippedSet) =>
+        public static Func<Hero, int> CalculateDefense = (hero) =>
         {
-            int? level = equippedSet.Equipped.Find(x => x.Type == EquipmentType.Shield)?.Level;
-            double? percent = 1 + (level / 100d);
-            double actualPercent = percent ?? 1;
-            int equipmentBonus = equippedSet.Equipped.Sum(x => x.Defense);
-            return (int)(equipmentBonus * actualPercent);
+            int defenseFromCharacteristics = hero.Characteristics.Defense;
+
+            int? shieldLevel = hero.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Shield)?.Level;
+            double percentFromShieldLevel = shieldLevel == null ? 1 : 1 + ((int)shieldLevel / 100d);
+            int defenseFromSet = (int)(hero.EquippedSet.Equipped.Sum(x => x.Defense) * percentFromShieldLevel);
+
+            int defense = defenseFromCharacteristics + defenseFromSet;
+
+            double percentFromBonuses = 1 + hero.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus);
+
+            return (int)(defense * percentFromBonuses);
         };
 
-        public static Func<EquippedSet, int> CalculateMasteryFromSet = (equippedSet) =>
+        public static Func<Hero, int> CalculateMastery = (hero) =>
         {
-            int? level = equippedSet.Equipped.Find(x => x.Type == EquipmentType.Helmet)?.Level;
-            double? percent = 1 + (level / 100d);
-            double actualPercent = percent ?? 1;
-            int equipmentBonus = equippedSet.Equipped.Sum(x => x.Mastery);
-            return (int)(equipmentBonus * actualPercent);
+            int masteryFromCharacteristics = hero.Characteristics.Defense;
+
+            int? helmetLevel = hero.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Helmet)?.Level;
+            double percentFromHelmetLevel = helmetLevel == null ? 1 : 1 + ((int)helmetLevel / 100d);
+            int masteryFromSet = (int)(hero.EquippedSet.Equipped.Sum(x => x.Defense) * percentFromHelmetLevel);
+
+            int mastery = masteryFromCharacteristics + masteryFromSet;
+
+            double percentFromBonuses = 1 + hero.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus);
+
+            return (int)(mastery * percentFromBonuses);
         };
     }
 }
