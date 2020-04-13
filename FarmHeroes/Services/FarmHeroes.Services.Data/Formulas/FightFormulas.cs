@@ -3,7 +3,6 @@
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     public static class FightFormulas

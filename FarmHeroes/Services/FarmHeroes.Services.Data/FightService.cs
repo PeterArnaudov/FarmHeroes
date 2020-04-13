@@ -172,7 +172,7 @@
             {
                 goldStolen = ResourceFormulas.CalculateStolenGold(
                     defender.ResourcePouch.Gold,
-                    this.GetSafeBonus(defender));
+                    this.GetGoldSafeBonus(defender));
 
                 await this.resourcePouchService.IncreaseGold(attacker.ResourcePouchId, goldStolen);
                 await this.resourcePouchService.DecreaseGold(defender.ResourcePouchId, goldStolen);
@@ -191,7 +191,7 @@
             {
                 goldStolen = ResourceFormulas.CalculateStolenGold(
                     attacker.ResourcePouch.Gold,
-                    this.GetSafeBonus(attacker));
+                    this.GetGoldSafeBonus(attacker));
 
                 await this.resourcePouchService.IncreaseGold(defender.ResourcePouchId, goldStolen);
                 await this.resourcePouchService.DecreaseGold(attacker.ResourcePouchId, goldStolen);
@@ -405,7 +405,7 @@
             {
                 goldStolen = ResourceFormulas.CalculateStolenGold(
                     attacker.ResourcePouch.Gold,
-                    this.GetSafeBonus(attacker));
+                    this.GetGoldSafeBonus(attacker));
 
                 await this.resourcePouchService.DecreaseGold(attacker.ResourcePouchId, goldStolen);
             }
@@ -485,7 +485,7 @@
             return viewModel;
         }
 
-        private double GetSafeBonus(Hero hero)
+        private double GetGoldSafeBonus(Hero hero)
         {
             HeroBonus safe = hero.Inventory.Bonuses.SingleOrDefault(b => b.Name == "Gold Safe");
 
