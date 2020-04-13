@@ -20,6 +20,7 @@
             this.ResourcePouch = new ResourcePouch();
             this.Statistics = new Statistics();
             this.Chronometer = new Chronometer();
+            this.DailyLimits = new DailyLimits();
         }
 
         public int Id { get; set; }
@@ -69,6 +70,10 @@
         public int ChronometerId { get; set; }
 
         public virtual Chronometer Chronometer { get; set; }
+
+        public int DailyLimitsId { get; set; }
+
+        public virtual DailyLimits DailyLimits { get; set; }
 
         public virtual List<Notification> Notifications { get; set; } = new List<Notification>();
 

@@ -48,6 +48,8 @@
 
         public virtual DbSet<Chronometer> Chronometers { get; set; }
 
+        public virtual DbSet<DailyLimits> DailyLimits { get; set; }
+
         public virtual DbSet<Characteristics> Characteristics { get; set; }
 
         public virtual DbSet<HeroEquipment> HeroEquipments { get; set; }

@@ -322,6 +322,24 @@ namespace FarmHeroes.Data.Migrations
                     b.ToTable("Chronometers");
                 });
 
+            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.DailyLimits", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PatrolLimit")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatrolsDone")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DailyLimits");
+                });
+
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.EquippedSet", b =>
                 {
                     b.Property<int>("Id")
@@ -375,6 +393,9 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("ChronometerId")
                         .HasColumnType("int");
 
+                    b.Property<int>("DailyLimitsId")
+                        .HasColumnType("int");
+
                     b.Property<int>("EquippedSetId")
                         .HasColumnType("int");
 
@@ -414,6 +435,9 @@ namespace FarmHeroes.Data.Migrations
                         .IsUnique();
 
                     b.HasIndex("ChronometerId")
+                        .IsUnique();
+
+                    b.HasIndex("DailyLimitsId")
                         .IsUnique();
 
                     b.HasIndex("EquippedSetId")
@@ -980,6 +1004,12 @@ namespace FarmHeroes.Data.Migrations
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Chronometer", "Chronometer")
                         .WithOne("Hero")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "ChronometerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FarmHeroes.Data.Models.HeroModels.DailyLimits", "DailyLimits")
+                        .WithOne("Hero")
+                        .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "DailyLimitsId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

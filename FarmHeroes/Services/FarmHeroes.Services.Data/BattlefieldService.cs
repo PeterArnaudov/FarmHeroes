@@ -31,8 +31,9 @@
         private readonly IMapper mapper;
         private readonly ITempDataDictionaryFactory tempDataDictionaryFactory;
         private readonly IHttpContextAccessor httpContext;
+        private readonly IDailyLimitsService dailyLimitsService;
 
-        public BattlefieldService(IHeroService heroService, IChronometerService chronometerService, ILevelService levelService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, INotificationService notificationService, FarmHeroesDbContext dbContext, IMapper mapper, ITempDataDictionaryFactory tempDataDictionaryFactory, IHttpContextAccessor httpContext)
+        public BattlefieldService(IHeroService heroService, IChronometerService chronometerService, ILevelService levelService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, INotificationService notificationService, FarmHeroesDbContext dbContext, IMapper mapper, ITempDataDictionaryFactory tempDataDictionaryFactory, IHttpContextAccessor httpContext, IDailyLimitsService dailyLimitsService)
         {
             this.heroService = heroService;
             this.chronometerService = chronometerService;
@@ -44,13 +45,23 @@
             this.mapper = mapper;
             this.tempDataDictionaryFactory = tempDataDictionaryFactory;
             this.httpContext = httpContext;
+            this.dailyLimitsService = dailyLimitsService;
         }
 
         public async Task<int> StartPatrol()
         {
+            Hero hero = await this.heroService.GetCurrentHero();
+
+            if (hero.DailyLimits.PatrolsDone >= hero.DailyLimits.PatrolLimit)
+            {
+                throw new FarmHeroesException(
+                    "You cannot go on a patrol.",
+                    "You've already been on patrol the maximum allowed times today.",
+                    "/Battlefield");
+            }
+
             int durationInSeconds = PatrolDurationInSeconds;
 
-            Hero hero = await this.heroService.GetCurrentHero();
             Random random = new Random();
 
             if (hero.EquippedSet.Amulet?.Name == "Speedster")
@@ -85,11 +96,13 @@
             collectedResources.Gold = BattlefieldFormulas.CalculatePatrolGold(hero.Level.CurrentLevel);
 
             hero.Statistics.EarnedOnPatrol += collectedResources.Gold;
+            hero.DailyLimits.PatrolsDone++;
 
             await this.levelService.GiveCurrentHeroExperience(collectedResources.Experience);
             await this.resourcePouchService.IncreaseCurrentHeroGold(collectedResources.Gold);
             await this.chronometerService.NullifyWorkUntil();
             await this.statisticsService.UpdateStatistics(hero.Statistics);
+            await this.dailyLimitsService.UpdateDailyLimits(hero.DailyLimits);
 
             Notification notification = new Notification()
             {

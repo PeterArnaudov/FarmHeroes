@@ -12,6 +12,8 @@
 
         public DateTime? CannotAttackMonsterUntil { get; set; }
 
+        public int PatrolsDone { get; set; }
+
         public bool IsOnPatrol { get; set; }
 
         public bool CanGoOnPatrol { get; set; }

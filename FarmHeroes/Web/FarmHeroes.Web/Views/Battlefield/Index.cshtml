@@ -40,12 +40,19 @@
             <img src="~/images/battlefield/patrol-icon.png" alt="patrol" class="img-fluid ml-2 mt-2 area-icon">
             <h2 class="text-uppercase">patrol</h2>
             <p class="m-auto">Spend 10 minutes patrolling around and earn some gold.</p>
-            <p>Today you've been to patrol {{times}}/3 times.</p>
+            <p>Today you've been on patrol <span id="patrols-done">@Model.PatrolsDone</span>/3 times.</p>
             <div id="work-body">
                 @if (Model.CanGoOnPatrol)
                 {
                     <!-- If hero cannot start a patrol, add class disabled to the button; when patrol limit is implemented -->
-                    <button onclick="startWork('battlefield')" class="btn btn-primary">Start Patrol</button>
+                    if (Model.PatrolsDone == 3)
+                    {
+                        <button onclick="startWork('battlefield')" class="btn btn-primary disabled" disabled>Start Patrol</button>
+                    }
+                    else
+                    {
+                        <button onclick="startWork('battlefield')" class="btn btn-primary">Start Patrol</button>
+                    }
                 }
                 else
                 {

@@ -163,6 +163,7 @@ function collect(location) {
                 $('#attack-monster-button').removeAttr('disabled');
                 $('#attack-random-monster-button').removeClass('disabled');
                 $('#attack-random-monster-button').removeAttr('disabled');
+                $('#patrols-done').text(Number($('#patrols-done').text()) + 1);
             }
 
             $('#current-gold').text(numberWithSeparator(Number($('#current-gold').text().replace(/\s/g, "")) + Number(data.gold)));

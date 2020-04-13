@@ -74,6 +74,7 @@
                 .ForMember(x => x.CanAttackHero, cfg => cfg.MapFrom(x => x.Chronometer.CannotAttackHeroUntil < DateTime.UtcNow || x.Chronometer.CannotAttackHeroUntil == null))
                 .ForMember(x => x.CannotAttackHeroUntil, cfg => cfg.MapFrom(x => x.Chronometer.CannotAttackHeroUntil))
                 .ForMember(x => x.CanAttackMonster, cfg => cfg.MapFrom(x => x.Chronometer.CannotAttackMonsterUntil < DateTime.UtcNow || x.Chronometer.CannotAttackMonsterUntil == null))
+                .ForMember(x => x.PatrolsDone, cfg => cfg.MapFrom(x => x.DailyLimits.PatrolsDone))
                 .ForMember(x => x.IsPatrolFinished, cfg => cfg.MapFrom(x => x.Chronometer.WorkUntil < DateTime.UtcNow))
                 .ForMember(x => x.CannotAttackMonsterUntil, cfg => cfg.MapFrom(x => x.Chronometer.CannotAttackMonsterUntil))
                 .ForMember(x => x.CanGoOnPatrol, cfg => cfg.MapFrom(x => x.WorkStatus == WorkStatus.Idle))

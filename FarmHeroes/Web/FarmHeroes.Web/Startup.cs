@@ -93,6 +93,7 @@
             services.AddTransient<ISmithService, SmithService>();
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IBonusService, BonusService>();
+            services.AddTransient<IDailyLimitsService, DailyLimitsService>();
             services.AddTransient<IChatService, ChatService>();
 
             // Filters
