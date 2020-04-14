@@ -80,7 +80,7 @@
         @if (Model.AttackerHitTwo.HasValue)
         {
             <div class="border rounded-pill text-left w-75 m-1 pl-3 row">
-                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon img-shake"> [@Model.AttackerHitTwo?.ToString("N0") @Model.DefenderName
+                @Model.AttackerName <img src="~/images/icons/fight-log-attack-icon.png" alt="attack" class="m-1 fight-log-icon img-shake"> [@Model.AttackerHitTwo?.ToString("N0")] @Model.DefenderName
             </div>
         }
         @if (Model.DefenderHitTwo.HasValue)

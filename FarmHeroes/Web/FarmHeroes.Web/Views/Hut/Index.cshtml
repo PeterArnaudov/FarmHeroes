@@ -6,8 +6,10 @@
 
 @foreach (var bonus in Model.Bonuses)
 {
-    <div class="row mt-2">
-        <img src="@bonus.ImageUrl" alt="bonus" class="img-fluid col-3 item-image">
+    <div class="row align-items-center mt-2">
+        <div class="col-3">
+            <img src="@bonus.ImageUrl" alt="bonus" class="img-fluid d-block m-auto item-image">
+        </div>
         <div class="col-7 m-auto">
             <p><span class="text-uppercase">@bonus.Name</span></p>
             <p class="m-auto">@bonus.Description Extend the rent of your safe with @bonus.Days days.</p>

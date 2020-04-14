@@ -11,8 +11,10 @@
 
 @foreach (var item in Model.Items)
 {
-    <div class="row mt-2">
-        <img src="@item.ImageUrl" alt="equipment" class="col-2">
+    <div class="row align-items-center mt-2">
+        <div class="col-2">
+            <img src="@item.ImageUrl" alt="equipment" class="img-fluid d-block m-auto item-image">
+        </div>
         <div class="col-8 m-auto">
             <p><span class="text-uppercase">@item.Name</span> | Level: @item.Level/25</p>
             <p class="m-auto">
@@ -35,8 +37,10 @@
     <hr class="bg-primary" />
     @foreach (var item in Model.Amulets)
     {
-        <div class="row mt-2">
-            <img src="@item.ImageUrl" alt="amulet" class="img-fluid col-2 item-image">
+        <div class="row align-items-center mt-2">
+            <div class="col-2">
+                <img src="@item.ImageUrl" alt="amulet" class="img-fluid d-block m-auto item-image">
+            </div>
             <div class="col-8 m-auto">
                 <p><span class="text-uppercase">@item.Name</span> <small>| Current chance: @item.Bonus% | Next level: @(item.Bonus + (item.Level == 99 ? item.InitialBonus * 101 : item.InitialBonus))%</small></p>
                 <p class="m-auto">@item.Description</p>
