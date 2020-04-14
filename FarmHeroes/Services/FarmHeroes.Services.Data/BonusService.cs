@@ -50,7 +50,7 @@
                 throw new FarmHeroesException(
                     "Such option doesn't exist",
                     "You probably tried to extend a non-existing bonus.",
-                    "/Hero/Overview");
+                    "/Hero");
             }
 
             Hero hero = await this.heroService.GetCurrentHero();
