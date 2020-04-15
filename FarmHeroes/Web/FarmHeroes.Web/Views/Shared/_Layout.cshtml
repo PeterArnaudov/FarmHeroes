@@ -1,4 +1,5 @@
-﻿@using FarmHeroes.Common
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@using FarmHeroes.Common
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +19,7 @@
         <link href="~/css/custom.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/animations.css" rel="stylesheet" asp-append-version="true" />
     </environment>
+    @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
     <header>

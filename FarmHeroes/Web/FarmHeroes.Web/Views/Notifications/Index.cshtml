@@ -14,10 +14,10 @@ else
     @foreach (var notification in @Model)
     {
         <div class="row mt-2 notification">
-            <div class="col-1">
+            <div class="col-2 col-sm-1">
                 <img src="@notification.ImageUrl" alt="notification" class="img-fluid notification-image">
             </div>
-            <div class="col-8">
+            <div class="col-7 col-sm-8">
                 <div class="row">
                     <small class="align-top">
                         <strong>@notification.Title</strong>

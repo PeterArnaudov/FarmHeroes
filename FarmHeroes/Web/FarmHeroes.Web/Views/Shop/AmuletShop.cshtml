@@ -16,8 +16,10 @@
 </div>
 @foreach (var item in Model.Items)
 {
-    <div class="row mt-2">
-        <img src="@item.ImageUrl" alt="amulet" class="img-fluid col-2 item-image">
+    <div class="row mt-2 align-items-center">
+        <div class="col-2">
+            <img src="@item.ImageUrl" alt="amulet" class="img-fluid d-block m-auto item-image">
+        </div>
         <div class="col-8 m-auto">
             <p><span class="text-uppercase">@item.Name</span> <small>| Initial chance: @item.InitialBonus% | Maximum chance: @(item.InitialBonus * 200)%</small></p>
             <p class="m-auto">@item.Description</p>

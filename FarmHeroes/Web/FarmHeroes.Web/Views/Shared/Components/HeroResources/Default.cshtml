@@ -2,7 +2,9 @@
 
 <div class="col-3 d-inline pl-2" data-toggle="tooltip" data-placement="bottom" title="Gold is used to practice and buy things. Earned by fighting other players and monsters or by working.">
     <div class="row mt-2">
-        <img src="~/images/icons/gold-icon.png" alt="Gold" class="img-fluid col-6 col-sm-4 img-rotate">
+        <div class="col-6 col-sm-4">
+            <img src="~/images/icons/gold-icon.png" alt="Gold" class="img-fluid img-rotate">
+        </div>
         <div class="col-6 col-sm-8 text-left m-auto">
             <h4 class="d-lg-inline-block d-none">Gold:</h4>
             <h4 id="current-gold">@Model.Gold.ToString("N0")</h4>
@@ -11,7 +13,9 @@
 </div>
 <div class="col-3 d-inline" data-toggle="tooltip" data-placement="bottom" title="Crystals are used to buy elite things. Earned by mining.">
     <div class="row mt-2">
-        <img src="~/images/icons/crystal-icon.png" alt="Crystals" class="img-fluid col-6 col-sm-4 img-rotate">
+        <div class="col-6 col-sm-4">
+            <img src="~/images/icons/crystal-icon.png" alt="Crystals" class="img-fluid img-rotate">
+        </div>
         <div class="col-6 col-sm-8 text-left m-auto">
             <h4 class="d-lg-inline-block d-none">Crystals:</h4>
             <h4 id="current-crystals">@Model.Crystals.ToString("N0")</h4>
