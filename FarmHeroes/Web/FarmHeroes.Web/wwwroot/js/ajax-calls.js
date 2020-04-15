@@ -77,7 +77,7 @@ function startWork(location) {
                 $('#attack-random-monster-button').addClass('disabled');
                 $('#attack-random-monster-button').attr('disabled', 'true');
             }
-                
+
             timerFunction(data.seconds, location);
             timerFunction(data.seconds, "work_0");
         })
@@ -166,14 +166,8 @@ function collect(location) {
                 $('#patrols-done').text(Number($('#patrols-done').text()) + 1);
             }
 
-<<<<<<< HEAD
             $('#current-gold').text(numberWithSeparator(Number($('#current-gold').text().replace(/[\s\.,]/g, "")) + Number(data.gold)));
             $('#current-crystals').text(numberWithSeparator(Number($('#current-crystals').text().replace(/[\s\.,]/g, "")) + Number(data.crystals)));
-=======
-            let separator = $('#current-gold').text().match(/[^\d]/g)[0];
-            $('#current-gold').text(numberWithSeparator(Number($('#current-gold').text().replace(/[\s\.,]/g, "")) + Number(data.gold), separator));
-            $('#current-crystals').text(numberWithSeparator(Number($('#current-crystals').text().replace(/[\s\.,]/g, "")) + Number(data.crystals), separator));
->>>>>>> remotes/origin/master
         })
         .fail((error) => {
             let $alert = $(`<div class='alert alert-danger alert-dismissible fade show' role='alert'><h4 class='alert-heading font-weight-bolder'>Oups! Something went wrong.</h4><p class='mb-0'><span class='font-weight-bold'>Cause: </span>${error.responseJSON.message}</p><p><span class='font-weight-bold'>Instructions: </span>${error.responseJSON.instructions}</p><hr><p class='mb-0 text-muted font-italic text-right'>You might have gone against the rules and tried to do something not allowed.</p><button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span></button></div>`);
@@ -200,9 +194,5 @@ function equipAmulet(id) {
 };
 
 function numberWithSeparator(target, separator) {
-<<<<<<< HEAD
     return target.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-=======
-    return target.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
->>>>>>> remotes/origin/master
 }
