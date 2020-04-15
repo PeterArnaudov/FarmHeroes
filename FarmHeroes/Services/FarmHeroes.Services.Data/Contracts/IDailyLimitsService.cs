@@ -7,5 +7,7 @@
     public interface IDailyLimitsService
     {
         Task UpdateDailyLimits(DailyLimits dailyLimits);
+
+        Task ResetDailyLimits();
     }
 }

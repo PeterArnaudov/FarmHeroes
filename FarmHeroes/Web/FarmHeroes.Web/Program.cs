@@ -22,6 +22,7 @@
                     {
                         services.AddHostedService<PassiveIncomeTask>();
                         services.AddHostedService<NotificationDeleteTask>();
+                        services.AddHostedService<DailyLimitsResetTask>();
                     });
     }
 }
