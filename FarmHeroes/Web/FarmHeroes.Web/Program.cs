@@ -1,6 +1,8 @@
 ﻿namespace FarmHeroes.Web
 {
+    using FarmHeroes.Web.BackgroundTasks;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
     public static class Program
@@ -15,6 +17,10 @@
                 .ConfigureWebHostDefaults(webBuilder =>
                     {
                         webBuilder.UseStartup<Startup>();
+                    })
+                .ConfigureServices(services =>
+                    {
+                        services.AddHostedService<PassiveIncomeTask>();
                     });
     }
 }

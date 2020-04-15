@@ -1,6 +1,7 @@
 ﻿namespace FarmHeroes.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -8,7 +9,9 @@
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
+    using FarmHeroes.Services.Data.Formulas;
     using FarmHeroes.Web.ViewModels.ResourcePouchModels;
+    using Microsoft.EntityFrameworkCore;
 
     public class ResourcePouchService : IResourcePouchService
     {
@@ -146,6 +149,13 @@
             hero.ResourcePouch.Gold = inputModel.ResourcePouchGold;
             hero.ResourcePouch.Crystals = inputModel.ResourcePouchCrystals;
 
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task GivePassiveIncome()
+        {
+            List<Hero> heroes = await this.context.Heroes.ToListAsync();
+            heroes.ForEach(x => x.ResourcePouch.Gold += ResourceFormulas.CalculatePassiveIncome(x.Level.CurrentLevel));
             await this.context.SaveChangesAsync();
         }
     }

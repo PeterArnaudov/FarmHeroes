@@ -31,5 +31,7 @@
         Task DecreaseCurrentHeroCrystals(int crystals);
 
         Task UpdateResourcePouch(ResourcePouchModifyInputModel inputModel);
+
+        Task GivePassiveIncome();
     }
 }
