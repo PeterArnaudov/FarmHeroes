@@ -10,7 +10,7 @@
         <a class="col-4 btn btn-outline-primary border-left-0 border-right-0 nav-link" href="/Statistics">Statistics</a>
     </div>
 <div class="row">
-    <div class="col-2 border-right border-primary m-auto">
+    <div class="col-3 col-sm-2 border-right border-primary m-auto">
         @if (Model.EquippedSetAmulet != null)
         {
             <div class="position-relative equipment-box m-2">
@@ -22,7 +22,7 @@
             <img src="/images/equipment/amulets/no-amulet.png" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" />
         }
     </div>
-    <div class="col-8">
+    <div class="col-6 col-sm-8">
         <h5 class="text-center m-2">@Model.Name</h5>
         <img src="@Model.AvatarUrl" class="row img-fluid m-auto">
         <p class="text-center m-auto"><img src="~/images/icons/level-icon.png" class="img-fluid icon"> @Model.Level</p>
@@ -33,7 +33,7 @@
             </strong>
         </div>
     </div>
-    <div class="col-2 border-left border-primary m-auto">
+    <div class="col-3 col-sm-2 border-left border-primary m-auto">
         @if (Model.EquippedSetHelmet != null)
         {
             <div class="position-relative equipment-box m-2">

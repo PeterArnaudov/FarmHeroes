@@ -8,7 +8,7 @@
     <img src="~/images/battlefield/battlefield.jpg" alt="battlefield" class="d-block img-fluid ml-auto mr-auto mb-3">
     <div class="row m-auto">
         <div class="col-6 border-right border-primary">
-            <img src="~/images/battlefield/fight-icon.png" alt="fight" class="img-fluid ml-2 mt-2 area-icon">
+            <img src="~/images/battlefield/fight-icon.png" alt="fight" class="img-fluid d-none d-sm-block ml-2 mt-2 area-icon">
             <h2 class="text-uppercase d-inline">fights</h2>
             <img src="~/images/icons/info-icon.png" alt="info" class="img-fluid ml-2 mt-2 info-icon" data-toggle="tooltip" data-placement="bottom" title="Battle consists of 5 rounds. Winner is determined by damage dealt, however if someone has 1 health left, they lose. The winner steals 10% of their enemy's gold.">
             <form method="get" asp-controller="Battlefield" asp-action="GetOpponents">
@@ -37,14 +37,13 @@
             </form>
         </div>
         <div class="col-6">
-            <img src="~/images/battlefield/patrol-icon.png" alt="patrol" class="img-fluid ml-2 mt-2 area-icon">
+            <img src="~/images/battlefield/patrol-icon.png" alt="patrol" class="img-fluid d-none d-sm-block ml-2 mt-2 area-icon">
             <h2 class="text-uppercase">patrol</h2>
             <p class="m-auto">Spend 10 minutes patrolling around and earn some gold.</p>
             <p>Today you've been on patrol <span id="patrols-done">@Model.PatrolsDone</span>/3 times.</p>
             <div id="work-body">
                 @if (Model.CanGoOnPatrol)
                 {
-                    <!-- If hero cannot start a patrol, add class disabled to the button; when patrol limit is implemented -->
                     if (Model.PatrolsDone == 3)
                     {
                         <button onclick="startWork('battlefield')" class="btn btn-primary disabled" disabled>Start Patrol</button>
@@ -71,7 +70,7 @@
     <hr class="bg-primary">
     <div class="row mt-2 ml-auto mr-auto">
         <div class="col-12">
-            <img src="~/images/battlefield/monster-fight-icon.png" alt="patrol" class="img-fluid ml-2 mt-2 area-icon">
+            <img src="~/images/battlefield/monster-fight-icon.png" alt="patrol" class="img-fluid d-none d-sm-block ml-2 mt-2 area-icon">
             <h2 class="text-uppercase">monsters</h2>
             <div class="row">
                 <div class="col-6">
