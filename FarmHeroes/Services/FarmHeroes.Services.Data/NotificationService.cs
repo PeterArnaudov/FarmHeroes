@@ -35,7 +35,6 @@
             TViewModel viewModel = this.mapper.Map<TViewModel>(notifications);
 
             await this.MarkAsRead();
-            await this.DeleteOld();
 
             return viewModel;
         }
@@ -58,6 +57,17 @@
             return count;
         }
 
+        public async Task DeleteOld()
+        {
+            Notification[] oldNotifications = await this.context.Notifications
+                .Where(n => n.CreatedOn <= DateTime.UtcNow.AddDays(-1))
+                .ToArrayAsync();
+
+            this.context.Notifications.RemoveRange(oldNotifications);
+
+            await this.context.SaveChangesAsync();
+        }
+
         private async Task MarkAsRead()
         {
             int heroId = this.heroService.GetCurrentHero().Result.Id;
@@ -67,17 +77,6 @@
                 .ToListAsync();
 
             newNotifications.ForEach(n => n.IsNew = false);
-
-            await this.context.SaveChangesAsync();
-        }
-
-        private async Task DeleteOld()
-        {
-            Notification[] oldNotifications = await this.context.Notifications
-                .Where(n => n.CreatedOn <= DateTime.UtcNow.AddDays(-1))
-                .ToArrayAsync();
-
-            this.context.Notifications.RemoveRange(oldNotifications);
 
             await this.context.SaveChangesAsync();
         }

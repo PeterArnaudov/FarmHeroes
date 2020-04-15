@@ -11,5 +11,7 @@
         Task<int> GetNewNotificationsCount();
 
         Task AddNotification(Notification notification);
+
+        Task DeleteOld();
     }
 }

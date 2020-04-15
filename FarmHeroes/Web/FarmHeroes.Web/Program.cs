@@ -21,6 +21,7 @@
                 .ConfigureServices(services =>
                     {
                         services.AddHostedService<PassiveIncomeTask>();
+                        services.AddHostedService<NotificationDeleteTask>();
                     });
     }
 }
