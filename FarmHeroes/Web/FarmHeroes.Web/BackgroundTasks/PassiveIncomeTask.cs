@@ -16,37 +16,37 @@ namespace FarmHeroes.Web.BackgroundTasks
     public class PassiveIncomeTask : IHostedService, IDisposable
     {
         private int executionCount = 0;
-        private readonly ILogger<PassiveIncomeTask> _logger;
+        private readonly ILogger<PassiveIncomeTask> logger;
         private readonly IServiceScopeFactory scopeFactory;
-        private Timer _timer;
+        private Timer timer;
 
         public PassiveIncomeTask(ILogger<PassiveIncomeTask> logger, IServiceScopeFactory scopeFactory)
         {
-            _logger = logger;
+            this.logger = logger;
             this.scopeFactory = scopeFactory;
         }
 
         public Task StartAsync(CancellationToken stoppingToken)
         {
-            this._logger.LogInformation("Passive Income Task running.");
+            this.logger.LogInformation("Passive Income Task running.");
 
-            this._timer = new Timer(this.DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(3600));
+            this.timer = new Timer(this.DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(3600));
 
             return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken stoppingToken)
         {
-            this._logger.LogInformation("Passive Income Task is stopping.");
+            this.logger.LogInformation("Passive Income Task is stopping.");
 
-            this._timer?.Change(Timeout.Infinite, 0);
+            this.timer?.Change(Timeout.Infinite, 0);
 
             return Task.CompletedTask;
         }
 
         public void Dispose()
         {
-            this._timer?.Dispose();
+            this.timer?.Dispose();
         }
 
         private void DoWork(object state)
@@ -59,7 +59,7 @@ namespace FarmHeroes.Web.BackgroundTasks
                 resourcePouchService.GivePassiveIncome().Wait();
             }
 
-            this._logger.LogInformation(
+            this.logger.LogInformation(
                 "Passive Income Task is working. Count: {Count}", count);
         }
     }

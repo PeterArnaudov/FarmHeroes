@@ -17,12 +17,6 @@
                 .ConfigureWebHostDefaults(webBuilder =>
                     {
                         webBuilder.UseStartup<Startup>();
-                    })
-                .ConfigureServices(services =>
-                    {
-                        services.AddHostedService<PassiveIncomeTask>();
-                        services.AddHostedService<NotificationDeleteTask>();
-                        services.AddHostedService<DailyLimitsResetTask>();
                     });
     }
 }

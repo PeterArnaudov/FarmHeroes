@@ -16,37 +16,37 @@ namespace FarmHeroes.Web.BackgroundTasks
     public class NotificationDeleteTask : IHostedService, IDisposable
     {
         private int executionCount = 0;
-        private readonly ILogger<PassiveIncomeTask> _logger;
+        private readonly ILogger<PassiveIncomeTask> logger;
         private readonly IServiceScopeFactory scopeFactory;
-        private Timer _timer;
+        private Timer timer;
 
         public NotificationDeleteTask(ILogger<PassiveIncomeTask> logger, IServiceScopeFactory scopeFactory)
         {
-            _logger = logger;
+            this.logger = logger;
             this.scopeFactory = scopeFactory;
         }
 
         public Task StartAsync(CancellationToken stoppingToken)
         {
-            this._logger.LogInformation("Notifications and Messages Delete Task running.");
+            this.logger.LogInformation("Notifications Delete Task running.");
 
-            this._timer = new Timer(this.DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(86400));
+            this.timer = new Timer(this.DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(86400));
 
             return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken stoppingToken)
         {
-            this._logger.LogInformation("Notifications and Messages Delete is stopping.");
+            this.logger.LogInformation("Notifications Delete is stopping.");
 
-            this._timer?.Change(Timeout.Infinite, 0);
+            this.timer?.Change(Timeout.Infinite, 0);
 
             return Task.CompletedTask;
         }
 
         public void Dispose()
         {
-            this._timer?.Dispose();
+            this.timer?.Dispose();
         }
 
         private void DoWork(object state)
@@ -59,8 +59,8 @@ namespace FarmHeroes.Web.BackgroundTasks
                 notificationService.DeleteOld().Wait();
             }
 
-            this._logger.LogInformation(
-                "Notifications and Messages Delete is working. Count: {Count}", count);
+            this.logger.LogInformation(
+                "Notifications Delete is working. Count: {Count}", count);
         }
     }
 }

@@ -25,6 +25,7 @@
     using FarmHeroes.Web.Filters;
     using Microsoft.AspNetCore.Mvc;
     using FarmHeroes.Web.Hubs;
+    using FarmHeroes.Web.BackgroundTasks;
 
     public class Startup
     {
@@ -65,6 +66,11 @@
             services.AddHttpContextAccessor();
 
             services.AddAutoMapper(typeof(FarmHeroesProfile));
+
+            // Background tasks
+            services.AddHostedService<PassiveIncomeTask>();
+            services.AddHostedService<NotificationDeleteTask>();
+            services.AddHostedService<DailyLimitsResetTask>();
 
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
