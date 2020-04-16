@@ -11,7 +11,7 @@
 
     public class MineService : IMineService
     {
-        private const int DigDurationInSeconds = 300;
+        private const int DigDurationInSeconds = 150;
 
         private readonly IHeroService heroService;
         private readonly IResourcePouchService resourcePouchService;

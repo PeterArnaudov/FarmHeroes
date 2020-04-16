@@ -22,10 +22,10 @@
     {
         private const int Rounds = 5;
         private const int ExperiencePerWin = 4;
-        private const int SecondsUntilNextHeroAttack = 900;
-        private const int SecondsUntilNextMonsterAttack = 900;
-        private const int SecondsDefenseGranted = 3600;
-        private const int RandomMonsterGoldCost = 500;
+        private const int SecondsUntilNextHeroAttack = 600;
+        private const int SecondsUntilNextMonsterAttack = 300;
+        private const int SecondsDefenseGranted = 1800;
+        private const int RandomMonsterGoldCost = 50;
         private const int MonsterCrystalCost = 1;
         private const string MonsterFightNotificationImageUrl = "/images/notifications/monster-fight-notification.png";
         private const string HeroFightNotificationImageUrl = "/images/notifications/hero-battle-notification.png";
