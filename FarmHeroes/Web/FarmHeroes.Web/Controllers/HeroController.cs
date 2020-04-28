@@ -40,6 +40,14 @@
             return this.View(viewModel);
         }
 
+        [Route("/Hero/{id}")]
+        public async Task<IActionResult> Hero(int id)
+        {
+            HeroViewModel viewModel = await this.heroService.GetHeroViewModelById<HeroViewModel>(id);
+
+            return this.View(viewModel);
+        }
+
         public async Task<IActionResult> Create()
         {
             if (await this.userService.CurrentUserHasHero())

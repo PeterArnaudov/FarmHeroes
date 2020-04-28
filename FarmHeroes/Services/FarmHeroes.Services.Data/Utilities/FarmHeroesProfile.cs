@@ -53,6 +53,9 @@
                 .ForMember(x => x.EquippedSetWeapon, cfg => cfg.MapFrom(x => x.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Weapon)))
                 .ForMember(x => x.EquippedSetShield, cfg => cfg.MapFrom(x => x.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Shield)));
 
+            this.CreateMap<Hero, HeroViewModel>()
+                .ForMember(x => x.ExperiencePercent, cfg => cfg.MapFrom(x => Math.Round((double)(100 * x.Level.CurrentExperience /  x.Level.NeededExperience))));
+
             this.CreateMap<Characteristics, CharacteristicsPracticeViewModel>()
                 .ForMember(x => x.AttackPrice, cfg => cfg.MapFrom(x => CharacteristicsFormulas.CalculateAttackPrice(x.Attack)))
                 .ForMember(x => x.DefensePrice, cfg => cfg.MapFrom(x => CharacteristicsFormulas.CalculateDefensePrice(x.Defense)))
