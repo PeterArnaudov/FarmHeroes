@@ -1,24 +1,28 @@
 ﻿@model FarmHeroes.Web.ViewModels.ViewComponentsModels.HeroResourcesViewComponentModel
 
-<div class="col-3 d-inline pl-2" data-toggle="tooltip" data-placement="bottom" title="Gold is used to practice and buy things. Earned by fighting other players and monsters or by working.">
+<div class="col-6 d-inline">
     <div class="row mt-2">
-        <div class="col-6 col-sm-4">
-            <img src="~/images/icons/gold-icon.png" alt="Gold" class="img-fluid img-rotate">
+        <div class="col-12 col-sm-6" data-toggle="tooltip" data-placement="bottom" title="Gold is used to practice and buy things. Earned by fighting other players and monsters or by working.">
+            <div class="row">
+                <div class="col-3 col-sm-4">
+                    <img src="~/images/icons/gold-icon.png" alt="Gold" class="img-fluid img-rotate">
+                </div>
+                <div class="col-9 col-sm-8 text-left m-auto">
+                    <h4 class="m-0 d-none d-sm-block">Gold:</h4>
+                    <span id="current-gold" class="align-middle">@Model.Gold.ToString("N0")</span>
+                </div>
+            </div>
         </div>
-        <div class="col-6 col-sm-8 text-left m-auto">
-            <h4 class="d-lg-inline-block d-none">Gold:</h4>
-            <h4 id="current-gold">@Model.Gold.ToString("N0")</h4>
-        </div>
-    </div>
-</div>
-<div class="col-3 d-inline" data-toggle="tooltip" data-placement="bottom" title="Crystals are used to buy elite things. Earned by mining.">
-    <div class="row mt-2">
-        <div class="col-6 col-sm-4">
-            <img src="~/images/icons/crystal-icon.png" alt="Crystals" class="img-fluid img-rotate">
-        </div>
-        <div class="col-6 col-sm-8 text-left m-auto">
-            <h4 class="d-lg-inline-block d-none">Crystals:</h4>
-            <h4 id="current-crystals">@Model.Crystals.ToString("N0")</h4>
+        <div class="col-12 col-sm-6" data-toggle="tooltip" data-placement="bottom" title="Crystals are used to buy elite things. Earned by mining.">
+            <div class="row">
+                <div class="col-3 col-sm-4">
+                    <img src="~/images/icons/crystal-icon.png" alt="Crystal" class="img-fluid img-rotate">
+                </div>
+                <div class="col-9 col-sm-8 text-left m-auto">
+                    <h4 class="m-0 d-none d-sm-block">Crystals:</h4>
+                    <span id="current-crystals" class="align-middle">@Model.Crystals.ToString("N0")</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
