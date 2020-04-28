@@ -25,8 +25,8 @@
     <div class="col-6 col-sm-8">
         <h5 class="text-center m-2">@Model.Name</h5>
         <img src="@Model.AvatarUrl" class="row img-fluid m-auto">
-        <p class="text-center m-auto"><img src="~/images/icons/level-icon.png" class="img-fluid icon"> @Model.Level</p>
-        <div class="progress w-50 position-relative mt-1 mb-3 ml-auto mr-auto" data-toggle="tooltip" data-placement="bottom" title="@Model.CurrentExperience.ToString("N0")/@Model.NeededExperience.ToString("N0")">
+        <p class="text-center m-auto"><img src="~/images/icons/level-icon.png" class="img-fluid icon"> @Model.LevelCurrentLevel</p>
+        <div class="progress w-50 position-relative mt-1 mb-3 ml-auto mr-auto" data-toggle="tooltip" data-placement="bottom" title="@Model.LevelCurrentExperience.ToString("N0")/@Model.LevelNeededExperience.ToString("N0")">
             <div class="progress-bar bg-info" role="progressbar" style="width: @Model.ExperiencePercent%"></div>
             <strong class="justify-content-center d-flex position-absolute w-100">
                 @Model.ExperiencePercent%
@@ -81,30 +81,30 @@
         <strong class="text-uppercase">characteristics</strong>
         <div class="text-left">
             <img src="~/images/icons/attack-icon.png" class="icon">
-            Attack: @Model.Attack
+            Attack: @Model.CharacteristicsAttack
         </div>
         <div class="text-left">
             <img src="~/images/icons/defense-icon.png" class="icon">
-            Defense: @Model.Defense
+            Defense: @Model.CharacteristicsDefense
         </div>
         <div class="text-left">
             <img src="~/images/icons/mastery-icon.png" class="icon">
-            Mastery: @Model.Mastery
+            Mastery: @Model.CharacteristicsMastery
         </div>
         <div class="text-left">
             <img src="~/images/icons/mass-icon.png" class="icon">
-            Mass: @Model.Mass
+            Mass: @Model.CharacteristicsMass
         </div>
     </div>
     <div class="col-6 text-center">
         <strong class="text-uppercase">statistics</strong>
         <div class="text-left">
             <img src="~/images/icons/fights-icon.png" class="icon">
-            Fights: @Model.Fights
+            Fights: @Model.StatisticsTotalFights
         </div>
         <div class="text-left">
             <img src="~/images/icons/wins-icon.png" class="icon">
-            Wins: @Model.Wins
+            Wins: @Model.StatisticsWins
         </div>
     </div>
 </div>

@@ -23,7 +23,7 @@
             else
             {
                 <p class="mb-1">Time left until you finish work:</p>
-                <vc:timer dom-element-id="work_1" date-time="@Model.WorkUntil"></vc:timer>
+                <vc:timer dom-element-id="work_1" date-time="@Model.ChronometerWorkUntil"></vc:timer>
                 <p class="text-danger">NOTE: If you cancel the work, you will not receive any rewards.</p>
                 <button class="btn btn-danger" onclick="cancelWork('farm')">Cancel</button>
             }

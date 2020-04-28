@@ -8,6 +8,6 @@
 
         public bool IsWorkFinished { get; set; }
 
-        public DateTime? WorkUntil { get; set; }
+        public DateTime? ChronometerWorkUntil { get; set; }
     }
 }

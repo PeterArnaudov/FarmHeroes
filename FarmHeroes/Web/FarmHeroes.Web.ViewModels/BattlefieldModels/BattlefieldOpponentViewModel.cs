@@ -10,12 +10,12 @@
 
         public string AvatarUrl { get; set; }
 
-        public int Attack { get; set; }
+        public int CharacteristicsAttack { get; set; }
 
-        public int Defense { get; set; }
+        public int CharacteristicsDefense { get; set; }
 
-        public int Mass { get; set; }
+        public int CharacteristicsMass { get; set; }
 
-        public int Mastery { get; set; }
+        public int CharacteristicsMastery { get; set; }
     }
 }

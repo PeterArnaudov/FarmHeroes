@@ -9,11 +9,11 @@
 
         public string AvatarUrl { get; set; }
 
-        public int Level { get; set; }
+        public int LevelCurrentLevel { get; set; }
 
-        public int CurrentExperience { get; set; }
+        public int LevelCurrentExperience { get; set; }
 
-        public int NeededExperience { get; set; }
+        public int LevelNeededExperience { get; set; }
 
         public double ExperiencePercent { get; set; }
 
@@ -27,16 +27,16 @@
 
         public AmuletViewModel EquippedSetAmulet { get; set; }
 
-        public long Attack { get; set; }
+        public int CharacteristicsAttack { get; set; }
 
-        public long Defense { get; set; }
+        public int CharacteristicsDefense { get; set; }
 
-        public long Mastery { get; set; }
+        public int CharacteristicsMastery { get; set; }
 
-        public long Mass { get; set; }
+        public int CharacteristicsMass { get; set; }
 
-        public long Fights { get; set; }
+        public int StatisticsTotalFights { get; set; }
 
-        public long Wins { get; set; }
+        public int StatisticsWins { get; set; }
     }
 }

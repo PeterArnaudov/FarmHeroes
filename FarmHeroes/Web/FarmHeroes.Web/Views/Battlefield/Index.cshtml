@@ -31,7 +31,7 @@
                     }
                     else
                     {
-                        <vc:timer dom-element-id="attackHero_1" date-time="@Model.CannotAttackHeroUntil"></vc:timer>
+                        <vc:timer dom-element-id="attackHero_1" date-time="@Model.ChronometerCannotAttackHeroUntil"></vc:timer>
                     }
                 }
             </form>
@@ -40,11 +40,11 @@
             <img src="~/images/battlefield/patrol-icon.png" alt="patrol" class="img-fluid d-none d-sm-block ml-2 mt-2 area-icon">
             <h2 class="text-uppercase">patrol</h2>
             <p class="m-auto">Spend 10 minutes patrolling around and earn some gold.</p>
-            <p>Today you've been on patrol <span id="patrols-done">@Model.PatrolsDone</span>/3 times.</p>
+            <p>Today you've been on patrol <span id="patrols-done">@Model.DailyLimitsPatrolsDone</span>/3 times.</p>
             <div id="work-body">
                 @if (Model.CanGoOnPatrol)
                 {
-                    if (Model.PatrolsDone == 3)
+                    if (Model.DailyLimitsPatrolsDone == 3)
                     {
                         <button onclick="startWork('battlefield')" class="btn btn-primary disabled" disabled>Start Patrol</button>
                     }
@@ -61,7 +61,7 @@
                     }
                     else
                     {
-                        <vc:timer dom-element-id="patrol_1" date-time="@Model.PatrolUntil"></vc:timer>
+                        <vc:timer dom-element-id="patrol_1" date-time="@Model.ChronometerWorkUntil"></vc:timer>
                     }
                 }
             </div>
@@ -88,7 +88,7 @@
                         }
                         else
                         {
-                            <vc:timer dom-element-id="attackMonster_1" date-time="@Model.CannotAttackMonsterUntil"></vc:timer>
+                            <vc:timer dom-element-id="attackMonster_1" date-time="@Model.ChronometerCannotAttackMonsterUntil"></vc:timer>
                         }
                     }
                 </div>
@@ -120,7 +120,7 @@
                             }
                             else
                             {
-                                <span class="m-auto"><vc:timer dom-element-id="attackMonster_2" date-time="@Model.CannotAttackMonsterUntil"></vc:timer></span>
+                                <span class="m-auto"><vc:timer dom-element-id="attackMonster_2" date-time="@Model.ChronometerCannotAttackMonsterUntil"></vc:timer></span>
                             }
                         }
                     </form>

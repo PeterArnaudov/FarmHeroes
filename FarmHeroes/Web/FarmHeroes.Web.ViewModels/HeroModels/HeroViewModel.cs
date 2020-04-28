@@ -17,16 +17,16 @@
 
         public double ExperiencePercent { get; set; }
 
-        public long CharacteristicsAttack { get; set; }
+        public int CharacteristicsAttack { get; set; }
 
-        public long CharacteristicsDefense { get; set; }
+        public int CharacteristicsDefense { get; set; }
 
-        public long CharacteristicsMastery { get; set; }
+        public int CharacteristicsMastery { get; set; }
 
-        public long CharacteristicsMass { get; set; }
+        public int CharacteristicsMass { get; set; }
 
-        public long StatisticsTotalFights { get; set; }
+        public int StatisticsTotalFights { get; set; }
 
-        public long StatisticsWins { get; set; }
+        public int StatisticsWins { get; set; }
     }
 }
