@@ -14,6 +14,12 @@
 
     public class MonsterService : IMonsterService
     {
+        private const int MaxPercent = 100;
+        private const int MinimumPercentAttack = 25;
+        private const int MaximumPercentAttack = 50;
+        private const int MinimumPercentDefense = 10;
+        private const int MaximumPercentDefense = 40;
+
         private readonly IHeroService heroService;
         private readonly FarmHeroesDbContext context;
 
@@ -51,9 +57,9 @@
 
             Random random = new Random();
 
-            int maxPercent = 100;
-            int monsterAttackPercent = random.Next(25, 50);
-            int monsterDefensePercent = random.Next(10, 40);
+            int maxPercent = MaxPercent;
+            int monsterAttackPercent = random.Next(MinimumPercentAttack, MaximumPercentAttack);
+            int monsterDefensePercent = random.Next(MinimumPercentDefense, MaximumPercentDefense);
             int monsterMasteryPercent = maxPercent - monsterAttackPercent - monsterDefensePercent;
             int monsterBattlePower = MonsterFormulas.CalculateBattlePower(heroBattlePower, monsterBattlePowerPercent);
 

@@ -7,6 +7,8 @@
     using FarmHeroes.Data;
     using FarmHeroes.Data.Common.Repositories;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Services.Data.Constants;
+    using FarmHeroes.Services.Data.Constants.ExceptionMessages;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Formulas;
@@ -54,13 +56,7 @@
         {
             Inventory inventory = await this.GetCurrentHeroInventory();
 
-            if (inventory.Items.Count == inventory.MaximumCapacity)
-            {
-                throw new FarmHeroesException(
-                    "You don't have enough space in your inventory.",
-                    "Upgrade your inventory or free up some space by selling something you don't need.",
-                    $"/Shop/{heroEquipment.Type.ToString()}");
-            }
+            this.CheckIfInventoryHasFreeSpace(inventory, heroEquipment);
 
             inventory.Items.Add(heroEquipment);
 
@@ -80,13 +76,7 @@
         {
             Inventory inventory = await this.GetCurrentHeroInventory();
 
-            if (inventory.MaximumCapacity == MaximumCapacityPossible)
-            {
-                throw new FarmHeroesException(
-                    "You've reached the maximum possible upgrade of the inventory.",
-                    "You cannot upgrade futher.",
-                    "/Inventory");
-            }
+            this.CheckIfInventoryCanBeUpgraded(inventory);
 
             await this.resourcePouchService.DecreaseCurrentHeroCrystals(InventoryFormulas.CalculateUpgradeCost(inventory.MaximumCapacity));
 
@@ -116,9 +106,9 @@
             else
             {
                 throw new FarmHeroesException(
-                    "You cannot trash an item that isn't in your inventory.",
-                    "Choose an item from your inventory.",
-                    "/Inventory");
+                    InventoryExceptionMessages.ItemNotOwnedMessage,
+                    InventoryExceptionMessages.ItemNotOwnedInstruction,
+                    Redirects.InventoryRedirect);
             }
 
             await this.context.SaveChangesAsync();
@@ -126,6 +116,28 @@
             this.tempDataDictionaryFactory
                 .GetTempData(this.httpContext.HttpContext)
                 .Add("Alert", $"You trashed the desired item successfully.");
+        }
+
+        private void CheckIfInventoryHasFreeSpace(Inventory inventory, HeroEquipment heroEquipment)
+        {
+            if (inventory.Items.Count == inventory.MaximumCapacity)
+            {
+                throw new FarmHeroesException(
+                    InventoryExceptionMessages.NotEnoughSpaceMessage,
+                    InventoryExceptionMessages.NotEnoughSpaceInstruction,
+                    string.Format(Redirects.ShopRedirect, heroEquipment.Type));
+            }
+        }
+
+        private void CheckIfInventoryCanBeUpgraded(Inventory inventory)
+        {
+            if (inventory.MaximumCapacity == MaximumCapacityPossible)
+            {
+                throw new FarmHeroesException(
+                    InventoryExceptionMessages.MaximumUpgradeReachedMessage,
+                    InventoryExceptionMessages.MaximumUpgradeReachedInstruction,
+                    Redirects.InventoryRedirect);
+            }
         }
     }
 }

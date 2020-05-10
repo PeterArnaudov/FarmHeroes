@@ -5,6 +5,8 @@
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.ShopModels;
+    using FarmHeroes.Services.Data.Constants;
+    using FarmHeroes.Services.Data.Constants.ExceptionMessages;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using Microsoft.AspNetCore.Http;
@@ -61,13 +63,7 @@
             ShopEquipment shopEquipment = await this.context.ShopEquipments.FindAsync(id);
             int heroLevel = await this.levelService.GetCurrentHeroLevel();
 
-            if (heroLevel < shopEquipment.RequiredLevel)
-            {
-                throw new FarmHeroesException(
-                    "You are lower level than the required one.",
-                    "Level up before trying to buy yourself such mighty equipment.",
-                    "/Shop/Helmets");
-            }
+            this.CheckIfRequiredLevelIsMet(shopEquipment, heroLevel);
 
             await this.resourcePouchService.DecreaseCurrentHeroGold(shopEquipment.Price);
 
@@ -112,6 +108,17 @@
             this.tempDataDictionaryFactory
                 .GetTempData(this.httpContext.HttpContext)
                 .Add("Alert", $"You bought {heroAmulet.Name}.");
+        }
+
+        private void CheckIfRequiredLevelIsMet(ShopEquipment shopEquipment, int heroLevel)
+        {
+            if (heroLevel < shopEquipment.RequiredLevel)
+            {
+                throw new FarmHeroesException(
+                    ShopExceptionMessages.RequiredLevelNotMetMessage,
+                    ShopExceptionMessages.RequiredLevelNotMetInstruction,
+                    string.Format(Redirects.ShopRedirect, shopEquipment.Type));
+            }
         }
     }
 }

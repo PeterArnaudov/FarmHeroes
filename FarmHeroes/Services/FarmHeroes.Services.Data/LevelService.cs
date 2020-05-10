@@ -14,6 +14,8 @@
     public class LevelService : ILevelService
     {
         private const string LevelNotificationImageUrl = "/images/notifications/level-notification.png";
+        private const string LevelNotificationTitle = "Level up";
+        private const string LevelNotificationContent = "You just reached level {0}. Congratulations!";
 
         private readonly FarmHeroesDbContext context;
         private readonly IHeroService heroService;
@@ -89,8 +91,8 @@
             Notification notification = new Notification()
             {
                 ImageUrl = LevelNotificationImageUrl,
-                Title = "Level up",
-                Content = $"You just reached level {hero.Level.CurrentLevel}. Congratulations!",
+                Title = LevelNotificationTitle,
+                Content = string.Format(LevelNotificationContent, hero.Level.CurrentLevel),
                 Type = NotificationType.Other,
                 Hero = hero,
             };
@@ -117,8 +119,8 @@
             Notification notification = new Notification()
             {
                 ImageUrl = LevelNotificationImageUrl,
-                Title = "Level up",
-                Content = $"You just reached level {hero.Level.CurrentLevel}. Congratulations!",
+                Title = LevelNotificationTitle,
+                Content = string.Format(LevelNotificationContent, hero.Level.CurrentLevel),
                 Type = NotificationType.Other,
                 Hero = hero,
             };

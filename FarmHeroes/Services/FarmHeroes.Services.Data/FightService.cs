@@ -13,10 +13,12 @@
     using FarmHeroes.Data.Models.MappingModels;
     using FarmHeroes.Data.Models.MonsterModels;
     using FarmHeroes.Data.Models.NotificationModels.HeroModels;
-    using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
+    using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Formulas;
     using FarmHeroes.Services.Models.Monsters;
+    using FarmHeroes.Services.Data.Constants.ExceptionMessages;
+    using FarmHeroes.Services.Data.Constants;
 
     public class FightService : IFightService
     {
@@ -27,8 +29,15 @@
         private const int SecondsDefenseGranted = 1800;
         private const int RandomMonsterGoldCost = 50;
         private const int MonsterCrystalCost = 1;
+        private const int RandomMonsterMinimumLevel = 1;
+        private const int RandomMonsterMaximumLevel = 3;
+        private const int LevelBoundary = 3;
         private const string MonsterFightNotificationImageUrl = "/images/notifications/monster-fight-notification.png";
         private const string HeroFightNotificationImageUrl = "/images/notifications/hero-battle-notification.png";
+        private const string FightNotificationTitle = "Fight log";
+        private const string FightNotificationLink = "/Battlefield/FightLog/{0}";
+        private const string FightNotificationAttacker = "You attacked {0}";
+        private const string FightNotificationDefender = "{0} attacked you.";
 
         private readonly IHeroService heroService;
         private readonly IHealthService healthService;
@@ -63,52 +72,15 @@
 
             Hero attacker = await this.heroService.GetCurrentHero();
 
-            if (attacker.WorkStatus != WorkStatus.Idle)
-            {
-                throw new FarmHeroesException(
-                    "You cannot attack while working.",
-                    "You have to cancel or finish your work before trying to attack.",
-                    "/Battlefield");
-            }
-            else if (attacker.Chronometer.CannotAttackHeroUntil > DateTime.UtcNow)
-            {
-                throw new FarmHeroesException(
-                    "You cannot attack right now.",
-                    "You have to wait until you can attack again. Take a rest, do something useful.",
-                    "/Battlefield");
-            }
-            else if (attacker.Id == opponentId)
-            {
-                throw new FarmHeroesException(
-                    "You cannot attack yourself.",
-                    "Who would attack themselves? Go find somebody else!.",
-                    "/Battlefield");
-            }
+            this.CheckIfHeroIsWorking(attacker);
+            this.CheckIfHeroCanAttackPlayer(attacker);
+            this.CheckIfHeroAttackThemselves(attacker, opponentId);
 
             Hero defender = await this.heroService.GetHeroById(opponentId);
 
-            if (defender.Fraction == attacker.Fraction)
-            {
-                throw new FarmHeroesException(
-                    "You cannot attack a hero from your fraction.",
-                    "Don't be a bad player. You can attack only players from the enemy fraction.",
-                    "/Battlefield");
-            }
-            else if (attacker.Level.CurrentLevel + 3 < defender.Level.CurrentLevel
-                    && attacker.Level.CurrentLevel - 3 > defender.Level.CurrentLevel)
-            {
-                throw new FarmHeroesException(
-                    "The hero you attempted to attack is outside of your level range.",
-                    "You can attack players with 3 levels below or above you, inclusively.",
-                    "/Battlefield");
-            }
-            else if (defender.Chronometer.CannotBeAttackedUntil > DateTime.UtcNow)
-            {
-                throw new FarmHeroesException(
-                    "You cannot attack a hero that still has defence.",
-                    "This hero still has defence. After being attacked, one is guaranteed an hour of immunity.",
-                    "/Battlefield");
-            }
+            this.CheckIfOpponentsAreSameFraction(attacker, defender);
+            this.CheckIfInLevelBoundary(attacker, defender);
+            this.CheckIfHeroCanBeAttacked(defender);
 
             EquippedSet attackerSet = await this.equipmentService.GetCurrentHeroEquipedSet();
             EquippedSet defenderSet = await this.equipmentService.GetEquippedSetById(defender.EquippedSetId);
@@ -121,8 +93,8 @@
             int defenderDefense = FightFormulas.CalculateDefense(defender);
             int defenderMastery = FightFormulas.CalculateMastery(defender);
             int defenderMass = defender.Characteristics.Mass;
-            int?[] attackerHits = new int?[5];
-            int?[] defenderHits = new int?[5];
+            int?[] attackerHits = new int?[Rounds];
+            int?[] defenderHits = new int?[Rounds];
             string winnerName = string.Empty;
             int goldStolen = 0;
 
@@ -133,8 +105,8 @@
                     defenderDefense,
                     attackerMastery,
                     defenderMastery,
-                    attackerSet.Amulet?.Name == "Criticum" ? attackerSet.Amulet.Bonus : 0,
-                    attackerSet.Amulet?.Name == "Fatty" ? attackerSet.Amulet.Bonus : 0);
+                    attackerSet.Amulet?.Name == AmuletNames.Criticum ? attackerSet.Amulet.Bonus : 0,
+                    attackerSet.Amulet?.Name == AmuletNames.Fatty ? attackerSet.Amulet.Bonus : 0);
 
                 await this.healthService.ReduceHealthById(defender.HealthId, attackerDamage);
                 attackerHits[i] = attackerDamage;
@@ -150,8 +122,8 @@
                     attackerDefense,
                     defenderMastery,
                     attackerMastery,
-                    defenderSet.Amulet?.Name == "Criticum" ? defenderSet.Amulet.Bonus : 0,
-                    defenderSet.Amulet?.Name == "Fatty" ? defenderSet.Amulet.Bonus : 0);
+                    defenderSet.Amulet?.Name == AmuletNames.Criticum ? defenderSet.Amulet.Bonus : 0,
+                    defenderSet.Amulet?.Name == AmuletNames.Fatty ? defenderSet.Amulet.Bonus : 0);
 
                 await this.healthService.ReduceHealthById(attacker.HealthId, defenderDamage);
                 defenderHits[i] = defenderDamage;
@@ -263,9 +235,9 @@
             Notification attackerNotification = new Notification()
             {
                 ImageUrl = HeroFightNotificationImageUrl,
-                Title = "Fight log",
-                Link = $"/Battlefield/FightLog/{fightEntity.Id}",
-                Content = $"You attacked {defender.Name}.",
+                Title = FightNotificationTitle,
+                Link = string.Format(FightNotificationLink, fightEntity.Id),
+                Content = string.Format(FightNotificationAttacker, defender.Name),
                 Gold = winnerName == attacker.Name ? goldStolen : goldStolen * -1,
                 Experience = winnerName == attacker.Name ? ExperiencePerWin : default(int?),
                 Type = NotificationType.HeroFight,
@@ -274,9 +246,9 @@
             Notification defenderNotification = new Notification()
             {
                 ImageUrl = HeroFightNotificationImageUrl,
-                Title = "Fight log",
-                Link = $"/Battlefield/FightLog/{fightEntity.Id}",
-                Content = $"{attacker.Name} attacked you.",
+                Title = FightNotificationTitle,
+                Link = string.Format(FightNotificationLink, fightEntity.Id),
+                Content = string.Format(FightNotificationDefender, attacker.Name),
                 Gold = winnerName == defender.Name ? goldStolen : goldStolen * -1,
                 Experience = winnerName == defender.Name ? ExperiencePerWin : default(int?),
                 Type = NotificationType.HeroFight,
@@ -295,24 +267,12 @@
 
             Hero attacker = await this.heroService.GetCurrentHero();
 
-            if (attacker.WorkStatus != WorkStatus.Idle)
-            {
-                throw new FarmHeroesException(
-                    "You cannot attack while working.",
-                    "You have to cancel or finish your work before trying to attack.",
-                    "/Battlefield");
-            }
-            else if (attacker.Chronometer.CannotAttackMonsterUntil > DateTime.UtcNow)
-            {
-                throw new FarmHeroesException(
-                    "You cannot attack right now.",
-                    "You have to wait until you can attack a monster again. Take a rest, do something useful.",
-                    "/Battlefield");
-            }
+            this.CheckIfHeroIsWorking(attacker);
+            this.CheckIfHeroCanAttackMonster(attacker);
 
             if (monsterLevel == null)
             {
-                monsterLevel = random.Next(1, 3);
+                monsterLevel = random.Next(RandomMonsterMinimumLevel, RandomMonsterMaximumLevel);
 
                 await this.resourcePouchService.DecreaseCurrentHeroGold(RandomMonsterGoldCost);
             }
@@ -333,15 +293,15 @@
 
             HeroAmulet heroAmulet = attacker.EquippedSet.Amulet;
 
-            if (heroAmulet?.Name == "Undergrounder")
+            if (heroAmulet?.Name == AmuletNames.Undergrounder)
             {
                 attackerAttack = (int)(attackerAttack * (1 + (heroAmulet.Bonus / 100)));
                 attackerDefense = (int)(attackerDefense * (1 + (heroAmulet.Bonus / 100)));
                 attackerMastery = (int)(attackerMastery * (1 + (heroAmulet.Bonus / 100)));
             }
 
-            int?[] attackerHits = new int?[5];
-            int?[] defenderHits = new int?[5];
+            int?[] attackerHits = new int?[Rounds];
+            int?[] defenderHits = new int?[Rounds];
             string winnerName = string.Empty;
             int goldStolen = 0;
 
@@ -352,8 +312,8 @@
                     monster.Characteristics.Defense,
                     attackerMastery,
                     monster.Characteristics.Mastery,
-                    attackerSet.Amulet?.Name == "Criticum" ? attackerSet.Amulet.Bonus : 0,
-                    attackerSet.Amulet?.Name == "Fatty" ? attackerSet.Amulet.Bonus : 0);
+                    attackerSet.Amulet?.Name == AmuletNames.Criticum ? attackerSet.Amulet.Bonus : 0,
+                    attackerSet.Amulet?.Name == AmuletNames.Fatty ? attackerSet.Amulet.Bonus : 0);
 
                 monster.Health -= attackerDamage;
                 if (monster.Health < 1)
@@ -374,7 +334,8 @@
                     attackerDefense,
                     monster.Characteristics.Mastery,
                     attackerMastery,
-                    0, 0);
+                    0,
+                    0);
 
                 await this.healthService.ReduceHealthById(attacker.HealthId, defenderDamage);
                 defenderHits[i] = defenderDamage;
@@ -457,9 +418,9 @@
             Notification notification = new Notification()
             {
                 ImageUrl = MonsterFightNotificationImageUrl,
-                Title = "Fight log",
-                Link = $"/Battlefield/FightLog/{fightEntity.Id}",
-                Content = $"You attacked {monster.Name}.",
+                Title = FightNotificationTitle,
+                Link = string.Format(FightNotificationLink, fightEntity.Id),
+                Content = string.Format(FightNotificationAttacker, monster.Name),
                 Gold = winnerName == attacker.Name ? goldStolen : goldStolen * -1,
                 Experience = winnerName == attacker.Name ? monster.Level : default(int?),
                 Type = NotificationType.MonsterFight,
@@ -485,9 +446,87 @@
             return viewModel;
         }
 
+        private void CheckIfInLevelBoundary(Hero attacker, Hero defender)
+        {
+            if (attacker.Level.CurrentLevel + LevelBoundary < defender.Level.CurrentLevel
+                 && attacker.Level.CurrentLevel - LevelBoundary > defender.Level.CurrentLevel)
+            {
+                throw new FarmHeroesException(
+                    FightExceptionMessages.CannotAttackExceptionMessage,
+                    FightExceptionMessages.CannotAttackOutsideOfLevelRangeInstruction,
+                    Redirects.BattlefieldRedirect);
+            }
+        }
+
+        private void CheckIfOpponentsAreSameFraction(Hero attacker, Hero defender)
+        {
+            if (defender.Fraction == attacker.Fraction)
+            {
+                throw new FarmHeroesException(
+                    FightExceptionMessages.CannotAttackExceptionMessage,
+                    FightExceptionMessages.CannotAttackSameFractionInstruction,
+                    Redirects.BattlefieldRedirect);
+            }
+        }
+
+        private void CheckIfHeroAttackThemselves(Hero hero, int opponentId)
+        {
+            if (hero.Id == opponentId)
+            {
+                throw new FarmHeroesException(
+                    FightExceptionMessages.CannotAttackExceptionMessage,
+                    FightExceptionMessages.CannotAttackThemselvesInstruction,
+                    Redirects.BattlefieldRedirect);
+            }
+        }
+
+        private void CheckIfHeroIsWorking(Hero hero)
+        {
+            if (hero.WorkStatus != WorkStatus.Idle)
+            {
+                throw new FarmHeroesException(
+                    FightExceptionMessages.CannotAttackExceptionMessage,
+                    FightExceptionMessages.CannotAttackWhileWorkingInstruction,
+                    Redirects.BattlefieldRedirect);
+            }
+        }
+
+        private void CheckIfHeroCanAttackPlayer(Hero hero)
+        {
+            if (hero.Chronometer.CannotAttackHeroUntil > DateTime.UtcNow)
+            {
+                throw new FarmHeroesException(
+                    FightExceptionMessages.CannotAttackExceptionMessage,
+                    FightExceptionMessages.CannotAttackWhileRestingInstruction,
+                    Redirects.BattlefieldRedirect);
+            }
+        }
+
+        private void CheckIfHeroCanBeAttacked(Hero hero)
+        {
+            if (hero.Chronometer.CannotBeAttackedUntil > DateTime.UtcNow)
+            {
+                throw new FarmHeroesException(
+                    FightExceptionMessages.CannotAttackExceptionMessage,
+                    FightExceptionMessages.CannotAttackHeroesWithImmunity,
+                    Redirects.BattlefieldRedirect);
+            }
+        }
+
+        private void CheckIfHeroCanAttackMonster(Hero hero)
+        {
+            if (hero.Chronometer.CannotAttackMonsterUntil > DateTime.UtcNow)
+            {
+                throw new FarmHeroesException(
+                    FightExceptionMessages.CannotAttackExceptionMessage,
+                    FightExceptionMessages.CannotAttackWhileRestingInstruction,
+                    Redirects.BattlefieldRedirect);
+            }
+        }
+
         private double GetGoldSafeBonus(Hero hero)
         {
-            HeroBonus safe = hero.Inventory.Bonuses.SingleOrDefault(b => b.Name == "Gold Safe");
+            HeroBonus safe = hero.Inventory.Bonuses.SingleOrDefault(b => b.Name == BonusNames.GoldSafe);
 
             return safe != null && safe.ActiveUntil > DateTime.UtcNow ? safe.Bonus : 0;
         }

@@ -13,6 +13,8 @@
 
     public class ChatService : IChatService
     {
+        private const string ChatExceptionMessage = "The message has to contain text.";
+
         private readonly FarmHeroesDbContext context;
 
         public ChatService(FarmHeroesDbContext context)
@@ -42,7 +44,7 @@
         {
             if (message.Text.Length < 1)
             {
-                throw new Exception("The message has to contain text.");
+                throw new Exception(ChatExceptionMessage);
             }
 
             await this.context.Messages.AddAsync(message);

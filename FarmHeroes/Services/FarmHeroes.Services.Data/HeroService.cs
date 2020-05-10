@@ -17,10 +17,7 @@
 
     public class HeroService : IHeroService
     {
-        private const string MaleSheepAvatarUrl = "/images/avatars/sheep-male.jpg";
-        private const string FemaleSheepAvatarUrl = "/images/avatars/sheep-female.jpg";
-        private const string MalePigAvatarUrl = "/images/avatars/pig-male.jpg";
-        private const string FemalePigAvatarUrl = "/images/avatars/pig-female.jpg";
+        private const string AvatarUrlFormat = "/images/avatars/{0}-{1}.jpg";
 
         private readonly FarmHeroesDbContext context;
         private readonly IMapper mapper;
@@ -39,22 +36,10 @@
             hero.User = await this.userService.GetApplicationUser();
             hero.Name = hero.User.UserName;
 
-            if (hero.Fraction == Fraction.Sheep && hero.Gender == Gender.Male)
-            {
-                hero.AvatarUrl = MaleSheepAvatarUrl;
-            }
-            else if (hero.Fraction == Fraction.Sheep && hero.Gender == Gender.Female)
-            {
-                hero.AvatarUrl = FemaleSheepAvatarUrl;
-            }
-            else if (hero.Fraction == Fraction.Pig && hero.Gender == Gender.Male)
-            {
-                hero.AvatarUrl = MalePigAvatarUrl;
-            }
-            else if (hero.Fraction == Fraction.Pig && hero.Gender == Gender.Female)
-            {
-                hero.AvatarUrl = FemalePigAvatarUrl;
-            }
+            hero.AvatarUrl = string.Format(
+                AvatarUrlFormat,
+                hero.Fraction.ToString().ToLower(),
+                hero.Gender.ToString().ToLower());
 
             await this.context.Heroes.AddAsync(hero);
             await this.context.SaveChangesAsync();
@@ -115,22 +100,10 @@
             hero.Fraction = inputModel.Fraction;
             hero.Gender = inputModel.Gender;
 
-            if (hero.Fraction == Fraction.Sheep && hero.Gender == Gender.Male)
-            {
-                hero.AvatarUrl = MaleSheepAvatarUrl;
-            }
-            else if (hero.Fraction == Fraction.Sheep && hero.Gender == Gender.Female)
-            {
-                hero.AvatarUrl = FemaleSheepAvatarUrl;
-            }
-            else if (hero.Fraction == Fraction.Pig && hero.Gender == Gender.Male)
-            {
-                hero.AvatarUrl = MalePigAvatarUrl;
-            }
-            else if (hero.Fraction == Fraction.Pig && hero.Gender == Gender.Female)
-            {
-                hero.AvatarUrl = FemalePigAvatarUrl;
-            }
+            hero.AvatarUrl = string.Format(
+                AvatarUrlFormat,
+                hero.Fraction.ToString().ToLower(),
+                hero.Gender.ToString().ToLower());
 
             await this.context.SaveChangesAsync();
         }

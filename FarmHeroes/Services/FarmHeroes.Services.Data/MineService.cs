@@ -5,6 +5,8 @@
 
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Services.Data.Constants;
+    using FarmHeroes.Services.Data.Constants.ExceptionMessages;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Web.ViewModels.ResourcePouchModels;
@@ -39,18 +41,12 @@
             Hero hero = await this.heroService.GetCurrentHero();
             HeroAmulet heroAmulet = hero.EquippedSet.Amulet;
 
-            if (hero.WorkStatus != WorkStatus.Mine)
-            {
-                throw new FarmHeroesException(
-                    "You haven't been working in the mines or are still working there.",
-                    "Wait for your work to finish or cancel your current work to start digging.",
-                    "/Mine");
-            }
+            this.CheckIfHeroWorkedInMine(hero);
 
             Random random = new Random();
             collectedResources.Crystals = random.Next(1, 5);
 
-            if (heroAmulet?.Name == "Crystal Digger")
+            if (heroAmulet?.Name == AmuletNames.CrystalDigger)
             {
                 double chance = random.Next(0, 100);
 
@@ -68,6 +64,17 @@
             await this.statisticsService.UpdateStatistics(hero.Statistics);
 
             return collectedResources;
+        }
+
+        private void CheckIfHeroWorkedInMine(Hero hero)
+        {
+            if (hero.WorkStatus != WorkStatus.Mine || hero.Chronometer.WorkUntil > DateTime.UtcNow)
+            {
+                throw new FarmHeroesException(
+                    MineExceptionMessages.CannotCollectRewardMessage,
+                    MineExceptionMessages.CannotCollectRewardInstruction,
+                    Redirects.MineRedirect);
+            }
         }
     }
 }

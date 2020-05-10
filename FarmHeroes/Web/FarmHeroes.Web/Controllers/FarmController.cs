@@ -27,7 +27,7 @@
 
             if (!await this.heroService.ValidateCurrentHeroLocation(WorkStatus.Farm))
             {
-                return this.Redirect($"/{hero.WorkStatus.ToString()}");
+                return this.Redirect($"/{hero.WorkStatus}");
             }
 
             FarmViewModel viewModel = await this.heroService.GetCurrentHeroViewModel<FarmViewModel>();

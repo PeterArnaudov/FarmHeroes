@@ -140,7 +140,7 @@ function collect(location) {
 
             $('#work-body').empty();
             if (location == "mine") {
-                let $paragraph = $(`<p>Dig for 5 minutes and find from 1 to 5 crystals.</p>`);
+                let $paragraph = $(`<p>Dig for 2.5 minutes and find from 1 to 5 crystals.</p>`);
                 let $button = $(`<button onclick="startWork('mine')" class="btn btn-primary">Dig</button>`);
 
                 $('#work-body').append($paragraph);

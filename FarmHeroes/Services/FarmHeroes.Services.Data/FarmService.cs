@@ -6,6 +6,8 @@
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.NotificationModels.HeroModels;
+    using FarmHeroes.Services.Data.Constants;
+    using FarmHeroes.Services.Data.Constants.ExceptionMessages;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Formulas;
@@ -16,8 +18,10 @@
     public class FarmService : IFarmService
     {
         private const int WorkDurationInSeconds = 14400;
-        private const int WorkDurationInHours = WorkDurationInSeconds / 60;
+        private const int WorkDurationInHours = WorkDurationInSeconds / 3600;
         private const string FarmNotificationImageUrl = "/images/notifications/farm-notification.png";
+        private const string FarmNotificationTitle = "Farm report";
+        private const string FarmNotificationContent = "You finished your work on the farm.";
 
         private readonly IHeroService heroService;
         private readonly IResourcePouchService resourcePouchService;
@@ -52,17 +56,11 @@
             CollectedResourcesViewModel collectedResources = new CollectedResourcesViewModel();
             Hero hero = await this.heroService.GetCurrentHero();
 
-            if (hero.WorkStatus != WorkStatus.Farm)
-            {
-                throw new FarmHeroesException(
-                    "You haven't been working on the farm or are still working there.",
-                    "You have to cancel or finish your work before trying to collect.",
-                    "/Farm");
-            }
+            this.CheckIfHeroWorkedOnFarm(hero);
 
             HeroAmulet heroAmulet = hero.EquippedSet.Amulet;
             collectedResources.Experience = FarmFormulas.CalculateExperience(hero.Level.CurrentLevel, WorkDurationInHours);
-            collectedResources.Gold = FarmFormulas.CalculateGoldEarned(hero.Level.CurrentLevel, WorkDurationInHours, heroAmulet?.Name == "Laborium" ? heroAmulet.Bonus : 0);
+            collectedResources.Gold = FarmFormulas.CalculateGoldEarned(hero.Level.CurrentLevel, WorkDurationInHours, heroAmulet?.Name == AmuletNames.Laborium ? heroAmulet.Bonus : 0);
 
             hero.Statistics.EarnedOnFarm += collectedResources.Gold;
 
@@ -74,8 +72,8 @@
             Notification notification = new Notification()
             {
                 ImageUrl = FarmNotificationImageUrl,
-                Title = "Farm report",
-                Content = $"You finished your work on the farm.",
+                Title = FarmNotificationTitle,
+                Content = FarmNotificationContent,
                 Gold = collectedResources.Gold,
                 Experience = collectedResources.Experience,
                 Type = NotificationType.Farm,
@@ -84,6 +82,17 @@
             await this.notificationService.AddNotification(notification);
 
             return collectedResources;
+        }
+
+        private void CheckIfHeroWorkedOnFarm(Hero hero)
+        {
+            if (hero.WorkStatus != WorkStatus.Farm || hero.Chronometer.WorkUntil > DateTime.UtcNow)
+            {
+                throw new FarmHeroesException(
+                    FarmExceptionMessages.CannotCollectRewardMessage,
+                    FarmExceptionMessages.CannotCollectRewardInstruction,
+                    Redirects.FarmRedirect);
+            }
         }
     }
 }

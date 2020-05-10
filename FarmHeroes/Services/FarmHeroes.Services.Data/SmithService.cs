@@ -2,6 +2,8 @@
 {
     using FarmHeroes.Data;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Services.Data.Constants;
+    using FarmHeroes.Services.Data.Constants.ExceptionMessages;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Formulas;
@@ -35,20 +37,8 @@
             Inventory inventory = await this.inventoryService.GetCurrentHeroInventory();
             HeroEquipment heroEquipment = inventory.Items.Find(i => i.Id == id);
 
-            if (heroEquipment == null)
-            {
-                throw new FarmHeroesException(
-                    "You cannot upgrade an item that isn't in your inventory.",
-                    "Choose an item from your inventory.",
-                    "/Smith");
-            }
-            else if (heroEquipment.Level == HeroEquipmentMaximumLevel)
-            {
-                throw new FarmHeroesException(
-                    "This item is already upgraded to its maximum level.",
-                    "Choose an item that isn't fully upgraded.",
-                    "/Smith");
-            }
+            this.CheckIfItemIsOwnedByHero(heroEquipment);
+            this.CheckIfItemIsFullyUpgraded(heroEquipment, HeroEquipmentMaximumLevel);
 
             int cost = SmithFormulas.CalculateEquipmentUpgradeCost(heroEquipment);
             await this.resourcePouchService.DecreaseCurrentHeroCrystals(cost);
@@ -67,20 +57,8 @@
             Inventory inventory = await this.inventoryService.GetCurrentHeroInventory();
             HeroAmulet heroAmulet = inventory.Amulets.Find(i => i.Id == id);
 
-            if (heroAmulet == null)
-            {
-                throw new FarmHeroesException(
-                    "You cannot upgrade an item that isn't in your inventory.",
-                    "Choose an item from your inventory.",
-                    "/Smith");
-            }
-            else if (heroAmulet.Level == HeroAmuletMaximumLevel)
-            {
-                throw new FarmHeroesException(
-                    "This item is already upgraded to its maximum level.",
-                    "Choose an item that isn't fully upgraded.",
-                    "/Smith");
-            }
+            this.CheckIfItemIsOwnedByHero(heroAmulet);
+            this.CheckIfItemIsFullyUpgraded(heroAmulet, HeroAmuletMaximumLevel);
 
             int cost = SmithFormulas.CalculateAmuletUpgradeCost(heroAmulet);
             await this.resourcePouchService.DecreaseCurrentHeroCrystals(cost);
@@ -93,6 +71,28 @@
             this.tempDataDictionaryFactory
                     .GetTempData(this.httpContext.HttpContext)
                     .Add("Alert", $"You upgraded {heroAmulet.Name}.");
+        }
+
+        private void CheckIfItemIsOwnedByHero(object item)
+        {
+            if (item == null)
+            {
+                throw new FarmHeroesException(
+                    SmithExceptionMessages.ItemNotOwnedMessage,
+                    SmithExceptionMessages.ItemNotOwnedInstruction,
+                    Redirects.SmithRedirect);
+            }
+        }
+
+        private void CheckIfItemIsFullyUpgraded(object item, int maxLevel)
+        {
+            if ((int)item.GetType().GetProperty("Level").GetValue(item) == maxLevel)
+            {
+                throw new FarmHeroesException(
+                    SmithExceptionMessages.ItemFullyUpgradedMessage,
+                    SmithExceptionMessages.ItemFullyUpgradedInstruction,
+                    Redirects.SmithRedirect);
+            }
         }
     }
 }

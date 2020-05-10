@@ -32,7 +32,7 @@
 
             if (!await this.heroService.ValidateCurrentHeroLocation(WorkStatus.Mine))
             {
-                return this.Redirect($"/{hero.WorkStatus.ToString()}");
+                return this.Redirect($"/{hero.WorkStatus}");
             }
 
             MineViewModel viewModel = await this.heroService.GetCurrentHeroViewModel<MineViewModel>();

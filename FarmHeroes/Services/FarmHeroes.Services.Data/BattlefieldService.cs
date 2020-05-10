@@ -12,14 +12,18 @@
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Formulas;
     using FarmHeroes.Web.ViewModels.ResourcePouchModels;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.EntityFrameworkCore;
+    using FarmHeroes.Services.Data.Constants.ExceptionMessages;
+    using FarmHeroes.Services.Data.Constants;
 
     public class BattlefieldService : IBattlefieldService
     {
         private const int PatrolDurationInSeconds = 600;
+        private const int PatrolDurationInSecondsWithSpeedster = 10;
+        private const string PatrolNotificationTitle = "Patrol report";
+        private const string PatrolNotificationContent = "You finished your patrol.";
         private const string PatrolNotificationImageUrl = "/images/notifications/patrol-notification.png";
+        private const string BattlefieldRedirect = "/Battlefield";
 
         private readonly IHeroService heroService;
         private readonly IChronometerService chronometerService;
@@ -29,11 +33,9 @@
         private readonly INotificationService notificationService;
         private readonly FarmHeroesDbContext dbContext;
         private readonly IMapper mapper;
-        private readonly ITempDataDictionaryFactory tempDataDictionaryFactory;
-        private readonly IHttpContextAccessor httpContext;
         private readonly IDailyLimitsService dailyLimitsService;
 
-        public BattlefieldService(IHeroService heroService, IChronometerService chronometerService, ILevelService levelService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, INotificationService notificationService, FarmHeroesDbContext dbContext, IMapper mapper, ITempDataDictionaryFactory tempDataDictionaryFactory, IHttpContextAccessor httpContext, IDailyLimitsService dailyLimitsService)
+        public BattlefieldService(IHeroService heroService, IChronometerService chronometerService, ILevelService levelService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, INotificationService notificationService, FarmHeroesDbContext dbContext, IMapper mapper, IDailyLimitsService dailyLimitsService)
         {
             this.heroService = heroService;
             this.chronometerService = chronometerService;
@@ -43,8 +45,6 @@
             this.notificationService = notificationService;
             this.dbContext = dbContext;
             this.mapper = mapper;
-            this.tempDataDictionaryFactory = tempDataDictionaryFactory;
-            this.httpContext = httpContext;
             this.dailyLimitsService = dailyLimitsService;
         }
 
@@ -52,28 +52,8 @@
         {
             Hero hero = await this.heroService.GetCurrentHero();
 
-            if (hero.DailyLimits.PatrolsDone >= hero.DailyLimits.PatrolLimit)
-            {
-                throw new FarmHeroesException(
-                    "You cannot go on a patrol.",
-                    "You've already been on patrol the maximum allowed times today.",
-                    "/Battlefield");
-            }
-
-            int durationInSeconds = PatrolDurationInSeconds;
-
-            Random random = new Random();
-
-            if (hero.EquippedSet.Amulet?.Name == "Speedster")
-            {
-                double chanceNeeded = random.Next(0, 100);
-
-                if (hero.EquippedSet.Amulet.Bonus >= chanceNeeded)
-                {
-                    durationInSeconds = 10;
-                }
-            }
-
+            this.CheckIfPatrolLimitIsReached(hero);
+            int durationInSeconds = this.GetPatrolDurationInSeconds(hero);
             await this.chronometerService.SetWorkUntil(durationInSeconds, WorkStatus.Battlefield);
 
             return durationInSeconds;
@@ -84,13 +64,7 @@
             CollectedResourcesViewModel collectedResources = new CollectedResourcesViewModel();
             Hero hero = await this.heroService.GetCurrentHero();
 
-            if (hero.WorkStatus != WorkStatus.Battlefield)
-            {
-                throw new FarmHeroesException(
-                    "You haven't been on patrol or are still patrolling.",
-                    "You have to cancel or finish your patrol before trying to collect your earnings.",
-                    "/Battlefield");
-            }
+            this.CheckIfHeroIsPatrolling(hero);
 
             collectedResources.Experience = BattlefieldFormulas.CalculatePatrolExperience(hero.Level.CurrentLevel);
             collectedResources.Gold = BattlefieldFormulas.CalculatePatrolGold(hero.Level.CurrentLevel);
@@ -107,8 +81,8 @@
             Notification notification = new Notification()
             {
                 ImageUrl = PatrolNotificationImageUrl,
-                Title = "Patrol report",
-                Content = $"You finished your patrol.",
+                Title = PatrolNotificationTitle,
+                Content = PatrolNotificationContent,
                 Gold = collectedResources.Gold,
                 Experience = collectedResources.Experience,
                 Type = NotificationType.Patrol,
@@ -123,25 +97,13 @@
         {
             Hero attacker = await this.heroService.GetCurrentHero();
 
-            if (attacker.WorkStatus != WorkStatus.Idle)
-            {
-                throw new FarmHeroesException(
-                     "You cannot attack while working.",
-                     "You have to cancel or finish your work before trying to attack.",
-                     "/Battlefield");
-            }
-            else if (attacker.Chronometer.CannotAttackHeroUntil > DateTime.UtcNow)
-            {
-                throw new FarmHeroesException(
-                    "You cannot attack right now.",
-                    "You have to wait until you can initiate a fight again.",
-                    "/Battlefield");
-            }
+            this.CheckIfHeroIsFree(attacker);
+            this.CheckIfHeroIsResting(attacker);
 
             int level = attacker.Level.CurrentLevel;
 
             Hero[] heroes = await this.dbContext.Heroes
-                .Where(x => (x.Level.CurrentLevel <= level + 3 && x.Level.CurrentLevel >= level - 3)
+                .Where(x => x.Level.CurrentLevel <= level + 3 && x.Level.CurrentLevel >= level - 3
                     && x.Id != attacker.Id
                     && x.Fraction != attacker.Fraction
                     && x.Chronometer.CannotBeAttackedUntil < DateTime.UtcNow
@@ -151,9 +113,9 @@
             if (heroes.Length == 0)
             {
                 throw new FarmHeroesException(
-                    "There are no heroes that you can attack right now.",
-                    "There might be no heroes in your level range or all are with attack immunity.",
-                    "/Battlefield");
+                    BattlefieldExceptionMessages.NoEnemiesAvailableMessage,
+                    BattlefieldExceptionMessages.NoEnemiesAvailableInstruction,
+                    BattlefieldRedirect);
             }
 
             Random random = new Random();
@@ -175,6 +137,69 @@
             TViewModel viewModel = this.mapper.Map<TViewModel>(opponents);
 
             return viewModel;
+        }
+
+        private void CheckIfPatrolLimitIsReached(Hero hero)
+        {
+            if (hero.DailyLimits.PatrolsDone >= hero.DailyLimits.PatrolLimit)
+            {
+                throw new FarmHeroesException(
+                    BattlefieldExceptionMessages.CannotPatrolMessage,
+                    BattlefieldExceptionMessages.PatrolLimitInstruction,
+                    BattlefieldRedirect);
+            }
+        }
+
+        private int GetPatrolDurationInSeconds(Hero hero)
+        {
+            int durationInSeconds = PatrolDurationInSeconds;
+
+            Random random = new Random();
+
+            if (hero.EquippedSet.Amulet?.Name == AmuletNames.Speedster)
+            {
+                double chanceNeeded = random.Next(0, 100);
+
+                if (hero.EquippedSet.Amulet.Bonus >= chanceNeeded)
+                {
+                    durationInSeconds = PatrolDurationInSecondsWithSpeedster;
+                }
+            }
+
+            return durationInSeconds;
+        }
+
+        private void CheckIfHeroIsPatrolling(Hero hero)
+        {
+            if (hero.WorkStatus != WorkStatus.Battlefield || hero.Chronometer.WorkUntil > DateTime.UtcNow)
+            {
+                throw new FarmHeroesException(
+                    BattlefieldExceptionMessages.CannotCollectRewardMessage,
+                    BattlefieldExceptionMessages.CannotCollectRewardInstruction,
+                    BattlefieldRedirect);
+            }
+        }
+
+        private void CheckIfHeroIsFree(Hero hero)
+        {
+            if (hero.WorkStatus != WorkStatus.Idle)
+            {
+                throw new FarmHeroesException(
+                     BattlefieldExceptionMessages.CannotAttackMessage,
+                     BattlefieldExceptionMessages.CannotAttackWhileWorkingInstruction,
+                     BattlefieldRedirect);
+            }
+        }
+
+        private void CheckIfHeroIsResting(Hero hero)
+        {
+            if (hero.Chronometer.CannotAttackHeroUntil > DateTime.UtcNow)
+            {
+                throw new FarmHeroesException(
+                    BattlefieldExceptionMessages.CannotAttackMessage,
+                    BattlefieldExceptionMessages.CannotAttackWhileRestingInstruction,
+                    BattlefieldRedirect);
+            }
         }
     }
 }

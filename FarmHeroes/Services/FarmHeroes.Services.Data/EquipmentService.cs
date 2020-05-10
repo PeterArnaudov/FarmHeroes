@@ -4,6 +4,8 @@
     using FarmHeroes.Data;
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Services.Data.Constants;
+    using FarmHeroes.Services.Data.Constants.ExceptionMessages;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Web.ViewModels.EquipmentModels;
@@ -50,13 +52,7 @@
             HeroEquipment heroEquipment = await this.GetHeroEquipmentById(id);
             EquippedSet equippedSet = await this.GetCurrentHeroEquipedSet();
 
-            if (hero.InventoryId != heroEquipment.InventoryId)
-            {
-                throw new FarmHeroesException(
-                    "You cannot equip an item that isn't yours.",
-                    "Go buy yourself items.",
-                    "/Inventory");
-            }
+            this.CheckIfEquipmentBelongsToHero(hero, heroEquipment);
 
             if (equippedSet.Equipped.Any(x => x.Type == heroEquipment.Type))
             {
@@ -78,13 +74,7 @@
             HeroAmulet heroAmulet = await this.GetHeroAmuletById(id);
             EquippedSet equippedSet = await this.GetCurrentHeroEquipedSet();
 
-            if (heroAmulet == null || hero.InventoryId != heroAmulet.InventoryId)
-            {
-                throw new FarmHeroesException(
-                    "You cannot equip an item that isn't yours.",
-                    "Go buy yourself items.",
-                    "/Inventory");
-            }
+            this.CheckIfAmuletBelongsToHero(hero, heroAmulet);
 
             equippedSet.Amulet = heroAmulet;
 
@@ -105,6 +95,28 @@
             HeroAmulet heroAmulet = await this.context.HeroAmulets.FindAsync(id);
 
             return heroAmulet;
+        }
+
+        private void CheckIfEquipmentBelongsToHero(Hero hero, HeroEquipment heroEquipment)
+        {
+            if (hero.InventoryId != heroEquipment.InventoryId)
+            {
+                throw new FarmHeroesException(
+                    EquipmentExceptionMessages.DoesNotBelongToHeroMessage,
+                    EquipmentExceptionMessages.DoesNotBelongToHeroInstruction,
+                    Redirects.InventoryRedirect);
+            }
+        }
+
+        private void CheckIfAmuletBelongsToHero(Hero hero, HeroAmulet heroAmulet)
+        {
+            if (heroAmulet == null || hero.InventoryId != heroAmulet.InventoryId)
+            {
+                throw new FarmHeroesException(
+                    EquipmentExceptionMessages.DoesNotBelongToHeroMessage,
+                    EquipmentExceptionMessages.DoesNotBelongToHeroInstruction,
+                    Redirects.InventoryRedirect);
+            }
         }
     }
 }

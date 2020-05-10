@@ -7,6 +7,8 @@
     using AutoMapper;
     using FarmHeroes.Data;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Services.Data.Constants;
+    using FarmHeroes.Services.Data.Constants.ExceptionMessages;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Formulas;
@@ -68,10 +70,7 @@
         {
             ResourcePouch resources = await this.context.ResourcePouches.FindAsync(id);
 
-            if (resources.Gold < gold)
-            {
-                throw new Exception("The hero doesn't have enough gold.");
-            }
+            this.CheckIfHeroHasEnoughGold(resources, gold);
 
             resources.Gold -= gold;
 
@@ -82,13 +81,7 @@
         {
             ResourcePouch resources = await this.GetCurrentHeroResources();
 
-            if (resources.Gold < gold)
-            {
-                throw new FarmHeroesException(
-                    "You don't have enough gold.",
-                    "Go earn yourself some more gold and come back... or steal it. ;)",
-                    "/Battlefield");
-            }
+            this.CheckIfHeroHasEnoughGold(resources, gold);
 
             resources.Gold -= gold;
 
@@ -115,10 +108,7 @@
         {
             ResourcePouch resources = await this.context.ResourcePouches.FindAsync(id);
 
-            if (resources.Crystals < crystals)
-            {
-                throw new Exception("The hero doesn't have enough crystals.");
-            }
+            this.CheckIfHeroHasEnoughCrystals(resources, crystals);
 
             resources.Crystals -= crystals;
 
@@ -129,13 +119,7 @@
         {
             ResourcePouch resources = await this.GetCurrentHeroResources();
 
-            if (resources.Crystals < crystals)
-            {
-                throw new FarmHeroesException(
-                    "You don't have enough crystals.",
-                    "Go earn yourself some more crystals and come back.",
-                    "/Mine");
-            }
+            this.CheckIfHeroHasEnoughCrystals(resources, crystals);
 
             resources.Crystals -= crystals;
 
@@ -157,6 +141,28 @@
             List<Hero> heroes = await this.context.Heroes.ToListAsync();
             heroes.ForEach(x => x.ResourcePouch.Gold += ResourceFormulas.CalculatePassiveIncome(x.Level.CurrentLevel));
             await this.context.SaveChangesAsync();
+        }
+
+        private void CheckIfHeroHasEnoughGold(ResourcePouch resources, int goldNeeded)
+        {
+            if (resources.Gold < goldNeeded)
+            {
+                throw new FarmHeroesException(
+                    ResourcePouchExceptionMessages.NotEnoughGoldMessage,
+                    ResourcePouchExceptionMessages.NotEnoughGoldInstrctuon,
+                    Redirects.BattlefieldRedirect);
+            }
+        }
+
+        private void CheckIfHeroHasEnoughCrystals(ResourcePouch resources, int crystalsNeeded)
+        {
+            if (resources.Crystals < crystalsNeeded)
+            {
+                throw new FarmHeroesException(
+                    ResourcePouchExceptionMessages.NotEnoughCrystalsMessage,
+                    ResourcePouchExceptionMessages.NotEnoughCrystalsInstruction,
+                    Redirects.MineRedirect);
+            }
         }
     }
 }

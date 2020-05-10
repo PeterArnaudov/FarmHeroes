@@ -7,6 +7,8 @@
     using FarmHeroes.Data;
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Services.Data.Constants;
+    using FarmHeroes.Services.Data.Constants.ExceptionMessages;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Web.ViewModels.ChronometerModels;
@@ -51,13 +53,7 @@
         {
             Hero hero = await this.heroService.GetCurrentHero();
 
-            if (hero.Chronometer.WorkUntil != null)
-            {
-                throw new FarmHeroesException(
-                    "You are already working somewhere.",
-                    "Cancel or finish your current work.",
-                    "/Farm");
-            }
+            this.CheckIfCurrentlyWorking(hero);
 
             hero.Chronometer.WorkUntil = DateTime.UtcNow.AddSeconds(seconds);
             hero.WorkStatus = workStatus;
@@ -69,13 +65,7 @@
         {
             Hero hero = await this.heroService.GetCurrentHero();
 
-            if (hero.WorkStatus == WorkStatus.Battlefield && hero.Chronometer.WorkUntil > DateTime.UtcNow)
-            {
-                throw new FarmHeroesException(
-                    "You cannot cancel patrol.",
-                    "Finish your patrol.",
-                    "/Battlefield");
-            }
+            this.CheckIfPatrolling(hero);
 
             hero.Chronometer.WorkUntil = null;
             hero.WorkStatus = WorkStatus.Idle;
@@ -122,6 +112,28 @@
             }
 
             await this.context.SaveChangesAsync();
+        }
+
+        private void CheckIfCurrentlyWorking(Hero hero)
+        {
+            if (hero.Chronometer.WorkUntil != null)
+            {
+                throw new FarmHeroesException(
+                    ChronometerExceptionMessages.CurrentlyWorkingMessage,
+                    ChronometerExceptionMessages.CurrentlyWorkingInstruction,
+                    Redirects.FarmRedirect);
+            }
+        }
+
+        private void CheckIfPatrolling(Hero hero)
+        {
+            if (hero.WorkStatus == WorkStatus.Battlefield && hero.Chronometer.WorkUntil > DateTime.UtcNow)
+            {
+                throw new FarmHeroesException(
+                    ChronometerExceptionMessages.PatrolCancelMessage,
+                    ChronometerExceptionMessages.PatrolCancelInstruction,
+                    Redirects.BattlefieldRedirect);
+            }
         }
     }
 }
