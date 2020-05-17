@@ -65,3 +65,7 @@ let showActions = function (target) {
         actions.classList.add("d-none");
     }
 };
+
+function numberWithSeparator(target, separator) {
+    return target.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
