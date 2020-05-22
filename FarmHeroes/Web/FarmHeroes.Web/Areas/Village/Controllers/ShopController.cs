@@ -10,6 +10,7 @@
     using System.Threading.Tasks;
 
     [Authorize]
+    [Area("Village")]
     public class ShopController : BaseController
     {
         private readonly IShopService shopService;
@@ -19,7 +20,7 @@
             this.shopService = shopService;
         }
 
-        [Route("/Shop/{type}")]
+        [Route("Village/Shop/{type}")]
         public async Task<IActionResult> Shop(EquipmentType type)
         {
             ShopViewModel viewModel = await this.shopService.GetShopViewModel<ShopViewModel>(type);
@@ -27,7 +28,7 @@
             return this.View(viewModel);
         }
 
-        [Route("/Shop/Amulet")]
+        [Route("Village/Shop/Amulet")]
         public async Task<IActionResult> AmuletShop()
         {
             AmuletShopViewModel viewModel = await this.shopService.GetAmuletShopViewModel<AmuletShopViewModel>();
@@ -39,14 +40,14 @@
         {
             string type = await this.shopService.Sell(id);
 
-            return this.Redirect($"/Shop/{type}");
+            return this.Redirect($"/Village/Shop/{type}");
         }
 
         public async Task<IActionResult> BuyAmulet(int id)
         {
             await this.shopService.SellAmulet(id);
 
-            return this.Redirect("/Shop/Amulet");
+            return this.Redirect("/Village/Shop/Amulet");
         }
     }
 }

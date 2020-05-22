@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
 
     [Authorize]
+    [Area("Village")]
     public class SmithController : BaseController
     {
         private readonly ISmithService smithService;
@@ -30,14 +31,14 @@
         {
             await this.smithService.Upgrade(id);
 
-            return this.Redirect("/Smith");
+            return this.Redirect("/Village/Smith");
         }
 
         public async Task<IActionResult> UpgradeAmulet(int id)
         {
             await this.smithService.UpgradeAmulet(id);
 
-            return this.Redirect("/Smith");
+            return this.Redirect("/Village/Smith");
         }
     }
 }

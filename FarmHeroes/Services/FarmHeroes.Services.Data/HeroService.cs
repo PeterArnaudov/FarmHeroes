@@ -9,7 +9,10 @@
     using FarmHeroes.Data.Models;
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Services.Data.Constants;
+    using FarmHeroes.Services.Data.Constants.ExceptionMessages;
     using FarmHeroes.Services.Data.Contracts;
+    using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Mapping;
     using FarmHeroes.Web.ViewModels.HeroModels;
     using Microsoft.AspNetCore.Identity;
@@ -85,12 +88,18 @@
             return this.mapper.Map<TViewModel>(hero);
         }
 
-        public async Task<bool> ValidateCurrentHeroLocation(WorkStatus workStatus)
+        public async Task ValidateCurrentHeroLocation(WorkStatus workStatus)
         {
             Hero hero = await this.GetCurrentHero();
             bool validLocation = hero.WorkStatus == WorkStatus.Idle || workStatus == hero.WorkStatus;
 
-            return validLocation;
+            if (!validLocation)
+            {
+                throw new FarmHeroesException(
+                    HeroExceptionMessages.InvalidLocationMessage,
+                    string.Format(HeroExceptionMessages.InvalidLocationInstruction, hero.WorkStatus, workStatus),
+                    Redirects.HeroRedirect);
+            }
         }
 
         public async Task UpdateBasicInfo(HeroModifyBasicInfoInputModel inputModel)

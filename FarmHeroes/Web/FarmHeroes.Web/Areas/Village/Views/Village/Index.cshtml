@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Village";
     Layout = "~/Views/Shared/_LoggedLayout.cshtml";
 }
@@ -7,7 +6,7 @@
 <img src="~/images/village/village.jpg" alt="village-image" class="row img-fluid m-auto">
 <div class="row m-3">
     <div class="col-12 col-md-6 mt-2">
-        <a href="/Shop/Helmet" class="text-white text-decoration-none">
+        <a class="text-white text-decoration-none" asp-area="Village" asp-controller="Shop" asp-action="Shop" asp-route-type="Helmet">
             <div class="row">
                 <div class="col-4">
                     <img src="~/images/village/shop-village.png" alt="shop" class="img-fluid">
@@ -20,7 +19,7 @@
         </a>
     </div>
     <div class="col-12 col-md-6 mt-2">
-        <a href="/Farm" class="text-white text-decoration-none">
+        <a class="text-white text-decoration-none" asp-area="Village" asp-controller="Farm" asp-action="Index">
             <div class="row">
                 <div class="col-4">
                     <img src="~/images/village/farm-village.png" alt="farm" class="img-fluid">
@@ -35,7 +34,7 @@
 </div>
 <div class="row m-3">
     <div class="col-12 col-md-6 mt-2">
-        <a href="/Smith" class="text-white text-decoration-none">
+        <a class="text-white text-decoration-none" asp-area="Village" asp-controller="Smith" asp-action="Index">
             <div class="row">
                 <div class="col-4">
                     <img src="~/images/village/smith-village.png" alt="smith" class="img-fluid">
@@ -48,7 +47,7 @@
         </a>
     </div>
     <div class="col-12 col-md-6 mt-2">
-        <a href="/Mine" class="text-white text-decoration-none">
+        <a class="text-white text-decoration-none" asp-area="Village" asp-controller="Mine" asp-action="Index">
             <div class="row">
                 <div class="col-4">
                     <img src="~/images/village/mine-village.png" alt="mine" class="img-fluid">
@@ -63,7 +62,7 @@
 </div>
 <div class="row m-3">
     <div class="col-12 col-md-6 mt-2">
-        <a href="/Hut" class="text-white text-decoration-none">
+        <a class="text-white text-decoration-none" asp-area="Village" asp-controller="Hut" asp-action="Index">
             <div class="row">
                 <div class="col-4">
                     <img src="~/images/village/hut-village.png" alt="hut" class="img-fluid">

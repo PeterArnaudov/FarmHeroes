@@ -4,16 +4,18 @@
 
     public class Redirects
     {
+        public const string HeroRedirect = "/Hero";
+
         public const string BattlefieldRedirect = "/Battlefield";
 
-        public const string FarmRedirect = "/Farm";
+        public const string FarmRedirect = "/Village/Farm";
 
-        public const string MineRedirect = "/Mine";
+        public const string MineRedirect = "/Village/Mine";
 
         public const string InventoryRedirect = "/Inventory";
 
-        public const string ShopRedirect = "/Shop/{0}";
+        public const string ShopRedirect = "/Village/Shop/{0}";
 
-        public const string SmithRedirect = "/Smith";
+        public const string SmithRedirect = "/Village/Smith";
     }
 }

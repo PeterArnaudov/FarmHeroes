@@ -29,12 +29,7 @@
 
         public async Task<IActionResult> Index()
         {
-            Hero hero = await this.heroService.GetCurrentHero();
-
-            if (!await this.heroService.ValidateCurrentHeroLocation(WorkStatus.Battlefield))
-            {
-                return this.Redirect($"/{hero.WorkStatus.ToString()}");
-            }
+            await this.heroService.ValidateCurrentHeroLocation(WorkStatus.Battlefield);
 
             BattlefieldViewModel viewModel = await this.heroService.GetCurrentHeroViewModel<BattlefieldViewModel>();
 
