@@ -14,6 +14,8 @@
 
         public int DailyLimitsPatrolsDone { get; set; }
 
+        public int DailyLimitsPatrolResets { get; set; }
+
         public bool IsOnPatrol { get; set; }
 
         public bool CanGoOnPatrol { get; set; }

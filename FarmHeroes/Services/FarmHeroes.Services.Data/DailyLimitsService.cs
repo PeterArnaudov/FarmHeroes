@@ -29,6 +29,7 @@
             dailyLimits.ForEach(x =>
             {
                 x.PatrolsDone = 0;
+                x.PatrolResets = 0;
             });
 
             await this.context.SaveChangesAsync();

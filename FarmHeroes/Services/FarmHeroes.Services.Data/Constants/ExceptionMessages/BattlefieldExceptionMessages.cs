@@ -12,6 +12,10 @@
 
         public const string CannotCollectRewardInstruction = "You have to finish your patrol before trying to collect your reward.";
 
+        public const string CannotResetPatrolMessage = "You cannot reset your patrol limit.";
+
+        public const string CannotResetPatrolInstruction = "You have already resetted your patrol limit today.";
+
         public const string CannotAttackMessage = "You cannot attack right now.";
 
         public const string CannotAttackWhileWorkingInstruction = "You have to cancel or finish your work before trying to attack.";

@@ -11,6 +11,8 @@
 
         Task<CollectedResourcesViewModel> Collect();
 
+        Task ResetPatrolLimit();
+
         Task<Hero[]> GetOpponents();
 
         Task<TViewModel> GetOpponentsViewModel<TViewModel>();

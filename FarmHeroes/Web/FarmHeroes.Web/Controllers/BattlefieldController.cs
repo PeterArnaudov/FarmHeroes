@@ -36,6 +36,13 @@
             return this.View(viewModel);
         }
 
+        public async Task<IActionResult> ResetPatrol()
+        {
+            await this.battlefieldService.ResetPatrolLimit();
+
+            return this.RedirectToAction("Index");
+        }
+
         public async Task<IActionResult> GetOpponents(string attackType)
         {
             BattlefieldGetOpponentsViewModel viewModel = await this.battlefieldService

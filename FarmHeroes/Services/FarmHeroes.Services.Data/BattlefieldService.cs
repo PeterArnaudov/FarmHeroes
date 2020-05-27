@@ -20,10 +20,10 @@
     {
         private const int PatrolDurationInSeconds = 600;
         private const int PatrolDurationInSecondsWithSpeedster = 10;
+        private const int PatrolResetPrice = 100;
         private const string PatrolNotificationTitle = "Patrol report";
         private const string PatrolNotificationContent = "You finished your patrol.";
         private const string PatrolNotificationImageUrl = "/images/notifications/patrol-notification.png";
-        private const string BattlefieldRedirect = "/Battlefield";
 
         private readonly IHeroService heroService;
         private readonly IChronometerService chronometerService;
@@ -57,6 +57,20 @@
             await this.chronometerService.SetWorkUntil(durationInSeconds, WorkStatus.Battlefield);
 
             return durationInSeconds;
+        }
+
+        public async Task ResetPatrolLimit()
+        {
+            Hero hero = await this.heroService.GetCurrentHero();
+
+            this.CheckIfPatrolResetsLimitIsReached(hero);
+
+            await this.resourcePouchService.DecreaseCurrentHeroCrystals(PatrolResetPrice);
+
+            hero.DailyLimits.PatrolResets = 1;
+            hero.DailyLimits.PatrolsDone = 0;
+
+            await this.dailyLimitsService.UpdateDailyLimits(hero.DailyLimits);
         }
 
         public async Task<CollectedResourcesViewModel> Collect()
@@ -115,7 +129,7 @@
                 throw new FarmHeroesException(
                     BattlefieldExceptionMessages.NoEnemiesAvailableMessage,
                     BattlefieldExceptionMessages.NoEnemiesAvailableInstruction,
-                    BattlefieldRedirect);
+                    Redirects.BattlefieldRedirect);
             }
 
             Random random = new Random();
@@ -146,7 +160,18 @@
                 throw new FarmHeroesException(
                     BattlefieldExceptionMessages.CannotPatrolMessage,
                     BattlefieldExceptionMessages.PatrolLimitInstruction,
-                    BattlefieldRedirect);
+                    Redirects.BattlefieldRedirect);
+            }
+        }
+
+        private void CheckIfPatrolResetsLimitIsReached(Hero hero)
+        {
+            if (hero.DailyLimits.PatrolResets == hero.DailyLimits.PatrolResetsLimit)
+            {
+                throw new FarmHeroesException(
+                    BattlefieldExceptionMessages.CannotResetPatrolMessage,
+                    BattlefieldExceptionMessages.CannotResetPatrolInstruction,
+                    Redirects.BattlefieldRedirect);
             }
         }
 
@@ -176,7 +201,7 @@
                 throw new FarmHeroesException(
                     BattlefieldExceptionMessages.CannotCollectRewardMessage,
                     BattlefieldExceptionMessages.CannotCollectRewardInstruction,
-                    BattlefieldRedirect);
+                    Redirects.BattlefieldRedirect);
             }
         }
 
@@ -187,7 +212,7 @@
                 throw new FarmHeroesException(
                      BattlefieldExceptionMessages.CannotAttackMessage,
                      BattlefieldExceptionMessages.CannotAttackWhileWorkingInstruction,
-                     BattlefieldRedirect);
+                     Redirects.BattlefieldRedirect);
             }
         }
 
@@ -198,7 +223,7 @@
                 throw new FarmHeroesException(
                     BattlefieldExceptionMessages.CannotAttackMessage,
                     BattlefieldExceptionMessages.CannotAttackWhileRestingInstruction,
-                    BattlefieldRedirect);
+                    Redirects.BattlefieldRedirect);
             }
         }
     }

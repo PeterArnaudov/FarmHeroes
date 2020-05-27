@@ -7,6 +7,7 @@
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
+    using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Tests.Common;
     using FarmHeroes.Web.ViewModels.HeroModels;
     using Microsoft.AspNetCore.Http;
@@ -153,45 +154,36 @@
         }
 
         [Fact]
-        public async Task ValidateCurrentHeroLocationShouldReturnTrueIfWorkStatusIdle()
+        public async Task ValidateCurrentHeroLocationShouldNotThrowExceptionIfWorkStatusIdle()
         {
             // Arrange
             FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             HeroService heroService = this.GetHeroServiceInitialValues(context);
 
             // Act
-            bool actual = await heroService.ValidateCurrentHeroLocation(WorkStatus.Farm);
-
-            // Assert
-            Assert.True(actual);
+            await heroService.ValidateCurrentHeroLocation(WorkStatus.Farm);
         }
 
         [Fact]
-        public async Task ValidateCurrentHeroLocationShouldReturnTrueIfWorkStatusSame()
+        public async Task ValidateCurrentHeroLocationShouldNotThrowExceptionIfWorkStatusSame()
         {
             // Arrange
             FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             HeroService heroService = this.GetHeroService(context);
 
             // Act
-            bool actual = await heroService.ValidateCurrentHeroLocation(WorkStatus.Farm);
-
-            // Assert
-            Assert.True(actual);
+            await heroService.ValidateCurrentHeroLocation(WorkStatus.Farm);
         }
 
         [Fact]
-        public async Task ValidateCurrentHeroLocationShouldReturnFalseIfWorkStatusDifferent()
+        public async Task ValidateCurrentHeroLocationShouldThrowExceptionIfWorkStatusDifferent()
         {
             // Arrange
             FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             HeroService heroService = this.GetHeroService(context);
 
             // Act
-            bool actual = await heroService.ValidateCurrentHeroLocation(WorkStatus.Mine);
-
-            // Assert
-            Assert.False(actual);
+            await Assert.ThrowsAsync<FarmHeroesException>(async () => await heroService.ValidateCurrentHeroLocation(WorkStatus.Mine));
         }
 
         private HeroService GetHeroServiceInitialValues(FarmHeroesDbContext context)

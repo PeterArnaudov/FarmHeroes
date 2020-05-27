@@ -46,7 +46,15 @@
                 {
                     if (Model.DailyLimitsPatrolsDone == 3)
                     {
-                        <button onclick="startWork('battlefield')" class="btn btn-primary disabled" disabled>Start Patrol</button>
+                        if (Model.DailyLimitsPatrolResets == 0)
+                        {
+                            <p>Price: 100 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
+                            <a href="/Battlefield/ResetPatrol" class="btn btn-primary">Reset Patrol</a>
+                        }
+                        else
+                        {
+                            <p>Come back tomorrow!</p>
+                        }
                     }
                     else
                     {

@@ -332,6 +332,12 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("PatrolLimit")
                         .HasColumnType("int");
 
+                    b.Property<int>("PatrolResets")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatrolResetsLimit")
+                        .HasColumnType("int");
+
                     b.Property<int>("PatrolsDone")
                         .HasColumnType("int");
 
