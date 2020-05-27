@@ -1,0 +1,59 @@
+﻿@model FarmHeroes.Web.ViewModels.LeaderboardModels.LeaderboardsViewModel
+@{
+    ViewData["Title"] = "Leaderboards";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<form class="text-center" method="post" asp-controller="Leaderboards" asp-action="Index">
+    <div class="form-row m-auto">
+        <div class="form-group col-6 m-auto">
+            <label for="criteria">Sort by:</label>
+            <select id="criteria" name="criteria" class="form-control-sm">
+                <option selected hidden value="@Model.Criteria">@Model.Criteria</option>
+                <option value="Wins">Wins</option>
+                <option value="Losses">Losses</option>
+                <option value="TotalFights">Fights</option>
+                <option value="MaximalGoldSteal">Maximal Gold Steal</option>
+                <option value="TotalGoldStolen">Gold Stolen</option>
+                <option value="TotalCrystalsStolen">Crystals Stolen</option>
+                <option value="EarnedOnFarm">Earned on Farm</option>
+                <option value="EarnedOnPatrol">Earned on Patrol</option>
+                <option value="EarnedInMines">Earned in Mines</option>
+                <option value="EarnedFromMonsters">Stolen from Monsters</option>
+                <option value="MonstersDefeated">Monsters Defeated</option>
+            </select>
+        </div>
+        <div class="form-group col-3 m-auto">
+            <label for="page">Positions:</label>
+            <select id="page" name="page" class="form-control-sm">
+                <option selected hidden value="@Model.CurrentPage">@((Model.CurrentPage - 1) * 25 + 1) - @(Model.CurrentPage * 25)</option>
+                @for (int i = 1; i <= Model.Pages; i++)
+                {
+                    <option value="@i">@((i - 1) * 25 + 1) - @(i * 25)</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary col-3 m-auto">Show</button>
+    </div>
+</form>
+
+<table class="table table-hover mt-2">
+    <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">Username</th>
+            <th scope="col">@Model.Criteria</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Players.Count; i++)
+        {
+            <tr>
+                <th scope="row">@(i + 1) </th>
+                <td>@Model.Players[i].Username</td>
+                <td>@Model.Players[i].Points</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

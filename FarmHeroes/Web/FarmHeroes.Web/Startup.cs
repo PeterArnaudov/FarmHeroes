@@ -100,6 +100,7 @@
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IBonusService, BonusService>();
             services.AddTransient<IDailyLimitsService, DailyLimitsService>();
+            services.AddTransient<ILeaderboardsService, LeaderboardsService>();
             services.AddTransient<IChatService, ChatService>();
 
             // Filters
