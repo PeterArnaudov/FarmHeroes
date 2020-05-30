@@ -8,6 +8,7 @@
         private const double AttackBattlePowerModifier = 2.6;
         private const double DefenseBattlePowerModifier = 2.35;
         private const double MasteryBattlePowerModifier = 2.5;
+        private const int InitialCharacteristicsModifier = 10;
         private const int LevelOneMinimalModifier = 10;
         private const int LevelOneMaximalModifier = 100;
         private const int LevelTwoMinimalModifier = 10;
@@ -27,11 +28,11 @@
         private const int LevelNineMinimalModifier = 500;
         private const int LevelNineMaximalModifier = 20000;
 
-        public static Func<int, int, int> CalculateAttack = (battlePower, percent) => (int)(battlePower * (percent / 100d) / AttackBattlePowerModifier);
+        public static Func<int, int, int, int> CalculateAttack = (level, battlePower, percent) => (int)(battlePower * (percent / 100d) / AttackBattlePowerModifier) + (level * InitialCharacteristicsModifier);
 
-        public static Func<int, int, int> CalculateDefense = (battlePower, percent) => (int)(battlePower * (percent / 100d) / DefenseBattlePowerModifier);
+        public static Func<int, int, int, int> CalculateDefense = (level, battlePower, percent) => (int)(battlePower * (percent / 100d) / DefenseBattlePowerModifier) + (level * InitialCharacteristicsModifier);
 
-        public static Func<int, int, int> CalculateMastery = (battlePower, percent) => (int)(battlePower * (percent / 100d) / MasteryBattlePowerModifier);
+        public static Func<int, int, int, int> CalculateMastery = (level, battlePower, percent) => (int)(battlePower * (percent / 100d) / MasteryBattlePowerModifier) + (level * InitialCharacteristicsModifier);
 
         public static Func<int, int, int> CalculateBattlePower = (heroBattlePower, percent) => (int)(heroBattlePower * (percent / 100d));
 

@@ -43,13 +43,13 @@
             fightMonster.Name = databaseMonster.Name;
             fightMonster.AvatarUrl = databaseMonster.AvatarUrl;
             fightMonster.Level = databaseMonster.Level;
-            fightMonster.Characteristics = this.GenerateFightMonsterCharacteristics(databaseMonster.StatPercentage, hero.Characteristics);
+            fightMonster.Characteristics = this.GenerateFightMonsterCharacteristics(databaseMonster.Level, databaseMonster.StatPercentage, hero.Characteristics);
             fightMonster.Health = hero.Health.Maximum;
 
             return fightMonster;
         }
 
-        private Characteristics GenerateFightMonsterCharacteristics(int monsterBattlePowerPercent, Characteristics heroCharacteristics)
+        private Characteristics GenerateFightMonsterCharacteristics(int monsterLevel, int monsterBattlePowerPercent, Characteristics heroCharacteristics)
         {
             Characteristics monsterCharacteristics = new Characteristics();
 
@@ -63,9 +63,9 @@
             int monsterMasteryPercent = maxPercent - monsterAttackPercent - monsterDefensePercent;
             int monsterBattlePower = MonsterFormulas.CalculateBattlePower(heroBattlePower, monsterBattlePowerPercent);
 
-            monsterCharacteristics.Attack = MonsterFormulas.CalculateAttack(monsterBattlePower, monsterAttackPercent);
-            monsterCharacteristics.Defense = MonsterFormulas.CalculateDefense(monsterBattlePower, monsterAttackPercent);
-            monsterCharacteristics.Mastery = MonsterFormulas.CalculateMastery(monsterBattlePower, monsterMasteryPercent);
+            monsterCharacteristics.Attack = MonsterFormulas.CalculateAttack(monsterLevel, monsterBattlePower, monsterAttackPercent);
+            monsterCharacteristics.Defense = MonsterFormulas.CalculateDefense(monsterLevel, monsterBattlePower, monsterAttackPercent);
+            monsterCharacteristics.Mastery = MonsterFormulas.CalculateMastery(monsterLevel, monsterBattlePower, monsterMasteryPercent);
             monsterCharacteristics.Mass = heroCharacteristics.Mass;
 
             return monsterCharacteristics;
