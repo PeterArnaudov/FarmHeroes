@@ -49,7 +49,7 @@
         @for (int i = 0; i < Model.Players.Count; i++)
         {   
             <tr>
-                <th scope="row">@(i + 1) </th>
+                <th scope="row">@(i + 1 + ((Model.CurrentPage - 1) * 25)) </th>
                 <td>@Model.Players[i].Username</td>
                 <td>@Model.Players[i].Points.ToString("N0")</td>
             </tr>
