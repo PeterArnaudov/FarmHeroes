@@ -1,0 +1,33 @@
+﻿@model FarmHeroes.Web.ViewModels.MonsterModels.MonsterInputModel
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<a asp-area="Administration" asp-controller="Monsters" asp-action="Index" class="btn btn-primary">Go Back</a>
+
+<form asp-area="Administration" asp-controller="Monsters" asp-action="Add" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group mt-2">
+        <label asp-for="Name"></label>
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <input asp-for="Name" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="AvatarUrl"></label>
+        <span asp-validation-for="AvatarUrl" class="text-danger"></span>
+        <input asp-for="AvatarUrl" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="Level"></label>
+        <span asp-validation-for="Level" class="text-danger"></span>
+        <input asp-for="Level" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="StatPercentage"></label>
+        <span asp-validation-for="StatPercentage" class="text-danger"></span>
+        <input asp-for="StatPercentage" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-success">Add Monster</button>
+</form>
+

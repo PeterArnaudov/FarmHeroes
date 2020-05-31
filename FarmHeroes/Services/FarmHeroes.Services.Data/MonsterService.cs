@@ -2,14 +2,14 @@
 {
     using System;
     using System.Threading.Tasks;
-
+    using AutoMapper;
     using FarmHeroes.Data;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.MonsterModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Formulas;
     using FarmHeroes.Services.Models.Monsters;
-
+    using FarmHeroes.Web.ViewModels.MonsterModels;
     using Microsoft.EntityFrameworkCore;
 
     public class MonsterService : IMonsterService
@@ -22,11 +22,13 @@
 
         private readonly IHeroService heroService;
         private readonly FarmHeroesDbContext context;
+        private readonly IMapper mapper;
 
-        public MonsterService(IHeroService heroService, FarmHeroesDbContext context)
+        public MonsterService(IHeroService heroService, FarmHeroesDbContext context, IMapper mapper)
         {
             this.heroService = heroService;
             this.context = context;
+            this.mapper = mapper;
         }
 
         public async Task<Monster> GetMonsterByLevel(int level)
@@ -47,6 +49,42 @@
             fightMonster.Health = hero.Health.Maximum;
 
             return fightMonster;
+        }
+
+        public async Task<Monster[]> GetAllMonsters()
+        {
+            return await this.context.Monsters.ToArrayAsync();
+        }
+
+        public async Task AddMonster(MonsterInputModel inputModel)
+        {
+            Monster monster = this.mapper.Map<Monster>(inputModel);
+
+            await this.context.Monsters.AddAsync(monster);
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task<MonsterInputModel> GetMonsterInputModelById(int id)
+        {
+            Monster monster = await this.context.Monsters.FindAsync(id);
+
+            return this.mapper.Map<MonsterInputModel>(monster);
+        }
+
+        public async Task EditMonster(MonsterInputModel inputModel)
+        {
+            Monster monster = this.mapper.Map<Monster>(inputModel);
+
+            this.context.Monsters.Update(monster);
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task DeleteMonster(int id)
+        {
+            Monster monster = await this.context.Monsters.FindAsync(id);
+
+            this.context.Monsters.Remove(monster);
+            await this.context.SaveChangesAsync();
         }
 
         private Characteristics GenerateFightMonsterCharacteristics(int monsterLevel, int monsterBattlePowerPercent, Characteristics heroCharacteristics)

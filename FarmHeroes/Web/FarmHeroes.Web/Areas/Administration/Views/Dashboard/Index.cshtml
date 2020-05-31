@@ -4,9 +4,8 @@
     Layout = "~/Views/Shared/_LoggedLayout.cshtml";
 }
 
-@*add dashboard information, player control, game control (add/edit monsters, items)*@
 <div class="row">
-    <a class="col-4 btn btn-outline-primary border-left-0 border-right-0 nav-link" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" disabled>Dashboard</a>
+    <a class="col-4 btn btn-outline-primary border-left-0 border-right-0 nav-link disabled" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
     <a class="col-4 btn btn-outline-primary nav-link" asp-area="Administration" asp-controller="PlayerControl" asp-action="Index">Player control</a>
     <a class="col-4 btn btn-outline-primary border-left-0 border-right-0 nav-link" asp-area="Administration" asp-controller="GameControl" asp-action="Index">Game control</a>
 </div>
