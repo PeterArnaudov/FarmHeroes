@@ -22,5 +22,11 @@
 
         [Required]
         public int StatPercentage { get; set; }
+
+        [Required]
+        public int MinimalRewardModifier { get; set; }
+
+        [Required]
+        public int MaximalRewardModifier { get; set; }
     }
 }

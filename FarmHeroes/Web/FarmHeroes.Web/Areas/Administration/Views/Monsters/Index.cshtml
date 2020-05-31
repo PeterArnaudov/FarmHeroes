@@ -12,22 +12,26 @@
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Level</th>
-            <th scope="col">Stat Percentage</th>
+            <th scope="col">Stats</th>
+            <th scope="col">Min Reward Modifier</th>
+            <th scope="col">Max Reward Modifier</th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var monster in Model)
         {
-            <tr>
-                <th scope="row">@monster.Name</th>
-                <td>@monster.Level</td>
-                <td>@monster.StatPercentage%</td>
-                <td>
-                    <a asp-area="Administration" asp-controller="Monsters" asp-action="Edit" asp-route-id="@monster.Id" class="btn btn-info">Edit</a>
-                    <a asp-area="Administration" asp-controller="Monsters" asp-action="Delete" asp-route-id="@monster.Id" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <th scope="row">@monster.Name</th>
+            <td>@monster.Level</td>
+            <td>@monster.StatPercentage%</td>
+            <td>@monster.MinimalRewardModifier</td>
+            <td>@monster.MaximalRewardModifier</td>
+            <td>
+                <a asp-area="Administration" asp-controller="Monsters" asp-action="Edit" asp-route-id="@monster.Id" class="btn btn-info">Edit</a>
+                <a asp-area="Administration" asp-controller="Monsters" asp-action="Delete" asp-route-id="@monster.Id" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

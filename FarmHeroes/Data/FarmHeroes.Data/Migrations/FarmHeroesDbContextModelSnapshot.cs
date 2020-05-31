@@ -725,6 +725,12 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("Level")
                         .HasColumnType("int");
 
+                    b.Property<int>("MaximalRewardModifier")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinimalRewardModifier")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 

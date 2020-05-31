@@ -354,7 +354,7 @@
 
             if (winnerName == attacker.Name)
             {
-                goldStolen = MonsterFormulas.CalculateReward(monster.Level, attacker.Level.CurrentLevel);
+                goldStolen = MonsterFormulas.CalculateReward(databaseMonster, attacker.Level.CurrentLevel);
 
                 await this.resourcePouchService.IncreaseGold(attacker.ResourcePouchId, goldStolen);
                 await this.levelService.GiveHeroExperienceById(attacker.LevelId, monster.Level);

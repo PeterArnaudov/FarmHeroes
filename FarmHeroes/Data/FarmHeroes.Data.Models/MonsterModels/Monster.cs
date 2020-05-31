@@ -13,5 +13,9 @@
         public int Level { get; set; }
 
         public int StatPercentage { get; set; }
+
+        public int MinimalRewardModifier { get; set; }
+
+        public int MaximalRewardModifier { get; set; }
     }
 }
