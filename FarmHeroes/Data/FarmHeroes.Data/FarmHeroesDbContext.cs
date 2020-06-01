@@ -9,6 +9,7 @@
     using FarmHeroes.Data.Common.Models;
     using FarmHeroes.Data.Models;
     using FarmHeroes.Data.Models.Chat;
+    using FarmHeroes.Data.Models.DatabaseModels;
     using FarmHeroes.Data.Models.FightModels;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.MappingModels;
@@ -33,6 +34,8 @@
         public virtual DbSet<Hero> Heroes { get; set; }
 
         public virtual DbSet<Notification> Notifications { get; set; }
+
+        public virtual DbSet<DatabaseLevel> DatabaseLevels { get; set; }
 
         public virtual DbSet<Level> Levels { get; set; }
 

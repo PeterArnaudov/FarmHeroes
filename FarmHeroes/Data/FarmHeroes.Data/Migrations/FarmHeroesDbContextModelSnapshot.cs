@@ -163,6 +163,24 @@ namespace FarmHeroes.Data.Migrations
                     b.ToTable("Messages");
                 });
 
+            modelBuilder.Entity("FarmHeroes.Data.Models.DatabaseModels.DatabaseLevel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NeededExperience")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DatabaseLevels");
+                });
+
             modelBuilder.Entity("FarmHeroes.Data.Models.FightModels.Fight", b =>
                 {
                     b.Property<int>("Id")

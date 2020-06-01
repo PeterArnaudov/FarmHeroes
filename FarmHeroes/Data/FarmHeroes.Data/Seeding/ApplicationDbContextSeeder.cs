@@ -33,6 +33,7 @@
                               new ShieldsSeeder(),
                               new AmuletsSeeder(),
                               new BonusesSeeder(),
+                              new LevelsSeeder(),
                           };
 
             foreach (var seeder in seeders)

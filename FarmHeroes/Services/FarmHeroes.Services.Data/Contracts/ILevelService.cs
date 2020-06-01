@@ -8,13 +8,7 @@
     {
         Task<int> GetCurrentHeroLevel();
 
-        Task GiveCurrentHeroExperience(int experience);
-
-        Task GiveHeroExperienceById(int id, int experience);
-
-        Task LevelUpCurrentHero();
-
-        Task LevelUpHeroById(int id);
+        Task GiveHeroExperience(int experience, int id = 0);
 
         Task UpdateLevel(LevelModifyInputModel inputModel);
     }

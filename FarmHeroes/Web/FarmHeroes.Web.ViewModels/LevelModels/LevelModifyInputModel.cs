@@ -8,12 +8,7 @@
         public string Name { get; set; }
 
         [Required]
+        [Range(1, 100)]
         public int LevelCurrentLevel { get; set; }
-
-        [Required]
-        public int LevelCurrentExperience { get; set; }
-
-        [Required]
-        public int LevelNeededExperience { get; set; }
     }
 }

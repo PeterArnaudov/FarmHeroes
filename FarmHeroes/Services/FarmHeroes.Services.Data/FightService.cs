@@ -148,7 +148,7 @@
 
                 await this.resourcePouchService.IncreaseGold(attacker.ResourcePouchId, goldStolen);
                 await this.resourcePouchService.DecreaseGold(defender.ResourcePouchId, goldStolen);
-                await this.levelService.GiveHeroExperienceById(attacker.LevelId, ExperiencePerWin);
+                await this.levelService.GiveHeroExperience(ExperiencePerWin, attacker.LevelId);
 
                 attacker.Statistics.TotalGoldStolen += goldStolen;
                 attacker.Statistics.Wins++;
@@ -167,7 +167,7 @@
 
                 await this.resourcePouchService.IncreaseGold(defender.ResourcePouchId, goldStolen);
                 await this.resourcePouchService.DecreaseGold(attacker.ResourcePouchId, goldStolen);
-                await this.levelService.GiveHeroExperienceById(defender.LevelId, ExperiencePerWin);
+                await this.levelService.GiveHeroExperience(ExperiencePerWin, defender.LevelId);
 
                 defender.Statistics.TotalGoldStolen += goldStolen;
                 defender.Statistics.Wins++;
@@ -357,7 +357,7 @@
                 goldStolen = MonsterFormulas.CalculateReward(databaseMonster, attacker.Level.CurrentLevel);
 
                 await this.resourcePouchService.IncreaseGold(attacker.ResourcePouchId, goldStolen);
-                await this.levelService.GiveHeroExperienceById(attacker.LevelId, monster.Level);
+                await this.levelService.GiveHeroExperience(monster.Level, attacker.LevelId);
 
                 attacker.Statistics.EarnedFromMonsters += goldStolen;
                 attacker.Statistics.MonstersDefeated++;
