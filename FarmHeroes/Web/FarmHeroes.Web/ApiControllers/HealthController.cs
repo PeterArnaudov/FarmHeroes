@@ -29,8 +29,8 @@
         {
             await this.healthService.HealCurrentHero(PillHealAmount, PillCost);
 
-            Health health = await this.healthService.GetCurrentHeroHealth();
-            ResourcePouch resources = await this.resourcePouchService.GetCurrentHeroResources();
+            Health health = await this.healthService.GetHealth();
+            ResourcePouch resources = await this.resourcePouchService.GetResourcePouch();
 
             object result = new
             {
@@ -48,8 +48,8 @@
         {
             await this.healthService.HealCurrentHero(ElixirHealAmount, ElixirCost);
 
-            Health health = await this.healthService.GetCurrentHeroHealth();
-            ResourcePouch resources = await this.resourcePouchService.GetCurrentHeroResources();
+            Health health = await this.healthService.GetHealth();
+            ResourcePouch resources = await this.resourcePouchService.GetResourcePouch();
 
             object result = new
             {
@@ -67,8 +67,8 @@
         {
             await this.healthService.HealCurrentHeroToMaximum(PotionCost);
 
-            Health health = await this.healthService.GetCurrentHeroHealth();
-            ResourcePouch resources = await this.resourcePouchService.GetCurrentHeroResources();
+            Health health = await this.healthService.GetHealth();
+            ResourcePouch resources = await this.resourcePouchService.GetResourcePouch();
 
             object result = new
             {

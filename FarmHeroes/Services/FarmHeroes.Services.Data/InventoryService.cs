@@ -38,14 +38,14 @@
 
         public async Task<Inventory> GetCurrentHeroInventory()
         {
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero();
 
             return hero.Inventory;
         }
 
         public async Task<T> GetCurrentHeroInventoryViewModel<T>()
         {
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero();
 
             T viewModel = this.mapper.Map<T>(hero.Inventory);
 
@@ -78,7 +78,7 @@
 
             this.CheckIfInventoryCanBeUpgraded(inventory);
 
-            await this.resourcePouchService.DecreaseCurrentHeroCrystals(InventoryFormulas.CalculateUpgradeCost(inventory.MaximumCapacity));
+            await this.resourcePouchService.DecreaseCrystals(InventoryFormulas.CalculateUpgradeCost(inventory.MaximumCapacity));
 
             inventory.MaximumCapacity++;
 

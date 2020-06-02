@@ -28,47 +28,32 @@
             this.mapper = mapper;
         }
 
-        public async Task<ResourcePouch> GetHeroResourcesById(int id)
+        public async Task<ResourcePouch> GetResourcePouch(int id = 0)
         {
-            ResourcePouch resources = await this.context.ResourcePouches.FindAsync(id);
-            return resources;
-        }
+            Hero hero = await this.heroService.GetHero(id);
 
-        public async Task<ResourcePouch> GetCurrentHeroResources()
-        {
-            Hero hero = await this.heroService.GetCurrentHero();
-            ResourcePouch resources = hero.ResourcePouch;
-
-            return resources;
+            return hero.ResourcePouch;
         }
 
         public async Task<TViewModel> GetCurrentHeroResourcesViewModel<TViewModel>()
         {
-            ResourcePouch resourcePouch = await this.GetCurrentHeroResources();
+            ResourcePouch resourcePouch = await this.GetResourcePouch();
             TViewModel viewModel = this.mapper.Map<TViewModel>(resourcePouch);
 
             return viewModel;
         }
 
-        public async Task IncreaseGold(int id, int gold)
+        public async Task IncreaseGold(int gold, int id = 0)
         {
-            ResourcePouch resources = await this.context.ResourcePouches.FindAsync(id);
+            ResourcePouch resources = await this.GetResourcePouch(id);
             resources.Gold += gold;
 
             await this.context.SaveChangesAsync();
         }
 
-        public async Task IncreaseCurrentHeroGold(int gold)
+        public async Task DecreaseGold(int gold, int id = 0)
         {
-            ResourcePouch resources = await this.GetCurrentHeroResources();
-            resources.Gold += gold;
-
-            await this.context.SaveChangesAsync();
-        }
-
-        public async Task DecreaseGold(int id, int gold)
-        {
-            ResourcePouch resources = await this.context.ResourcePouches.FindAsync(id);
+            ResourcePouch resources = await this.GetResourcePouch(id);
 
             this.CheckIfHeroHasEnoughGold(resources, gold);
 
@@ -77,47 +62,17 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task DecreaseCurrentHeroGold(int gold)
+        public async Task IncreaseCrystals(int crystals, int id = 0)
         {
-            ResourcePouch resources = await this.GetCurrentHeroResources();
-
-            this.CheckIfHeroHasEnoughGold(resources, gold);
-
-            resources.Gold -= gold;
-
-            await this.context.SaveChangesAsync();
-        }
-
-        public async Task IncreaseCrystals(int id, int crystals)
-        {
-            ResourcePouch resources = await this.context.ResourcePouches.FindAsync(id);
+            ResourcePouch resources = await this.GetResourcePouch(id);
             resources.Crystals += crystals;
 
             await this.context.SaveChangesAsync();
         }
 
-        public async Task IncreaseCurrentHeroCrystals(int crystals)
+        public async Task DecreaseCrystals(int crystals, int id = 0)
         {
-            ResourcePouch resources = await this.GetCurrentHeroResources();
-            resources.Crystals += crystals;
-
-            await this.context.SaveChangesAsync();
-        }
-
-        public async Task DecreaseCrystals(int id, int crystals)
-        {
-            ResourcePouch resources = await this.context.ResourcePouches.FindAsync(id);
-
-            this.CheckIfHeroHasEnoughCrystals(resources, crystals);
-
-            resources.Crystals -= crystals;
-
-            await this.context.SaveChangesAsync();
-        }
-
-        public async Task DecreaseCurrentHeroCrystals(int crystals)
-        {
-            ResourcePouch resources = await this.GetCurrentHeroResources();
+            ResourcePouch resources = await this.GetResourcePouch(id);
 
             this.CheckIfHeroHasEnoughCrystals(resources, crystals);
 

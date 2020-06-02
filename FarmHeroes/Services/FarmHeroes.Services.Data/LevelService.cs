@@ -32,14 +32,14 @@
 
         public async Task<int> GetCurrentHeroLevel()
         {
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero();
 
             return hero.Level.CurrentLevel;
         }
 
         public async Task GiveHeroExperience(int experience, int id = 0)
         {
-            Hero hero = id == 0 ? await this.heroService.GetCurrentHero() : await this.heroService.GetHeroById(id);
+            Hero hero = await this.heroService.GetHero(id);
 
             if (hero.Level.CurrentLevel == 100)
             {
@@ -71,7 +71,7 @@
 
         private async Task LevelUpHero(int id = 0)
         {
-            Hero hero = id == 0 ? await this.heroService.GetCurrentHero() : await this.heroService.GetHeroById(id);
+            Hero hero = id == 0 ? await this.heroService.GetHero() : await this.heroService.GetHero(id);
 
             if (hero.Level.CurrentLevel == 100)
             {

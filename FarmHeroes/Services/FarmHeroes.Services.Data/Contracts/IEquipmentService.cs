@@ -7,9 +7,7 @@
 
     public interface IEquipmentService
     {
-        Task<EquippedSet> GetCurrentHeroEquipedSet();
-
-        Task<EquippedSet> GetEquippedSetById(int id);
+        Task<EquippedSet> GetEquippedSet(int id = 0);
 
         Task Equip(int id);
 

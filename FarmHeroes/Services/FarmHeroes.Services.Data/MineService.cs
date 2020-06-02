@@ -38,7 +38,7 @@
         public async Task<CollectedResourcesViewModel> Collect()
         {
             CollectedResourcesViewModel collectedResources = new CollectedResourcesViewModel();
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero();
             HeroAmulet heroAmulet = hero.EquippedSet.Amulet;
 
             this.CheckIfHeroWorkedInMine(hero);
@@ -59,7 +59,7 @@
 
             hero.Statistics.EarnedInMines += collectedResources.Crystals;
 
-            await this.resourcePouchService.IncreaseCurrentHeroCrystals(collectedResources.Crystals);
+            await this.resourcePouchService.IncreaseCrystals(collectedResources.Crystals);
             await this.chronometerService.NullifyWorkUntil();
             await this.statisticsService.UpdateStatistics(hero.Statistics);
 

@@ -8,7 +8,7 @@
 
     public interface IHealthService
     {
-        Task<Health> GetCurrentHeroHealth();
+        Task<Health> GetHealth(int id = 0);
 
         Task<TViewModel> GetCurrentHeroHealthViewModel<TViewModel>();
 
@@ -16,13 +16,11 @@
 
         Task HealCurrentHeroToMaximum(int crystals);
 
-        Task<Health> GetHealthById(int id);
-
         Task IncreaseMaximumHealth(int mass);
 
-        Task ReduceHealthById(int id, int damage);
+        Task ReduceHealth(int damage, int id = 0);
 
-        Task<bool> CheckIfDead(int id);
+        Task<bool> CheckIfDead(int id = 0);
 
         Task UpdateHealth(HealthModifyInputModel inputModel);
     }

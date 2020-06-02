@@ -41,7 +41,7 @@
             this.CheckIfItemIsFullyUpgraded(heroEquipment, HeroEquipmentMaximumLevel);
 
             int cost = SmithFormulas.CalculateEquipmentUpgradeCost(heroEquipment);
-            await this.resourcePouchService.DecreaseCurrentHeroCrystals(cost);
+            await this.resourcePouchService.DecreaseCrystals(cost);
 
             heroEquipment.Level += 5;
 
@@ -61,7 +61,7 @@
             this.CheckIfItemIsFullyUpgraded(heroAmulet, HeroAmuletMaximumLevel);
 
             int cost = SmithFormulas.CalculateAmuletUpgradeCost(heroAmulet);
-            await this.resourcePouchService.DecreaseCurrentHeroCrystals(cost);
+            await this.resourcePouchService.DecreaseCrystals(cost);
 
             heroAmulet.Bonus += heroAmulet.Level == HeroAmuletMaximumLevel - 1 ? heroAmulet.InitialBonus * 101 : heroAmulet.InitialBonus;
             heroAmulet.Level++;

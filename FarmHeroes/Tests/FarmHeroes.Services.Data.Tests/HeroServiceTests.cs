@@ -97,7 +97,7 @@
             HeroService heroService = this.GetHeroServiceInitialValues(context);
 
             // Act
-            Hero hero = await heroService.GetCurrentHero();
+            Hero hero = await heroService.GetHero();
 
             // Assert
             Assert.Equal(UserName, hero.Name);
@@ -115,7 +115,7 @@
             await context.Heroes.AddAsync(heroTwo);
 
             // Act
-            Hero heroById = await heroService.GetHeroById(heroTwo.Id);
+            Hero heroById = await heroService.GetHero(heroTwo.Id);
 
             // Assert
             Assert.Equal(heroTwo, heroById);
@@ -131,7 +131,7 @@
             await context.Heroes.AddAsync(hero);
 
             // Act
-            Hero heroById = await heroService.GetHeroById(hero.Id + 1);
+            Hero heroById = await heroService.GetHero(hero.Id + 1);
 
             // Assert
             Assert.Null(heroById);

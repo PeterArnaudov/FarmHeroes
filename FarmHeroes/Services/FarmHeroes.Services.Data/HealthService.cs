@@ -25,24 +25,17 @@
             this.context = context;
         }
 
-        public async Task<Health> GetCurrentHeroHealth()
+        public async Task<Health> GetHealth(int id = 0)
         {
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero(id);
             Health health = hero.Health;
-
-            return health;
-        }
-
-        public async Task<Health> GetHealthById(int id)
-        {
-            Health health = await this.context.Healths.FindAsync(id);
 
             return health;
         }
 
         public async Task<TViewModel> GetCurrentHeroHealthViewModel<TViewModel>()
         {
-            Health health = await this.GetCurrentHeroHealth();
+            Health health = await this.GetHealth();
 
             TViewModel viewModel = this.mapper.Map<TViewModel>(health);
 
@@ -51,7 +44,7 @@
 
         public async Task IncreaseMaximumHealth(int mass)
         {
-            Health health = await this.GetCurrentHeroHealth();
+            Health health = await this.GetHealth();
             health.Maximum = HealthFormulas.CalculateMaximumHealth(mass);
 
             await this.context.SaveChangesAsync();
@@ -59,9 +52,9 @@
 
         public async Task HealCurrentHero(int amount, int gold)
         {
-            Health health = await this.GetCurrentHeroHealth();
+            Health health = await this.GetHealth();
 
-            await this.resourcePouchService.DecreaseCurrentHeroGold(gold);
+            await this.resourcePouchService.DecreaseGold(gold);
             health.Current += amount;
 
             if (health.Current > health.Maximum)
@@ -74,17 +67,17 @@
 
         public async Task HealCurrentHeroToMaximum(int crystals)
         {
-            Health health = await this.GetCurrentHeroHealth();
+            Health health = await this.GetHealth();
 
-            await this.resourcePouchService.DecreaseCurrentHeroCrystals(crystals);
+            await this.resourcePouchService.DecreaseCrystals(crystals);
             health.Current = health.Maximum;
 
             await this.context.SaveChangesAsync();
         }
 
-        public async Task ReduceHealthById(int id, int damage)
+        public async Task ReduceHealth(int damage, int id = 0)
         {
-            Health health = await this.GetHealthById(id);
+            Health health = await this.GetHealth(id);
             health.Current -= damage;
 
             if (health.Current <= 0)
@@ -95,9 +88,9 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task<bool> CheckIfDead(int id)
+        public async Task<bool> CheckIfDead(int id = 0)
         {
-            Health health = await this.GetHealthById(id);
+            Health health = await this.GetHealth(id);
 
             return health.Current == 1;
         }

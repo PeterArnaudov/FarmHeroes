@@ -58,7 +58,7 @@
             return this.Redirect($"/Battlefield/FightLog/{fightId}");
         }
 
-        public async Task<IActionResult> AttackMonster([Range(0, 9)]int? monsterLevel)
+        public async Task<IActionResult> AttackMonster([Range(0, 9)]int monsterLevel = 0)
         {
             if (!this.ModelState.IsValid)
             {
@@ -72,7 +72,7 @@
 
         public async Task<IActionResult> FightLog(int id)
         {
-            FightLogViewModel viewModel = await this.fightService.GetFightViewModelById<FightLogViewModel>(id);
+            FightLogViewModel viewModel = await this.fightService.GetFightViewModel<FightLogViewModel>(id);
 
             return this.View(viewModel);
         }

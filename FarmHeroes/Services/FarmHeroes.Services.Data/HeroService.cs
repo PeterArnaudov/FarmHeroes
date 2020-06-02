@@ -48,16 +48,10 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task<Hero> GetCurrentHero()
+        public async Task<Hero> GetHero(int id = 0)
         {
-            ApplicationUser user = await this.userService.GetApplicationUser();
+            Hero hero = id == 0 ? this.userService.GetApplicationUser().Result.Hero : await this.context.Heroes.FindAsync(id);
 
-            return user.Hero;
-        }
-
-        public async Task<Hero> GetHeroById(int id)
-        {
-            Hero hero = await this.context.Heroes.FindAsync(id);
             return hero;
         }
 
@@ -69,7 +63,7 @@
 
         public async Task<TViewModel> GetCurrentHeroViewModel<TViewModel>()
         {
-            Hero hero = await this.GetCurrentHero();
+            Hero hero = await this.GetHero();
 
             return this.mapper.Map<TViewModel>(hero);
         }
@@ -90,7 +84,7 @@
 
         public async Task ValidateCurrentHeroLocation(WorkStatus workStatus)
         {
-            Hero hero = await this.GetCurrentHero();
+            Hero hero = await this.GetHero();
             bool validLocation = hero.WorkStatus == WorkStatus.Idle || workStatus == hero.WorkStatus;
 
             if (!validLocation)

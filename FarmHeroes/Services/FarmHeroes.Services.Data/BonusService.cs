@@ -53,7 +53,7 @@
                     "/Hero");
             }
 
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero();
             HeroBonus heroBonus = hero.Inventory.Bonuses.SingleOrDefault(b => b.Name == shopBonus.Name);
 
             if (heroBonus == null)
@@ -67,7 +67,7 @@
                     : heroBonus.ActiveUntil.AddDays(shopBonus.Days);
             }
 
-            await this.resourcePouchService.DecreaseCurrentHeroCrystals(shopBonus.CrystalsPrice);
+            await this.resourcePouchService.DecreaseCrystals(shopBonus.CrystalsPrice);
 
             await this.context.SaveChangesAsync();
 

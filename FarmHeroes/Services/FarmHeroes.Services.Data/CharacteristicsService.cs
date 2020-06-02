@@ -27,23 +27,16 @@
             this.healthService = healthService;
         }
 
-        public async Task<Characteristics> GetHeroCharacteristicsByIdAsync(int id)
+        public async Task<Characteristics> GetCharacteristics(int id = 0)
         {
-            Characteristics characteristics = await this.context.Characteristics.FindAsync(id);
-            return characteristics;
+            Hero hero = await this.heroService.GetHero(id);
+
+            return hero.Characteristics;
         }
 
-        public async Task<Characteristics> GetCurrentHeroCharacteristicsAsync()
+        public async Task<TViewModel> GetCurrentHeroCharacteristicsViewModel<TViewModel>()
         {
-            Hero hero = await this.heroService.GetCurrentHero();
-            Characteristics characteristics = hero.Characteristics;
-
-            return characteristics;
-        }
-
-        public async Task<TViewModel> GetCurrentHeroCharacteristicsViewModelAsync<TViewModel>()
-        {
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero();
             Characteristics characteristics = hero.Characteristics;
 
             TViewModel viewModel = this.mapper.Map<TViewModel>(characteristics);
@@ -53,10 +46,10 @@
 
         public async Task<int> IncreaseAttack()
         {
-            Characteristics characteristics = await this.GetCurrentHeroCharacteristicsAsync();
+            Characteristics characteristics = await this.GetCharacteristics();
             int goldNeeded = CharacteristicsFormulas.CalculateAttackPrice(characteristics.Attack);
 
-            await this.resourcesService.DecreaseCurrentHeroGold(goldNeeded);
+            await this.resourcesService.DecreaseGold(goldNeeded);
             characteristics.Attack++;
 
             await this.context.SaveChangesAsync();
@@ -66,10 +59,10 @@
 
         public async Task<int> IncreaseDefense()
         {
-            Characteristics characteristics = await this.GetCurrentHeroCharacteristicsAsync();
+            Characteristics characteristics = await this.GetCharacteristics();
             int goldNeeded = CharacteristicsFormulas.CalculateDefensePrice(characteristics.Defense);
 
-            await this.resourcesService.DecreaseCurrentHeroGold(goldNeeded);
+            await this.resourcesService.DecreaseGold(goldNeeded);
             characteristics.Defense++;
 
             await this.context.SaveChangesAsync();
@@ -79,10 +72,10 @@
 
         public async Task<int> IncreaseMass()
         {
-            Characteristics characteristics = await this.GetCurrentHeroCharacteristicsAsync();
+            Characteristics characteristics = await this.GetCharacteristics();
             int goldNeeded = CharacteristicsFormulas.CalculateMassPrice(characteristics.Mass);
 
-            await this.resourcesService.DecreaseCurrentHeroGold(goldNeeded);
+            await this.resourcesService.DecreaseGold(goldNeeded);
             characteristics.Mass++;
 
             await this.healthService.IncreaseMaximumHealth(characteristics.Mass);
@@ -94,10 +87,10 @@
 
         public async Task<int> IncreaseMastery()
         {
-            Characteristics characteristics = await this.GetCurrentHeroCharacteristicsAsync();
+            Characteristics characteristics = await this.GetCharacteristics();
             int goldNeeded = CharacteristicsFormulas.CalculateMasteryPrice(characteristics.Mastery);
 
-            await this.resourcesService.DecreaseCurrentHeroGold(goldNeeded);
+            await this.resourcesService.DecreaseGold(goldNeeded);
             characteristics.Mastery++;
 
             await this.context.SaveChangesAsync();

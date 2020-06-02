@@ -65,7 +65,7 @@
 
             this.CheckIfRequiredLevelIsMet(shopEquipment, heroLevel);
 
-            await this.resourcePouchService.DecreaseCurrentHeroGold(shopEquipment.Price);
+            await this.resourcePouchService.DecreaseGold(shopEquipment.Price);
 
             HeroEquipment heroEquipment = new HeroEquipment
             {
@@ -91,7 +91,7 @@
         {
             ShopAmulet shopAmulet = await this.context.ShopAmulets.FindAsync(id);
 
-            await this.resourcePouchService.DecreaseCurrentHeroCrystals(shopAmulet.InitialPrice);
+            await this.resourcePouchService.DecreaseCrystals(shopAmulet.InitialPrice);
 
             HeroAmulet heroAmulet = new HeroAmulet
             {

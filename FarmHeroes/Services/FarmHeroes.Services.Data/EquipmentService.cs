@@ -32,25 +32,18 @@
             this.mapper = mapper;
         }
 
-        public async Task<EquippedSet> GetCurrentHeroEquipedSet()
+        public async Task<EquippedSet> GetEquippedSet(int id = 0)
         {
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero(id);
 
             return hero.EquippedSet;
         }
 
-        public async Task<EquippedSet> GetEquippedSetById(int id)
-        {
-            EquippedSet equippedSet = await this.context.EquippedSets.FindAsync(id);
-
-            return equippedSet;
-        }
-
         public async Task Equip(int id)
         {
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero();
             HeroEquipment heroEquipment = await this.GetHeroEquipmentById(id);
-            EquippedSet equippedSet = await this.GetCurrentHeroEquipedSet();
+            EquippedSet equippedSet = await this.GetEquippedSet();
 
             this.CheckIfEquipmentBelongsToHero(hero, heroEquipment);
 
@@ -70,9 +63,9 @@
 
         public async Task<AmuletViewModel> EquipAmulet(int id)
         {
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero();
             HeroAmulet heroAmulet = await this.GetHeroAmuletById(id);
-            EquippedSet equippedSet = await this.GetCurrentHeroEquipedSet();
+            EquippedSet equippedSet = await this.GetEquippedSet();
 
             this.CheckIfAmuletBelongsToHero(hero, heroAmulet);
 

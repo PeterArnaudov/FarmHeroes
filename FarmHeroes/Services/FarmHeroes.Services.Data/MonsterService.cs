@@ -40,7 +40,7 @@
         {
             FightMonster fightMonster = new FightMonster();
 
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero();
 
             fightMonster.Name = databaseMonster.Name;
             fightMonster.AvatarUrl = databaseMonster.AvatarUrl;

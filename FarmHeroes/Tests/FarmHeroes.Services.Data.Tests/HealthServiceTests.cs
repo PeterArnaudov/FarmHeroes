@@ -22,32 +22,29 @@
             // Arrange
             FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             Health health = new Health();
-            await context.Healths.AddAsync(health);
+            this.hero.Health = health;
             await context.SaveChangesAsync();
             HealthService healthService = this.GetHealthService(context);
 
             // Act
-            Health actual = await healthService.GetHealthById(health.Id);
+            Health actual = await healthService.GetHealth(health.Id);
 
             // Assert
             Assert.Equal(health, actual);
         }
 
         [Fact]
-        public async Task GetHealthByIdWithInvalidIdShouldReturnNull()
+        public async Task GetHealthByIdWithInvalidIdShouldThrowException()
         {
             // Arrange
             FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             Health health = new Health();
-            await context.Healths.AddAsync(health);
+            this.hero.Health = health;
             await context.SaveChangesAsync();
             HealthService healthService = this.GetHealthService(context);
 
             // Act
-            Health actual = await healthService.GetHealthById(health.Id + 1);
-
-            // Assert
-            Assert.Null(actual);
+            await Assert.ThrowsAsync<Exception>(async () => { await healthService.GetHealth(health.Id + 1); });
         }
 
         [Fact]
@@ -58,7 +55,7 @@
             HealthService healthService = this.GetHealthService(context);
 
             // Act
-            Health actual = await healthService.GetCurrentHeroHealth();
+            Health actual = await healthService.GetHealth();
 
             // Assert
             Assert.Equal(this.hero.Health, actual);
@@ -166,13 +163,13 @@
             // Arrange
             FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             Health health = new Health();
-            await context.Healths.AddAsync(health);
+            this.hero.Health = health;
             await context.SaveChangesAsync();
             HealthService healthService = this.GetHealthService(context);
             int damage = 10;
 
             // Act
-            await healthService.ReduceHealthById(health.Id, damage);
+            await healthService.ReduceHealth(damage, health.Id);
             int expected = health.Maximum - damage;
 
             // Assert
@@ -185,13 +182,13 @@
             // Arrange
             FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             Health health = new Health();
-            await context.Healths.AddAsync(health);
+            this.hero.Health = health;
             await context.SaveChangesAsync();
             HealthService healthService = this.GetHealthService(context);
             int damage = health.Maximum;
 
             // Act
-            await healthService.ReduceHealthById(health.Id, damage);
+            await healthService.ReduceHealth(damage, health.Id);
 
             // Assert
             Assert.Equal(1, health.Current);
@@ -203,7 +200,7 @@
             // Arrange
             FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             Health health = new Health() { Current = 1 };
-            await context.Healths.AddAsync(health);
+            this.hero.Health = health;
             await context.SaveChangesAsync();
             HealthService healthService = this.GetHealthService(context);
 
@@ -220,7 +217,7 @@
             // Arrange
             FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             Health health = new Health();
-            await context.Healths.AddAsync(health);
+            this.hero.Health = health;
             await context.SaveChangesAsync();
             HealthService healthService = this.GetHealthService(context);
 
@@ -236,7 +233,7 @@
             // HeroService
             Mock<IHeroService> heroServiceMock = new Mock<IHeroService>();
             heroServiceMock
-                .Setup(x => x.GetCurrentHero())
+                .Setup(x => x.GetHero())
                 .Returns(Task.FromResult<Hero>(this.hero));
 
             // ResourcePouchService

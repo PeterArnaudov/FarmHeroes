@@ -8,27 +8,17 @@
 
     public interface IResourcePouchService
     {
-        public Task<ResourcePouch> GetHeroResourcesById(int id);
-
-        Task<ResourcePouch> GetCurrentHeroResources();
+        Task<ResourcePouch> GetResourcePouch(int id = 0);
 
         Task<TViewModel> GetCurrentHeroResourcesViewModel<TViewModel>();
 
-        Task IncreaseGold(int id, int gold);
+        Task IncreaseGold(int gold, int id = 0);
 
-        Task IncreaseCurrentHeroGold(int gold);
+        Task DecreaseGold(int gold, int id = 0);
 
-        Task DecreaseGold(int id, int gold);
+        Task IncreaseCrystals(int crystals, int id = 0);
 
-        Task DecreaseCurrentHeroGold(int gold);
-
-        Task IncreaseCrystals(int id, int crystals);
-
-        Task IncreaseCurrentHeroCrystals(int crystals);
-
-        Task DecreaseCrystals(int id, int crystals);
-
-        Task DecreaseCurrentHeroCrystals(int crystals);
+        Task DecreaseCrystals(int crystals, int id = 0);
 
         Task UpdateResourcePouch(ResourcePouchModifyInputModel inputModel);
 

@@ -7,9 +7,7 @@
 
     public interface IStatisticsService
     {
-        Task<Statistics> GetHeroStatisticsByIdAsync(int id);
-
-        Task<Statistics> GetCurrentHeroStatistcs();
+        Task<Statistics> GetStatistcs(int id = 0);
 
         Task<TViewModel> GetCurrentHeroStatisticsViewModel<TViewModel>();
 

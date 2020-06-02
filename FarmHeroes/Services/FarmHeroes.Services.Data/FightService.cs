@@ -70,20 +70,20 @@
         {
             Fight fight = new Fight();
 
-            Hero attacker = await this.heroService.GetCurrentHero();
+            Hero attacker = await this.heroService.GetHero();
 
             this.CheckIfHeroIsWorking(attacker);
             this.CheckIfHeroCanAttackPlayer(attacker);
             this.CheckIfHeroAttackThemselves(attacker, opponentId);
 
-            Hero defender = await this.heroService.GetHeroById(opponentId);
+            Hero defender = await this.heroService.GetHero(opponentId);
 
             this.CheckIfOpponentsAreSameFraction(attacker, defender);
             this.CheckIfInLevelBoundary(attacker, defender);
             this.CheckIfHeroCanBeAttacked(defender);
 
-            EquippedSet attackerSet = await this.equipmentService.GetCurrentHeroEquipedSet();
-            EquippedSet defenderSet = await this.equipmentService.GetEquippedSetById(defender.EquippedSetId);
+            EquippedSet attackerSet = await this.equipmentService.GetEquippedSet();
+            EquippedSet defenderSet = await this.equipmentService.GetEquippedSet(defender.EquippedSetId);
 
             int attackerAttack = FightFormulas.CalculateAttack(attacker);
             int attackerDefense = FightFormulas.CalculateDefense(attacker);
@@ -108,7 +108,7 @@
                     attackerSet.Amulet?.Name == AmuletNames.Criticum ? attackerSet.Amulet.Bonus : 0,
                     attackerSet.Amulet?.Name == AmuletNames.Fatty ? attackerSet.Amulet.Bonus : 0);
 
-                await this.healthService.ReduceHealthById(defender.HealthId, attackerDamage);
+                await this.healthService.ReduceHealth(attackerDamage, defender.HealthId);
                 attackerHits[i] = attackerDamage;
 
                 if (await this.healthService.CheckIfDead(defender.HealthId))
@@ -125,7 +125,7 @@
                     defenderSet.Amulet?.Name == AmuletNames.Criticum ? defenderSet.Amulet.Bonus : 0,
                     defenderSet.Amulet?.Name == AmuletNames.Fatty ? defenderSet.Amulet.Bonus : 0);
 
-                await this.healthService.ReduceHealthById(attacker.HealthId, defenderDamage);
+                await this.healthService.ReduceHealth(defenderDamage, attacker.HealthId);
                 defenderHits[i] = defenderDamage;
 
                 if (await this.healthService.CheckIfDead(attacker.HealthId))
@@ -146,8 +146,8 @@
                     defender.ResourcePouch.Gold,
                     this.GetGoldSafeBonus(defender));
 
-                await this.resourcePouchService.IncreaseGold(attacker.ResourcePouchId, goldStolen);
-                await this.resourcePouchService.DecreaseGold(defender.ResourcePouchId, goldStolen);
+                await this.resourcePouchService.IncreaseGold(goldStolen, attacker.ResourcePouchId);
+                await this.resourcePouchService.DecreaseGold(goldStolen, defender.ResourcePouchId);
                 await this.levelService.GiveHeroExperience(ExperiencePerWin, attacker.LevelId);
 
                 attacker.Statistics.TotalGoldStolen += goldStolen;
@@ -165,8 +165,8 @@
                     attacker.ResourcePouch.Gold,
                     this.GetGoldSafeBonus(attacker));
 
-                await this.resourcePouchService.IncreaseGold(defender.ResourcePouchId, goldStolen);
-                await this.resourcePouchService.DecreaseGold(attacker.ResourcePouchId, goldStolen);
+                await this.resourcePouchService.IncreaseGold(goldStolen, defender.ResourcePouchId);
+                await this.resourcePouchService.DecreaseGold(goldStolen, attacker.ResourcePouchId);
                 await this.levelService.GiveHeroExperience(ExperiencePerWin, defender.LevelId);
 
                 defender.Statistics.TotalGoldStolen += goldStolen;
@@ -185,8 +185,8 @@
             await this.statisticsService.UpdateStatistics(attacker.Statistics);
             await this.statisticsService.UpdateStatistics(defender.Statistics);
 
-            await this.chronometerService.SetCannotAttackHeroUntilById(attacker.ChronometerId, SecondsUntilNextHeroAttack);
-            await this.chronometerService.SetCannotBeAttackedUntilById(defender.ChronometerId, SecondsDefenseGranted);
+            await this.chronometerService.SetCannotAttackHeroUntilById(SecondsUntilNextHeroAttack, attacker.ChronometerId);
+            await this.chronometerService.SetCannotBeAttackedUntilById(SecondsDefenseGranted, defender.ChronometerId);
 
             fight.WinnerName = winnerName;
             fight.GoldStolen = goldStolen;
@@ -260,31 +260,31 @@
             return fightEntity.Id;
         }
 
-        public async Task<int> InitiateMonsterFight(int? monsterLevel)
+        public async Task<int> InitiateMonsterFight(int monsterLevel = 0)
         {
             Random random = new Random();
             Fight fight = new Fight();
 
-            Hero attacker = await this.heroService.GetCurrentHero();
+            Hero attacker = await this.heroService.GetHero();
 
             this.CheckIfHeroIsWorking(attacker);
             this.CheckIfHeroCanAttackMonster(attacker);
 
-            if (monsterLevel == null)
+            if (monsterLevel == 0)
             {
                 monsterLevel = random.Next(RandomMonsterMinimumLevel, RandomMonsterMaximumLevel);
 
-                await this.resourcePouchService.DecreaseCurrentHeroGold(RandomMonsterGoldCost);
+                await this.resourcePouchService.DecreaseGold(RandomMonsterGoldCost);
             }
             else
             {
-                await this.resourcePouchService.DecreaseCurrentHeroCrystals(MonsterCrystalCost);
+                await this.resourcePouchService.DecreaseCrystals(MonsterCrystalCost);
             }
 
-            Monster databaseMonster = await this.monsterService.GetMonsterByLevel((int)monsterLevel);
+            Monster databaseMonster = await this.monsterService.GetMonsterByLevel(monsterLevel);
             FightMonster monster = await this.monsterService.GenerateFightMonster(databaseMonster);
 
-            EquippedSet attackerSet = await this.equipmentService.GetCurrentHeroEquipedSet();
+            EquippedSet attackerSet = await this.equipmentService.GetEquippedSet();
 
             int attackerAttack = FightFormulas.CalculateAttack(attacker);
             int attackerDefense = FightFormulas.CalculateDefense(attacker);
@@ -337,7 +337,7 @@
                     0,
                     0);
 
-                await this.healthService.ReduceHealthById(attacker.HealthId, defenderDamage);
+                await this.healthService.ReduceHealth(defenderDamage, attacker.HealthId);
                 defenderHits[i] = defenderDamage;
 
                 if (await this.healthService.CheckIfDead(attacker.HealthId))
@@ -356,7 +356,7 @@
             {
                 goldStolen = MonsterFormulas.CalculateReward(databaseMonster, attacker.Level.CurrentLevel);
 
-                await this.resourcePouchService.IncreaseGold(attacker.ResourcePouchId, goldStolen);
+                await this.resourcePouchService.IncreaseGold(goldStolen, attacker.ResourcePouchId);
                 await this.levelService.GiveHeroExperience(monster.Level, attacker.LevelId);
 
                 attacker.Statistics.EarnedFromMonsters += goldStolen;
@@ -368,12 +368,12 @@
                     attacker.ResourcePouch.Gold,
                     this.GetGoldSafeBonus(attacker));
 
-                await this.resourcePouchService.DecreaseGold(attacker.ResourcePouchId, goldStolen);
+                await this.resourcePouchService.DecreaseGold(goldStolen, attacker.ResourcePouchId);
             }
 
             await this.statisticsService.UpdateStatistics(attacker.Statistics);
 
-            await this.chronometerService.SetCannotAttackMonsterUntilById(attacker.ChronometerId, SecondsUntilNextMonsterAttack);
+            await this.chronometerService.SetCannotAttackMonsterUntilById(SecondsUntilNextMonsterAttack, attacker.ChronometerId);
 
             fight.WinnerName = winnerName;
             fight.GoldStolen = goldStolen;
@@ -431,16 +431,16 @@
             return fightEntity.Id;
         }
 
-        public async Task<Fight> GetFightById(int id)
+        public async Task<Fight> GetFight(int id)
         {
             Fight fight = await this.context.Fights.FindAsync(id);
 
             return fight;
         }
 
-        public async Task<TViewModel> GetFightViewModelById<TViewModel>(int id)
+        public async Task<TViewModel> GetFightViewModel<TViewModel>(int id)
         {
-            Fight fight = await this.GetFightById(id);
+            Fight fight = await this.GetFight(id);
             TViewModel viewModel = this.mapper.Map<TViewModel>(fight);
 
             return viewModel;

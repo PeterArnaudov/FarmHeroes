@@ -25,7 +25,7 @@
 
         public async Task<TViewModel> GetAllNotifications<TViewModel>()
         {
-            int heroId = this.heroService.GetCurrentHero().Result.Id;
+            int heroId = this.heroService.GetHero().Result.Id;
 
             Notification[] notifications = this.context.Notifications
                 .Where(n => n.HeroId == heroId)
@@ -48,7 +48,7 @@
 
         public async Task<int> GetNewNotificationsCount()
         {
-            int heroId = this.heroService.GetCurrentHero().Result.Id;
+            int heroId = this.heroService.GetHero().Result.Id;
 
             int count = await this.context.Notifications
                 .Where(n => n.HeroId == heroId && n.IsNew)
@@ -70,7 +70,7 @@
 
         private async Task MarkAsRead()
         {
-            int heroId = this.heroService.GetCurrentHero().Result.Id;
+            int heroId = this.heroService.GetHero().Result.Id;
 
             List<Notification> newNotifications = await this.context.Notifications
                 .Where(n => n.HeroId == heroId && n.IsNew)

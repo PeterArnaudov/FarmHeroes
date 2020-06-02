@@ -50,7 +50,7 @@
 
         public async Task<int> StartPatrol()
         {
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero();
 
             this.CheckIfPatrolLimitIsReached(hero);
             int durationInSeconds = this.GetPatrolDurationInSeconds(hero);
@@ -61,11 +61,11 @@
 
         public async Task ResetPatrolLimit()
         {
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero();
 
             this.CheckIfPatrolResetsLimitIsReached(hero);
 
-            await this.resourcePouchService.DecreaseCurrentHeroCrystals(PatrolResetPrice);
+            await this.resourcePouchService.DecreaseCrystals(PatrolResetPrice);
 
             hero.DailyLimits.PatrolResets = 1;
             hero.DailyLimits.PatrolsDone = 0;
@@ -76,7 +76,7 @@
         public async Task<CollectedResourcesViewModel> Collect()
         {
             CollectedResourcesViewModel collectedResources = new CollectedResourcesViewModel();
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero();
 
             this.CheckIfHeroIsPatrolling(hero);
 
@@ -87,7 +87,7 @@
             hero.DailyLimits.PatrolsDone++;
 
             await this.levelService.GiveHeroExperience(collectedResources.Experience);
-            await this.resourcePouchService.IncreaseCurrentHeroGold(collectedResources.Gold);
+            await this.resourcePouchService.IncreaseGold(collectedResources.Gold);
             await this.chronometerService.NullifyWorkUntil();
             await this.statisticsService.UpdateStatistics(hero.Statistics);
             await this.dailyLimitsService.UpdateDailyLimits(hero.DailyLimits);
@@ -109,7 +109,7 @@
 
         public async Task<Hero[]> GetOpponents()
         {
-            Hero attacker = await this.heroService.GetCurrentHero();
+            Hero attacker = await this.heroService.GetHero();
 
             this.CheckIfHeroIsFree(attacker);
             this.CheckIfHeroIsResting(attacker);

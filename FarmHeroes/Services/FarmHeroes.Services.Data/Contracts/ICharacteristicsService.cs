@@ -8,11 +8,9 @@
 
     public interface ICharacteristicsService
     {
-        Task<Characteristics> GetHeroCharacteristicsByIdAsync(int id);
+        Task<Characteristics> GetCharacteristics(int id = 0);
 
-        Task<Characteristics> GetCurrentHeroCharacteristicsAsync();
-
-        Task<TViewModel> GetCurrentHeroCharacteristicsViewModelAsync<TViewModel>();
+        Task<TViewModel> GetCurrentHeroCharacteristicsViewModel<TViewModel>();
 
         Task<int> IncreaseAttack();
 

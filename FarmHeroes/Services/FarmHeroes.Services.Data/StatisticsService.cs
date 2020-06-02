@@ -21,23 +21,16 @@
             this.mapper = mapper;
         }
 
-        public async Task<Statistics> GetHeroStatisticsByIdAsync(int id)
+        public async Task<Statistics> GetStatistcs(int id = 0)
         {
-            Statistics statistics = await this.context.Statistics.FindAsync(id);
-            return statistics;
-        }
+            Hero hero = await this.heroService.GetHero(id);
 
-        public async Task<Statistics> GetCurrentHeroStatistcs()
-        {
-            Hero hero = await this.heroService.GetCurrentHero();
-            Statistics statistics = hero.Statistics;
-
-            return statistics;
+            return hero.Statistics;
         }
 
         public async Task<TViewModel> GetCurrentHeroStatisticsViewModel<TViewModel>()
         {
-            Statistics statistics = await this.GetCurrentHeroStatistcs();
+            Statistics statistics = await this.GetStatistcs();
             TViewModel viewModel = this.mapper.Map<TViewModel>(statistics);
 
             return viewModel;

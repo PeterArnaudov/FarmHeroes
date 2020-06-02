@@ -26,32 +26,24 @@
             this.mapper = mapper;
         }
 
-        public async Task<Chronometer> GetCurrentHeroChronometer()
+        public async Task<Chronometer> GetChronometer(int id = 0)
         {
-            Hero hero = await this.heroService.GetCurrentHero();
-            Chronometer chronometer = hero.Chronometer;
+            Hero hero = await this.heroService.GetHero(id);
 
-            return chronometer;
+            return hero.Chronometer;
         }
 
         public async Task<TViewModel> GetCurrentHeroChronometerViewModel<TViewModel>()
         {
-            Chronometer chronometer = await this.GetCurrentHeroChronometer();
+            Chronometer chronometer = await this.GetChronometer();
             TViewModel viewModel = this.mapper.Map<TViewModel>(chronometer);
 
             return viewModel;
         }
 
-        public async Task<Chronometer> GetChronometerById(int id)
-        {
-            Chronometer chronometer = await this.context.Chronometers.FindAsync(id);
-
-            return chronometer;
-        }
-
         public async Task SetWorkUntil(int seconds, WorkStatus workStatus)
         {
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero();
 
             this.CheckIfCurrentlyWorking(hero);
 
@@ -63,7 +55,7 @@
 
         public async Task NullifyWorkUntil()
         {
-            Hero hero = await this.heroService.GetCurrentHero();
+            Hero hero = await this.heroService.GetHero();
 
             this.CheckIfPatrolling(hero);
 
@@ -73,25 +65,25 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task SetCannotAttackHeroUntilById(int id, int seconds)
+        public async Task SetCannotAttackHeroUntilById(int seconds, int id = 0)
         {
-            Chronometer chronometer = await this.GetChronometerById(id);
+            Chronometer chronometer = await this.GetChronometer(id);
             chronometer.CannotAttackHeroUntil = DateTime.UtcNow.AddSeconds(seconds);
 
             await this.context.SaveChangesAsync();
         }
 
-        public async Task SetCannotAttackMonsterUntilById(int id, int seconds)
+        public async Task SetCannotAttackMonsterUntilById(int seconds, int id = 0)
         {
-            Chronometer chronometer = await this.GetChronometerById(id);
+            Chronometer chronometer = await this.GetChronometer(id);
             chronometer.CannotAttackMonsterUntil = DateTime.UtcNow.AddSeconds(seconds);
 
             await this.context.SaveChangesAsync();
         }
 
-        public async Task SetCannotBeAttackedUntilById(int id, int seconds)
+        public async Task SetCannotBeAttackedUntilById(int seconds, int id = 0)
         {
-            Chronometer chronometer = await this.GetChronometerById(id);
+            Chronometer chronometer = await this.GetChronometer(id);
             chronometer.CannotBeAttackedUntil = DateTime.UtcNow.AddSeconds(seconds);
 
             await this.context.SaveChangesAsync();

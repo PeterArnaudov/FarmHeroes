@@ -11,11 +11,9 @@
     {
         Task CreateHero(HeroCreateInputModel inputModel);
 
-        Task<Hero> GetHeroById(int id);
+        Task<Hero> GetHero(int id = 0);
 
         Task<Hero> GetHeroByName(string name);
-
-        Task<Hero> GetCurrentHero();
 
         Task<TViewModel> GetCurrentHeroViewModel<TViewModel>();
 

@@ -8,7 +8,7 @@
 
     public interface IChronometerService
     {
-        Task<Chronometer> GetCurrentHeroChronometer();
+        Task<Chronometer> GetChronometer(int id = 0);
 
         Task<TViewModel> GetCurrentHeroChronometerViewModel<TViewModel>();
 

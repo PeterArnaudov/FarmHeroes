@@ -29,7 +29,7 @@
             {
                 Stat = attack,
                 Price = CharacteristicsFormulas.CalculateAttackPrice(attack),
-                this.resourcePouchService.GetCurrentHeroResources().Result.Gold,
+                this.resourcePouchService.GetResourcePouch().Result.Gold,
             };
 
             return result;
@@ -44,7 +44,7 @@
             {
                 Stat = defense,
                 Price = CharacteristicsFormulas.CalculateDefensePrice(defense),
-                this.resourcePouchService.GetCurrentHeroResources().Result.Gold,
+                this.resourcePouchService.GetResourcePouch().Result.Gold,
             };
 
             return result;
@@ -54,13 +54,13 @@
         public async Task<ActionResult<object>> PracticeMass()
         {
             int mass = await this.characteristicsService.IncreaseMass();
-            Health health = await this.healthService.GetCurrentHeroHealth();
+            Health health = await this.healthService.GetHealth();
 
             object result = new
             {
                 Stat = mass,
                 Price = CharacteristicsFormulas.CalculateMassPrice(mass),
-                this.resourcePouchService.GetCurrentHeroResources().Result.Gold,
+                this.resourcePouchService.GetResourcePouch().Result.Gold,
                 health.Current,
                 health.Maximum,
             };
@@ -77,7 +77,7 @@
             {
                 Stat = mastery,
                 Price = CharacteristicsFormulas.CalculateDefensePrice(mastery),
-                this.resourcePouchService.GetCurrentHeroResources().Result.Gold,
+                this.resourcePouchService.GetResourcePouch().Result.Gold,
             };
 
             return result;

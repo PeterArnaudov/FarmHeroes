@@ -8,10 +8,10 @@
     {
         Task<int> InitiateFight(int opponentId);
 
-        Task<int> InitiateMonsterFight(int? monsterLevel);
+        Task<int> InitiateMonsterFight(int monsterLevel = 0);
 
-        Task<Fight> GetFightById(int id);
+        Task<Fight> GetFight(int id);
 
-        Task<TViewModel> GetFightViewModelById<TViewModel>(int id);
+        Task<TViewModel> GetFightViewModel<TViewModel>(int id);
     }
 }
