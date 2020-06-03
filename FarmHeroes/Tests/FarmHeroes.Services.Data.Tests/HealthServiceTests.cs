@@ -12,19 +12,20 @@
     using System.Threading.Tasks;
     using Xunit;
 
-    public class HealthServiceTests
+    public class HealthServiceTests : IDisposable
     {
-        private readonly Hero hero = new Hero();
+        private readonly Hero hero;
         private readonly FarmHeroesDbContext context;
 
         public HealthServiceTests()
         {
+            this.hero = new Hero();
             this.context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
         }
 
-        public async Task Dispose()
+        public void Dispose()
         {
-            await this.context.Database.EnsureDeletedAsync();
+            this.context.Database.EnsureDeletedAsync().Wait();
         }
 
         [Fact]

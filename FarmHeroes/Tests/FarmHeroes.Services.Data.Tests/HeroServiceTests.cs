@@ -10,18 +10,13 @@
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Tests.Common;
     using FarmHeroes.Web.ViewModels.HeroModels;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
     using Moq;
     using System;
     using System.Linq;
-    using System.Security.Principal;
     using System.Threading.Tasks;
     using Xunit;
 
-    public class HeroServiceTests
+    public class HeroServiceTests : IDisposable
     {
         private const string UserName = "TestUser";
         private readonly FarmHeroesDbContext context;
@@ -31,9 +26,9 @@
             this.context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
         }
 
-        public async Task Dispose()
+        public void Dispose()
         {
-            await this.context.Database.EnsureDeletedAsync();
+            this.context.Database.EnsureDeletedAsync().Wait();
         }
 
         [Fact]
