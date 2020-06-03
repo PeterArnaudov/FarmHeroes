@@ -36,7 +36,7 @@
         private const string HeroFightNotificationImageUrl = "/images/notifications/hero-battle-notification.png";
         private const string FightNotificationTitle = "Fight log";
         private const string FightNotificationLink = "/Battlefield/FightLog/{0}";
-        private const string FightNotificationAttacker = "You attacked {0}";
+        private const string FightNotificationAttacker = "You attacked {0}.";
         private const string FightNotificationDefender = "{0} attacked you.";
 
         private readonly IHeroService heroService;
