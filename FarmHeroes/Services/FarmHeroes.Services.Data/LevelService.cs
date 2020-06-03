@@ -50,7 +50,7 @@
 
             if (hero.Level.CurrentExperience >= hero.Level.NeededExperience)
             {
-                await this.LevelUpHero();
+                await this.LevelUpHero(id);
             }
 
             await this.context.SaveChangesAsync();
