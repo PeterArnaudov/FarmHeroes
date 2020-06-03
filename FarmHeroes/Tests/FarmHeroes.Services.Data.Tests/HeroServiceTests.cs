@@ -24,33 +24,42 @@
     public class HeroServiceTests
     {
         private const string UserName = "TestUser";
+        private readonly FarmHeroesDbContext context;
+
+        public HeroServiceTests()
+        {
+            this.context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
+        }
+
+        public async Task Dispose()
+        {
+            await this.context.Database.EnsureDeletedAsync();
+        }
 
         [Fact]
         public async Task CreateHeroShouldCreateHeroInDatabase()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             HeroCreateInputModel inputModel = new HeroCreateInputModel() { Fraction = Fraction.Sheep, Gender = Gender.Male };
-            HeroService heroService = this.GetHeroServiceInitialValues(context);
+            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
 
             // Act
             await heroService.CreateHero(inputModel);
 
             // Assert
-            Assert.True(context.Heroes.Any());
+            Assert.True(this.context.Heroes.Any());
         }
 
         [Fact]
         public async Task CreateHeroShouldCreateHeroWithProperName()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             HeroCreateInputModel inputModel = new HeroCreateInputModel() { Fraction = Fraction.Sheep, Gender = Gender.Male };
-            HeroService heroService = this.GetHeroServiceInitialValues(context);
+            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
 
             // Act
             await heroService.CreateHero(inputModel);
-            Hero hero = context.Heroes.First();
+            Hero hero = this.context.Heroes.First();
 
             // Assert
             Assert.Equal(UserName, hero.Name);
@@ -60,13 +69,12 @@
         public async Task CreateHeroShouldIgnoreNameInInputModel()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             HeroCreateInputModel inputModel = new HeroCreateInputModel() { Fraction = Fraction.Sheep, Gender = Gender.Male, Name = "Name" };
-            HeroService heroService = this.GetHeroServiceInitialValues(context);
+            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
 
             // Act
             await heroService.CreateHero(inputModel);
-            Hero hero = context.Heroes.First();
+            Hero hero = this.context.Heroes.First();
 
             // Assert
             Assert.Equal(UserName, hero.Name);
@@ -76,25 +84,23 @@
         public async Task CreateHeroShouldUseGenderAndFractionFromInputModel()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             Fraction fraction = Fraction.Pig;
             Gender gender = Gender.Female;
             HeroCreateInputModel inputModel = new HeroCreateInputModel() { Fraction = fraction, Gender = gender };
-            HeroService heroService = this.GetHeroServiceInitialValues(context);
+            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
 
             // Act
             await heroService.CreateHero(inputModel);
 
             // Assert
-            Assert.True(context.Heroes.Any(x => x.Fraction == fraction && x.Gender == gender));
+            Assert.True(this.context.Heroes.Any(x => x.Fraction == fraction && x.Gender == gender));
         }
 
         [Fact]
-        public async Task GetCurrentHeroShouldReturnCorrectHero()
+        public async Task GetHeroWithoutParameterShouldReturnCorrectHero()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
-            HeroService heroService = this.GetHeroServiceInitialValues(context);
+            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
 
             // Act
             Hero hero = await heroService.GetHero();
@@ -104,15 +110,14 @@
         }
 
         [Fact]
-        public async Task GetHeroByIdShouldReturnCorrectHero()
+        public async Task GetHeroWithParameterShouldReturnCorrectHero()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
-            HeroService heroService = this.GetHeroServiceInitialValues(context);
+            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
             Hero heroOne = new Hero() { Name = "HeroOne" };
             Hero heroTwo = new Hero() { Name = "HeroTwo" };
-            await context.Heroes.AddAsync(heroOne);
-            await context.Heroes.AddAsync(heroTwo);
+            await this.context.Heroes.AddAsync(heroOne);
+            await this.context.Heroes.AddAsync(heroTwo);
 
             // Act
             Hero heroById = await heroService.GetHero(heroTwo.Id);
@@ -122,13 +127,12 @@
         }
 
         [Fact]
-        public async Task GetHeroByIdInvalidIdShouldReturnNull()
+        public async Task GetHeroWithInvalidIdShouldReturnNull()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
-            HeroService heroService = this.GetHeroServiceInitialValues(context);
+            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
             Hero hero = new Hero() { Name = "HeroOne" };
-            await context.Heroes.AddAsync(hero);
+            await this.context.Heroes.AddAsync(hero);
 
             // Act
             Hero heroById = await heroService.GetHero(hero.Id + 1);
@@ -138,13 +142,12 @@
         }
 
         [Fact]
-        public async Task GetHeroByNameInvalidNameShouldReturnNull()
+        public async Task GetHeroByNameWithInvalidNameShouldReturnNull()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
-            HeroService heroService = this.GetHeroServiceInitialValues(context);
+            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
             Hero hero = new Hero() { Name = "HeroOne" };
-            await context.Heroes.AddAsync(hero);
+            await this.context.Heroes.AddAsync(hero);
 
             // Act
             Hero heroByName = await heroService.GetHeroByName("Invalid name");
@@ -157,8 +160,7 @@
         public async Task ValidateCurrentHeroLocationShouldNotThrowExceptionIfWorkStatusIdle()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
-            HeroService heroService = this.GetHeroServiceInitialValues(context);
+            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
 
             // Act
             await heroService.ValidateCurrentHeroLocation(WorkStatus.Farm);
@@ -168,8 +170,7 @@
         public async Task ValidateCurrentHeroLocationShouldNotThrowExceptionIfWorkStatusSame()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
-            HeroService heroService = this.GetHeroService(context);
+            HeroService heroService = this.GetHeroService(this.context);
 
             // Act
             await heroService.ValidateCurrentHeroLocation(WorkStatus.Farm);
@@ -179,8 +180,7 @@
         public async Task ValidateCurrentHeroLocationShouldThrowExceptionIfWorkStatusDifferent()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
-            HeroService heroService = this.GetHeroService(context);
+            HeroService heroService = this.GetHeroService(this.context);
 
             // Act
             await Assert.ThrowsAsync<FarmHeroesException>(async () => await heroService.ValidateCurrentHeroLocation(WorkStatus.Mine));

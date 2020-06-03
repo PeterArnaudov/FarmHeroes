@@ -15,16 +15,26 @@
     public class HealthServiceTests
     {
         private readonly Hero hero = new Hero();
+        private readonly FarmHeroesDbContext context;
+
+        public HealthServiceTests()
+        {
+            this.context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
+        }
+
+        public async Task Dispose()
+        {
+            await this.context.Database.EnsureDeletedAsync();
+        }
 
         [Fact]
-        public async Task GetHealthByIdShouldReturnCorrectHealth()
+        public async Task GetHealthShouldReturnCorrectHealth()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             Health health = new Health();
             this.hero.Health = health;
-            await context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService(context);
+            await this.context.SaveChangesAsync();
+            HealthService healthService = this.GetHealthService(this.context);
 
             // Act
             Health actual = await healthService.GetHealth(health.Id);
@@ -34,31 +44,31 @@
         }
 
         [Fact]
-        public async Task GetHealthByIdWithInvalidIdShouldThrowException()
+        public async Task GetHealthWithInvalidIdShouldThrowException()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             Health health = new Health();
             this.hero.Health = health;
-            await context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService(context);
+            await this.context.SaveChangesAsync();
+            HealthService healthService = this.GetHealthService(this.context);
 
             // Act
-            await Assert.ThrowsAsync<Exception>(async () => { await healthService.GetHealth(health.Id + 1); });
+            await Assert.ThrowsAsync<NullReferenceException>(async () => { await healthService.GetHealth(health.Id + 1); });
         }
 
         [Fact]
-        public async Task GetCurrentHealthShouldReturnCorrectHealth()
+        public async Task GetHealthShouldReturnCorrectHealthWithoutParameter()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
-            HealthService healthService = this.GetHealthService(context);
+            HealthService healthService = this.GetHealthService(this.context);
 
             // Act
             Health actual = await healthService.GetHealth();
 
             // Assert
             Assert.Equal(this.hero.Health, actual);
+
+            await this.context.Database.EnsureDeletedAsync();
         }
 
         [Fact]
@@ -66,11 +76,10 @@
         {
             // Arrange
             int mass = 15;
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             Health health = new Health();
-            await context.Healths.AddAsync(health);
-            await context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService(context);
+            await this.context.Healths.AddAsync(health);
+            await this.context.SaveChangesAsync();
+            HealthService healthService = this.GetHealthService(this.context);
 
             // Act
             await healthService.IncreaseMaximumHealth(mass);
@@ -84,8 +93,7 @@
         public async Task HealCurrentHeroShouldWorkProperly()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
-            HealthService healthService = this.GetHealthService(context);
+            HealthService healthService = this.GetHealthService(this.context);
             this.hero.Health.Maximum = 1000;
             int healAmount = 100;
 
@@ -94,14 +102,15 @@
 
             // Assert
             Assert.Equal(50 + healAmount, this.hero.Health.Current);
+
+            await this.context.Database.EnsureDeletedAsync();
         }
 
         [Fact]
         public async Task HealCurrentHeroShouldNotIncreaseCurrentHealthAboveMaximumHealthWithInitialValues()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
-            HealthService healthService = this.GetHealthService(context);
+            HealthService healthService = this.GetHealthService(this.context);
             int healAmount = 100;
 
             // Act
@@ -115,8 +124,7 @@
         public async Task HealCurrentHeroShouldNotIncreaseCurrentHealthAboveMaximumHealth()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
-            HealthService healthService = this.GetHealthService(context);
+            HealthService healthService = this.GetHealthService(this.context);
             this.hero.Health.Maximum = 100;
             int healAmount = 100;
 
@@ -131,8 +139,7 @@
         public async Task HealCurrentHeroToMaximumShouldHealExactlyToTheMaximumWithInitialValues()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
-            HealthService healthService = this.GetHealthService(context);
+            HealthService healthService = this.GetHealthService(this.context);
             this.hero.Health.Current -= 30;
 
             // Act
@@ -146,8 +153,7 @@
         public async Task HealCurrentHeroToMaximumShouldHealExactlyToTheMaximum()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
-            HealthService healthService = this.GetHealthService(context);
+            HealthService healthService = this.GetHealthService(this.context);
             this.hero.Health.Maximum += 100;
 
             // Act
@@ -161,11 +167,10 @@
         public async Task ReduceHealthByIdShouldReduceHealth()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             Health health = new Health();
             this.hero.Health = health;
-            await context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService(context);
+            await this.context.SaveChangesAsync();
+            HealthService healthService = this.GetHealthService(this.context);
             int damage = 10;
 
             // Act
@@ -180,11 +185,10 @@
         public async Task ReduceHealthByIdShouldNotReduceHealthBelowOne()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             Health health = new Health();
             this.hero.Health = health;
-            await context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService(context);
+            await this.context.SaveChangesAsync();
+            HealthService healthService = this.GetHealthService(this.context);
             int damage = health.Maximum;
 
             // Act
@@ -198,11 +202,10 @@
         public async Task CheckIfDeadShouldReturnTrueIfCurrentHealthEqualToOne()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
             Health health = new Health() { Current = 1 };
             this.hero.Health = health;
-            await context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService(context);
+            await this.context.SaveChangesAsync();
+            HealthService healthService = this.GetHealthService(this.context);
 
             // Act
             bool actual = await healthService.CheckIfDead(health.Id);
@@ -233,7 +236,7 @@
             // HeroService
             Mock<IHeroService> heroServiceMock = new Mock<IHeroService>();
             heroServiceMock
-                .Setup(x => x.GetHero())
+                .Setup(x => x.GetHero(0))
                 .Returns(Task.FromResult<Hero>(this.hero));
 
             // ResourcePouchService
