@@ -65,7 +65,7 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task SetCannotAttackHeroUntilById(int seconds, int id = 0)
+        public async Task SetCannotAttackHeroUntil(int seconds, int id = 0)
         {
             Chronometer chronometer = await this.GetChronometer(id);
             chronometer.CannotAttackHeroUntil = DateTime.UtcNow.AddSeconds(seconds);
@@ -73,7 +73,7 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task SetCannotAttackMonsterUntilById(int seconds, int id = 0)
+        public async Task SetCannotAttackMonsterUntil(int seconds, int id = 0)
         {
             Chronometer chronometer = await this.GetChronometer(id);
             chronometer.CannotAttackMonsterUntil = DateTime.UtcNow.AddSeconds(seconds);
@@ -81,7 +81,7 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task SetCannotBeAttackedUntilById(int seconds, int id = 0)
+        public async Task SetCannotBeAttackedUntil(int seconds, int id = 0)
         {
             Chronometer chronometer = await this.GetChronometer(id);
             chronometer.CannotBeAttackedUntil = DateTime.UtcNow.AddSeconds(seconds);

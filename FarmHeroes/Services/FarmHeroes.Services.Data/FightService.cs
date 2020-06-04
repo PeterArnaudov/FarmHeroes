@@ -185,8 +185,8 @@
             await this.statisticsService.UpdateStatistics(attacker.Statistics);
             await this.statisticsService.UpdateStatistics(defender.Statistics);
 
-            await this.chronometerService.SetCannotAttackHeroUntilById(SecondsUntilNextHeroAttack, attacker.ChronometerId);
-            await this.chronometerService.SetCannotBeAttackedUntilById(SecondsDefenseGranted, defender.ChronometerId);
+            await this.chronometerService.SetCannotAttackHeroUntil(SecondsUntilNextHeroAttack, attacker.ChronometerId);
+            await this.chronometerService.SetCannotBeAttackedUntil(SecondsDefenseGranted, defender.ChronometerId);
 
             fight.WinnerName = winnerName;
             fight.GoldStolen = goldStolen;
@@ -373,7 +373,7 @@
 
             await this.statisticsService.UpdateStatistics(attacker.Statistics);
 
-            await this.chronometerService.SetCannotAttackMonsterUntilById(SecondsUntilNextMonsterAttack, attacker.ChronometerId);
+            await this.chronometerService.SetCannotAttackMonsterUntil(SecondsUntilNextMonsterAttack, attacker.ChronometerId);
 
             fight.WinnerName = winnerName;
             fight.GoldStolen = goldStolen;
