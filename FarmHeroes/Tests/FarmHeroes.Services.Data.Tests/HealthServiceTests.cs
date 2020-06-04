@@ -16,12 +16,17 @@
     public class HealthServiceTests : IDisposable
     {
         private readonly Hero hero;
+        private readonly Hero heroTwo;
         private readonly FarmHeroesDbContext context;
+        private readonly HealthService healthService;
 
         public HealthServiceTests()
         {
             this.hero = new Hero();
+            this.heroTwo = new Hero();
+
             this.context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
+            this.healthService = this.GetHealthService();
         }
 
         public void Dispose()
@@ -30,41 +35,34 @@
         }
 
         [Fact]
-        public async Task GetHealthShouldReturnCorrectHealth()
+        public async Task GetHealthWithoutIdParameterShouldReturnCorrectHealth()
         {
-            // Arrange
-            HealthService healthService = this.GetHealthService();
-
             // Act
-            Health actual = await healthService.GetHealth(this.hero.Id);
+            Health actual = await this.healthService.GetHealth();
 
             // Assert
             Assert.Equal(this.hero.Health, actual);
+        }
+
+        [Fact]
+        public async Task GetHealthWithIdParameterShouldReturnCorrectHealth()
+        {
+            // Arrange
+            await this.context.Heroes.AddAsync(this.heroTwo);
+            await this.context.SaveChangesAsync();
+
+            // Act
+            Health actual = await this.healthService.GetHealth(this.heroTwo.Id);
+
+            // Assert
+            Assert.Equal(this.heroTwo.Health, actual);
         }
 
         [Fact]
         public async Task GetHealthWithInvalidIdShouldThrowException()
         {
-            // Arrange
-            HealthService healthService = this.GetHealthService();
-
             // Act
-            await Assert.ThrowsAsync<NullReferenceException>(async () => { await healthService.GetHealth(this.hero.Id + 1); });
-        }
-
-        [Fact]
-        public async Task GetHealthShouldReturnCorrectHealthWithoutParameter()
-        {
-            // Arrange
-            HealthService healthService = this.GetHealthService();
-
-            // Act
-            Health actual = await healthService.GetHealth();
-
-            // Assert
-            Assert.Equal(this.hero.Health, actual);
-
-            await this.context.Database.EnsureDeletedAsync();
+            await Assert.ThrowsAsync<NullReferenceException>(async () => { await this.healthService.GetHealth(this.hero.Id + 5); });
         }
 
         [Fact]
@@ -72,10 +70,9 @@
         {
             // Arrange
             int mass = 15;
-            HealthService healthService = this.GetHealthService();
 
             // Act
-            await healthService.IncreaseMaximumHealth(mass);
+            await this.healthService.IncreaseMaximumHealth(mass);
             int expected = HealthFormulas.CalculateMaximumHealth(mass);
 
             // Assert
@@ -86,12 +83,11 @@
         public async Task HealCurrentHeroShouldWorkProperly()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService();
             this.hero.Health.Maximum = 1000;
             int healAmount = 100;
 
             // Act
-            await healthService.HealCurrentHero(healAmount, 0);
+            await this.healthService.HealCurrentHero(healAmount, 0);
 
             // Assert
             Assert.Equal(50 + healAmount, this.hero.Health.Current);
@@ -101,11 +97,10 @@
         public async Task HealCurrentHeroShouldNotIncreaseCurrentHealthAboveMaximumHealthWithInitialValues()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService();
             int healAmount = 100;
 
             // Act
-            await healthService.HealCurrentHero(healAmount, 0);
+            await this.healthService.HealCurrentHero(healAmount, 0);
 
             // Assert
             Assert.Equal(this.hero.Health.Maximum, this.hero.Health.Current);
@@ -115,12 +110,11 @@
         public async Task HealCurrentHeroShouldNotIncreaseCurrentHealthAboveMaximumHealth()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService();
             this.hero.Health.Maximum = 100;
             int healAmount = 100;
 
             // Act
-            await healthService.HealCurrentHero(healAmount, 0);
+            await this.healthService.HealCurrentHero(healAmount, 0);
 
             // Assert
             Assert.Equal(this.hero.Health.Maximum, this.hero.Health.Current);
@@ -130,11 +124,10 @@
         public async Task HealCurrentHeroToMaximumShouldHealExactlyToTheMaximumWithInitialValues()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService();
             this.hero.Health.Current -= 30;
 
             // Act
-            await healthService.HealCurrentHeroToMaximum(0);
+            await this.healthService.HealCurrentHeroToMaximum(0);
 
             // Assert
             Assert.Equal(this.hero.Health.Maximum, this.hero.Health.Current);
@@ -144,11 +137,10 @@
         public async Task HealCurrentHeroToMaximumShouldHealExactlyToTheMaximum()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService();
             this.hero.Health.Maximum += 100;
 
             // Act
-            await healthService.HealCurrentHeroToMaximum(0);
+            await this.healthService.HealCurrentHeroToMaximum(0);
 
             // Assert
             Assert.Equal(this.hero.Health.Maximum, this.hero.Health.Current);
@@ -158,48 +150,43 @@
         public async Task ReduceHealthWithIdParameterShouldReduceHealth()
         {
             // Arrange
-            Health health = new Health();
-            this.hero.Health = health;
+            await this.context.Heroes.AddAsync(this.heroTwo);
             await this.context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService();
             int damage = 10;
 
             // Act
-            await healthService.ReduceHealth(damage, health.Id);
-            int expected = health.Maximum - damage;
+            await this.healthService.ReduceHealth(damage, this.heroTwo.Id);
+            int expected = this.heroTwo.Health.Maximum - damage;
 
             // Assert
-            Assert.Equal(expected, health.Current);
+            Assert.Equal(expected, this.heroTwo.Health.Current);
         }
 
         [Fact]
         public async Task ReduceHealthWithIdParameterShouldNotReduceHealthBelowOne()
         {
             // Arrange
-            Health health = new Health();
-            this.hero.Health = health;
+            await this.context.Heroes.AddAsync(this.heroTwo);
             await this.context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService();
-            int damage = health.Maximum;
+            int damage = this.heroTwo.Health.Maximum;
 
             // Act
-            await healthService.ReduceHealth(damage, health.Id);
+            await this.healthService.ReduceHealth(damage, this.heroTwo.Id);
 
             // Assert
-            Assert.Equal(1, health.Current);
+            Assert.Equal(1, this.heroTwo.Health.Current);
         }
 
         [Fact]
         public async Task CheckIfDeadWithIdParameterShouldReturnTrueIfCurrentHealthEqualToOne()
         {
             // Arrange
-            Health health = new Health() { Current = 1 };
-            this.hero.Health = health;
+            this.heroTwo.Health.Current = 1;
+            await this.context.Heroes.AddAsync(this.heroTwo);
             await this.context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService();
 
             // Act
-            bool actual = await healthService.CheckIfDead(health.Id);
+            bool actual = await this.healthService.CheckIfDead(this.heroTwo.Id);
 
             // Assert
             Assert.True(actual);
@@ -209,14 +196,11 @@
         public async Task CheckIfDeadWithIdParameterShouldReturnFalseIfCurrentHealthAboveOne()
         {
             // Arrange
-            FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
-            Health health = new Health();
-            this.hero.Health = health;
-            await context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService();
+            await this.context.Heroes.AddAsync(this.heroTwo);
+            await this.context.SaveChangesAsync();
 
             // Act
-            bool actual = await healthService.CheckIfDead(health.Id);
+            bool actual = await this.healthService.CheckIfDead(this.heroTwo.Id);
 
             // Assert
             Assert.False(actual);
@@ -228,10 +212,9 @@
             // Arrange
             this.hero.Health.Current = 1;
             await this.context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService();
 
             // Act
-            bool actual = await healthService.CheckIfDead(0);
+            bool actual = await this.healthService.CheckIfDead(0);
 
             // Assert
             Assert.True(actual);
@@ -240,11 +223,8 @@
         [Fact]
         public async Task CheckIfDeadWithoutIdParameterShouldReturnFalseIfCurrentHealthAboveOne()
         {
-            // Arrange
-            HealthService healthService = this.GetHealthService();
-
             // Act
-            bool actual = await healthService.CheckIfDead(0);
+            bool actual = await this.healthService.CheckIfDead(0);
 
             // Assert
             Assert.False(actual);
@@ -253,11 +233,8 @@
         [Fact]
         public async Task UpdateLevelShouldChangeHealthProperly()
         {
-            // Arrange
-            HealthService healthService = this.GetHealthService();
-
             // Act
-            await healthService.UpdateHealth(
+            await this.healthService.UpdateHealth(
                 new HealthModifyInputModel()
                 {
                     HealthCurrent = 30,
@@ -277,6 +254,9 @@
             heroServiceMock
                 .Setup(x => x.GetHero(0))
                 .Returns(Task.FromResult<Hero>(this.hero));
+            heroServiceMock
+                .Setup(x => x.GetHero(1))
+                .Returns(Task.FromResult<Hero>(this.heroTwo));
             heroServiceMock
                 .Setup(x => x.GetHeroByName("Name"))
                 .Returns(Task.FromResult<Hero>(this.hero));

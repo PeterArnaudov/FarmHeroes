@@ -17,6 +17,7 @@
         private readonly Hero hero;
         private readonly Hero heroTwo;
         private readonly FarmHeroesDbContext context;
+        private readonly LevelService levelService;
 
         public LevelServiceTests()
         {
@@ -30,9 +31,11 @@
                 },
             };
 
-            this.heroTwo = new Hero() { Id = 1 };
+            this.heroTwo = new Hero();
 
             this.context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
+
+            this.levelService = this.GetLevelService();
         }
 
         public void Dispose()
@@ -43,11 +46,8 @@
         [Fact]
         public async Task GetCurrentHeroLevelShouldReturnCorrectLevel()
         {
-            // Arrange
-            LevelService levelService = this.GetLevelService();
-
             // Act
-            int actual = await levelService.GetCurrentHeroLevel();
+            int actual = await this.levelService.GetCurrentHeroLevel();
 
             // Assert
             Assert.Equal(this.hero.Level.CurrentLevel, actual);
@@ -56,12 +56,9 @@
         [Fact]
         public async Task GiveHeroExperienceWithoutIdShouldGiveExperienceToCurrentHero()
         {
-            // Arrange
-            LevelService levelService = this.GetLevelService();
-
             // Act
             int experience = this.hero.Level.NeededExperience - 10;
-            await levelService.GiveHeroExperience(experience);
+            await this.levelService.GiveHeroExperience(experience);
 
             // Assert
             Assert.Equal(experience, this.hero.Level.CurrentExperience);
@@ -71,12 +68,11 @@
         public async Task GiveHeroExperienceWithoutIdShouldGiveExperienceToCurrentHeroAndLevelUp()
         {
             // Arrange
-            LevelService levelService = this.GetLevelService();
             await this.SeedLevels(10);
 
             // Act
             int experience = this.hero.Level.NeededExperience;
-            await levelService.GiveHeroExperience(experience);
+            await this.levelService.GiveHeroExperience(experience);
 
             // Assert
             Assert.Equal(0, this.hero.Level.CurrentExperience);
@@ -87,13 +83,12 @@
         public async Task GiveHeroExperienceWithoutIdShouldGiveExperienceToCurrentHeroAndLevelUpAndCarryExtraExperience()
         {
             // Arrange
-            LevelService levelService = this.GetLevelService();
             await this.SeedLevels(10);
 
             // Act
             int extraExperience = 10;
             int experience = this.hero.Level.NeededExperience + extraExperience;
-            await levelService.GiveHeroExperience(experience);
+            await this.levelService.GiveHeroExperience(experience);
 
             // Assert
             Assert.Equal(extraExperience, this.hero.Level.CurrentExperience);
@@ -104,11 +99,12 @@
         public async Task GiveHeroExperienceWithIdShouldGiveExperienceToCorrespondingHero()
         {
             // Arrange
-            LevelService levelService = this.GetLevelService();
+            await this.context.Heroes.AddAsync(this.heroTwo);
+            await this.context.SaveChangesAsync();
 
             // Act
             int experience = this.heroTwo.Level.NeededExperience - 5;
-            await levelService.GiveHeroExperience(experience, this.heroTwo.Id);
+            await this.levelService.GiveHeroExperience(experience, this.heroTwo.Id);
 
             // Assert
             Assert.Equal(experience, this.heroTwo.Level.CurrentExperience);
@@ -118,12 +114,13 @@
         public async Task GiveHeroExperienceWithIdShouldGiveExperienceToCorrespondingHeroAndLevelUp()
         {
             // Arrange
-            LevelService levelService = this.GetLevelService();
+            await this.context.Heroes.AddAsync(this.heroTwo);
+            await this.context.SaveChangesAsync();
             await this.SeedLevels(10);
 
             // Act
             int experience = this.heroTwo.Level.NeededExperience;
-            await levelService.GiveHeroExperience(experience, this.heroTwo.Id);
+            await this.levelService.GiveHeroExperience(experience, this.heroTwo.Id);
 
             // Assert
             Assert.Equal(0, this.heroTwo.Level.CurrentExperience);
@@ -134,13 +131,14 @@
         public async Task GiveHeroExperienceWithIdShouldGiveExperienceToCorrespondingHeroAndLevelUpAndCarryExtraExperience()
         {
             // Arrange
-            LevelService levelService = this.GetLevelService();
+            await this.context.Heroes.AddAsync(this.heroTwo);
+            await this.context.SaveChangesAsync();
             await this.SeedLevels(10);
 
             // Act
             int extraExperience = 10;
             int experience = this.heroTwo.Level.NeededExperience + extraExperience;
-            await levelService.GiveHeroExperience(experience, this.heroTwo.Id);
+            await this.levelService.GiveHeroExperience(experience, this.heroTwo.Id);
 
             // Assert
             Assert.Equal(extraExperience, this.heroTwo.Level.CurrentExperience);
@@ -151,11 +149,10 @@
         public async Task UpdateLevelShouldChangeLevelProperly()
         {
             // Arrange
-            LevelService levelService = this.GetLevelService();
             await this.SeedLevels(10);
 
             // Act
-            await levelService.UpdateLevel(new LevelModifyInputModel() { LevelCurrentLevel = 10, Name = "Name" });
+            await this.levelService.UpdateLevel(new LevelModifyInputModel() { LevelCurrentLevel = 10, Name = "Name" });
 
             // Assert
             Assert.Equal(10, this.hero.Level.CurrentLevel);
