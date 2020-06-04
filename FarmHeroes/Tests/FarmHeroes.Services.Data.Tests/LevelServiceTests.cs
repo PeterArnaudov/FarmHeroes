@@ -44,7 +44,7 @@
         public async Task GetCurrentHeroLevelShouldReturnCorrectLevel()
         {
             // Arrange
-            LevelService levelService = this.GetLevelService(this.context);
+            LevelService levelService = this.GetLevelService();
 
             // Act
             int actual = await levelService.GetCurrentHeroLevel();
@@ -57,7 +57,7 @@
         public async Task GiveHeroExperienceWithoutIdShouldGiveExperienceToCurrentHero()
         {
             // Arrange
-            LevelService levelService = this.GetLevelService(this.context);
+            LevelService levelService = this.GetLevelService();
 
             // Act
             int experience = this.hero.Level.NeededExperience - 10;
@@ -71,7 +71,7 @@
         public async Task GiveHeroExperienceWithoutIdShouldGiveExperienceToCurrentHeroAndLevelUp()
         {
             // Arrange
-            LevelService levelService = this.GetLevelService(this.context);
+            LevelService levelService = this.GetLevelService();
             await this.SeedLevels(10);
 
             // Act
@@ -87,7 +87,7 @@
         public async Task GiveHeroExperienceWithoutIdShouldGiveExperienceToCurrentHeroAndLevelUpAndCarryExtraExperience()
         {
             // Arrange
-            LevelService levelService = this.GetLevelService(this.context);
+            LevelService levelService = this.GetLevelService();
             await this.SeedLevels(10);
 
             // Act
@@ -104,7 +104,7 @@
         public async Task GiveHeroExperienceWithIdShouldGiveExperienceToCorrespondingHero()
         {
             // Arrange
-            LevelService levelService = this.GetLevelService(this.context);
+            LevelService levelService = this.GetLevelService();
 
             // Act
             int experience = this.heroTwo.Level.NeededExperience - 5;
@@ -118,7 +118,7 @@
         public async Task GiveHeroExperienceWithIdShouldGiveExperienceToCorrespondingHeroAndLevelUp()
         {
             // Arrange
-            LevelService levelService = this.GetLevelService(this.context);
+            LevelService levelService = this.GetLevelService();
             await this.SeedLevels(10);
 
             // Act
@@ -134,7 +134,7 @@
         public async Task GiveHeroExperienceWithIdShouldGiveExperienceToCorrespondingHeroAndLevelUpAndCarryExtraExperience()
         {
             // Arrange
-            LevelService levelService = this.GetLevelService(this.context);
+            LevelService levelService = this.GetLevelService();
             await this.SeedLevels(10);
 
             // Act
@@ -151,7 +151,7 @@
         public async Task UpdateLevelShouldChangeLevelProperly()
         {
             // Arrange
-            LevelService levelService = this.GetLevelService(this.context);
+            LevelService levelService = this.GetLevelService();
             await this.SeedLevels(10);
 
             // Act
