@@ -5,6 +5,7 @@
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Tests.Common;
+    using FarmHeroes.Web.ViewModels.LevelModels;
     using Moq;
     using System;
     using System.Collections.Generic;
@@ -146,6 +147,22 @@
             Assert.Equal(2, this.heroTwo.Level.CurrentLevel);
         }
 
+        [Fact]
+        public async Task UpdateLevelShouldChangeLevelProperly()
+        {
+            // Arrange
+            LevelService levelService = this.GetLevelService(this.context);
+            await this.SeedLevels(10);
+
+            // Act
+            await levelService.UpdateLevel(new LevelModifyInputModel() { LevelCurrentLevel = 10, Name = "Name" });
+
+            // Assert
+            Assert.Equal(10, this.hero.Level.CurrentLevel);
+            Assert.Equal(63, this.hero.Level.NeededExperience);
+            Assert.Equal(0, this.hero.Level.CurrentExperience);
+        }
+
         private LevelService GetLevelService(FarmHeroesDbContext context)
         {
             // HeroService
@@ -156,6 +173,9 @@
             heroServiceMock
                 .Setup(x => x.GetHero(1))
                 .Returns(Task.FromResult<Hero>(this.heroTwo));
+            heroServiceMock
+                .Setup(x => x.GetHeroByName("Name"))
+                .Returns(Task.FromResult<Hero>(this.hero));
 
             // NotificationService
             Mock<INotificationService> notificationServiceMock = new Mock<INotificationService>();

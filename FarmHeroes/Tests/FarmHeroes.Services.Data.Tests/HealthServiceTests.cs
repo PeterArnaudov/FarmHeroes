@@ -7,6 +7,7 @@
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Formulas;
     using FarmHeroes.Services.Data.Tests.Common;
+    using FarmHeroes.Web.ViewModels.HealthModels;
     using Moq;
     using System;
     using System.Threading.Tasks;
@@ -32,29 +33,23 @@
         public async Task GetHealthShouldReturnCorrectHealth()
         {
             // Arrange
-            Health health = new Health();
-            this.hero.Health = health;
-            await this.context.SaveChangesAsync();
             HealthService healthService = this.GetHealthService(this.context);
 
             // Act
-            Health actual = await healthService.GetHealth(health.Id);
+            Health actual = await healthService.GetHealth(this.hero.Id);
 
             // Assert
-            Assert.Equal(health, actual);
+            Assert.Equal(this.hero.Health, actual);
         }
 
         [Fact]
         public async Task GetHealthWithInvalidIdShouldThrowException()
         {
             // Arrange
-            Health health = new Health();
-            this.hero.Health = health;
-            await this.context.SaveChangesAsync();
             HealthService healthService = this.GetHealthService(this.context);
 
             // Act
-            await Assert.ThrowsAsync<NullReferenceException>(async () => { await healthService.GetHealth(health.Id + 1); });
+            await Assert.ThrowsAsync<NullReferenceException>(async () => { await healthService.GetHealth(this.hero.Id + 1); });
         }
 
         [Fact]
@@ -77,9 +72,6 @@
         {
             // Arrange
             int mass = 15;
-            Health health = new Health();
-            await this.context.Healths.AddAsync(health);
-            await this.context.SaveChangesAsync();
             HealthService healthService = this.GetHealthService(this.context);
 
             // Act
@@ -103,8 +95,6 @@
 
             // Assert
             Assert.Equal(50 + healAmount, this.hero.Health.Current);
-
-            await this.context.Database.EnsureDeletedAsync();
         }
 
         [Fact]
@@ -165,7 +155,7 @@
         }
 
         [Fact]
-        public async Task ReduceHealthByIdShouldReduceHealth()
+        public async Task ReduceHealthWithIdParameterShouldReduceHealth()
         {
             // Arrange
             Health health = new Health();
@@ -183,7 +173,7 @@
         }
 
         [Fact]
-        public async Task ReduceHealthByIdShouldNotReduceHealthBelowOne()
+        public async Task ReduceHealthWithIdParameterShouldNotReduceHealthBelowOne()
         {
             // Arrange
             Health health = new Health();
@@ -200,7 +190,7 @@
         }
 
         [Fact]
-        public async Task CheckIfDeadShouldReturnTrueIfCurrentHealthEqualToOne()
+        public async Task CheckIfDeadWithIdParameterShouldReturnTrueIfCurrentHealthEqualToOne()
         {
             // Arrange
             Health health = new Health() { Current = 1 };
@@ -216,7 +206,7 @@
         }
 
         [Fact]
-        public async Task CheckIfDeadShouldReturnFalseIfCurrentHealthAboveOne()
+        public async Task CheckIfDeadWithIdParameterShouldReturnFalseIfCurrentHealthAboveOne()
         {
             // Arrange
             FarmHeroesDbContext context = FarmHeroesDbContextInMemoryInitializer.InitializeContext();
@@ -232,12 +222,63 @@
             Assert.False(actual);
         }
 
+        [Fact]
+        public async Task CheckIfDeadWithoutIdParameterShouldReturnTrueIfCurrentHealthEqualToOne()
+        {
+            // Arrange
+            this.hero.Health.Current = 1;
+            await this.context.SaveChangesAsync();
+            HealthService healthService = this.GetHealthService(this.context);
+
+            // Act
+            bool actual = await healthService.CheckIfDead(0);
+
+            // Assert
+            Assert.True(actual);
+        }
+
+        [Fact]
+        public async Task CheckIfDeadWithoutIdParameterShouldReturnFalseIfCurrentHealthAboveOne()
+        {
+            // Arrange
+            HealthService healthService = this.GetHealthService(this.context);
+
+            // Act
+            bool actual = await healthService.CheckIfDead(0);
+
+            // Assert
+            Assert.False(actual);
+        }
+
+        [Fact]
+        public async Task UpdateLevelShouldChangeHealthProperly()
+        {
+            // Arrange
+            HealthService healthService = this.GetHealthService(this.context);
+
+            // Act
+            await healthService.UpdateHealth(
+                new HealthModifyInputModel()
+                {
+                    HealthCurrent = 30,
+                    HealthMaximum = 60,
+                    Name = "Name",
+                });
+
+            // Assert
+            Assert.Equal(30, this.hero.Health.Current);
+            Assert.Equal(60, this.hero.Health.Maximum);
+        }
+
         private HealthService GetHealthService(FarmHeroesDbContext context)
         {
             // HeroService
             Mock<IHeroService> heroServiceMock = new Mock<IHeroService>();
             heroServiceMock
                 .Setup(x => x.GetHero(0))
+                .Returns(Task.FromResult<Hero>(this.hero));
+            heroServiceMock
+                .Setup(x => x.GetHeroByName("Name"))
                 .Returns(Task.FromResult<Hero>(this.hero));
 
             // ResourcePouchService
