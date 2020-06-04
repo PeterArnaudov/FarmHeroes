@@ -33,7 +33,7 @@
         public async Task GetHealthShouldReturnCorrectHealth()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
 
             // Act
             Health actual = await healthService.GetHealth(this.hero.Id);
@@ -46,7 +46,7 @@
         public async Task GetHealthWithInvalidIdShouldThrowException()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
 
             // Act
             await Assert.ThrowsAsync<NullReferenceException>(async () => { await healthService.GetHealth(this.hero.Id + 1); });
@@ -56,7 +56,7 @@
         public async Task GetHealthShouldReturnCorrectHealthWithoutParameter()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
 
             // Act
             Health actual = await healthService.GetHealth();
@@ -72,7 +72,7 @@
         {
             // Arrange
             int mass = 15;
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
 
             // Act
             await healthService.IncreaseMaximumHealth(mass);
@@ -86,7 +86,7 @@
         public async Task HealCurrentHeroShouldWorkProperly()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
             this.hero.Health.Maximum = 1000;
             int healAmount = 100;
 
@@ -101,7 +101,7 @@
         public async Task HealCurrentHeroShouldNotIncreaseCurrentHealthAboveMaximumHealthWithInitialValues()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
             int healAmount = 100;
 
             // Act
@@ -115,7 +115,7 @@
         public async Task HealCurrentHeroShouldNotIncreaseCurrentHealthAboveMaximumHealth()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
             this.hero.Health.Maximum = 100;
             int healAmount = 100;
 
@@ -130,7 +130,7 @@
         public async Task HealCurrentHeroToMaximumShouldHealExactlyToTheMaximumWithInitialValues()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
             this.hero.Health.Current -= 30;
 
             // Act
@@ -144,7 +144,7 @@
         public async Task HealCurrentHeroToMaximumShouldHealExactlyToTheMaximum()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
             this.hero.Health.Maximum += 100;
 
             // Act
@@ -161,7 +161,7 @@
             Health health = new Health();
             this.hero.Health = health;
             await this.context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
             int damage = 10;
 
             // Act
@@ -179,7 +179,7 @@
             Health health = new Health();
             this.hero.Health = health;
             await this.context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
             int damage = health.Maximum;
 
             // Act
@@ -196,7 +196,7 @@
             Health health = new Health() { Current = 1 };
             this.hero.Health = health;
             await this.context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
 
             // Act
             bool actual = await healthService.CheckIfDead(health.Id);
@@ -213,7 +213,7 @@
             Health health = new Health();
             this.hero.Health = health;
             await context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService(context);
+            HealthService healthService = this.GetHealthService();
 
             // Act
             bool actual = await healthService.CheckIfDead(health.Id);
@@ -228,7 +228,7 @@
             // Arrange
             this.hero.Health.Current = 1;
             await this.context.SaveChangesAsync();
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
 
             // Act
             bool actual = await healthService.CheckIfDead(0);
@@ -241,7 +241,7 @@
         public async Task CheckIfDeadWithoutIdParameterShouldReturnFalseIfCurrentHealthAboveOne()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
 
             // Act
             bool actual = await healthService.CheckIfDead(0);
@@ -254,7 +254,7 @@
         public async Task UpdateLevelShouldChangeHealthProperly()
         {
             // Arrange
-            HealthService healthService = this.GetHealthService(this.context);
+            HealthService healthService = this.GetHealthService();
 
             // Act
             await healthService.UpdateHealth(
@@ -270,7 +270,7 @@
             Assert.Equal(60, this.hero.Health.Maximum);
         }
 
-        private HealthService GetHealthService(FarmHeroesDbContext context)
+        private HealthService GetHealthService()
         {
             // HeroService
             Mock<IHeroService> heroServiceMock = new Mock<IHeroService>();
@@ -289,7 +289,7 @@
             var configuration = new MapperConfiguration(cfg => cfg.AddProfile(farmHeroesProfile));
             IMapper mapper = new Mapper(configuration);
 
-            HealthService healthService = new HealthService(mapper, heroServiceMock.Object, resourcePouchServiceMock.Object, context);
+            HealthService healthService = new HealthService(mapper, heroServiceMock.Object, resourcePouchServiceMock.Object, this.context);
 
             return healthService;
         }

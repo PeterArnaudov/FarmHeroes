@@ -163,7 +163,7 @@
             Assert.Equal(0, this.hero.Level.CurrentExperience);
         }
 
-        private LevelService GetLevelService(FarmHeroesDbContext context)
+        private LevelService GetLevelService()
         {
             // HeroService
             Mock<IHeroService> heroServiceMock = new Mock<IHeroService>();
