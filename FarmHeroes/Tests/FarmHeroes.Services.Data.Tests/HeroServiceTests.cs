@@ -36,7 +36,7 @@
         {
             // Arrange
             HeroCreateInputModel inputModel = new HeroCreateInputModel() { Fraction = Fraction.Sheep, Gender = Gender.Male };
-            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
+            HeroService heroService = this.GetHeroServiceInitialValues();
 
             // Act
             await heroService.CreateHero(inputModel);
@@ -50,7 +50,7 @@
         {
             // Arrange
             HeroCreateInputModel inputModel = new HeroCreateInputModel() { Fraction = Fraction.Sheep, Gender = Gender.Male };
-            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
+            HeroService heroService = this.GetHeroServiceInitialValues();
 
             // Act
             await heroService.CreateHero(inputModel);
@@ -65,7 +65,7 @@
         {
             // Arrange
             HeroCreateInputModel inputModel = new HeroCreateInputModel() { Fraction = Fraction.Sheep, Gender = Gender.Male, Name = "Name" };
-            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
+            HeroService heroService = this.GetHeroServiceInitialValues();
 
             // Act
             await heroService.CreateHero(inputModel);
@@ -82,7 +82,7 @@
             Fraction fraction = Fraction.Pig;
             Gender gender = Gender.Female;
             HeroCreateInputModel inputModel = new HeroCreateInputModel() { Fraction = fraction, Gender = gender };
-            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
+            HeroService heroService = this.GetHeroServiceInitialValues();
 
             // Act
             await heroService.CreateHero(inputModel);
@@ -95,7 +95,7 @@
         public async Task GetHeroWithoutParameterShouldReturnCorrectHero()
         {
             // Arrange
-            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
+            HeroService heroService = this.GetHeroServiceInitialValues();
 
             // Act
             Hero hero = await heroService.GetHero();
@@ -108,7 +108,7 @@
         public async Task GetHeroWithParameterShouldReturnCorrectHero()
         {
             // Arrange
-            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
+            HeroService heroService = this.GetHeroServiceInitialValues();
             Hero heroOne = new Hero() { Name = "HeroOne" };
             Hero heroTwo = new Hero() { Name = "HeroTwo" };
             await this.context.Heroes.AddAsync(heroOne);
@@ -125,7 +125,7 @@
         public async Task GetHeroWithInvalidIdShouldReturnNull()
         {
             // Arrange
-            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
+            HeroService heroService = this.GetHeroServiceInitialValues();
             Hero hero = new Hero() { Name = "HeroOne" };
             await this.context.Heroes.AddAsync(hero);
 
@@ -140,7 +140,7 @@
         public async Task GetHeroByNameWithInvalidNameShouldReturnNull()
         {
             // Arrange
-            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
+            HeroService heroService = this.GetHeroServiceInitialValues();
             Hero hero = new Hero() { Name = "HeroOne" };
             await this.context.Heroes.AddAsync(hero);
 
@@ -155,7 +155,7 @@
         public async Task ValidateCurrentHeroLocationShouldNotThrowExceptionIfWorkStatusIdle()
         {
             // Arrange
-            HeroService heroService = this.GetHeroServiceInitialValues(this.context);
+            HeroService heroService = this.GetHeroServiceInitialValues();
 
             // Act
             await heroService.ValidateCurrentHeroLocation(WorkStatus.Farm);
@@ -165,7 +165,7 @@
         public async Task ValidateCurrentHeroLocationShouldNotThrowExceptionIfWorkStatusSame()
         {
             // Arrange
-            HeroService heroService = this.GetHeroService(this.context);
+            HeroService heroService = this.GetHeroService();
 
             // Act
             await heroService.ValidateCurrentHeroLocation(WorkStatus.Farm);
@@ -175,13 +175,13 @@
         public async Task ValidateCurrentHeroLocationShouldThrowExceptionIfWorkStatusDifferent()
         {
             // Arrange
-            HeroService heroService = this.GetHeroService(this.context);
+            HeroService heroService = this.GetHeroService();
 
             // Act
             await Assert.ThrowsAsync<FarmHeroesException>(async () => await heroService.ValidateCurrentHeroLocation(WorkStatus.Mine));
         }
 
-        private HeroService GetHeroServiceInitialValues(FarmHeroesDbContext context)
+        private HeroService GetHeroServiceInitialValues()
         {
             // UserService
             Mock<IUserService> userServiceMock = new Mock<IUserService>();
@@ -201,12 +201,12 @@
             var configuration = new MapperConfiguration(cfg => cfg.AddProfile(farmHeroesProfile));
             IMapper mapper = new Mapper(configuration);
 
-            HeroService heroService = new HeroService(context, mapper, userServiceMock.Object);
+            HeroService heroService = new HeroService(this.context, mapper, userServiceMock.Object);
 
             return heroService;
         }
 
-        private HeroService GetHeroService(FarmHeroesDbContext context)
+        private HeroService GetHeroService()
         {
             // UserService
             Mock<IUserService> userServiceMock = new Mock<IUserService>();
@@ -227,7 +227,7 @@
             var configuration = new MapperConfiguration(cfg => cfg.AddProfile(farmHeroesProfile));
             IMapper mapper = new Mapper(configuration);
 
-            HeroService heroService = new HeroService(context, mapper, userServiceMock.Object);
+            HeroService heroService = new HeroService(this.context, mapper, userServiceMock.Object);
 
             return heroService;
         }
