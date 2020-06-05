@@ -292,6 +292,39 @@ namespace FarmHeroes.Data.Migrations
                     b.ToTable("Fights");
                 });
 
+            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.AmuletBag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("ActiveUntil")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OnFarmAmuletId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OnIdleAmuletId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OnMineAmuletId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OnMonsterAttackAmuletId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OnPatrolAmuletId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OnPlayerAttackAmuletId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AmuletBags");
+                });
+
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.Characteristics", b =>
                 {
                     b.Property<int>("Id")
@@ -408,6 +441,9 @@ namespace FarmHeroes.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AmuletBagId")
+                        .HasColumnType("int");
+
                     b.Property<string>("AvatarUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -454,6 +490,9 @@ namespace FarmHeroes.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AmuletBagId")
+                        .IsUnique();
 
                     b.HasIndex("CharacteristicsId")
                         .IsUnique();
@@ -1025,6 +1064,12 @@ namespace FarmHeroes.Data.Migrations
 
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.Hero", b =>
                 {
+                    b.HasOne("FarmHeroes.Data.Models.HeroModels.AmuletBag", "AmuletBag")
+                        .WithOne("Hero")
+                        .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "AmuletBagId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Characteristics", "Characteristics")
                         .WithOne("Hero")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "CharacteristicsId")

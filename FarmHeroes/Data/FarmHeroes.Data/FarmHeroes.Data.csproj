@@ -11,6 +11,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200604191234_AmuletAutomation.cs" />
+    <Compile Remove="Migrations\20200604191234_AmuletAutomation.Designer.cs" />
+    <Compile Remove="Migrations\20200604191407_AmuletAutomation2.cs" />
+    <Compile Remove="Migrations\20200604191407_AmuletAutomation2.Designer.cs" />
+    <Compile Remove="Migrations\20200604193317_AmuletAutomation.cs" />
+    <Compile Remove="Migrations\20200604193317_AmuletAutomation.Designer.cs" />
+    <Compile Remove="Migrations\20200604195931_AmuletAutomation.cs" />
+    <Compile Remove="Migrations\20200604195931_AmuletAutomation.Designer.cs" />
+    <Compile Remove="Migrations\20200604200751_Initial.cs" />
+    <Compile Remove="Migrations\20200604200751_Initial.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
 

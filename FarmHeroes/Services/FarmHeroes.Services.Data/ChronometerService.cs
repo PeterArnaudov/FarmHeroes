@@ -17,12 +17,14 @@
     {
         private readonly FarmHeroesDbContext context;
         private readonly IHeroService heroService;
+        private readonly IAmuletBagService amuletBagService;
         private readonly IMapper mapper;
 
-        public ChronometerService(FarmHeroesDbContext context, IHeroService heroService, IMapper mapper)
+        public ChronometerService(FarmHeroesDbContext context, IHeroService heroService, IMapper mapper, IAmuletBagService amuletBagService)
         {
             this.context = context;
             this.heroService = heroService;
+            this.amuletBagService = amuletBagService;
             this.mapper = mapper;
         }
 
@@ -61,6 +63,8 @@
 
             hero.Chronometer.WorkUntil = null;
             hero.WorkStatus = WorkStatus.Idle;
+
+            await this.amuletBagService.EquipAmulet("Idle");
 
             await this.context.SaveChangesAsync();
         }

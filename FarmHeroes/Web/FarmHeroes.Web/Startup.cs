@@ -94,6 +94,7 @@
             services.AddTransient<IMonsterService, MonsterService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IInventoryService, InventoryService>();
+            services.AddTransient<IAmuletBagService, AmuletBagService>();
             services.AddTransient<IShopService, ShopService>();
             services.AddTransient<IEquipmentService, EquipmentService>();
             services.AddTransient<ISmithService, SmithService>();

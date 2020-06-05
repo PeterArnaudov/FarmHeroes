@@ -19,17 +19,21 @@
         private readonly IResourcePouchService resourcePouchService;
         private readonly IStatisticsService statisticsService;
         private readonly IChronometerService chronometerService;
+        private readonly IAmuletBagService amuletBagService;
 
-        public MineService(IHeroService heroService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, IChronometerService chronometerService)
+        public MineService(IHeroService heroService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, IChronometerService chronometerService, IAmuletBagService amuletBagService)
         {
             this.heroService = heroService;
             this.resourcePouchService = resourcePouchService;
             this.statisticsService = statisticsService;
             this.chronometerService = chronometerService;
+            this.amuletBagService = amuletBagService;
         }
 
         public async Task<int> InitiateDig()
         {
+            await this.amuletBagService.EquipAmulet("Mine");
+
             await this.chronometerService.SetWorkUntil(DigDurationInSeconds, WorkStatus.Mine);
 
             return DigDurationInSeconds;

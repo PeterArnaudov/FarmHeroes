@@ -48,10 +48,11 @@
         private readonly IMonsterService monsterService;
         private readonly INotificationService notificationService;
         private readonly IEquipmentService equipmentService;
+        private readonly IAmuletBagService amuletBagService;
         private readonly FarmHeroesDbContext context;
         private readonly IMapper mapper;
 
-        public FightService(IHeroService heroService, IHealthService healthService, IResourcePouchService resourcePouchService, IChronometerService chronometerService, ILevelService levelService, IStatisticsService statisticsService, IMonsterService monsterService, INotificationService notificationService, IEquipmentService equipmentService, FarmHeroesDbContext context, IMapper mapper)
+        public FightService(IHeroService heroService, IHealthService healthService, IResourcePouchService resourcePouchService, IChronometerService chronometerService, ILevelService levelService, IStatisticsService statisticsService, IMonsterService monsterService, INotificationService notificationService, IEquipmentService equipmentService, IAmuletBagService amuletBagService, FarmHeroesDbContext context, IMapper mapper)
         {
             this.heroService = heroService;
             this.healthService = healthService;
@@ -62,6 +63,7 @@
             this.monsterService = monsterService;
             this.notificationService = notificationService;
             this.equipmentService = equipmentService;
+            this.amuletBagService = amuletBagService;
             this.context = context;
             this.mapper = mapper;
         }
@@ -75,6 +77,8 @@
             this.CheckIfHeroIsWorking(attacker);
             this.CheckIfHeroCanAttackPlayer(attacker);
             this.CheckIfHeroAttackThemselves(attacker, opponentId);
+
+            await this.amuletBagService.EquipAmulet("PlayerAttack");
 
             Hero defender = await this.heroService.GetHero(opponentId);
 
@@ -257,6 +261,8 @@
             await this.notificationService.AddNotification(attackerNotification);
             await this.notificationService.AddNotification(defenderNotification);
 
+            await this.amuletBagService.EquipAmulet("Idle");
+
             return fightEntity.Id;
         }
 
@@ -269,6 +275,8 @@
 
             this.CheckIfHeroIsWorking(attacker);
             this.CheckIfHeroCanAttackMonster(attacker);
+
+            await this.amuletBagService.EquipAmulet("MonsterAttack");
 
             if (monsterLevel == 0)
             {
@@ -427,6 +435,8 @@
                 Hero = attacker,
             };
             await this.notificationService.AddNotification(notification);
+
+            await this.amuletBagService.EquipAmulet("Idle");
 
             return fightEntity.Id;
         }

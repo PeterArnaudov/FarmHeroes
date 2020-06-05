@@ -17,5 +17,7 @@
         public const string ShopRedirect = "/Village/Shop/{0}";
 
         public const string SmithRedirect = "/Village/Smith";
+
+        public const string AmuletBagRedirect = "/AmuletBag";
     }
 }

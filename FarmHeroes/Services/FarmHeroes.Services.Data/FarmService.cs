@@ -28,24 +28,28 @@
         private readonly IStatisticsService statisticsService;
         private readonly ILevelService levelService;
         private readonly IChronometerService chronometerService;
+        private readonly INotificationService notificationService;
+        private readonly IAmuletBagService amuletBagService;
         private readonly ITempDataDictionaryFactory tempDataDictionaryFactory;
         private readonly IHttpContextAccessor context;
-        private readonly INotificationService notificationService;
 
-        public FarmService(IHeroService heroService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, ILevelService levelService, IChronometerService chronometerService, INotificationService notificationService, ITempDataDictionaryFactory tempDataDictionaryFactory, IHttpContextAccessor context)
+        public FarmService(IHeroService heroService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, ILevelService levelService, IChronometerService chronometerService, INotificationService notificationService, IAmuletBagService amuletBagService, ITempDataDictionaryFactory tempDataDictionaryFactory, IHttpContextAccessor context)
         {
             this.heroService = heroService;
             this.resourcePouchService = resourcePouchService;
             this.statisticsService = statisticsService;
             this.levelService = levelService;
             this.chronometerService = chronometerService;
+            this.notificationService = notificationService;
+            this.amuletBagService = amuletBagService;
             this.tempDataDictionaryFactory = tempDataDictionaryFactory;
             this.context = context;
-            this.notificationService = notificationService;
         }
 
         public async Task<int> StartWork()
         {
+            await this.amuletBagService.EquipAmulet("Farm");
+
             await this.chronometerService.SetWorkUntil(WorkDurationInSeconds, WorkStatus.Farm);
 
             return WorkDurationInSeconds;

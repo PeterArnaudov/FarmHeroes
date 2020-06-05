@@ -11,6 +11,7 @@
     using FarmHeroes.Data.Models.NotificationModels.HeroModels;
     using FarmHeroes.Data.Models.ShopModels;
     using FarmHeroes.Services.Data.Formulas;
+    using FarmHeroes.Web.ViewModels.AmuletBagModels;
     using FarmHeroes.Web.ViewModels.BattlefieldModels;
     using FarmHeroes.Web.ViewModels.CharacteristcsModels;
     using FarmHeroes.Web.ViewModels.ChatModels;
@@ -139,6 +140,10 @@
             this.CreateMap<MonsterInputModel, Monster>();
 
             this.CreateMap<Monster, MonsterInputModel>();
+
+            this.CreateMap<AmuletBag, AmuletBagViewModel>();
+
+            this.CreateMap<HeroAmulet, AmuletSelectViewModel>();
         }
     }
 }

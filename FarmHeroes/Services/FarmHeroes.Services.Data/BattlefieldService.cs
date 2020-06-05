@@ -31,11 +31,12 @@
         private readonly IResourcePouchService resourcePouchService;
         private readonly IStatisticsService statisticsService;
         private readonly INotificationService notificationService;
+        private readonly IDailyLimitsService dailyLimitsService;
+        private readonly IAmuletBagService amuletBagService;
         private readonly FarmHeroesDbContext dbContext;
         private readonly IMapper mapper;
-        private readonly IDailyLimitsService dailyLimitsService;
 
-        public BattlefieldService(IHeroService heroService, IChronometerService chronometerService, ILevelService levelService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, INotificationService notificationService, FarmHeroesDbContext dbContext, IMapper mapper, IDailyLimitsService dailyLimitsService)
+        public BattlefieldService(IHeroService heroService, IChronometerService chronometerService, ILevelService levelService, IResourcePouchService resourcePouchService, IStatisticsService statisticsService, INotificationService notificationService, FarmHeroesDbContext dbContext, IMapper mapper, IDailyLimitsService dailyLimitsService, IAmuletBagService amuletBagService)
         {
             this.heroService = heroService;
             this.chronometerService = chronometerService;
@@ -43,9 +44,10 @@
             this.resourcePouchService = resourcePouchService;
             this.statisticsService = statisticsService;
             this.notificationService = notificationService;
+            this.dailyLimitsService = dailyLimitsService;
+            this.amuletBagService = amuletBagService;
             this.dbContext = dbContext;
             this.mapper = mapper;
-            this.dailyLimitsService = dailyLimitsService;
         }
 
         public async Task<int> StartPatrol()
@@ -53,6 +55,9 @@
             Hero hero = await this.heroService.GetHero();
 
             this.CheckIfPatrolLimitIsReached(hero);
+
+            await this.amuletBagService.EquipAmulet("Patrol");
+
             int durationInSeconds = this.GetPatrolDurationInSeconds(hero);
             await this.chronometerService.SetWorkUntil(durationInSeconds, WorkStatus.Battlefield);
 
@@ -102,6 +107,7 @@
                 Type = NotificationType.Patrol,
                 Hero = hero,
             };
+
             await this.notificationService.AddNotification(notification);
 
             return collectedResources;

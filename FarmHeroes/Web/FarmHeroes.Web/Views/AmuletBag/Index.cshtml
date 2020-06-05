@@ -1,0 +1,104 @@
+﻿@model FarmHeroes.Web.ViewModels.AmuletBagModels.AmuletBagViewModel
+@{
+    ViewData["Title"] = "Amulet Bag";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<h1 class="text-uppercase">Amulet Bag</h1>
+<p class="font-italic m-auto">You can set what amulet you want to be wearing while doing specific activities. While the amulet bag is active, the amulet you've specified will be automatically equipped before the activity.</p>
+<hr class="bg-primary" />
+@if (Model.ActiveUntil == DateTime.MaxValue)
+{
+    <p class="text-center text-success">You've purchased the amulet bag.</p>
+}
+else if (Model.ActiveUntil > DateTime.UtcNow)
+{
+    <p class="text-center">Active until: @Model.ActiveUntil.ToString("dd.MM.yyyy hh:mm")</p>
+}
+else
+{
+    <p class="text-center text-danger">Currently not active</p>
+}
+@if (Model.ActiveUntil != DateTime.MaxValue)
+{
+    <div class="row">
+        <p class="col-6 text-left">Activate for 14 days: 140 <img src="~/images/icons/crystal-icon.png" class="icon" alt="crystals"> <a href="/AmuletBag/ExtendRent" class="btn btn-success text-uppercase">extend</a></p>
+        <p class="col-6 text-right">Purchase the bag: 3 500 <img src="~/images/icons/crystal-icon.png" class="icon" alt="crystals"> <a href="/AmuletBag/Purchase" class="btn btn-success text-uppercase">purchase</a></p>
+    </div>
+}
+@if (Model.ActiveUntil > DateTime.UtcNow)
+{
+    <hr class="bg-primary" />
+    <form asp-area="" asp-controller="AmuletBag" asp-action="Set" method="post">
+        <div>
+            <label asp-for="OnIdleAmuletId">Default, while idle</label>
+            <select asp-for="OnIdleAmuletId" class="form-control">
+                @if (Model.OnIdleAmuletId != 0)
+                {
+                    <option selected hidden value="@Model.OnIdleAmuletId">@Model.Amulets.SingleOrDefault(x => x.Id == Model.OnIdleAmuletId).Name</option>
+                }
+                @foreach (var amulet in Model.Amulets)
+                {
+                    <option value="@amulet.Id">@amulet.Name</option>
+                }
+            </select>
+        </div>
+        <label asp-for="OnPlayerAttackAmuletId" class="float-left">On hero attack</label>
+        <select asp-for="OnPlayerAttackAmuletId" class="form-control float-right">
+            @if (Model.OnPlayerAttackAmuletId != 0)
+            {
+                <option selected hidden value="@Model.OnPlayerAttackAmuletId">@Model.Amulets.SingleOrDefault(x => x.Id == Model.OnPlayerAttackAmuletId).Name</option>
+            }
+            @foreach (var amulet in Model.Amulets)
+            {
+                <option value="@amulet.Id">@amulet.Name</option>
+            }
+        </select>
+        <label asp-for="OnMonsterAttackAmuletId">On monster attack</label>
+        <select asp-for="OnMonsterAttackAmuletId" class="form-control">
+            @if (Model.OnMonsterAttackAmuletId != 0)
+            {
+                <option selected hidden value="@Model.OnMonsterAttackAmuletId">@Model.Amulets.SingleOrDefault(x => x.Id == Model.OnMonsterAttackAmuletId).Name</option>
+            }
+            @foreach (var amulet in Model.Amulets)
+            {
+                <option value="@amulet.Id">@amulet.Name</option>
+            }
+        </select>
+        <label asp-for="OnFarmAmuletId">During work on farm</label>
+        <select asp-for="OnFarmAmuletId" class="form-control">
+            @if (Model.OnFarmAmuletId != 0)
+            {
+                <option selected hidden value="@Model.OnFarmAmuletId">@Model.Amulets.SingleOrDefault(x => x.Id == Model.OnFarmAmuletId).Name</option>
+            }
+            @foreach (var amulet in Model.Amulets)
+            {
+                <option value="@amulet.Id">@amulet.Name</option>
+            }
+        </select>
+        <label asp-for="OnMineAmuletId">During work in mine</label>
+        <select asp-for="OnMineAmuletId" class="form-control">
+            @if (Model.OnMineAmuletId != 0)
+            {
+                <option selected hidden value="@Model.OnMineAmuletId">@Model.Amulets.SingleOrDefault(x => x.Id == Model.OnMineAmuletId).Name</option>
+            }
+            @foreach (var amulet in Model.Amulets)
+            {
+                <option value="@amulet.Id">@amulet.Name</option>
+            }
+        </select>
+        <label asp-for="OnPatrolAmuletId">During patrol</label>
+        <select asp-for="OnPatrolAmuletId" class="form-control">
+            @if (Model.OnPatrolAmuletId != 0)
+            {
+                <option selected hidden value="@Model.OnPatrolAmuletId">@Model.Amulets.SingleOrDefault(x => x.Id == Model.OnPatrolAmuletId).Name</option>
+            }
+            @foreach (var amulet in Model.Amulets)
+            {
+                <option value="@amulet.Id">@amulet.Name</option>
+            }
+        </select>
+        <button type="submit" class="btn btn-success text-uppercase mt-2">Set amulet bag</button>
+    </form>
+}
+

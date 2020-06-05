@@ -21,6 +21,7 @@
             this.Statistics = new Statistics();
             this.Chronometer = new Chronometer();
             this.DailyLimits = new DailyLimits();
+            this.AmuletBag = new AmuletBag();
         }
 
         public int Id { get; set; }
@@ -74,6 +75,10 @@
         public int DailyLimitsId { get; set; }
 
         public virtual DailyLimits DailyLimits { get; set; }
+
+        public int AmuletBagId { get; set; }
+
+        public virtual AmuletBag AmuletBag { get; set; }
 
         public virtual List<Notification> Notifications { get; set; } = new List<Notification>();
 
