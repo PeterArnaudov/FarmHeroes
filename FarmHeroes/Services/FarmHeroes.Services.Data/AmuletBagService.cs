@@ -76,6 +76,20 @@
         {
             Hero hero = await this.heroService.GetHero();
 
+            int[] idsToSet = typeof(AmuletBagViewModel)
+                .GetProperties()
+                .Where(x => x.Name.StartsWith("On"))
+                .Select(x => (int)x.GetValue(inputModel))
+                .ToArray();
+
+            if (idsToSet.Except(hero.Inventory.Amulets.Select(x => x.Id)).Any())
+            {
+                throw new FarmHeroesException(
+                    AmuletBagExceptionMessages.HeroDoesNotOwnAmuletsMessage,
+                    AmuletBagExceptionMessages.HeroDoesNotOwnAmuletsInstruction,
+                    Redirects.AmuletBagRedirect);
+            }
+
             hero.AmuletBag.OnIdleAmuletId = inputModel.OnIdleAmuletId;
             hero.AmuletBag.OnPlayerAttackAmuletId = inputModel.OnPlayerAttackAmuletId;
             hero.AmuletBag.OnMonsterAttackAmuletId = inputModel.OnMonsterAttackAmuletId;
