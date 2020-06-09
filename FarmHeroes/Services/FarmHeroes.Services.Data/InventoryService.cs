@@ -91,9 +91,9 @@
 
         public async Task Trash(int id)
         {
-            Inventory inventory = await this.GetCurrentHeroInventory();
-            HeroEquipment itemToRemove = inventory.Items.Find(i => i.Id == id);
-            HeroAmulet amuletToRemove = inventory.Amulets.Find(a => a.Id == id);
+            Hero hero = await this.heroService.GetHero();
+            HeroEquipment itemToRemove = hero.Inventory.Items.Find(i => i.Id == id);
+            HeroAmulet amuletToRemove = hero.Inventory.Amulets.Find(a => a.Id == id);
 
             if (itemToRemove != null)
             {
@@ -102,6 +102,12 @@
             else if (amuletToRemove != null)
             {
                 this.context.HeroAmulets.Remove(amuletToRemove);
+
+                typeof(AmuletBag)
+                    .GetProperties()
+                    .Where(x => x.Name.StartsWith("On") && (int)x.GetValue(hero.AmuletBag) == id)
+                    .ToList()
+                    .ForEach(x => x.SetValue(hero.AmuletBag, 0));
             }
             else
             {
