@@ -105,6 +105,11 @@
             Hero hero = await this.heroService.GetHero();
             int amuletId = (int)typeof(AmuletBag).GetProperty("On" + action + "AmuletId").GetValue(hero.AmuletBag);
 
+            if (amuletId == 0)
+            {
+                return;
+            }
+
             await this.equipmentService.EquipAmulet(amuletId);
         }
 
