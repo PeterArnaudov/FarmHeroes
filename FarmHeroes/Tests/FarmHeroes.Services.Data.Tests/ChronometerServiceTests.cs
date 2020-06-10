@@ -289,12 +289,15 @@
                 .Setup(x => x.GetHeroByName("Name"))
                 .Returns(Task.FromResult<Hero>(this.hero));
 
+            // AmuletBagService
+            Mock<IAmuletBagService> amuletBagServiceMock = new Mock<IAmuletBagService>();
+
             // AutoMapper
             var farmHeroesProfile = new FarmHeroesProfile();
             var configuration = new MapperConfiguration(cfg => cfg.AddProfile(farmHeroesProfile));
             IMapper mapper = new Mapper(configuration);
 
-            ChronometerService chronometerService = new ChronometerService(this.context, heroServiceMock.Object, mapper);
+            ChronometerService chronometerService = new ChronometerService(this.context, heroServiceMock.Object, mapper, amuletBagServiceMock.Object);
 
             return chronometerService;
         }

@@ -5,22 +5,73 @@
     using System;
     using System.Linq;
 
+    /// <summary>
+    /// Contains methods for performing calculations related to the <see cref="FightService"/>.
+    /// </summary>
     public static class FightFormulas
     {
-        private static Random Random = new Random();
+        private static readonly Random Random = new Random();
 
-        public static Func<int, bool, int> CalculateDamage = (attack, isCrit) =>
+        /// <summary>
+        /// Calculates the damage inflicted.
+        /// </summary>
+        /// <param name="attack">
+        /// An <see cref="int"/>, the value of attack characteristic.
+        /// </param>
+        /// <param name="isCrit">
+        /// A <see cref="bool"/> that specifies whether the hit is critical or not.
+        /// </param>
+        /// <returns>
+        /// An <see cref="int"/>, the damage inflicted.
+        /// </returns>
+        public static int CalculateDamage(int attack, bool isCrit) =>
             isCrit ? (int)(attack * (Random.Next(75, 150) / 100d) * 1.5) : (int)(attack * (Random.Next(75, 150) / 100d));
 
-        public static Func<int, double, int> CalculateBlocked = (defense, blockAmuletBonus) =>
+        /// <summary>
+        /// Calculates the damage blocked.
+        /// </summary>
+        /// <param name="defense">
+        /// An <see cref="int"/>, the value of defense characteristic.
+        /// </param>
+        /// <param name="blockAmuletBonus">
+        /// A <see cref="double"/>, the bonus from <see cref="FarmHeroes.Data.Models.HeroModels.HeroAmulet"/>.
+        /// </param>
+        /// <returns>
+        /// An <see cref="int"/>, the damage blocked.
+        /// </returns>
+        public static int CalculateBlocked(int defense, double blockAmuletBonus)
         {
             int blocked = (int)(defense * (Random.Next(50, 100) / 100d));
             blocked = (int)(blocked * (1 + (blockAmuletBonus / 100)));
 
             return blocked;
-        };
+        }
 
-        public static Func<int, int, int, int, double, double, int> CalculateHitDamage = (attackerAttack, defenderDefense, attackerMastery, defenderMastery, critAmuletBonus, blockAmuletBonus) =>
+        /// <summary>
+        /// A method that calls other <see cref="FightFormulas"/> methods to calculate the final hit damage.
+        /// </summary>
+        /// <param name="attackerAttack">
+        /// An <see cref="int"/>, the value of attack characteristic of the attacker.
+        /// </param>
+        /// <param name="defenderDefense">
+        /// An <see cref="int"/>, the value of defender characteristic of the defender.
+        /// </param>
+        /// <param name="attackerMastery">
+        /// An <see cref="int"/>, the value of mastery characteristic of the attacker.
+        /// </param>
+        /// <param name="defenderMastery">
+        /// An <see cref="int"/>, the value of mastery characteristic of the defender.
+        /// </param>
+        /// <param name="critAmuletBonus">
+        /// A <see cref="double"/>, the bonus from <see cref="FarmHeroes.Data.Models.HeroModels.HeroAmulet"/> of the attacker.
+        /// </param>
+        /// <param name="blockAmuletBonus">
+        /// A <see cref="double"/>, the bonus from <see cref="FarmHeroes.Data.Models.HeroModels.HeroAmulet"/> of the defender.
+        /// </param>
+        /// <returns>
+        /// An <see cref="int"/>, the final damage of a hit.
+        /// </returns>
+        public static int CalculateHitDamage(int attackerAttack, int defenderDefense, int attackerMastery, int defenderMastery, double critAmuletBonus, double blockAmuletBonus)
         {
             bool isCrit = IsCrit(attackerMastery, defenderMastery, critAmuletBonus);
             int attackerDamage = CalculateDamage(attackerAttack, isCrit);
@@ -28,18 +79,42 @@
             int hitDamage = attackerDamage - damageBlocked;
 
             return hitDamage < 0 ? 0 : hitDamage;
-        };
+        }
 
-        public static Func<int, int, double, bool> IsCrit = (attackerMastery, defenderMastery, amuletBonus) =>
+        /// <summary>
+        /// Calculates whether the hit is critical or not.
+        /// </summary>
+        /// <param name="attackerMastery">
+        /// An <see cref="int"/>, the value of mastery characteristic of the attacker.
+        /// </param>
+        /// <param name="defenderMastery">
+        /// An <see cref="int"/>, the value of mastery characteristic of the defender.
+        /// </param>
+        /// <param name="amuletBonus">
+        /// A <see cref="double"/>, the bonus from <see cref="FarmHeroes.Data.Models.HeroModels.HeroAmulet"/> of the attacker.
+        /// </param>
+        /// <returns>
+        /// A <see cref="bool"/> whether the hit is critical or not.
+        /// </returns>
+        public static bool IsCrit(int attackerMastery, int defenderMastery, double amuletBonus)
         {
             double heroCritChance = Random.Next(0, 100) * attackerMastery / (attackerMastery + defenderMastery);
             heroCritChance *= 1 + (amuletBonus / 100);
             double neededChance = Random.Next(0, 100);
 
             return heroCritChance >= neededChance ? true : false;
-        };
+        }
 
-        public static Func<Hero, int> CalculateAttack = (hero) =>
+        /// <summary>
+        /// Calculates the attack characteristic with all multipliers.
+        /// </summary>
+        /// <param name="hero">
+        /// A <see cref="FarmHeroes.Data.Models.HeroModels.Hero"/> for which the attack characteristic will be calculated.
+        /// </param>
+        /// <returns>
+        /// An <see cref="int"/>, the attack characteristic of <see cref="FarmHeroes.Data.Models.HeroModels.Hero"/> in a fight.
+        /// </returns>
+        public static int CalculateAttack(Hero hero)
         {
             int attackFromCharacteristics = hero.Characteristics.Attack;
 
@@ -52,9 +127,18 @@
             double percentFromBonuses = 1 + hero.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus);
 
             return (int)(attack * percentFromBonuses);
-        };
+        }
 
-        public static Func<Hero, int> CalculateDefense = (hero) =>
+        /// <summary>
+        /// Calculates the defense characteristic with all multipliers.
+        /// </summary>
+        /// <param name="hero">
+        /// A <see cref="FarmHeroes.Data.Models.HeroModels.Hero"/> for which the defense characteristic will be calculated.
+        /// </param>
+        /// <returns>
+        /// An <see cref="int"/>, the defense characteristic of <see cref="FarmHeroes.Data.Models.HeroModels.Hero"/> in a fight.
+        /// </returns>
+        public static int CalculateDefense(Hero hero)
         {
             int defenseFromCharacteristics = hero.Characteristics.Defense;
 
@@ -67,9 +151,18 @@
             double percentFromBonuses = 1 + hero.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus);
 
             return (int)(defense * percentFromBonuses);
-        };
+        }
 
-        public static Func<Hero, int> CalculateMastery = (hero) =>
+        /// <summary>
+        /// Calculates the mastery characteristic with all multipliers.
+        /// </summary>
+        /// <param name="hero">
+        /// A <see cref="FarmHeroes.Data.Models.HeroModels.Hero"/> for which the mastery characteristic will be calculated.
+        /// </param>
+        /// <returns>
+        /// An <see cref="int"/>, the mastery characteristic of <see cref="FarmHeroes.Data.Models.HeroModels.Hero"/> in a fight.
+        /// </returns>
+        public static int CalculateMastery(Hero hero)
         {
             int masteryFromCharacteristics = hero.Characteristics.Defense;
 
@@ -82,6 +175,6 @@
             double percentFromBonuses = 1 + hero.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus);
 
             return (int)(mastery * percentFromBonuses);
-        };
+        }
     }
 }
