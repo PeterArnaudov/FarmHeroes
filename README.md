@@ -1,4 +1,6 @@
-[![FarmHeroes](https://i.ibb.co/48G8w25/logo-transparent.png)](https://github.com/PeterArnaudov/FarmHeroes)
+<p align="center">
+  <img width="200" height="200" src="https://i.ibb.co/dtHnCyV/logo-transparent.png">
+</p>
 
 # 🌻 FarmHeroes
 
