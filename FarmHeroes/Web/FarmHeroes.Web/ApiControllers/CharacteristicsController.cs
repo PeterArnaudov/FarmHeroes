@@ -82,5 +82,20 @@
 
             return result;
         }
+
+        [HttpGet("PracticeDexterity")]
+        public async Task<ActionResult<object>> PracticeDexterity()
+        {
+            int mastery = await this.characteristicsService.IncreaseDexterity();
+
+            object result = new
+            {
+                Stat = mastery,
+                Price = CharacteristicsFormulas.CalculateDexterityPrice(mastery),
+                this.resourcePouchService.GetResourcePouch().Result.Gold,
+            };
+
+            return result;
+        }
     }
 }

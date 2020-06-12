@@ -98,6 +98,19 @@
             return characteristics.Mastery;
         }
 
+        public async Task<int> IncreaseDexterity()
+        {
+            Characteristics characteristics = await this.GetCharacteristics();
+            int goldNeeded = CharacteristicsFormulas.CalculateDexterityPrice(characteristics.Dexterity);
+
+            await this.resourcesService.DecreaseGold(goldNeeded);
+            characteristics.Dexterity++;
+
+            await this.context.SaveChangesAsync();
+
+            return characteristics.Dexterity;
+        }
+
         public async Task UpdateCharacteristics(CharacteristicsModifyInputModel inputModel)
         {
             Hero hero = await this.heroService.GetHeroByName(inputModel.Name);
@@ -106,6 +119,7 @@
             hero.Characteristics.Defense = inputModel.CharacteristicsDefense;
             hero.Characteristics.Mastery = inputModel.CharacteristicsMastery;
             hero.Characteristics.Mass = inputModel.CharacteristicsMass;
+            hero.Characteristics.Dexterity = inputModel.CharacteristicsDexterity;
 
             await this.context.SaveChangesAsync();
         }

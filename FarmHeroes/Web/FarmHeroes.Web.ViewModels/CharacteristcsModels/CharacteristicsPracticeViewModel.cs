@@ -4,20 +4,24 @@
 
     public class CharacteristicsPracticeViewModel
     {
-        public long Attack { get; set; }
+        public int Attack { get; set; }
 
-        public long AttackPrice { get; set; }
+        public int AttackPrice { get; set; }
 
-        public long Defense { get; set; }
+        public int Defense { get; set; }
 
-        public long DefensePrice { get; set; }
+        public int DefensePrice { get; set; }
 
-        public long Mass { get; set; }
+        public int Mass { get; set; }
 
-        public long MassPrice { get; set; }
+        public int MassPrice { get; set; }
 
-        public long Mastery { get; set; }
+        public int Mastery { get; set; }
 
-        public long MasteryPrice { get; set; }
+        public int MasteryPrice { get; set; }
+
+        public int Dexterity { get; set; }
+
+        public int DexterityPrice { get; set; }
     }
 }

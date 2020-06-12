@@ -92,11 +92,15 @@
             int attackerAttack = FightFormulas.CalculateAttack(attacker);
             int attackerDefense = FightFormulas.CalculateDefense(attacker);
             int attackerMastery = FightFormulas.CalculateMastery(attacker);
+            int attackerDexterity = FightFormulas.CalculateDexterity(attacker);
             int attackerMass = attacker.Characteristics.Mass;
             int defenderAttack = FightFormulas.CalculateAttack(defender);
             int defenderDefense = FightFormulas.CalculateDefense(defender);
             int defenderMastery = FightFormulas.CalculateMastery(defender);
+            int defenderDexterity = FightFormulas.CalculateDexterity(defender);
             int defenderMass = defender.Characteristics.Mass;
+            HitType[] attackerHitTypes = new HitType[Rounds];
+            HitType[] defenderHitTypes = new HitType[Rounds];
             int?[] attackerHits = new int?[Rounds];
             int?[] defenderHits = new int?[Rounds];
             string winnerName = string.Empty;
@@ -104,15 +108,22 @@
 
             for (int i = 0; i < Rounds; i++)
             {
+                bool isCrit = FightFormulas.IsCrit(
+                    attackerMastery,
+                    defenderDexterity,
+                    attackerSet.Amulet?.Name == AmuletNames.Criticum ? attackerSet.Amulet.Bonus : 0);
+
+                bool isDodged = FightFormulas.IsDodged(attackerAttack, defenderDexterity, 0);
+
                 int attackerDamage = FightFormulas.CalculateHitDamage(
                     attackerAttack,
                     defenderDefense,
-                    attackerMastery,
-                    defenderMastery,
-                    attackerSet.Amulet?.Name == AmuletNames.Criticum ? attackerSet.Amulet.Bonus : 0,
+                    isCrit,
+                    isDodged,
                     attackerSet.Amulet?.Name == AmuletNames.Fatty ? attackerSet.Amulet.Bonus : 0);
 
                 await this.healthService.ReduceHealth(attackerDamage, defender.HealthId);
+                attackerHitTypes[i] = isDodged ? HitType.Dodged : isCrit ? HitType.Critical : HitType.Normal;
                 attackerHits[i] = attackerDamage;
 
                 if (await this.healthService.CheckIfDead(defender.HealthId))
@@ -121,15 +132,22 @@
                     break;
                 }
 
+                isCrit = FightFormulas.IsCrit(
+                    defenderMastery,
+                    attackerDexterity,
+                    defenderSet.Amulet?.Name == AmuletNames.Criticum ? defenderSet.Amulet.Bonus : 0);
+
+                isDodged = FightFormulas.IsDodged(defenderAttack, attackerDexterity, 0);
+
                 int defenderDamage = FightFormulas.CalculateHitDamage(
                     defenderAttack,
                     attackerDefense,
-                    defenderMastery,
-                    attackerMastery,
-                    defenderSet.Amulet?.Name == AmuletNames.Criticum ? defenderSet.Amulet.Bonus : 0,
+                    isCrit,
+                    isDodged,
                     defenderSet.Amulet?.Name == AmuletNames.Fatty ? defenderSet.Amulet.Bonus : 0);
 
                 await this.healthService.ReduceHealth(defenderDamage, attacker.HealthId);
+                defenderHitTypes[i] = isDodged ? HitType.Dodged : isCrit ? HitType.Critical : HitType.Normal;
                 defenderHits[i] = defenderDamage;
 
                 if (await this.healthService.CheckIfDead(attacker.HealthId))
@@ -213,10 +231,12 @@
             fight.AttackerDefense = attackerDefense;
             fight.AttackerMastery = attackerMastery;
             fight.AttackerMass = attackerMass;
+            fight.AttackerDexterity = attackerDexterity;
             fight.DefenderAttack = defenderAttack;
             fight.DefenderDefense = defenderDefense;
             fight.DefenderMastery = defenderMastery;
             fight.DefenderMass = defenderMass;
+            fight.DefenderDexterity = defenderDexterity;
 
             fight.AttackerHitOne = attackerHits[0];
             fight.AttackerHitTwo = attackerHits[1];
@@ -228,6 +248,17 @@
             fight.DefenderHitThree = defenderHits[2];
             fight.DefenderHitFour = defenderHits[3];
             fight.DefenderHitFive = defenderHits[4];
+
+            fight.AttackerHitOneType = attackerHitTypes[0];
+            fight.AttackerHitTwoType = attackerHitTypes[1];
+            fight.AttackerHitThreeType = attackerHitTypes[2];
+            fight.AttackerHitFourType = attackerHitTypes[3];
+            fight.AttackerHitFiveType = attackerHitTypes[4];
+            fight.DefenderHitOneType = defenderHitTypes[0];
+            fight.DefenderHitTwoType = defenderHitTypes[1];
+            fight.DefenderHitThreeType = defenderHitTypes[2];
+            fight.DefenderHitFourType = defenderHitTypes[3];
+            fight.DefenderHitFiveType = defenderHitTypes[4];
 
             Fight fightEntity = this.context.Fights.AddAsync(fight).Result.Entity;
 
@@ -297,6 +328,7 @@
             int attackerAttack = FightFormulas.CalculateAttack(attacker);
             int attackerDefense = FightFormulas.CalculateDefense(attacker);
             int attackerMastery = FightFormulas.CalculateMastery(attacker);
+            int attackerDexterity = FightFormulas.CalculateDexterity(attacker);
             int attackerMass = attacker.Characteristics.Mass;
 
             HeroAmulet heroAmulet = attacker.EquippedSet.Amulet;
@@ -306,21 +338,30 @@
                 attackerAttack = (int)(attackerAttack * (1 + (heroAmulet.Bonus / 100)));
                 attackerDefense = (int)(attackerDefense * (1 + (heroAmulet.Bonus / 100)));
                 attackerMastery = (int)(attackerMastery * (1 + (heroAmulet.Bonus / 100)));
+                attackerDexterity = (int)(attackerDexterity * (1 + (heroAmulet.Bonus / 100)));
             }
 
             int?[] attackerHits = new int?[Rounds];
             int?[] defenderHits = new int?[Rounds];
+            HitType[] attackerHitTypes = new HitType[Rounds];
+            HitType[] defenderHitTypes = new HitType[Rounds];
             string winnerName = string.Empty;
             int goldStolen = 0;
 
             for (int i = 0; i < Rounds; i++)
             {
+                bool isCrit = FightFormulas.IsCrit(
+                    attackerMastery,
+                    monster.Characteristics.Dexterity,
+                    attackerSet.Amulet?.Name == AmuletNames.Criticum ? attackerSet.Amulet.Bonus : 0);
+
+                bool isDodged = FightFormulas.IsDodged(attackerAttack, monster.Characteristics.Dexterity, 0);
+
                 int attackerDamage = FightFormulas.CalculateHitDamage(
                     attackerAttack,
                     monster.Characteristics.Defense,
-                    attackerMastery,
-                    monster.Characteristics.Mastery,
-                    attackerSet.Amulet?.Name == AmuletNames.Criticum ? attackerSet.Amulet.Bonus : 0,
+                    isCrit,
+                    isDodged,
                     attackerSet.Amulet?.Name == AmuletNames.Fatty ? attackerSet.Amulet.Bonus : 0);
 
                 monster.Health -= attackerDamage;
@@ -330,6 +371,7 @@
                 }
 
                 attackerHits[i] = attackerDamage;
+                attackerHitTypes[i] = isDodged ? HitType.Dodged : isCrit ? HitType.Critical : HitType.Normal;
 
                 if (monster.Health == 1)
                 {
@@ -337,16 +379,19 @@
                     break;
                 }
 
+                isCrit = FightFormulas.IsCrit(monster.Characteristics.Attack, attackerDexterity, 0);
+                isDodged = FightFormulas.IsDodged(monster.Characteristics.Attack, attackerDexterity, 0);
+
                 int defenderDamage = FightFormulas.CalculateHitDamage(
                     monster.Characteristics.Attack,
                     attackerDefense,
-                    monster.Characteristics.Mastery,
-                    attackerMastery,
-                    0,
+                    isCrit,
+                    isDodged,
                     0);
 
                 await this.healthService.ReduceHealth(defenderDamage, attacker.HealthId);
                 defenderHits[i] = defenderDamage;
+                defenderHitTypes[i] = isDodged ? HitType.Dodged : isCrit ? HitType.Critical : HitType.Normal;
 
                 if (await this.healthService.CheckIfDead(attacker.HealthId))
                 {
@@ -403,10 +448,12 @@
             fight.AttackerDefense = attackerDefense;
             fight.AttackerMastery = attackerMastery;
             fight.AttackerMass = attackerMass;
+            fight.AttackerDexterity = attackerDexterity;
             fight.DefenderAttack = monster.Characteristics.Attack;
             fight.DefenderDefense = monster.Characteristics.Defense;
             fight.DefenderMastery = monster.Characteristics.Mastery;
             fight.DefenderMass = monster.Characteristics.Mass;
+            fight.DefenderDexterity = monster.Characteristics.Dexterity;
 
             fight.AttackerHitOne = attackerHits[0];
             fight.AttackerHitTwo = attackerHits[1];
@@ -418,6 +465,17 @@
             fight.DefenderHitThree = defenderHits[2];
             fight.DefenderHitFour = defenderHits[3];
             fight.DefenderHitFive = defenderHits[4];
+
+            fight.AttackerHitOneType = attackerHitTypes[0];
+            fight.AttackerHitTwoType = attackerHitTypes[1];
+            fight.AttackerHitThreeType = attackerHitTypes[2];
+            fight.AttackerHitFourType = attackerHitTypes[3];
+            fight.AttackerHitFiveType = attackerHitTypes[4];
+            fight.DefenderHitOneType = defenderHitTypes[0];
+            fight.DefenderHitTwoType = defenderHitTypes[1];
+            fight.DefenderHitThreeType = defenderHitTypes[2];
+            fight.DefenderHitFourType = defenderHitTypes[3];
+            fight.DefenderHitFiveType = defenderHitTypes[4];
 
             Fight fightEntity = this.context.Fights.AddAsync(fight).Result.Entity;
             attacker.HeroFights.Add(new HeroFight { Fight = fightEntity, Hero = attacker });

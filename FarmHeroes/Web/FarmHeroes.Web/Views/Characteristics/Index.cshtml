@@ -68,5 +68,19 @@
         <button onclick="practice('mastery')" class="btn btn-primary badge-pill">Practice</button>
     </div>
 </div>
+<hr class="bg-primary">
+<div class="row text-center">
+    <div class="col-3">
+        <h4>Dexterity</h4>
+        <p id="current-dexterity">@Model.Dexterity.ToString("N0")</p>
+    </div>
+    <div class="col-6">
+        <p>Dexterity determines the chance to dodge your enemy's hit.</p>
+    </div>
+    <div class="col-3">
+        <p><span id="dexterity-price">@Model.DexterityPrice.ToString("N0")</span> <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
+        <button onclick="practice('dexterity')" class="btn btn-primary badge-pill">Practice</button>
+    </div>
+</div>
 
 <script src="~/js/ajax-calls/practice.js" asp-append-version="true"></script>

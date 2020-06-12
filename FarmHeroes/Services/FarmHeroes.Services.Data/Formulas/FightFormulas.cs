@@ -56,14 +56,11 @@
         /// <param name="defenderDefense">
         /// An <see cref="int"/>, the value of defender characteristic of the defender.
         /// </param>
-        /// <param name="attackerMastery">
-        /// An <see cref="int"/>, the value of mastery characteristic of the attacker.
+        /// <param name="isCrit">
+        /// A <see cref="bool"/>, specifies whether the hit is critical or not.
         /// </param>
-        /// <param name="defenderMastery">
-        /// An <see cref="int"/>, the value of mastery characteristic of the defender.
-        /// </param>
-        /// <param name="critAmuletBonus">
-        /// A <see cref="double"/>, the bonus from <see cref="FarmHeroes.Data.Models.HeroModels.HeroAmulet"/> of the attacker.
+        /// <param name="isDodged">
+        /// A <see cref="bool"/>, specifies whether the hit is dodged or not.
         /// </param>
         /// <param name="blockAmuletBonus">
         /// A <see cref="double"/>, the bonus from <see cref="FarmHeroes.Data.Models.HeroModels.HeroAmulet"/> of the defender.
@@ -71,14 +68,13 @@
         /// <returns>
         /// An <see cref="int"/>, the final damage of a hit.
         /// </returns>
-        public static int CalculateHitDamage(int attackerAttack, int defenderDefense, int attackerMastery, int defenderMastery, double critAmuletBonus, double blockAmuletBonus)
+        public static int CalculateHitDamage(int attackerAttack, int defenderDefense, bool isCrit, bool isDodged, double blockAmuletBonus)
         {
-            bool isCrit = IsCrit(attackerMastery, defenderMastery, critAmuletBonus);
             int attackerDamage = CalculateDamage(attackerAttack, isCrit);
             int damageBlocked = CalculateBlocked(defenderDefense, blockAmuletBonus);
             int hitDamage = attackerDamage - damageBlocked;
 
-            return hitDamage < 0 ? 0 : hitDamage;
+            return hitDamage < 0 || isDodged ? 0 : hitDamage;
         }
 
         /// <summary>
@@ -87,8 +83,8 @@
         /// <param name="attackerMastery">
         /// An <see cref="int"/>, the value of mastery characteristic of the attacker.
         /// </param>
-        /// <param name="defenderMastery">
-        /// An <see cref="int"/>, the value of mastery characteristic of the defender.
+        /// <param name="defenderDexterity">
+        /// An <see cref="int"/>, the value of dexterity characteristic of the defender.
         /// </param>
         /// <param name="amuletBonus">
         /// A <see cref="double"/>, the bonus from <see cref="FarmHeroes.Data.Models.HeroModels.HeroAmulet"/> of the attacker.
@@ -96,13 +92,37 @@
         /// <returns>
         /// A <see cref="bool"/> whether the hit is critical or not.
         /// </returns>
-        public static bool IsCrit(int attackerMastery, int defenderMastery, double amuletBonus)
+        public static bool IsCrit(int attackerMastery, int defenderDexterity, double amuletBonus)
         {
-            double heroCritChance = Random.Next(0, 100) * attackerMastery / (attackerMastery + defenderMastery);
+            double heroCritChance = Random.Next(0, 100) * attackerMastery / (attackerMastery + defenderDexterity);
             heroCritChance *= 1 + (amuletBonus / 100);
             double neededChance = Random.Next(0, 100);
 
             return heroCritChance >= neededChance ? true : false;
+        }
+
+        /// <summary>
+        /// Calculates whether the hit is dodged or not.
+        /// </summary>
+        /// <param name="attackerAttack">
+        /// An <see cref="int"/>, the value of attack characteristic of the attacker.
+        /// </param>
+        /// <param name="defenderDexterity">
+        /// An <see cref="int"/>, the value of dexterity characteristic of the defender.
+        /// </param>
+        /// <param name="amuletBonus">
+        /// A <see cref="double"/>, the bonus from <see cref="FarmHeroes.Data.Models.HeroModels.HeroAmulet"/> of the defender.
+        /// </param>
+        /// <returns>
+        /// A <see cref="bool"/> whether the hit is dodged or not.
+        /// </returns>
+        public static bool IsDodged(int attackerAttack, int defenderDexterity, double amuletBonus)
+        {
+            double heroHitChance = ((double)attackerAttack / (attackerAttack + defenderDexterity)) * 100;
+            heroHitChance /= 1 + (amuletBonus / 100);
+            double neededChance = Random.Next(0, 100);
+
+            return heroHitChance >= neededChance ? false : true;
         }
 
         /// <summary>
@@ -168,13 +188,37 @@
 
             int? helmetLevel = hero.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Helmet)?.Level;
             double percentFromHelmetLevel = helmetLevel == null ? 1 : 1 + ((int)helmetLevel / 100d);
-            int masteryFromSet = (int)(hero.EquippedSet.Equipped.Sum(x => x.Defense) * percentFromHelmetLevel);
+            int masteryFromSet = (int)(hero.EquippedSet.Equipped.Sum(x => x.Mastery) * percentFromHelmetLevel);
 
             int mastery = masteryFromCharacteristics + masteryFromSet;
 
             double percentFromBonuses = 1 + hero.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus);
 
             return (int)(mastery * percentFromBonuses);
+        }
+
+        /// <summary>
+        /// Calculates the dexterity characteristic with all multipliers.
+        /// </summary>
+        /// <param name="hero">
+        /// A <see cref="FarmHeroes.Data.Models.HeroModels.Hero"/> for which the dexterity characteristic will be calculated.
+        /// </param>
+        /// <returns>
+        /// An <see cref="int"/>, the dexterity characteristic of <see cref="FarmHeroes.Data.Models.HeroModels.Hero"/> in a fight.
+        /// </returns>
+        public static int CalculateDexterity(Hero hero)
+        {
+            int dexterityFromCharacteristics = hero.Characteristics.Dexterity;
+
+            int? armorLevel = hero.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Armor)?.Level;
+            double percentFromArmorLevel = armorLevel == null ? 1 : 1 + ((int)armorLevel / 100d);
+            int dexterityFromSet = (int)(hero.EquippedSet.Equipped.Sum(x => x.Dexterity) * percentFromArmorLevel);
+
+            int dexterity = dexterityFromCharacteristics + dexterityFromSet;
+
+            double percentFromBonuses = 1 + hero.Inventory.Bonuses.Where(b => b.Type == BonusType.Characteristics && b.ActiveUntil > DateTime.UtcNow).Sum(b => b.Bonus);
+
+            return (int)(dexterity * percentFromBonuses);
         }
     }
 }

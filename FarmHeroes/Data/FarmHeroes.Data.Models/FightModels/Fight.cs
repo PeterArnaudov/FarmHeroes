@@ -1,7 +1,7 @@
 ﻿namespace FarmHeroes.Data.Models.FightModels
 {
     using System.Collections.Generic;
-
+    using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.MappingModels;
 
     public class Fight
@@ -34,6 +34,8 @@
 
         public int AttackerMass { get; set; }
 
+        public int AttackerDexterity { get; set; }
+
         public int DefenderAttack { get; set; }
 
         public int DefenderDefense { get; set; }
@@ -42,23 +44,45 @@
 
         public int DefenderMass { get; set; }
 
+        public int DefenderDexterity { get; set; }
+
+        public HitType AttackerHitOneType { get; set; }
+
         public int? AttackerHitOne { get; set; }
+
+        public HitType AttackerHitTwoType { get; set; }
 
         public int? AttackerHitTwo { get; set; }
 
+        public HitType AttackerHitThreeType { get; set; }
+
         public int? AttackerHitThree { get; set; }
+
+        public HitType AttackerHitFourType { get; set; }
 
         public int? AttackerHitFour { get; set; }
 
+        public HitType AttackerHitFiveType { get; set; }
+
         public int? AttackerHitFive { get; set; }
+
+        public HitType DefenderHitOneType { get; set; }
 
         public int? DefenderHitOne { get; set; }
 
+        public HitType DefenderHitTwoType { get; set; }
+
         public int? DefenderHitTwo { get; set; }
+
+        public HitType DefenderHitThreeType { get; set; }
 
         public int? DefenderHitThree { get; set; }
 
+        public HitType DefenderHitFourType { get; set; }
+
         public int? DefenderHitFour { get; set; }
+
+        public HitType DefenderHitFiveType { get; set; }
 
         public int? DefenderHitFive { get; set; }
 

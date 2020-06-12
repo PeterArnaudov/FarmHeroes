@@ -12,6 +12,7 @@
         private const double AttackBattlePowerModifier = 2.6;
         private const double DefenseBattlePowerModifier = 2.35;
         private const double MasteryBattlePowerModifier = 2.5;
+        private const double DexterityBattlePowerModifier = 2.3;
         private const int InitialCharacteristicsModifier = 10;
 
         /// <summary>
@@ -67,6 +68,24 @@
         /// </returns>
         public static int CalculateMastery(int level, int battlePower, int percent) =>
             (int)(battlePower * (percent / 100d) / MasteryBattlePowerModifier) + (level * InitialCharacteristicsModifier);
+
+        /// <summary>
+        /// Calculates the value of the dexterity characteristic of the monster.
+        /// </summary>
+        /// <param name="level">
+        /// An <see cref="int"/>, the level of the monster.
+        /// </param>
+        /// <param name="battlePower">
+        /// An <see cref="int"/>, the battle power of the monster.
+        /// </param>
+        /// <param name="percent">
+        /// An <see cref="int"/>, the percent of battle power to be converted to dexterity.
+        /// </param>
+        /// <returns>
+        /// An <see cref="int"/>, the value of the monster's dexterity characteristic.
+        /// </returns>
+        public static int CalculateDexterity(int level, int battlePower, int percent) =>
+            (int)(battlePower * (percent / 100d) / DexterityBattlePowerModifier) + (level * InitialCharacteristicsModifier);
 
         /// <summary>
         /// Calculates the battle power of the monster.

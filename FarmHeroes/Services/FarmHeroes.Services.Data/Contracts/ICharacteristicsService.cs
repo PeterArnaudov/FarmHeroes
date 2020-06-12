@@ -20,6 +20,8 @@
 
         Task<int> IncreaseMastery();
 
+        Task<int> IncreaseDexterity();
+
         Task UpdateCharacteristics(CharacteristicsModifyInputModel inputModel);
     }
 }

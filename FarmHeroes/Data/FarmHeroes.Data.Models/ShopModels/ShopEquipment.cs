@@ -21,6 +21,8 @@
 
         public int Mastery { get; set; }
 
+        public int Dexterity { get; set; }
+
         public string ImageUrl { get; set; }
     }
 }

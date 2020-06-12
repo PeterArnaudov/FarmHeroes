@@ -14,8 +14,10 @@
 
         public int CharacteristicsDefense { get; set; }
 
+        public int CharacteristicsMastery { get; set; }
+
         public int CharacteristicsMass { get; set; }
 
-        public int CharacteristicsMastery { get; set; }
+        public int CharacteristicsDexterity { get; set; }
     }
 }

@@ -34,46 +34,10 @@
         </div>
     </div>
     <div class="col-3 col-sm-2 border-left border-primary m-auto">
-        @if (Model.EquippedSetHelmet != null)
-        {
-            <div class="position-relative equipment-box m-2">
-                <img src="@Model.EquippedSetHelmet.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="left" title="@Model.EquippedSetHelmet.Name<br><img src='/images/icons/level-icon.png' class='icon'>: @Model.EquippedSetHelmet.Level @if (Model.EquippedSetHelmet.Attack != 0) {<br><span><img src='/images/icons/attack-icon.png' class='icon'>: @Model.EquippedSetHelmet.Attack</span>}@if (Model.EquippedSetHelmet.Defense != 0) {<br><span><img src='/images/icons/defense-icon.png' class='icon'>: @Model.EquippedSetHelmet.Defense</span>}@if (Model.EquippedSetHelmet.Mastery != 0) {<br><span><img src='/images/icons/mastery-icon.png' class='icon'>: @Model.EquippedSetHelmet.Mastery</span>}">
-            </div>
-        }
-        else
-        {
-            <img src="/images/equipment/helmets/no-helmet.png" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" />
-        }
-        @if (Model.EquippedSetArmor != null)
-        {
-            <div class="position-relative equipment-box m-2">
-                <img src="@Model.EquippedSetArmor.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="left" title="@Model.EquippedSetArmor.Name<br><img src='/images/icons/level-icon.png' class='icon'>: @Model.EquippedSetArmor.Level @if (Model.EquippedSetArmor.Attack != 0) {<br><span><img src='/images/icons/attack-icon.png' class='icon'>: @Model.EquippedSetArmor.Attack</span>}@if (Model.EquippedSetArmor.Defense != 0) {<br><span><img src='/images/icons/defense-icon.png' class='icon'>: @Model.EquippedSetArmor.Defense</span>}@if (Model.EquippedSetArmor.Mastery != 0) {<br><span><img src='/images/icons/mastery-icon.png' class='icon'>: @Model.EquippedSetArmor.Mastery</span>}">
-            </div>
-        }
-        else
-        {
-            <img src="/images/equipment/armors/no-armor.png" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" />
-        }
-        @if (Model.EquippedSetWeapon != null)
-        {
-            <div class="position-relative equipment-box m-2">
-                <img src="@Model.EquippedSetWeapon.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="left" title="@Model.EquippedSetWeapon.Name<br><img src='/images/icons/level-icon.png' class='icon'>: @Model.EquippedSetWeapon.Level @if (Model.EquippedSetWeapon.Attack != 0) {<br><span><img src='/images/icons/attack-icon.png' class='icon'>: @Model.EquippedSetWeapon.Attack</span>}@if (Model.EquippedSetWeapon.Defense != 0) {<br><span><img src='/images/icons/defense-icon.png' class='icon'>: @Model.EquippedSetWeapon.Defense</span>}@if (Model.EquippedSetWeapon.Mastery != 0) {<br><span><img src='/images/icons/mastery-icon.png' class='icon'>: @Model.EquippedSetWeapon.Mastery</span>}">
-            </div>
-        }
-        else
-        {
-            <img src="/images/equipment/weapons/no-weapon.png" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" />
-        }
-        @if (Model.EquippedSetShield != null)
-        {
-            <div class="position-relative equipment-box m-2">
-                <img src="@Model.EquippedSetShield.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="left" title="@Model.EquippedSetShield.Name<br><img src='/images/icons/level-icon.png' class='icon'>: @Model.EquippedSetShield.Level @if (Model.EquippedSetShield.Attack != 0) {<br><span><img src='/images/icons/attack-icon.png' class='icon'>: @Model.EquippedSetShield.Attack</span>}@if (Model.EquippedSetShield.Defense != 0) {<br><span><img src='/images/icons/defense-icon.png' class='icon'>: @Model.EquippedSetShield.Defense</span>}@if (Model.EquippedSetShield.Mastery != 0) {<br><span><img src='/images/icons/mastery-icon.png' class='icon'>: @Model.EquippedSetShield.Mastery</span>}">
-            </div>
-        }
-        else
-        {
-            <img src="/images/equipment/shields/no-shield.png" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" />
-        }
+        <partial name="_EquipmentViewModelPartiallView" model="Model.EquippedSetHelmet" />
+        <partial name="_EquipmentViewModelPartiallView" model="Model.EquippedSetArmor" />
+        <partial name="_EquipmentViewModelPartiallView" model="Model.EquippedSetWeapon" />
+        <partial name="_EquipmentViewModelPartiallView" model="Model.EquippedSetShield" />
     </div>
 </div>
 <div class="row p-1">
@@ -94,6 +58,10 @@
         <div class="text-left">
             <img src="~/images/icons/mass-icon.png" class="icon">
             Mass: @Model.CharacteristicsMass
+        </div>
+        <div class="text-left">
+            <img src="~/images/icons/dexterity-icon.png" class="icon">
+            Dexterity: @Model.CharacteristicsDexterity
         </div>
     </div>
     <div class="col-6 text-center">

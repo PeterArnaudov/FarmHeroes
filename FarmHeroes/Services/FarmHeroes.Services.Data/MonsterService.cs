@@ -16,9 +16,11 @@
     {
         private const int MaxPercent = 100;
         private const int MinimumPercentAttack = 25;
-        private const int MaximumPercentAttack = 50;
-        private const int MinimumPercentDefense = 10;
-        private const int MaximumPercentDefense = 40;
+        private const int MaximumPercentAttack = 35;
+        private const int MinimumPercentDefense = 15;
+        private const int MaximumPercentDefense = 25;
+        private const int MinimumPercentMastery = 10;
+        private const int MaximumPercentMastery = 20;
 
         private readonly IHeroService heroService;
         private readonly FarmHeroesDbContext context;
@@ -98,12 +100,14 @@
             int maxPercent = MaxPercent;
             int monsterAttackPercent = random.Next(MinimumPercentAttack, MaximumPercentAttack);
             int monsterDefensePercent = random.Next(MinimumPercentDefense, MaximumPercentDefense);
-            int monsterMasteryPercent = maxPercent - monsterAttackPercent - monsterDefensePercent;
+            int monsterMasteryPercent = random.Next(MinimumPercentMastery, MaximumPercentMastery);
+            int monsterDexterityPercent = maxPercent - monsterAttackPercent - monsterDefensePercent - monsterMasteryPercent;
             int monsterBattlePower = MonsterFormulas.CalculateBattlePower(heroBattlePower, monsterBattlePowerPercent);
 
             monsterCharacteristics.Attack = MonsterFormulas.CalculateAttack(monsterLevel, monsterBattlePower, monsterAttackPercent);
             monsterCharacteristics.Defense = MonsterFormulas.CalculateDefense(monsterLevel, monsterBattlePower, monsterAttackPercent);
             monsterCharacteristics.Mastery = MonsterFormulas.CalculateMastery(monsterLevel, monsterBattlePower, monsterMasteryPercent);
+            monsterCharacteristics.Dexterity = MonsterFormulas.CalculateDexterity(monsterLevel, monsterBattlePower, monsterDexterityPercent);
             monsterCharacteristics.Mass = heroCharacteristics.Mass;
 
             return monsterCharacteristics;

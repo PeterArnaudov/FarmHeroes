@@ -16,6 +16,8 @@
 
         public int Mastery { get; set; } = InitialCharacteristicsAmount;
 
+        public int Dexterity { get; set; } = InitialCharacteristicsAmount;
+
         public virtual Hero Hero { get; set; }
     }
 }

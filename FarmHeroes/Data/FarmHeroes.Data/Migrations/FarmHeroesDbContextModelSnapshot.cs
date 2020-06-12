@@ -200,22 +200,40 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("AttackerDefense")
                         .HasColumnType("int");
 
+                    b.Property<int>("AttackerDexterity")
+                        .HasColumnType("int");
+
                     b.Property<int>("AttackerHealthLeft")
                         .HasColumnType("int");
 
                     b.Property<int?>("AttackerHitFive")
                         .HasColumnType("int");
 
+                    b.Property<int>("AttackerHitFiveType")
+                        .HasColumnType("int");
+
                     b.Property<int?>("AttackerHitFour")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AttackerHitFourType")
                         .HasColumnType("int");
 
                     b.Property<int?>("AttackerHitOne")
                         .HasColumnType("int");
 
+                    b.Property<int>("AttackerHitOneType")
+                        .HasColumnType("int");
+
                     b.Property<int?>("AttackerHitThree")
                         .HasColumnType("int");
 
+                    b.Property<int>("AttackerHitThreeType")
+                        .HasColumnType("int");
+
                     b.Property<int?>("AttackerHitTwo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AttackerHitTwoType")
                         .HasColumnType("int");
 
                     b.Property<int>("AttackerId")
@@ -245,22 +263,40 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("DefenderDefense")
                         .HasColumnType("int");
 
+                    b.Property<int>("DefenderDexterity")
+                        .HasColumnType("int");
+
                     b.Property<int>("DefenderHealthLeft")
                         .HasColumnType("int");
 
                     b.Property<int?>("DefenderHitFive")
                         .HasColumnType("int");
 
+                    b.Property<int>("DefenderHitFiveType")
+                        .HasColumnType("int");
+
                     b.Property<int?>("DefenderHitFour")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DefenderHitFourType")
                         .HasColumnType("int");
 
                     b.Property<int?>("DefenderHitOne")
                         .HasColumnType("int");
 
+                    b.Property<int>("DefenderHitOneType")
+                        .HasColumnType("int");
+
                     b.Property<int?>("DefenderHitThree")
                         .HasColumnType("int");
 
+                    b.Property<int>("DefenderHitThreeType")
+                        .HasColumnType("int");
+
                     b.Property<int?>("DefenderHitTwo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DefenderHitTwoType")
                         .HasColumnType("int");
 
                     b.Property<int>("DefenderId")
@@ -336,6 +372,9 @@ namespace FarmHeroes.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Defense")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Dexterity")
                         .HasColumnType("int");
 
                     b.Property<int>("Mass")
@@ -618,6 +657,9 @@ namespace FarmHeroes.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Defense")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Dexterity")
                         .HasColumnType("int");
 
                     b.Property<int?>("EquippedSetId")
@@ -923,6 +965,9 @@ namespace FarmHeroes.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Defense")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Dexterity")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")

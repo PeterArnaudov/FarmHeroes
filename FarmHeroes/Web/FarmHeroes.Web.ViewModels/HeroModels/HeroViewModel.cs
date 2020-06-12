@@ -25,6 +25,8 @@
 
         public int CharacteristicsMass { get; set; }
 
+        public int CharacteristicsDexterity { get; set; }
+
         public int StatisticsTotalFights { get; set; }
 
         public int StatisticsWins { get; set; }
