@@ -58,6 +58,7 @@
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(typeof(AutoValidateAntiforgeryTokenAttribute));
+                options.Filters.Add(typeof(WorkCompletionActionFilter));
                 options.Filters.Add(typeof(FarmHeroesExceptionFilterAttribute));
             });
             services.AddRazorPages();
