@@ -12,7 +12,12 @@
             if (hours <= 0 && minutes <= 0 && seconds <= 0 || document.getElementById("@Model.DomElementId").classList.contains("stop")) {
             clearInterval(@(Model.DomElementId + "Interval"));
                 document.getElementById("@Model.DomElementId").innerHTML = "00:00:00";
-        }
+            }
+
+            if ((hours <= 0 && minutes <= 0 && seconds <= 0 || document.getElementById("@Model.DomElementId").classList.contains("stop")) &&
+                ("@Model.DomElementId" != "work_0" && "@Model.DomElementId" != "attack_0" && "@Model.DomElementId" != "defense_0")) {
+                location.reload();
+            }
 
         seconds--;
         if (seconds == 0 && minutes != 0) {
