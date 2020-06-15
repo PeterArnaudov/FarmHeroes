@@ -16,6 +16,7 @@
     using FarmHeroes.Web.ViewModels.CharacteristcsModels;
     using FarmHeroes.Web.ViewModels.ChatModels;
     using FarmHeroes.Web.ViewModels.ChronometerModels;
+    using FarmHeroes.Web.ViewModels.DungeonModels;
     using FarmHeroes.Web.ViewModels.EquipmentModels;
     using FarmHeroes.Web.ViewModels.FarmModels;
     using FarmHeroes.Web.ViewModels.FightModels;
@@ -145,6 +146,10 @@
             this.CreateMap<AmuletBag, AmuletBagViewModel>();
 
             this.CreateMap<HeroAmulet, AmuletSelectViewModel>();
+
+            this.CreateMap<Hero, DungeonIndexViewModel>();
+
+            this.CreateMap<Hero, DungeonWalkingViewModel>();
         }
     }
 }

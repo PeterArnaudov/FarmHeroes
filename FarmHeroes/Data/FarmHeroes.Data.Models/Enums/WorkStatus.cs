@@ -7,6 +7,8 @@
         Idle,
         Farm,
         Mine,
-        Battlefield
+        Battlefield,
+        Dungeon,
+        DungeonIdle,
     }
 }

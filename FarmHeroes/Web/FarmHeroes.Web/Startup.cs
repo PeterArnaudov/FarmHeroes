@@ -104,6 +104,7 @@
             services.AddTransient<IDailyLimitsService, DailyLimitsService>();
             services.AddTransient<ILeaderboardsService, LeaderboardsService>();
             services.AddTransient<IChatService, ChatService>();
+            services.AddTransient<IDungeonService, DungeonService>();
 
             // Filters
             services.AddTransient<FarmHeroesExceptionFilterAttribute>();

@@ -1,0 +1,34 @@
+﻿@model FarmHeroes.Web.ViewModels.DungeonModels.DungeonWalkingViewModel
+@{
+    ViewData["Title"] = "Dungeon";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<h1 class="text-uppercase">Dungeon</h1>
+<p class="font-italic">You are currently walking down the dungeon floors.</p>
+<hr class="bg-primary" />
+<div class="row">
+    <p class="col-6 m-0">Current floor: @Model.DungeonInformationCurrentFloor</p>
+    <p class="col-6 m-0">Monsters left on floor: @(4 - Model.DungeonInformationMonstersDefeatedOnCurrentFloor)</p>
+</div>
+<hr class="bg-primary" />
+@if (Model.ChronometerWorkUntil < DateTime.UtcNow)
+{
+    <div class="text-center">
+        <a href="/Dungeon/NextFloor" class="btn btn-primary text-uppercase">Go to next floor</a>
+        @if (4 - Model.DungeonInformationMonstersDefeatedOnCurrentFloor > 0)
+        {
+            <a href="/Dungeon/WalkOnFloor" class="btn btn-primary text-uppercase ml-2">Walk on this floor</a>
+        }
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <vc:timer dom-element-id="work_1" date-time="@Model.ChronometerWorkUntil"></vc:timer>
+    </div>
+}
+<div class="text-center">
+    <a href="/Dungeon/Exit" class="btn btn-danger text-uppercase mt-2">Exit Dungeon</a>
+</div>
+

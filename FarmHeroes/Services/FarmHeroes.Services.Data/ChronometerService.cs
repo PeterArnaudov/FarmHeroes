@@ -93,6 +93,14 @@
             await this.context.SaveChangesAsync();
         }
 
+        public async Task SetCannotDungeonUntil(int seconds, int id = 0)
+        {
+            Chronometer chronometer = await this.GetChronometer(id);
+            chronometer.CannotDungeonUntil = DateTime.UtcNow.AddSeconds(seconds);
+
+            await this.context.SaveChangesAsync();
+        }
+
         public async Task UpdateChronometer(ChronometerModifyInputModel inputModel)
         {
             Hero hero = await this.heroService.GetHeroByName(inputModel.Name);
@@ -112,12 +120,12 @@
 
         private void CheckIfCurrentlyWorking(Hero hero)
         {
-            if (hero.Chronometer.WorkUntil != null)
+            if (hero.Chronometer.WorkUntil != null && hero.WorkStatus != WorkStatus.DungeonIdle)
             {
                 throw new FarmHeroesException(
                     ChronometerExceptionMessages.CurrentlyWorkingMessage,
                     ChronometerExceptionMessages.CurrentlyWorkingInstruction,
-                    Redirects.FarmRedirect);
+                    string.Empty);
             }
         }
 

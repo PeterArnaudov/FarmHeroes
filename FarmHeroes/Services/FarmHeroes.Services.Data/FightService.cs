@@ -550,7 +550,7 @@
 
         private void CheckIfHeroIsWorking(Hero hero)
         {
-            if (hero.WorkStatus != WorkStatus.Idle)
+            if (hero.WorkStatus != WorkStatus.Idle && hero.WorkStatus != WorkStatus.Dungeon)
             {
                 throw new FarmHeroesException(
                     FightExceptionMessages.CannotAttackExceptionMessage,
@@ -583,7 +583,7 @@
 
         private void CheckIfHeroCanAttackMonster(Hero hero)
         {
-            if (hero.Chronometer.CannotAttackMonsterUntil > DateTime.UtcNow)
+            if (hero.Chronometer.CannotAttackMonsterUntil > DateTime.UtcNow && hero.WorkStatus != WorkStatus.Dungeon)
             {
                 throw new FarmHeroesException(
                     FightExceptionMessages.CannotAttackExceptionMessage,

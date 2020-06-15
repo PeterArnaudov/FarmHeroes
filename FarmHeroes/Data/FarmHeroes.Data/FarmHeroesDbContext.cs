@@ -75,6 +75,8 @@
 
         public virtual DbSet<Message> Messages { get; set; }
 
+        public virtual DbSet<DungeonInformation> DungeonInformations { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

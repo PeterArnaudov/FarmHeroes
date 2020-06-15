@@ -14,6 +14,8 @@
 
         public DateTime? CannotBeAttackedUntil { get; set; } = DateTime.UtcNow;
 
+        public DateTime? CannotDungeonUntil { get; set; } = DateTime.UtcNow;
+
         public virtual Hero Hero { get; set; }
     }
 }

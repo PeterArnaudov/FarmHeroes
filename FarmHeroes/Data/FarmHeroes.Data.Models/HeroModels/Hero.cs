@@ -22,6 +22,7 @@
             this.Chronometer = new Chronometer();
             this.DailyLimits = new DailyLimits();
             this.AmuletBag = new AmuletBag();
+            this.DungeonInformation = new DungeonInformation();
         }
 
         public int Id { get; set; }
@@ -79,6 +80,10 @@
         public int AmuletBagId { get; set; }
 
         public virtual AmuletBag AmuletBag { get; set; }
+
+        public int DungeonInformationId { get; set; }
+
+        public virtual DungeonInformation DungeonInformation { get; set; }
 
         public virtual List<Notification> Notifications { get; set; } = new List<Notification>();
 

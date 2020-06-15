@@ -1,6 +1,7 @@
 ﻿namespace FarmHeroes.Services.Data
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
     using FarmHeroes.Data;
@@ -35,7 +36,19 @@
 
         public async Task<Monster> GetMonsterByLevel(int level)
         {
-            return await this.context.Monsters.SingleOrDefaultAsync(m => m.Level == level);
+            Monster monster = await this.context.Monsters.SingleOrDefaultAsync(m => m.Level == level);
+
+            if (monster == null)
+            {
+                monster = await this.context.Monsters.OrderByDescending(x => x.Level).FirstOrDefaultAsync();
+                monster.Level = level * 3;
+                monster.MinimalRewardModifier += level * 6;
+                monster.MaximalRewardModifier += level * 12;
+                monster.StatPercentage += level;
+                this.context.Entry(monster).State = EntityState.Detached;
+            }
+
+            return monster;
         }
 
         public async Task<FightMonster> GenerateFightMonster(Monster databaseMonster)

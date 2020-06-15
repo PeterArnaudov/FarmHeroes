@@ -58,7 +58,7 @@
             return this.Redirect($"/Battlefield/FightLog/{fightId}");
         }
 
-        public async Task<IActionResult> AttackMonster([Range(0, 9)]int monsterLevel = 0)
+        public async Task<IActionResult> AttackMonster([Range(0, 3)]int monsterLevel = 0)
         {
             if (!this.ModelState.IsValid)
             {

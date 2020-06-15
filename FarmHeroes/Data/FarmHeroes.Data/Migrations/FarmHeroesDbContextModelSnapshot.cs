@@ -404,6 +404,9 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<DateTime?>("CannotBeAttackedUntil")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("CannotDungeonUntil")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("WorkUntil")
                         .HasColumnType("datetime2");
 
@@ -434,6 +437,24 @@ namespace FarmHeroes.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DailyLimits");
+                });
+
+            modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.DungeonInformation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CurrentFloor")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MonstersDefeatedOnCurrentFloor")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DungeonInformations");
                 });
 
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.EquippedSet", b =>
@@ -495,6 +516,9 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("DailyLimitsId")
                         .HasColumnType("int");
 
+                    b.Property<int>("DungeonInformationId")
+                        .HasColumnType("int");
+
                     b.Property<int>("EquippedSetId")
                         .HasColumnType("int");
 
@@ -540,6 +564,9 @@ namespace FarmHeroes.Data.Migrations
                         .IsUnique();
 
                     b.HasIndex("DailyLimitsId")
+                        .IsUnique();
+
+                    b.HasIndex("DungeonInformationId")
                         .IsUnique();
 
                     b.HasIndex("EquippedSetId")
@@ -741,6 +768,9 @@ namespace FarmHeroes.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Crystals")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DungeonKeys")
                         .HasColumnType("int");
 
                     b.Property<int>("Gold")
@@ -1130,6 +1160,12 @@ namespace FarmHeroes.Data.Migrations
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.DailyLimits", "DailyLimits")
                         .WithOne("Hero")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "DailyLimitsId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FarmHeroes.Data.Models.HeroModels.DungeonInformation", "DungeonInformation")
+                        .WithOne("Hero")
+                        .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "DungeonInformationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

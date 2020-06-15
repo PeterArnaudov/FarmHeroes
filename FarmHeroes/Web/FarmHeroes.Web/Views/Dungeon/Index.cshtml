@@ -1,0 +1,34 @@
+﻿@model FarmHeroes.Web.ViewModels.DungeonModels.DungeonIndexViewModel
+@{
+    ViewData["Title"] = "Dungeon";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<h1 class="text-uppercase">Dungeon</h1>
+<p class="font-italic">You are standing in front of the dungeon gateway. Would you be brave enough to enter? Scary monsters and piles of gold await you! But you need a key...</p>
+<hr class="bg-primary w-75" />
+<div class="row">
+    <div class="col-6 border-primary border-right">
+        <img src="~/images/dungeon/dungeon-icon.png" alt="dungeon" class="img-fluid d-none d-sm-block ml-2 mt-2 area-icon">
+        <h4 class="text-uppercase text-center">Entrance</h4>
+        <p class="font-italic mt-1 mt-sm-5">Dive into the depths of the dungeon. The deeper you dare going, the stronger the monsters will be. If you lose a fight, you will be kicked out of the dungeon.</p>
+        <div class="text-center">
+            @if (Model.ChronometerCannotDungeonUntil <= DateTime.UtcNow)
+            {
+                <a href="/Dungeon/Enter" class="btn btn-primary text-uppercase"><img src="~/images/icons/dungeon-key-icon.png" alt="dungeon-key" class="icon"> Enter</a>
+            }
+            else
+            {
+                <vc:timer dom-element-id="dungeon_1" date-time="@Model.ChronometerCannotDungeonUntil"></vc:timer>
+            }
+        </div>
+    </div>
+    <div class="col-6">
+        <img src="~/images/icons/dungeon-key-icon.png" alt="dungeon-key" class="img-fluid d-none d-sm-block ml-2 mt-2 area-icon">
+        <h4 class="text-uppercase text-center">Keys</h4>
+        <p class="mt-1 mt-sm-5">You currently have @Model.ResourcePouchDungeonKeys keys.</p>
+        <div class="text-center">
+            <a href="/Dungeon/BuyKey" class="btn btn-success text-uppercase">10 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"> Buy</a>
+        </div>
+    </div>
+</div>

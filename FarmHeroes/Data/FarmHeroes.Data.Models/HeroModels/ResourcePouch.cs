@@ -12,6 +12,8 @@
 
         public int Crystals { get; set; }
 
+        public int DungeonKeys { get; set; }
+
         public virtual Hero Hero { get; set; }
     }
 }

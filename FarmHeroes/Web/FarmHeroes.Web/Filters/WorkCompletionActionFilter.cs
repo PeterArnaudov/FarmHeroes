@@ -12,12 +12,14 @@
         private readonly IHeroService heroService;
         private readonly IBattlefieldService battlefieldService;
         private readonly IFarmService farmService;
+        private readonly IDungeonService dungeonService;
 
-        public WorkCompletionActionFilter(IHeroService heroService, IBattlefieldService battlefieldService, IFarmService farmService)
+        public WorkCompletionActionFilter(IHeroService heroService, IBattlefieldService battlefieldService, IFarmService farmService, IDungeonService dungeonService)
         {
             this.heroService = heroService;
             this.battlefieldService = battlefieldService;
             this.farmService = farmService;
+            this.dungeonService = dungeonService;
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -33,6 +35,10 @@
                 else if (hero.WorkStatus == WorkStatus.Farm && this.CheckIfWorkIsFinished(hero))
                 {
                     await this.farmService.Collect();
+                }
+                else if (hero.WorkStatus == WorkStatus.Dungeon && this.CheckIfWorkIsFinished(hero))
+                {
+                    await this.dungeonService.AttackMonster();
                 }
             }
             catch

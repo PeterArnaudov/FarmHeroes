@@ -16,11 +16,13 @@
 
         Task NullifyWorkUntil();
 
-        Task SetCannotAttackHeroUntil(int id, int seconds);
+        Task SetCannotAttackHeroUntil(int seconds, int id = 0);
 
-        Task SetCannotAttackMonsterUntil(int id, int seconds);
+        Task SetCannotAttackMonsterUntil(int seconds, int id = 0);
 
-        Task SetCannotBeAttackedUntil(int id, int seconds);
+        Task SetCannotBeAttackedUntil(int seconds, int id = 0);
+
+        Task SetCannotDungeonUntil(int seconds, int id = 0);
 
         Task UpdateChronometer(ChronometerModifyInputModel inputModel);
     }
