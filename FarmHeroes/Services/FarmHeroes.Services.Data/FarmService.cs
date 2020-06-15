@@ -69,7 +69,7 @@
             hero.Statistics.EarnedOnFarm += collectedResources.Gold;
 
             await this.levelService.GiveHeroExperience(collectedResources.Experience);
-            await this.resourcePouchService.IncreaseGold(collectedResources.Gold);
+            await this.resourcePouchService.IncreaseResource(ResourceNames.Gold, collectedResources.Gold);
             await this.chronometerService.NullifyWorkUntil();
             await this.statisticsService.UpdateStatistics(hero.Statistics);
 

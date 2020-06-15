@@ -6,6 +6,8 @@
     using System.Reflection;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Web.ApiControllers;
+    using Microsoft.ApplicationInsights.AspNetCore.Extensions;
+    using Microsoft.AspNetCore.Http.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -47,7 +49,14 @@
                         .GetTempData(context.HttpContext)
                         .Add("ExceptionInstructions", exception.Instructions);
 
-                    context.Result = new RedirectResult(exception.RedirectPath);
+                    if (exception.RedirectPath != string.Empty)
+                    {
+                        context.Result = new RedirectResult(exception.RedirectPath);
+                    }
+                    else
+                    {
+                        context.Result = new RedirectResult(context.HttpContext.Request.Headers["Referer"].ToString());
+                    }
                 }
             }
         }

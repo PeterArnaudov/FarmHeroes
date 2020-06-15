@@ -6,6 +6,7 @@
     using AutoMapper;
     using FarmHeroes.Data;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Services.Data.Constants;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Formulas;
     using FarmHeroes.Web.ViewModels.HealthModels;
@@ -54,7 +55,7 @@
         {
             Health health = await this.GetHealth();
 
-            await this.resourcePouchService.DecreaseGold(gold);
+            await this.resourcePouchService.DecreaseResource(ResourceNames.Gold, gold);
             health.Current += amount;
 
             if (health.Current > health.Maximum)
@@ -69,7 +70,7 @@
         {
             Health health = await this.GetHealth();
 
-            await this.resourcePouchService.DecreaseCrystals(crystals);
+            await this.resourcePouchService.DecreaseResource(ResourceNames.Crystals, crystals);
             health.Current = health.Maximum;
 
             await this.context.SaveChangesAsync();

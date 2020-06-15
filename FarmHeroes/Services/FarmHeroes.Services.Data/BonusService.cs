@@ -4,6 +4,7 @@
     using FarmHeroes.Data;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.ShopModels;
+    using FarmHeroes.Services.Data.Constants;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using Microsoft.AspNetCore.Http;
@@ -67,7 +68,7 @@
                     : heroBonus.ActiveUntil.AddDays(shopBonus.Days);
             }
 
-            await this.resourcePouchService.DecreaseCrystals(shopBonus.CrystalsPrice);
+            await this.resourcePouchService.DecreaseResource(ResourceNames.Crystals, shopBonus.CrystalsPrice);
 
             await this.context.SaveChangesAsync();
 

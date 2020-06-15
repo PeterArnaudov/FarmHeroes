@@ -4,12 +4,8 @@
 
     public class ResourcePouchExceptionMessages
     {
-        public const string NotEnoughGoldMessage = "Not enough gold.";
+        public const string NotEnoughResourceMessage = "Not enough {0}.";
 
-        public const string NotEnoughGoldInstrctuon = "Go earn yourself some more gold and come back... or steal it. ;)";
-
-        public const string NotEnoughCrystalsMessage = "Not enough crystals.";
-
-        public const string NotEnoughCrystalsInstruction = "Go earn yourself some more crystals and come back.";
+        public const string NotEnoughResourceInstruction = "Go earn yourself some more {0} and come back...";
     }
 }

@@ -63,7 +63,7 @@
 
             hero.Statistics.EarnedInMines += collectedResources.Crystals;
 
-            await this.resourcePouchService.IncreaseCrystals(collectedResources.Crystals);
+            await this.resourcePouchService.IncreaseResource(ResourceNames.Crystals, collectedResources.Crystals);
             await this.chronometerService.NullifyWorkUntil();
             await this.statisticsService.UpdateStatistics(hero.Statistics);
 

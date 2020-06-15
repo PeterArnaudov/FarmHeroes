@@ -78,7 +78,7 @@
 
             this.CheckIfInventoryCanBeUpgraded(inventory);
 
-            await this.resourcePouchService.DecreaseCrystals(InventoryFormulas.CalculateUpgradeCost(inventory.MaximumCapacity));
+            await this.resourcePouchService.DecreaseResource(ResourceNames.Crystals, InventoryFormulas.CalculateUpgradeCost(inventory.MaximumCapacity));
 
             inventory.MaximumCapacity++;
 

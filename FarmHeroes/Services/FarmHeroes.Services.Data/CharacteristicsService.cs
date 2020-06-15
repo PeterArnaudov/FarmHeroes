@@ -6,6 +6,7 @@
     using AutoMapper;
     using FarmHeroes.Data;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Services.Data.Constants;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Formulas;
     using FarmHeroes.Web.ViewModels.CharacteristcsModels;
@@ -49,7 +50,7 @@
             Characteristics characteristics = await this.GetCharacteristics();
             int goldNeeded = CharacteristicsFormulas.CalculateAttackPrice(characteristics.Attack);
 
-            await this.resourcesService.DecreaseGold(goldNeeded);
+            await this.resourcesService.DecreaseResource(ResourceNames.Gold, goldNeeded);
             characteristics.Attack++;
 
             await this.context.SaveChangesAsync();
@@ -62,7 +63,7 @@
             Characteristics characteristics = await this.GetCharacteristics();
             int goldNeeded = CharacteristicsFormulas.CalculateDefensePrice(characteristics.Defense);
 
-            await this.resourcesService.DecreaseGold(goldNeeded);
+            await this.resourcesService.DecreaseResource(ResourceNames.Gold, goldNeeded);
             characteristics.Defense++;
 
             await this.context.SaveChangesAsync();
@@ -75,7 +76,7 @@
             Characteristics characteristics = await this.GetCharacteristics();
             int goldNeeded = CharacteristicsFormulas.CalculateMassPrice(characteristics.Mass);
 
-            await this.resourcesService.DecreaseGold(goldNeeded);
+            await this.resourcesService.DecreaseResource(ResourceNames.Gold, goldNeeded);
             characteristics.Mass++;
 
             await this.healthService.IncreaseMaximumHealth(characteristics.Mass);
@@ -90,7 +91,7 @@
             Characteristics characteristics = await this.GetCharacteristics();
             int goldNeeded = CharacteristicsFormulas.CalculateMasteryPrice(characteristics.Mastery);
 
-            await this.resourcesService.DecreaseGold(goldNeeded);
+            await this.resourcesService.DecreaseResource(ResourceNames.Gold, goldNeeded);
             characteristics.Mastery++;
 
             await this.context.SaveChangesAsync();
@@ -103,7 +104,7 @@
             Characteristics characteristics = await this.GetCharacteristics();
             int goldNeeded = CharacteristicsFormulas.CalculateDexterityPrice(characteristics.Dexterity);
 
-            await this.resourcesService.DecreaseGold(goldNeeded);
+            await this.resourcesService.DecreaseResource(ResourceNames.Gold, goldNeeded);
             characteristics.Dexterity++;
 
             await this.context.SaveChangesAsync();

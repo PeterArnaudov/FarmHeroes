@@ -54,7 +54,7 @@
                 ? DateTime.UtcNow.AddDays(ExtendRentDays)
                 : hero.AmuletBag.ActiveUntil.AddDays(ExtendRentDays);
 
-            await this.resourcePouchService.DecreaseCrystals(ExtendRentPrice);
+            await this.resourcePouchService.DecreaseResource(ResourceNames.Crystals, ExtendRentPrice);
 
             await this.context.SaveChangesAsync();
         }
@@ -67,7 +67,7 @@
 
             hero.AmuletBag.ActiveUntil = DateTime.MaxValue;
 
-            await this.resourcePouchService.DecreaseCrystals(PurchaseAmuletBagPrice);
+            await this.resourcePouchService.DecreaseResource(ResourceNames.Crystals, PurchaseAmuletBagPrice);
 
             await this.context.SaveChangesAsync();
         }

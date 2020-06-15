@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -35,6 +36,26 @@
             return hero.ResourcePouch;
         }
 
+        public async Task UpdateResourcePouch(ResourcePouchModifyInputModel inputModel)
+        {
+            Hero hero = await this.heroService.GetHeroByName(inputModel.Name);
+
+            hero.ResourcePouch.Gold = inputModel.ResourcePouchGold;
+            hero.ResourcePouch.Crystals = inputModel.ResourcePouchCrystals;
+
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task IncreaseResource(string resource, int amount, int id = 0)
+        {
+            ResourcePouch resources = await this.GetResourcePouch(id);
+
+            int currentAmount = (int)typeof(ResourcePouch).GetProperty(resource).GetValue(resources);
+            typeof(ResourcePouch).GetProperty(resource).SetValue(resources, currentAmount + amount);
+
+            await this.context.SaveChangesAsync();
+        }
+
         public async Task<TViewModel> GetCurrentHeroResourcesViewModel<TViewModel>()
         {
             ResourcePouch resourcePouch = await this.GetResourcePouch();
@@ -43,50 +64,14 @@
             return viewModel;
         }
 
-        public async Task IncreaseGold(int gold, int id = 0)
-        {
-            ResourcePouch resources = await this.GetResourcePouch(id);
-            resources.Gold += gold;
-
-            await this.context.SaveChangesAsync();
-        }
-
-        public async Task DecreaseGold(int gold, int id = 0)
+        public async Task DecreaseResource(string resourceName, int amount, int id = 0)
         {
             ResourcePouch resources = await this.GetResourcePouch(id);
 
-            this.CheckIfHeroHasEnoughGold(resources, gold);
+            this.CheckIfHeroHasEnoughResource(resources, resourceName, amount);
 
-            resources.Gold -= gold;
-
-            await this.context.SaveChangesAsync();
-        }
-
-        public async Task IncreaseCrystals(int crystals, int id = 0)
-        {
-            ResourcePouch resources = await this.GetResourcePouch(id);
-            resources.Crystals += crystals;
-
-            await this.context.SaveChangesAsync();
-        }
-
-        public async Task DecreaseCrystals(int crystals, int id = 0)
-        {
-            ResourcePouch resources = await this.GetResourcePouch(id);
-
-            this.CheckIfHeroHasEnoughCrystals(resources, crystals);
-
-            resources.Crystals -= crystals;
-
-            await this.context.SaveChangesAsync();
-        }
-
-        public async Task UpdateResourcePouch(ResourcePouchModifyInputModel inputModel)
-        {
-            Hero hero = await this.heroService.GetHeroByName(inputModel.Name);
-
-            hero.ResourcePouch.Gold = inputModel.ResourcePouchGold;
-            hero.ResourcePouch.Crystals = inputModel.ResourcePouchCrystals;
+            int currentAmount = (int)typeof(ResourcePouch).GetProperty(resourceName).GetValue(resources);
+            typeof(ResourcePouch).GetProperty(resourceName).SetValue(resources, currentAmount - amount);
 
             await this.context.SaveChangesAsync();
         }
@@ -98,26 +83,22 @@
             await this.context.SaveChangesAsync();
         }
 
-        private void CheckIfHeroHasEnoughGold(ResourcePouch resources, int goldNeeded)
+        private void CheckIfHeroHasEnoughResource(ResourcePouch resources, string resourceName, int amount)
         {
-            if (resources.Gold < goldNeeded)
+            int currentAmount = (int)typeof(ResourcePouch).GetProperty(resourceName).GetValue(resources);
+
+            if (currentAmount < amount)
             {
                 throw new FarmHeroesException(
-                    ResourcePouchExceptionMessages.NotEnoughGoldMessage,
-                    ResourcePouchExceptionMessages.NotEnoughGoldInstrctuon,
-                    Redirects.BattlefieldRedirect);
+                    string.Format(ResourcePouchExceptionMessages.NotEnoughResourceMessage, this.SeparateWords(resourceName)),
+                    string.Format(ResourcePouchExceptionMessages.NotEnoughResourceInstruction, this.SeparateWords(resourceName)),
+                    string.Empty);
             }
         }
 
-        private void CheckIfHeroHasEnoughCrystals(ResourcePouch resources, int crystalsNeeded)
+        private string SeparateWords(string resourceName)
         {
-            if (resources.Crystals < crystalsNeeded)
-            {
-                throw new FarmHeroesException(
-                    ResourcePouchExceptionMessages.NotEnoughCrystalsMessage,
-                    ResourcePouchExceptionMessages.NotEnoughCrystalsInstruction,
-                    Redirects.MineRedirect);
-            }
+            return Regex.Replace(resourceName, @"(?<=[A-Za-z])(?=[A-Z][a-z])|(?<=[a-z0-9])(?=[0-9]?[A-Z])", " ").ToLower();
         }
     }
 }

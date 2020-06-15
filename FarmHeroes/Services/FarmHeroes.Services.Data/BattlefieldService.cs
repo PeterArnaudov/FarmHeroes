@@ -70,7 +70,7 @@
 
             this.CheckIfPatrolResetsLimitIsReached(hero);
 
-            await this.resourcePouchService.DecreaseCrystals(PatrolResetPrice);
+            await this.resourcePouchService.DecreaseResource(ResourceNames.Crystals, PatrolResetPrice);
 
             hero.DailyLimits.PatrolResets = 1;
             hero.DailyLimits.PatrolsDone = 0;
@@ -92,7 +92,7 @@
             hero.DailyLimits.PatrolsDone++;
 
             await this.levelService.GiveHeroExperience(collectedResources.Experience);
-            await this.resourcePouchService.IncreaseGold(collectedResources.Gold);
+            await this.resourcePouchService.IncreaseResource(ResourceNames.Gold, collectedResources.Gold);
             await this.chronometerService.NullifyWorkUntil();
             await this.statisticsService.UpdateStatistics(hero.Statistics);
             await this.dailyLimitsService.UpdateDailyLimits(hero.DailyLimits);
