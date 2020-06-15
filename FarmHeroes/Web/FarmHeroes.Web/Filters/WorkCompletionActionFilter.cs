@@ -22,15 +22,23 @@
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            Hero hero = await this.heroService.GetHero();
+            try
+            {
+                Hero hero = await this.heroService.GetHero();
 
-            if (hero.WorkStatus == WorkStatus.Battlefield && this.CheckIfWorkIsFinished(hero))
-            {
-                await this.battlefieldService.Collect();
+                if (hero.WorkStatus == WorkStatus.Battlefield && this.CheckIfWorkIsFinished(hero))
+                {
+                    await this.battlefieldService.Collect();
+                }
+                else if (hero.WorkStatus == WorkStatus.Farm && this.CheckIfWorkIsFinished(hero))
+                {
+                    await this.farmService.Collect();
+                }
             }
-            else if (hero.WorkStatus == WorkStatus.Farm && this.CheckIfWorkIsFinished(hero))
+            catch
             {
-                await this.farmService.Collect();
+                await next();
+                return;
             }
 
             await next();
