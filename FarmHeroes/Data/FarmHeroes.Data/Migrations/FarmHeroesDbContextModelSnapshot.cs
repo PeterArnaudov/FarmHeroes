@@ -28,18 +28,6 @@ namespace FarmHeroes.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -49,8 +37,6 @@ namespace FarmHeroes.Data.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
@@ -75,9 +61,6 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -88,17 +71,11 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("HeroId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")
@@ -128,8 +105,6 @@ namespace FarmHeroes.Data.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -504,6 +479,9 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("AmuletBagId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("AvatarUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -546,9 +524,6 @@ namespace FarmHeroes.Data.Migrations
                     b.Property<int>("StatisticsId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("WorkStatus")
                         .HasColumnType("int");
 
@@ -556,6 +531,10 @@ namespace FarmHeroes.Data.Migrations
 
                     b.HasIndex("AmuletBagId")
                         .IsUnique();
+
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique()
+                        .HasFilter("[ApplicationUserId] IS NOT NULL");
 
                     b.HasIndex("CharacteristicsId")
                         .IsUnique();
@@ -586,10 +565,6 @@ namespace FarmHeroes.Data.Migrations
 
                     b.HasIndex("StatisticsId")
                         .IsUnique();
-
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Heroes");
                 });
@@ -1076,10 +1051,12 @@ namespace FarmHeroes.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -1116,10 +1093,12 @@ namespace FarmHeroes.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -1142,73 +1121,73 @@ namespace FarmHeroes.Data.Migrations
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.AmuletBag", "AmuletBag")
                         .WithOne("Hero")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "AmuletBagId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("FarmHeroes.Data.Models.ApplicationUser", "ApplicationUser")
+                        .WithOne("Hero")
+                        .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "ApplicationUserId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Characteristics", "Characteristics")
                         .WithOne("Hero")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "CharacteristicsId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Chronometer", "Chronometer")
                         .WithOne("Hero")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "ChronometerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.DailyLimits", "DailyLimits")
                         .WithOne("Hero")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "DailyLimitsId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.DungeonInformation", "DungeonInformation")
                         .WithOne("Hero")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "DungeonInformationId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.EquippedSet", "EquippedSet")
                         .WithOne("Hero")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "EquippedSetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Health", "Health")
                         .WithOne("Hero")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "HealthId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Inventory", "Inventory")
                         .WithOne("Hero")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "InventoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Level", "Level")
                         .WithOne("Hero")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "LevelId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.ResourcePouch", "ResourcePouch")
                         .WithOne("Hero")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "ResourcePouchId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Statistics", "Statistics")
                         .WithOne("Hero")
                         .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "StatisticsId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("FarmHeroes.Data.Models.ApplicationUser", "User")
-                        .WithOne("Hero")
-                        .HasForeignKey("FarmHeroes.Data.Models.HeroModels.Hero", "UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("FarmHeroes.Data.Models.HeroModels.HeroAmulet", b =>
@@ -1216,7 +1195,7 @@ namespace FarmHeroes.Data.Migrations
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Inventory", "Inventory")
                         .WithMany("Amulets")
                         .HasForeignKey("InventoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -1225,7 +1204,7 @@ namespace FarmHeroes.Data.Migrations
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Inventory", "Inventory")
                         .WithMany("Bonuses")
                         .HasForeignKey("InventoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -1234,12 +1213,12 @@ namespace FarmHeroes.Data.Migrations
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.EquippedSet", "EquippedSet")
                         .WithMany("Equipped")
                         .HasForeignKey("EquippedSetId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Inventory", "Inventory")
                         .WithMany("Items")
                         .HasForeignKey("InventoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -1248,13 +1227,13 @@ namespace FarmHeroes.Data.Migrations
                     b.HasOne("FarmHeroes.Data.Models.FightModels.Fight", "Fight")
                         .WithMany("HeroFights")
                         .HasForeignKey("FightId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Hero", "Hero")
                         .WithMany("HeroFights")
                         .HasForeignKey("HeroId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -1263,7 +1242,7 @@ namespace FarmHeroes.Data.Migrations
                     b.HasOne("FarmHeroes.Data.Models.HeroModels.Hero", "Hero")
                         .WithMany("Notifications")
                         .HasForeignKey("HeroId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -1272,7 +1251,7 @@ namespace FarmHeroes.Data.Migrations
                     b.HasOne("FarmHeroes.Data.Models.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -1299,7 +1278,7 @@ namespace FarmHeroes.Data.Migrations
                     b.HasOne("FarmHeroes.Data.Models.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FarmHeroes.Data.Models.ApplicationUser", null)
@@ -1314,7 +1293,7 @@ namespace FarmHeroes.Data.Migrations
                     b.HasOne("FarmHeroes.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

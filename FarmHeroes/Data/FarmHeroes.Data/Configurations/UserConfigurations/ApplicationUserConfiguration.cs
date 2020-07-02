@@ -30,8 +30,8 @@
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(e => e.Hero)
-                .WithOne(h => h.User)
-                .HasForeignKey<Hero>(h => h.UserId)
+                .WithOne(h => h.ApplicationUser)
+                .HasForeignKey<Hero>(h => h.ApplicationUserId)
                 .OnDelete(DeleteBehavior.SetNull);
         }
     }

@@ -41,7 +41,6 @@
     <ProjectReference Include="..\..\Data\FarmHeroes.Data.Models\FarmHeroes.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\FarmHeroes.Data\FarmHeroes.Data.csproj" />
     <ProjectReference Include="..\..\Services\FarmHeroes.Services.Data\FarmHeroes.Services.Data.csproj" />
-    <ProjectReference Include="..\..\Services\FarmHeroes.Services.Mapping\FarmHeroes.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Services\FarmHeroes.Services.Messaging\FarmHeroes.Services.Messaging.csproj" />
     <ProjectReference Include="..\..\Services\FarmHeroes.Services\FarmHeroes.Services.csproj" />
     <ProjectReference Include="..\FarmHeroes.Web.Infrastructure\FarmHeroes.Web.Infrastructure.csproj" />

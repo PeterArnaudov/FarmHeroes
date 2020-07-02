@@ -4,15 +4,12 @@
 
     using AutoMapper;
     using FarmHeroes.Data;
-    using FarmHeroes.Data.Common;
-    using FarmHeroes.Data.Common.Repositories;
+
     using FarmHeroes.Data.Models;
-    using FarmHeroes.Data.Repositories;
     using FarmHeroes.Data.Seeding;
     using FarmHeroes.Services.Data;
     using FarmHeroes.Services.Data.Contracts;
     using Farmheroes.Services.Data.Utilities;
-    using FarmHeroes.Services.Mapping;
     using FarmHeroes.Services.Messaging;
     using FarmHeroes.Web.ViewModels;
     using Microsoft.AspNetCore.Builder;
@@ -73,11 +70,6 @@
             services.AddHostedService<NotificationDeleteTask>();
             services.AddHostedService<DailyLimitsResetTask>();
 
-            // Data repositories
-            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
-            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-            services.AddScoped<IDbQueryRunner, DbQueryRunner>();
-
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<IUserService, UserService>();
@@ -114,8 +106,6 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
-
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {

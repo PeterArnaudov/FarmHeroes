@@ -13,7 +13,6 @@
     using FarmHeroes.Services.Data.Constants.ExceptionMessages;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
-    using FarmHeroes.Services.Mapping;
     using FarmHeroes.Web.ViewModels.HeroModels;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -36,8 +35,8 @@
         public async Task CreateHero(HeroCreateInputModel inputModel)
         {
             Hero hero = this.mapper.Map<Hero>(inputModel);
-            hero.User = await this.userService.GetApplicationUser();
-            hero.Name = hero.User.UserName;
+            hero.ApplicationUser = await this.userService.GetApplicationUser();
+            hero.Name = hero.ApplicationUser.UserName;
 
             hero.AvatarUrl = string.Format(
                 AvatarUrlFormat,

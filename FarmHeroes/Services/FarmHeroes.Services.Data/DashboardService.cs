@@ -35,7 +35,7 @@
         public SimpleReportViewModel[] GetFractionDistributionReport()
         {
             SimpleReportViewModel[] report = this.context.Heroes
-                .Where(x => x.UserId != null)
+                .Where(x => x.ApplicationUserId != null)
                 .GroupBy(x => x.Fraction)
                 .Select(x => new SimpleReportViewModel()
                 {

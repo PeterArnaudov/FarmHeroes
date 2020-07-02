@@ -127,7 +127,7 @@
                     && x.Id != attacker.Id
                     && x.Fraction != attacker.Fraction
                     && x.Chronometer.CannotBeAttackedUntil < DateTime.UtcNow
-                    && x.UserId != null)
+                    && x.ApplicationUserId != null)
                 .ToArrayAsync();
 
             if (heroes.Length == 0)

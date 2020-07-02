@@ -4,29 +4,21 @@ namespace FarmHeroes.Data.Models
     using System;
     using System.Collections.Generic;
 
-    using FarmHeroes.Data.Common.Models;
     using FarmHeroes.Data.Models.HeroModels;
     using Microsoft.AspNetCore.Identity;
 
-    public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
+    public class ApplicationUser : IdentityUser
     {
         public ApplicationUser()
         {
+            this.CreatedOn = DateTime.UtcNow;
             this.Id = Guid.NewGuid().ToString();
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
         }
 
-        // Audit info
         public DateTime CreatedOn { get; set; }
-
-        public DateTime? ModifiedOn { get; set; }
-
-        // Deletable entity
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\FarmHeroes.Data.Models\FarmHeroes.Data.Models.csproj" />
-    <ProjectReference Include="..\..\Services\FarmHeroes.Services.Mapping\FarmHeroes.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

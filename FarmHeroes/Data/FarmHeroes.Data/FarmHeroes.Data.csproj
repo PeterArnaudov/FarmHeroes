@@ -11,19 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200604191234_AmuletAutomation.cs" />
-    <Compile Remove="Migrations\20200604191234_AmuletAutomation.Designer.cs" />
-    <Compile Remove="Migrations\20200604191407_AmuletAutomation2.cs" />
-    <Compile Remove="Migrations\20200604191407_AmuletAutomation2.Designer.cs" />
-    <Compile Remove="Migrations\20200604193317_AmuletAutomation.cs" />
-    <Compile Remove="Migrations\20200604193317_AmuletAutomation.Designer.cs" />
-    <Compile Remove="Migrations\20200604195931_AmuletAutomation.cs" />
-    <Compile Remove="Migrations\20200604195931_AmuletAutomation.Designer.cs" />
-    <Compile Remove="Migrations\20200604200751_Initial.cs" />
-    <Compile Remove="Migrations\20200604200751_Initial.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
 
@@ -35,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
       <PrivateAssets>all</PrivateAssets>
@@ -54,7 +42,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\FarmHeroes.Common\FarmHeroes.Common.csproj" />
-    <ProjectReference Include="..\FarmHeroes.Data.Common\FarmHeroes.Data.Common.csproj" />
     <ProjectReference Include="..\FarmHeroes.Data.Models\FarmHeroes.Data.Models.csproj" />
   </ItemGroup>
 

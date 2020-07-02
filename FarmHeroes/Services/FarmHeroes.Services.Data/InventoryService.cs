@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
     using AutoMapper;
     using FarmHeroes.Data;
-    using FarmHeroes.Data.Common.Repositories;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Constants;
     using FarmHeroes.Services.Data.Constants.ExceptionMessages;
