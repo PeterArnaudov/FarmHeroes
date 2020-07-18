@@ -15,7 +15,7 @@
 
         Task GoToNextFloor();
 
-        Task EndDungeon();
+        Task EndDungeon(bool voluntarily = true);
 
         Task<T> GetDungeonViewModel<T>();
     }
