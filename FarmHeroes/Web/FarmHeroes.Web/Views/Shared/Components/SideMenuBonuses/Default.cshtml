@@ -1,11 +1,11 @@
 ﻿@model FarmHeroes.Web.ViewModels.ViewComponentsModels.SideMenuBonusesViewComponentModel
 
-@if (Model.Bonuses.Length > 0)
+@if (Model.ActiveBonuses.Length > 0)
 {
     <hr class="bg-primary w-75" />
     <li class="nav-item side-menu-effects">
         <h5 class="text-uppercase">Effects</h5>
-        @foreach (var bonus in Model.Bonuses.Where(x => x.ActiveUntil != DateTime.MaxValue && x.ActiveUntil > DateTime.UtcNow))
+        @foreach (var bonus in Model.ActiveBonuses)
         {
             <div class="text-left">
                 <img src="@bonus.ImageUrl" alt="bonus" class="img-fluid amulet-icon" data-toggle="tooltip" data-placement="right" title="@bonus.Name">
