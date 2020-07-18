@@ -7,6 +7,10 @@
     {
         public DateTime ActiveUntil { get; set; }
 
+        public bool IsActivePermanently => this.ActiveUntil == DateTime.MaxValue;
+
+        public bool IsActive => this.ActiveUntil > DateTime.UtcNow;
+
         public int OnIdleAmuletId { get; set; }
 
         public int OnPlayerAttackAmuletId { get; set; }
