@@ -27,6 +27,8 @@
 
         public AmuletViewModel EquippedSetAmulet { get; set; }
 
+        public bool HasAmuletEquipped => this.EquippedSetAmulet != null;
+
         public int CharacteristicsAttack { get; set; }
 
         public int CharacteristicsDefense { get; set; }
