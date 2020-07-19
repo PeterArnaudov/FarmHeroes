@@ -9,14 +9,14 @@
 <hr class="bg-primary" />
 <div class="row">
     <p class="col-6 m-0">Current floor: @Model.DungeonInformationCurrentFloor</p>
-    <p class="col-6 m-0">Monsters left on floor: @(4 - Model.DungeonInformationMonstersDefeatedOnCurrentFloor)</p>
+    <p class="col-6 m-0">Monsters left on floor: @Model.MonstersAvailable</p>
 </div>
 <hr class="bg-primary" />
-@if (Model.ChronometerWorkUntil < DateTime.UtcNow)
+@if (Model.IsWalking)
 {
     <div class="text-center">
         <a href="/Dungeon/NextFloor" class="btn btn-primary text-uppercase">Go to next floor</a>
-        @if (4 - Model.DungeonInformationMonstersDefeatedOnCurrentFloor > 0)
+        @if (Model.AreMonsterAvailable)
         {
             <a href="/Dungeon/WalkOnFloor" class="btn btn-primary text-uppercase ml-2">Walk on this floor</a>
         }

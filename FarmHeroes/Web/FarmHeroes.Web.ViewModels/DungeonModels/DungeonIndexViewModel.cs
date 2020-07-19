@@ -9,6 +9,8 @@
 
         public DateTime? ChronometerCannotDungeonUntil { get; set; }
 
+        public bool CanEnterDungeon => this.ChronometerCannotDungeonUntil < DateTime.UtcNow;
+
         public WorkStatus WorkStatus { get; set; }
     }
 }

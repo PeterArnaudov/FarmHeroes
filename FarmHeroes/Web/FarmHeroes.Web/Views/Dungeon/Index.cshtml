@@ -13,7 +13,7 @@
         <h4 class="text-uppercase text-center">Entrance</h4>
         <p class="font-italic mt-1 mt-sm-5">Dive into the depths of the dungeon. The deeper you dare going, the stronger the monsters will be. If you lose a fight, you will be kicked out of the dungeon.</p>
         <div class="text-center">
-            @if (Model.ChronometerCannotDungeonUntil <= DateTime.UtcNow)
+            @if (Model.CanEnterDungeon)
             {
                 <a href="/Dungeon/Enter" class="btn btn-primary text-uppercase"><img src="~/images/icons/dungeon-key-icon.png" alt="dungeon-key" class="icon"> Enter</a>
             }
