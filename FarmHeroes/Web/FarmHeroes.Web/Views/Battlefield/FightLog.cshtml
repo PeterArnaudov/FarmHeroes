@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="col-6">
-        @if (Model.DefenderId == 0)
+        @if (Model.IsDefenderMonster)
         {
             <h3 class="d-block text-center text-white">@Model.DefenderName (@Model.DefenderLevel)</h3>
         }

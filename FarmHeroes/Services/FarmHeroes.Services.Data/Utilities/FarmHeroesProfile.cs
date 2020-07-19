@@ -66,12 +66,7 @@
                 .ForMember(x => x.IsWorkFinished, cfg => cfg.MapFrom(x => x.Chronometer.WorkUntil < DateTime.UtcNow && x.WorkStatus == WorkStatus.Farm))
                 .ForMember(x => x.Salary, cfg => cfg.MapFrom(x => FarmFormulas.CalculateFarmSalaryPerHour(x.Level.CurrentLevel)));
 
-            this.CreateMap<Hero, BattlefieldViewModel>()
-                .ForMember(x => x.CanAttackHero, cfg => cfg.MapFrom(x => x.Chronometer.CannotAttackHeroUntil < DateTime.UtcNow || x.Chronometer.CannotAttackHeroUntil == null))
-                .ForMember(x => x.CanAttackMonster, cfg => cfg.MapFrom(x => x.Chronometer.CannotAttackMonsterUntil < DateTime.UtcNow || x.Chronometer.CannotAttackMonsterUntil == null))
-                .ForMember(x => x.IsPatrolFinished, cfg => cfg.MapFrom(x => x.Chronometer.WorkUntil < DateTime.UtcNow))
-                .ForMember(x => x.CanGoOnPatrol, cfg => cfg.MapFrom(x => x.WorkStatus == WorkStatus.Idle))
-                .ForMember(x => x.IsOnPatrol, cfg => cfg.MapFrom(x => x.WorkStatus == WorkStatus.Battlefield));
+            this.CreateMap<Hero, BattlefieldViewModel>();
 
             this.CreateMap<Health, HeroHealthViewComponentModel>()
                 .ForMember(x => x.Percent, cfg => cfg.MapFrom(x => Math.Round((double)(100 * x.Current / x.Maximum))));

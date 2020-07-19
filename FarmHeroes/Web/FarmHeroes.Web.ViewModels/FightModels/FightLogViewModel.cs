@@ -9,6 +9,8 @@
 
         public int DefenderId { get; set; }
 
+        public bool IsDefenderMonster => this.DefenderId == default;
+
         public string AttackerName { get; set; }
 
         public string DefenderName { get; set; }
