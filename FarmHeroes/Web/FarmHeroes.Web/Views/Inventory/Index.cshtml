@@ -11,7 +11,7 @@
 </div>
 <div class="row mt-1">
     <p class="col-6 text-center">Capacity: @Model.Items.Count/@Model.MaximumCapacity</p>
-    @if (Model.MaximumCapacity < 20)
+    @if (!Model.MaximumCapacityReached)
     {
         <p class="col-6 text-center">+1 capacity: @Model.UpgradeCost.ToString("N0") <img src="~/images/icons/crystal-icon.png" class="icon" alt="crystals"> <a href="/Inventory/Upgrade" class="btn btn-success text-uppercase">upgrade</a></p>
     }
@@ -21,7 +21,7 @@
     }
 </div>
 <div class="row ml-1 mr-1">
-    @if (Model.Items.Count > 0)
+    @if (Model.HasItems)
     {
         foreach (var item in Model.Items)
         {
@@ -41,7 +41,7 @@
 </div>
 
 <div class="row ml-1 mr-1">
-    @if (Model.Amulets.Count > 0)
+    @if (Model.HasAmulets)
     {
         <hr class="bg-primary col-11" />
         @foreach (var item in Model.Amulets)
@@ -58,10 +58,10 @@
 </div>
 
 <div class="row ml-1 mr-1">
-    @if (Model.Bonuses.Count > 0)
+    @if (Model.HasBonuses)
     {
         <hr class="bg-primary col-11" />
-        @foreach (var item in Model.Bonuses.Where(x => x.ActiveUntil > DateTime.UtcNow))
+        @foreach (var item in Model.ActiveBonuses)
         {
             <div class="position-relative equipment-box m-2">
                 <img src="@item.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="top" title="@item.Name<br><img src='/images/icons/level-icon.png' class='icon'>: @item.Level (@(item.Bonus * 100)%)<br>Time left: @(item.ActiveUntil == DateTime.MaxValue ? "Permanent" : $"{(item.ActiveUntil - DateTime.UtcNow).Days} days {(item.ActiveUntil - DateTime.UtcNow).Hours} hours")<br><br>@item.Description">
