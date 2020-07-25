@@ -8,6 +8,6 @@
 
         public long Maximum { get; set; }
 
-        public double Percent { get; set; }
+        public double Percent => Math.Round((double)(100 * this.Current / this.Maximum));
     }
 }

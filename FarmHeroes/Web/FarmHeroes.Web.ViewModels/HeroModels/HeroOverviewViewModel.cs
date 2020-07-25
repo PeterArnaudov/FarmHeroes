@@ -15,7 +15,7 @@
 
         public int LevelNeededExperience { get; set; }
 
-        public double ExperiencePercent { get; set; }
+        public double ExperiencePercent => Math.Round((double)(100 * this.LevelCurrentExperience / this.LevelNeededExperience));
 
         public EquipmentViewModel EquippedSetHelmet { get; set; }
 

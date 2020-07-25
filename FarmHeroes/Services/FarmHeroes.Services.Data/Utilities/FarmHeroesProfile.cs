@@ -41,14 +41,12 @@
             this.CreateMap<HeroCreateInputModel, Hero>();
 
             this.CreateMap<Hero, HeroOverviewViewModel>()
-                .ForMember(x => x.ExperiencePercent, cfg => cfg.MapFrom(x => Math.Round((double)(100 * x.Level.CurrentExperience / x.Level.NeededExperience))))
                 .ForMember(x => x.EquippedSetHelmet, cfg => cfg.MapFrom(x => x.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Helmet)))
                 .ForMember(x => x.EquippedSetArmor, cfg => cfg.MapFrom(x => x.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Armor)))
                 .ForMember(x => x.EquippedSetWeapon, cfg => cfg.MapFrom(x => x.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Weapon)))
                 .ForMember(x => x.EquippedSetShield, cfg => cfg.MapFrom(x => x.EquippedSet.Equipped.Find(x => x.Type == EquipmentType.Shield)));
 
-            this.CreateMap<Hero, HeroViewModel>()
-                .ForMember(x => x.ExperiencePercent, cfg => cfg.MapFrom(x => Math.Round((double)(100 * x.Level.CurrentExperience /  x.Level.NeededExperience))));
+            this.CreateMap<Hero, HeroViewModel>();
 
             this.CreateMap<Characteristics, CharacteristicsPracticeViewModel>()
                 .ForMember(x => x.AttackPrice, cfg => cfg.MapFrom(x => CharacteristicsFormulas.CalculateAttackPrice(x.Attack)))
@@ -64,8 +62,7 @@
 
             this.CreateMap<Hero, BattlefieldViewModel>();
 
-            this.CreateMap<Health, HeroHealthViewComponentModel>()
-                .ForMember(x => x.Percent, cfg => cfg.MapFrom(x => Math.Round((double)(100 * x.Current / x.Maximum))));
+            this.CreateMap<Health, HeroHealthViewComponentModel>();
 
             this.CreateMap<Hero[], BattlefieldGetOpponentsViewModel>()
                 .ForMember(x => x.Opponents, cfg => cfg.MapFrom(x => x));
