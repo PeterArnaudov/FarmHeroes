@@ -57,9 +57,7 @@
                 .ForMember(x => x.MasteryPrice, cfg => cfg.MapFrom(x => CharacteristicsFormulas.CalculateMasteryPrice(x.Mastery)))
                 .ForMember(x => x.DexterityPrice, cfg => cfg.MapFrom(x => CharacteristicsFormulas.CalculateDexterityPrice(x.Dexterity)));
 
-            this.CreateMap<Hero, MineViewModel>()
-                .ForMember(x => x.DoesWork, cfg => cfg.MapFrom(x => x.WorkStatus == WorkStatus.Mine))
-                .ForMember(x => x.IsWorkFinished, cfg => cfg.MapFrom(x => x.Chronometer.WorkUntil < DateTime.UtcNow && x.WorkStatus == WorkStatus.Mine));
+            this.CreateMap<Hero, MineViewModel>();
 
             this.CreateMap<Hero, FarmViewModel>()
                 .ForMember(x => x.Salary, cfg => cfg.MapFrom(x => FarmFormulas.CalculateFarmSalaryPerHour(x.Level.CurrentLevel)));
