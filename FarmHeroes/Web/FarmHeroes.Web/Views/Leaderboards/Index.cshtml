@@ -26,10 +26,10 @@
         <div class="form-group col-3 m-auto">
             <label for="page">Positions:</label>
             <select id="page" name="page" class="form-control-sm">
-                <option selected hidden value="@Model.CurrentPage">@((Model.CurrentPage - 1) * 25 + 1) - @(Model.CurrentPage * 25)</option>
+                <option selected hidden value="@Model.CurrentPage">@Model.CurrentPageMinimumPosition - @Model.CurrentPageMaximumPosition</option>
                 @for (int i = 1; i <= Model.Pages; i++)
                 {
-                    <option value="@i">@((i - 1) * 25 + 1) - @(i * 25)</option>
+                    <option value="@i">@((i - 1) * Model.PlayersPerPage + 1) - @(i * Model.PlayersPerPage)</option>
                 }
             </select>
         </div>
@@ -49,7 +49,7 @@
         @for (int i = 0; i < Model.Players.Count; i++)
         {   
             <tr>
-                <th scope="row">@(i + 1 + ((Model.CurrentPage - 1) * 25)) </th>
+                <th scope="row">@(i + 1 + ((Model.CurrentPage - 1) * Model.PlayersPerPage)) </th>
                 <td>@Model.Players[i].Username</td>
                 <td>@Model.Players[i].Points.ToString("N0")</td>
             </tr>
