@@ -88,9 +88,7 @@
             this.CreateMap<ShopBonus[], HutBonusesViewModel>()
                 .ForMember(x => x.Bonuses, cfg => cfg.MapFrom(x => x));
 
-            this.CreateMap<Inventory, SmithViewModel>()
-                .ForMember(x => x.Items, cfg => cfg.MapFrom(x => x.Items.Where(x => x.Level < 25)))
-                .ForMember(x => x.Amulets, cfg => cfg.MapFrom(x => x.Amulets.Where(x => x.Level < 100)));
+            this.CreateMap<Inventory, SmithViewModel>();
 
             this.CreateMap<Hero, BattlefieldOpponentViewModel>();
 

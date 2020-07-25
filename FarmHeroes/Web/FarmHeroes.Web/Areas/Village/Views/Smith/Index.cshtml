@@ -9,7 +9,7 @@
     <img src="~/images/icons/info-icon.png" alt="info" class="img-fluid ml-2 mt-2 info-icon" data-toggle="tooltip" data-placement="bottom" title="Upgrading equipment increases the characteristics you receive from all equipped items by percent equal to their level.<br><br>Helmets give extra mastery.<br>Armor gives extra dexterity.<br>Weapons give extra attack.<br>Shields give extra defense.">
 </div>
 
-@foreach (var item in Model.Items)
+@foreach (var item in Model.UpgradeableItems)
 {
     <div class="row align-items-center mt-2">
         <div class="col-2">
@@ -35,7 +35,7 @@
 @if (Model.Amulets.Length > 0)
 {
     <hr class="bg-primary" />
-    @foreach (var item in Model.Amulets)
+    @foreach (var item in Model.UpgradeableAmulets)
     {
         <div class="row align-items-center mt-2">
             <div class="col-2">
