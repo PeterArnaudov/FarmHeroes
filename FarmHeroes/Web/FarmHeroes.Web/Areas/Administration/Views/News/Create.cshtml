@@ -1,0 +1,36 @@
+﻿@model FarmHeroes.Web.ViewModels.NewsModels.NewsInputModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<script src='https://cdn.tiny.cloud/1/qovt1nhjz2cu9vn0ekdgyzxpy75us1a6gjif72f0c4hrx0ca/tinymce/5/tinymce.min.js' referrerpolicy="origin">
+</script>
+<script>
+    tinymce.init({
+        selector: '#news-content'
+    });
+</script>
+
+<form asp-area="Administration" asp-controller="News" asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group mt-2">
+        <label asp-for="Title"></label>
+        <span asp-validation-for="Title" class="text-danger"></span>
+        <input asp-for="Title" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageUrl"></label>
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        <input asp-for="ImageUrl" class="form-control">
+    </div>
+    <div class="form-group mt-2">
+        <label asp-for="Content"></label>
+        <span asp-validation-for="Content" class="text-danger"></span>
+        <textarea asp-for="Content" id="news-content" placeholder="Write news content here...">
+    </textarea>
+    </div>
+    <button type="submit" class="btn btn-success mb-2">Create</button>
+</form>
+
+<a asp-area="Administration" asp-controller="News" asp-action="Index" class="btn btn-primary">Go Back</a>

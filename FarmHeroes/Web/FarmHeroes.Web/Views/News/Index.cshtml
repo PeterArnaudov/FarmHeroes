@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "News";
+    if (this.User.Identity.IsAuthenticated)
+    {
+        Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_GuestLayout.cshtml";
+    }
+}
+
+<table class="table mt-2">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Published On</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var news in Model)
+        {
+            <tr>
+                <th scope="row">@news.Title</th>
+                <td>@news.PublishedOn</td>
+                <td>
+                    <a asp-area="" asp-controller="News" asp-action="Details" asp-route-id="@news.Id" class="btn btn-info">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

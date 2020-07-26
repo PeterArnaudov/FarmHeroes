@@ -1,4 +1,4 @@
-﻿namespace FarmHeroes.Web.Areas.Administration.Controllers
+﻿namespace FarmHeroes.Web.Areas.Administration.Controllers.Dashboard
 {
     using FarmHeroes.Data.Models;
     using FarmHeroes.Services.Data;

@@ -1,0 +1,31 @@
+﻿@model FarmHeroes.Web.ViewModels.NewsModels.NewsListViewModel[]
+@{
+    ViewData["Title"] = "Administration";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<a asp-area="Administration" asp-controller="Dashboard" asp-action="Index" class="btn btn-primary">Go Back</a>
+<a asp-area="Administration" asp-controller="News" asp-action="Create" class="btn btn-success float-right">Create</a>
+
+<table class="table mt-2">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Published On</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var news in Model)
+        {
+            <tr>
+                <th scope="row">@news.Title</th>
+                <td>@news.PublishedOn</td>
+                <td>
+                    <a asp-area="Administration" asp-controller="News" asp-action="Edit" asp-route-id="@news.Id" class="btn btn-info">Edit</a>
+                    <a asp-area="Administration" asp-controller="News" asp-action="Delete" asp-route-id="@news.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

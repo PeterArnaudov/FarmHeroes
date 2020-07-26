@@ -8,6 +8,7 @@
     using FarmHeroes.Data.Models.FightModels;
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.MonsterModels;
+    using FarmHeroes.Data.Models.News;
     using FarmHeroes.Data.Models.NotificationModels.HeroModels;
     using FarmHeroes.Data.Models.ShopModels;
     using FarmHeroes.Services.Data.Formulas;
@@ -27,6 +28,7 @@
     using FarmHeroes.Web.ViewModels.LevelModels;
     using FarmHeroes.Web.ViewModels.MineModels;
     using FarmHeroes.Web.ViewModels.MonsterModels;
+    using FarmHeroes.Web.ViewModels.NewsModels;
     using FarmHeroes.Web.ViewModels.NotificationModels;
     using FarmHeroes.Web.ViewModels.ResourcePouchModels;
     using FarmHeroes.Web.ViewModels.ShopModels;
@@ -136,6 +138,14 @@
             this.CreateMap<Hero, DungeonIndexViewModel>();
 
             this.CreateMap<Hero, DungeonWalkingViewModel>();
+
+            this.CreateMap<NewsInputModel, News>();
+
+            this.CreateMap<News, NewsInputModel>();
+
+            this.CreateMap<News, NewsListViewModel>();
+
+            this.CreateMap<News, NewsDetailsViewModel>();
         }
     }
 }

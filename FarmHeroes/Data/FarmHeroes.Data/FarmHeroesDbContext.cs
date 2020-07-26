@@ -9,6 +9,7 @@
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Data.Models.MappingModels;
     using FarmHeroes.Data.Models.MonsterModels;
+    using FarmHeroes.Data.Models.News;
     using FarmHeroes.Data.Models.NotificationModels.HeroModels;
     using FarmHeroes.Data.Models.ShopModels;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -22,6 +23,8 @@
         }
 
         public virtual DbSet<Hero> Heroes { get; set; }
+
+        public virtual DbSet<News> News { get; set; }
 
         public virtual DbSet<Notification> Notifications { get; set; }
 

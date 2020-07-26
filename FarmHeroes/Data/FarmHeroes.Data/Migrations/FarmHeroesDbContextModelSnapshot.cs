@@ -846,6 +846,30 @@ namespace FarmHeroes.Data.Migrations
                     b.ToTable("Monsters");
                 });
 
+            modelBuilder.Entity("FarmHeroes.Data.Models.News.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublishedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("News");
+                });
+
             modelBuilder.Entity("FarmHeroes.Data.Models.NotificationModels.HeroModels.Notification", b =>
                 {
                     b.Property<int>("Id")

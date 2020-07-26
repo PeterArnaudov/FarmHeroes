@@ -1,0 +1,45 @@
+﻿@model FarmHeroes.Web.ViewModels.NewsModels.NewsDetailsViewModel
+@{
+    ViewData["Title"] = "News";
+    if (this.User.Identity.IsAuthenticated)
+    {
+        Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_GuestLayout.cshtml";
+    }
+}
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ImageUrl)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.Raw(Model.Content)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PublishedOn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PublishedOn)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-area="" asp-controller="News" asp-action="Index" class="btn btn-primary">Back</a>
+</div>

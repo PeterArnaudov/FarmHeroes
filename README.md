@@ -17,3 +17,4 @@ My defense project for ASP.NET Core course at SoftUni (January 2020).
  - xUnit
  - Bootstrap 4
  - Chart.js
+ - TinyMCE

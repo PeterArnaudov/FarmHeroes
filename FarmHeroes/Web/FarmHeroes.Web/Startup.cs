@@ -74,6 +74,7 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IHeroService, HeroService>();
+            services.AddTransient<INewsService, NewsService>();
             services.AddTransient<IMineService, MineService>();
             services.AddTransient<IFarmService, FarmService>();
             services.AddTransient<IResourcePouchService, ResourcePouchService>();
