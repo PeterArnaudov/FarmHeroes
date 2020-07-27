@@ -11,35 +11,9 @@
     }
 }
 
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ImageUrl)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.Raw(Model.Content)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PublishedOn)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PublishedOn)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-area="" asp-controller="News" asp-action="Index" class="btn btn-primary">Back</a>
-</div>
+<h1 class="mb-0">@Model.Title</h1>
+<small class="mt-0">Published on: @Model.PublishedOn</small>
+<img class="img-fluid d-block mt-2 mb-2" style="width: 200px; height: 200px" src="@Model.ImageUrl" />
+@Html.Raw(Model.Content)
+
+<a asp-area="" asp-controller="News" asp-action="Index" class="btn btn-primary">Back</a>
