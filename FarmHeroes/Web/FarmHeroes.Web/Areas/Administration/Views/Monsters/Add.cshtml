@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_LoggedLayout.cshtml";
 }
 
-<a asp-area="Administration" asp-controller="Monsters" asp-action="Index" class="btn btn-primary">Go Back</a>
+<a asp-area="Administration" asp-controller="Monsters" asp-action="Index" class="btn btn-primary text-uppercase">Go Back</a>
 
 <form asp-area="Administration" asp-controller="Monsters" asp-action="Add" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -38,6 +38,6 @@
         <span asp-validation-for="MaximalRewardModifier" class="text-danger"></span>
         <input asp-for="MaximalRewardModifier" class="form-control">
     </div>
-    <button type="submit" class="btn btn-success">Add Monster</button>
+    <button type="submit" class="btn btn-success text-uppercase">Add Monster</button>
 </form>
 

@@ -46,29 +46,29 @@
                 <ul id="menu" class="collapse navbar-collapse list-unstyled flex-column p-1 ">
                     <h4 class="text-center text-uppercase">Menu</h4>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link" asp-area="" asp-controller="Hero" asp-action="Index">Hero</a>
+                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Hero" asp-action="Index">Hero</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link" asp-area="" asp-controller="Notifications" asp-action="Index">Notifications <vc:new-notifications-count></vc:new-notifications-count></a>
+                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Notifications" asp-action="Index">Notifications <vc:new-notifications-count></vc:new-notifications-count></a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link" asp-area="" asp-controller="Characteristics" asp-action="Index">Practice</a>
+                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Characteristics" asp-action="Index">Practice</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link" asp-area="Village" asp-controller="Village" asp-action="Index">Village</a>
+                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="Village" asp-controller="Village" asp-action="Index">Village</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link" asp-area="" asp-controller="Dungeon" asp-action="Index">Dungeon</a>
+                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Dungeon" asp-action="Index">Dungeon</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link" asp-area="" asp-controller="Battlefield" asp-action="Index">Battlefield</a>
+                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Battlefield" asp-action="Index">Battlefield</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link" asp-area="" asp-controller="Leaderboards" asp-action="Index">Leaderboards</a>
+                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Leaderboards" asp-action="Index">Leaderboards</a>
                     </li>
                     <li class="nav-item w-100">
                         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
-                            <button type="submit" class="btn btn-primary p-1 w-100 nav-link">Exit</button>
+                            <button type="submit" class="btn btn-primary p-1 w-100 nav-link text-uppercase">Exit</button>
                         </form>
                     </li>
                 </ul>

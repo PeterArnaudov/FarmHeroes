@@ -16,7 +16,7 @@
         <label for="roleName">Role</label>
         <input class="form-control" name="roleName" value="@Model" />
     </div>
-    <button type="submit" class="btn btn-primary">Add to role</button>
+    <button type="submit" class="btn btn-primary text-uppercase">Add to role</button>
 </form>
 <table class="table table-hover mt-3">
     <thead>
@@ -30,10 +30,10 @@
         {
             <tr>
                 <td>@user.UserName</td>
-                <td><a asp-area="Administration" asp-controller="PlayerControl" asp-action="Demote" asp-route-roleName="@Model" asp-route-username="@user.UserName" class="btn btn-danger">Demote</a></td>
+                <td><a asp-area="Administration" asp-controller="PlayerControl" asp-action="Demote" asp-route-roleName="@Model" asp-route-username="@user.UserName" class="btn btn-danger text-uppercase">Demote</a></td>
             </tr>
         }
     </tbody>
 </table>
-<a class="btn btn-primary mt-3" asp-area="Administration" asp-controller="PlayerControl" asp-action="Roles">Go Back</a>
+<a class="btn btn-primary mt-3 text-uppercase" asp-area="Administration" asp-controller="PlayerControl" asp-action="Roles">Go Back</a>
 

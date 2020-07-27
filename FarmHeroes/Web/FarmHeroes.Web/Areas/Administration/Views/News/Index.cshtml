@@ -4,8 +4,8 @@
     Layout = "~/Views/Shared/_LoggedLayout.cshtml";
 }
 
-<a asp-area="Administration" asp-controller="Dashboard" asp-action="Index" class="btn btn-primary">Go Back</a>
-<a asp-area="Administration" asp-controller="News" asp-action="Create" class="btn btn-success float-right">Create</a>
+<a asp-area="Administration" asp-controller="Dashboard" asp-action="Index" class="btn btn-primary text-uppercase">Go Back</a>
+<a asp-area="Administration" asp-controller="News" asp-action="Create" class="btn btn-success float-right text-uppercase">Create</a>
 
 <table class="table mt-2">
     <thead>
@@ -22,8 +22,8 @@
                 <th scope="row">@news.Title</th>
                 <td>@news.PublishedOn</td>
                 <td>
-                    <a asp-area="Administration" asp-controller="News" asp-action="Edit" asp-route-id="@news.Id" class="btn btn-info">Edit</a>
-                    <a asp-area="Administration" asp-controller="News" asp-action="Delete" asp-route-id="@news.Id" class="btn btn-danger">Delete</a>
+                    <a asp-area="Administration" asp-controller="News" asp-action="Edit" asp-route-id="@news.Id" class="btn btn-info text-uppercase">Edit</a>
+                    <a asp-area="Administration" asp-controller="News" asp-action="Delete" asp-route-id="@news.Id" class="btn btn-danger text-uppercase">Delete</a>
                 </td>
             </tr>
         }

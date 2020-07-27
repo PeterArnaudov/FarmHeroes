@@ -10,21 +10,21 @@
         @if (!Model.DoesWork)
         {
             <p>Dig for 2.5 minutes and find from 1 to 5 crystals.</p>
-            <button onclick="startWork('mine')" class="btn btn-primary">Dig</button>
+            <button onclick="startWork('mine')" class="btn btn-primary text-uppercase">Dig</button>
         }
         else
         {
             if (Model.IsWorkFinished)
             {
                 <p class="text-success">You finished digging! Click the button below to collect your crystals.</p>
-                <button class="btn btn-success" onclick="collect('mine')">Collect</button>
+                <button class="btn btn-success text-uppercase" onclick="collect('mine')">Collect</button>
             }
             else
             {
                 <p>Time left until you finish work:</p>
                 <vc:timer dom-element-id="work_1" date-time="@Model.ChronometerWorkUntil"></vc:timer>
                 <p class="text-danger">NOTE: If you cancel the process, you will not receive any rewards.</p>
-                <button class="btn btn-danger" onclick="cancelWork('mine')">Cancel</button>
+                <button class="btn btn-danger text-uppercase" onclick="cancelWork('mine')">Cancel</button>
             }
         }
     </div>

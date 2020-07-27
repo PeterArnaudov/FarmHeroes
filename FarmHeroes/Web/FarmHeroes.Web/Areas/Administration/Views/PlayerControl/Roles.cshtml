@@ -19,10 +19,10 @@
             <tr>
                 <td>@role.Name</td>
                 <td>@this.UserManager.GetUsersInRoleAsync(role.Name).Result.Count</td>
-                <td><a asp-area="Administration" asp-controller="PlayerControl" asp-action="ModifyRole" asp-route-roleName="@role.Name" class="btn btn-primary">Modify</a></td>
+                <td><a asp-area="Administration" asp-controller="PlayerControl" asp-action="ModifyRole" asp-route-roleName="@role.Name" class="btn btn-primary text-uppercase">Modify</a></td>
             </tr>
         }
     </tbody>
 </table>
-<a class="btn btn-primary mt-3" asp-area="Administration" asp-controller="PlayerControl" asp-action="Index">Go Back</a>
+<a class="btn btn-primary mt-3 text-uppercase" asp-area="Administration" asp-controller="PlayerControl" asp-action="Index">Go Back</a>
 

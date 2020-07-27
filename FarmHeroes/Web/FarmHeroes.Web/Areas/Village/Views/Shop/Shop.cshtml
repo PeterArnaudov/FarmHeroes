@@ -7,11 +7,11 @@
 <img src="~/images/village/shop/shop.jpg" alt="village-image" class="d-block img-fluid ml-auto mr-auto mb-3">
 <div class="row">
     <span class="col-1"></span>
-    <a class="col-2 btn btn-outline-primary border-left-0 border-right-0" asp-area="Village" asp-controller="Shop" asp-action="Shop" asp-route-type="Helmet">Helmets</a>
-    <a class="col-2 btn btn-outline-primary" asp-area="Village" asp-controller="Shop" asp-action="Shop" asp-route-type="Armor">Armor</a>
-    <a class="col-2 btn btn-outline-primary border-left-0 border-right-0" asp-area="Village" asp-controller="Shop" asp-action="Shop" asp-route-type="Weapon">Weapons</a>
-    <a class="col-2 btn btn-outline-primary border-right-0" asp-area="Village" asp-controller="Shop" asp-action="Shop" asp-route-type="Shield">Shields</a>
-    <a class="col-2 btn btn-outline-primary border-right-0" asp-area="Village" asp-controller="Shop" asp-action="Shop" asp-route-type="Amulet">Amulets</a>
+    <a class="col-2 btn btn-outline-primary border-left-0 border-right-0 text-uppercase" asp-area="Village" asp-controller="Shop" asp-action="Shop" asp-route-type="Helmet">Helmets</a>
+    <a class="col-2 btn btn-outline-primary text-uppercase" asp-area="Village" asp-controller="Shop" asp-action="Shop" asp-route-type="Armor">Armor</a>
+    <a class="col-2 btn btn-outline-primary border-left-0 border-right-0 text-uppercase" asp-area="Village" asp-controller="Shop" asp-action="Shop" asp-route-type="Weapon">Weapons</a>
+    <a class="col-2 btn btn-outline-primary border-right-0 text-uppercase" asp-area="Village" asp-controller="Shop" asp-action="Shop" asp-route-type="Shield">Shields</a>
+    <a class="col-2 btn btn-outline-primary border-right-0 text-uppercase" asp-area="Village" asp-controller="Shop" asp-action="Shop" asp-route-type="Amulet">Amulets</a>
     <span class="col-1"></span>
 </div>
 @foreach (var item in Model.Items)
@@ -33,7 +33,7 @@
             <p class="m-auto">Price: @item.Price.ToString("N0") <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
         </div>
         <div class="col-2 m-auto text-center">
-            <a href="/Village/Shop/Buy/@item.Id" class="btn btn-primary btn-block">Buy</a>
+            <a href="/Village/Shop/Buy/@item.Id" class="btn btn-primary btn-block text-uppercase">Buy</a>
         </div>
     </div>
 }

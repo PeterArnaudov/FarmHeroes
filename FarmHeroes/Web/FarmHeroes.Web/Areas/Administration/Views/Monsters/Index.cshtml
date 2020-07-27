@@ -4,8 +4,8 @@
     Layout = "~/Views/Shared/_LoggedLayout.cshtml";
 }
 
-<a asp-area="Administration" asp-controller="GameControl" asp-action="Index" class="btn btn-primary">Go Back</a>
-<a asp-area="Administration" asp-controller="Monsters" asp-action="Add" class="btn btn-success float-right">Add Monster</a>
+<a asp-area="Administration" asp-controller="GameControl" asp-action="Index" class="btn btn-primary text-uppercase">Go Back</a>
+<a asp-area="Administration" asp-controller="Monsters" asp-action="Add" class="btn btn-success float-right text-uppercase">Add Monster</a>
 
 <table class="table mt-2">
     <thead>
@@ -28,8 +28,8 @@
             <td>@monster.MinimalRewardModifier</td>
             <td>@monster.MaximalRewardModifier</td>
             <td>
-                <a asp-area="Administration" asp-controller="Monsters" asp-action="Edit" asp-route-id="@monster.Id" class="btn btn-info">Edit</a>
-                <a asp-area="Administration" asp-controller="Monsters" asp-action="Delete" asp-route-id="@monster.Id" class="btn btn-danger">Delete</a>
+                <a asp-area="Administration" asp-controller="Monsters" asp-action="Edit" asp-route-id="@monster.Id" class="btn btn-info text-uppercase">Edit</a>
+                <a asp-area="Administration" asp-controller="Monsters" asp-action="Delete" asp-route-id="@monster.Id" class="btn btn-danger text-uppercase">Delete</a>
             </td>
         </tr>
         }
