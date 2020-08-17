@@ -7,6 +7,7 @@
 <h1 class="text-uppercase">Amulet Bag</h1>
 <p class="font-italic m-auto">You can set what amulet you want to be wearing while doing specific activities. While the amulet bag is active, the amulet you've specified will be automatically equipped before the activity.</p>
 <hr class="bg-primary" />
+
 @if (Model.IsActivePermanently)
 {
     <p class="text-center text-success">You've purchased the amulet bag.</p>
@@ -19,14 +20,15 @@ else
 {
     <p class="text-center text-danger">Currently not active</p>
 }
-@if (Model.IsActive)
+
+@if (!Model.IsActive)
 {
     <div class="row">
         <p class="col-6 text-left">Activate for 14 days: 140 <img src="~/images/icons/crystal-icon.png" class="icon" alt="crystals"> <a href="/AmuletBag/ExtendRent" class="btn btn-success text-uppercase">extend</a></p>
         <p class="col-6 text-right">Purchase the bag: 3 500 <img src="~/images/icons/crystal-icon.png" class="icon" alt="crystals"> <a href="/AmuletBag/Purchase" class="btn btn-success text-uppercase">purchase</a></p>
     </div>
 }
-@if (Model.IsActive)
+else
 {
     <hr class="bg-primary" />
     <form asp-area="" asp-controller="AmuletBag" asp-action="Set" method="post">
