@@ -25,6 +25,6 @@
 
         public List<HeroBonus> ActiveBonuses => this.Bonuses.Where(x => x.ActiveUntil > DateTime.UtcNow).ToList();
 
-        public bool HasBonuses => this.Bonuses.Count > 0;
+        public bool HasBonuses => this.ActiveBonuses.Count > 0;
     }
 }
