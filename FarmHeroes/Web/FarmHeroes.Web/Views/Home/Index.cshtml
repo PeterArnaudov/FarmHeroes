@@ -1,4 +1,5 @@
 ﻿@using FarmHeroes.Common
+
 @{
     this.ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_GuestLayout.cshtml";
@@ -14,22 +15,22 @@
         <div class="carousel-item active">
             <img class="d-block carousel-image" src="~/images/battlefield/battlefield.jpg" alt="First slide">
             <div class="carousel-caption position-static d-md-block">
-                <h5>Fight</h5>
-                <p>Initiate fights or defend yourself against worthy foes.</p>
+                <h5>@Localizer["Carousel-Fight-Title"]</h5>
+                <p>@Localizer["Carousel-Fight-Description"]</p>
             </div>
         </div>
         <div class="carousel-item">
             <img class="d-block carousel-image" src="~/images/village/farm/farm.jpg" alt="First slide">
             <div class="carousel-caption position-static d-md-block">
-                <h5>Work</h5>
-                <p>Work in order to buy your hero equipment and to train.</p>
+                <h5>@Localizer["Carousel-Work-Title"]</h5>
+                <p>@Localizer["Carousel-Work-Description"]</p>
             </div>
         </div>
         <div class="carousel-item">
             <img class="d-block carousel-image" src="~/images/village/shop/shop.jpg" alt="Third slide">
             <div class="carousel-caption position-static d-md-block">
-                <h5>Shop</h5>
-                <p>Spend your resources on empowerments and goods.</p>
+                <h5>@Localizer["Carousel-Shop-Title"]</h5>
+                <p>@Localizer["Carousel-Shop-Description"]</p>
             </div>
         </div>
         <a class="carousel-control-prev bottom-50" href="#carousel" role="button" data-slide="prev">
