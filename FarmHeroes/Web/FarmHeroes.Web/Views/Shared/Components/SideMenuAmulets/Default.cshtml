@@ -4,7 +4,7 @@
 {
     <hr class="bg-primary w-75" />
     <li class="nav-item">
-        <a href="/AmuletBag" class="h5 text-uppercase text-white d-block">Amulets</a>
+        <a href="/AmuletBag" class="h5 text-uppercase text-white d-block">@Localizer["Amulets-Title"]</a>
         @foreach (var amulet in Model.Amulets)
         {
             <img src="@amulet.ImageUrl" alt="amulet" class="img-fluid amulet-icon" onclick="equipAmulet('@amulet.Id')" data-toggle="tooltip" data-placement="bottom" title="@amulet.Name (@amulet.Bonus%)<br><img src='/images/icons/level-icon.png' class='icon'>@amulet.Level">

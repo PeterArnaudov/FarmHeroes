@@ -24,18 +24,18 @@
 <body>
     <div class="wrapper container">
         <div class="text-center">
-            <a asp-area="" asp-controller="News" asp-action="Index" class="small">News</a> |
-            <a asp-area="" asp-controller="Chat" asp-action="Index" class="small">Chat</a> |
+            <a asp-area="" asp-controller="News" asp-action="Index" class="small">@Localizer["Navbar-News"]</a> |
+            <a asp-area="" asp-controller="Chat" asp-action="Index" class="small">@Localizer["Navbar-Chat"]</a> |
             @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
             {
-                <a class="small" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">Administration</a> @: |
+                <a class="small" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">@Localizer["Navbar-Administration"]</a> @: |
             }
-            <a class="small" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a>
+            <a class="small" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@Localizer["Navbar-Settings"]</a>
         </div>
         <div class="mt-1 row text-center p-2">
             <h2 class="col-lg-3 d-lg-block d-none m-auto">Farm Heroes</h2>
-            <button class="navbar-toggler btn-outline-primary text-white col-3 d-lg-none d-md-block" aria-pressed="true" type="button" data-toggle="collapse" data-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                MENU
+            <button class="navbar-toggler btn-outline-primary text-white col-3 d-lg-none d-md-block text-uppercase" aria-pressed="true" type="button" data-toggle="collapse" data-target="#menu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                @Localizer["Navbar-Menu"]
             </button>
             <vc:hero-health></vc:hero-health>
             <vc:hero-resources></vc:hero-resources>
@@ -44,31 +44,31 @@
         <div class="row">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent col-lg-2 col-md-12 p-0 h-100">
                 <ul id="menu" class="collapse navbar-collapse list-unstyled flex-column p-1 ">
-                    <h4 class="text-center text-uppercase">Menu</h4>
+                    <h4 class="text-center text-uppercase">@Localizer["Navbar-Menu"]</h4>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Hero" asp-action="Index">Hero</a>
+                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Hero" asp-action="Index">@Localizer["Navbar-Hero"]</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Notifications" asp-action="Index">Notifications <vc:new-notifications-count></vc:new-notifications-count></a>
+                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Notifications" asp-action="Index">@Localizer["Navbar-Notifications"] <vc:new-notifications-count></vc:new-notifications-count></a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Characteristics" asp-action="Index">Practice</a>
+                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Characteristics" asp-action="Index">@Localizer["Navbar-Practice"]</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="Village" asp-controller="Village" asp-action="Index">Village</a>
+                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="Village" asp-controller="Village" asp-action="Index">@Localizer["Navbar-Village"]</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Dungeon" asp-action="Index">Dungeon</a>
+                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Dungeon" asp-action="Index">@Localizer["Navbar-Dungeon"]</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Battlefield" asp-action="Index">Battlefield</a>
+                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Battlefield" asp-action="Index">@Localizer["Navbar-Battlefield"]</a>
                     </li>
                     <li class="nav-item w-100">
-                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Leaderboards" asp-action="Index">Leaderboards</a>
+                        <a class="btn btn-primary p-1 nav-link text-uppercase" asp-area="" asp-controller="Leaderboards" asp-action="Index">@Localizer["Navbar-Leaderboards"]</a>
                     </li>
                     <li class="nav-item w-100">
                         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
-                            <button type="submit" class="btn btn-primary p-1 w-100 nav-link text-uppercase">Exit</button>
+                            <button type="submit" class="btn btn-primary p-1 w-100 nav-link text-uppercase">@Localizer["Navbar-Logout"]</button>
                         </form>
                     </li>
                 </ul>
@@ -77,11 +77,11 @@
                 @if (this.TempData["ExceptionMessage"] != null)
                 {
                     <div class="alert alert-danger disappearing-alert" role="alert">
-                        <h4 class="alert-heading font-weight-bolder">Oups! Something went wrong.</h4>
+                        <h4 class="alert-heading font-weight-bolder">@Localizer["Exception-Message-Header"]</h4>
                         <p class="mb-0"><span class="font-weight-bold">Cause: </span>@this.TempData["ExceptionMessage"]</p>
                         <p><span class="font-weight-bold">Instructions: </span>@this.TempData["ExceptionInstructions"]</p>
                         <hr>
-                        <p class="mb-0 text-muted font-italic text-right">You might have gone against the rules and tried to do something not allowed.</p>
+                        <p class="mb-0 text-muted font-italic text-right">@Localizer["Exception-Message-Footer"]</p>
                     </div>
                 }
                 @if (this.TempData["Alert"] != null)
@@ -101,14 +101,27 @@
         </div>
         <hr class="bg-primary">
         <footer>
-            <h6 class="font-weight-bold text-center">Created by <a href="https://softuni.bg/users/profile/show/peterarnaudov" target="_blank">PeterArnaudov</a>.</h6>
-            <div class="text-center">
-                <a href="https://www.instagram.com/peterxarnaudov/" target="_blank"><img src="~/images/community/instagram.png" alt="Instagram logo" class="m-2 logo"></a>
-                <a href="https://www.facebook.com/Peter.P.Arnaudov" target="_blank"><img src="~/images/community/facebook.png" alt="Facebook logo" class="m-2 logo"></a>
-                <a href="https://www.linkedin.com/in/peter-arnaudov/" target="_blank"><img src="~/images/community/linkedin.png" alt="LinkedIn logo" class="m-2 logo"></a>
-                <a href="https://github.com/PeterArnaudov/FarmHeroes" target="_blank"><img src="~/images/community/github.png" alt="Github logo" class="m-2 logo"></a>
+            <div class="row">
+                <div class="col-10 text-left">
+                    <h6 class="font-weight-bold">@Localizer["Created-By"] <a href="https://softuni.bg/users/profile/show/peterarnaudov" target="_blank">PeterArnaudov</a>.</h6>
+                    <div>
+                        <a href="https://www.instagram.com/peterxarnaudov/" target="_blank"><img src="~/images/community/instagram.png" alt="Instagram logo" class="m-2 logo"></a>
+                        <a href="https://www.facebook.com/Peter.P.Arnaudov" target="_blank"><img src="~/images/community/facebook.png" alt="Facebook logo" class="m-2 logo"></a>
+                        <a href="https://www.linkedin.com/in/peter-arnaudov/" target="_blank"><img src="~/images/community/linkedin.png" alt="LinkedIn logo" class="m-2 logo"></a>
+                        <a href="https://github.com/PeterArnaudov/FarmHeroes" target="_blank"><img src="~/images/community/github.png" alt="Github logo" class="m-2 logo"></a>
+                    </div>
+                    <h6 class="font-weight-bold">@Localizer["Educational-Purpose"] <a href="https://www.botva.ru">www.botva.ru</a>.</h6>
+                </div>
+                <div class="col-2">
+                    <div class="form-group">
+                        <select id="change-language" class="form-control" name="culture" onchange="changeLanguage()">
+                            <option selected>@Localizer["Choose-Language"]</option>
+                            <option value="en">@Localizer["English"]</option>
+                            <option value="bg">@Localizer["Bulgarian"]</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <h6 class="font-weight-bold text-center">Created with educational purpose. Based on <a href="https://www.botva.ru">www.botva.ru</a>.</h6>
         </footer>
     </div>
 
@@ -118,6 +131,7 @@
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/ajax-calls.js" asp-append-version="true"></script>
         <script src="~/js/ajax-calls/equipment.js" asp-append-version="true"></script>
         <script src="~/js/ajax-calls/health.js" asp-append-version="true"></script>
         <script src="~/lib/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>
@@ -128,6 +142,7 @@
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/js/ajax-calls.js" asp-append-version="true"></script>
         <script src="~/js/ajax-calls/equipment.js" asp-append-version="true"></script>
         <script src="~/js/ajax-calls/health.js" asp-append-version="true"></script>
         <script src="~/lib/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>

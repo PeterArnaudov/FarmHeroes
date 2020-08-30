@@ -1,16 +1,16 @@
 ﻿@model FarmHeroes.Web.ViewModels.ViewComponentsModels.SideMenuTimersViewComponentModel
 
 
-<h4 class="text-uppercase">Timers</h4>
-<span>Current work:</span>
+<h4 class="text-uppercase">@Localizer["Timers-Title"]</h4>
+<span>@Localizer["Current-Work"]:</span>
 <li class="nav-item">
     <vc:timer dom-element-id="work_0" date-time="@Model.WorkUntil"></vc:timer>
 </li>
-<span>Until fight:</span>
+<span>@Localizer["Until-Fight"]:</span>
 <li class="nav-item">
     <vc:timer dom-element-id="attack_0" date-time="@Model.CannotAttackHeroUntil"></vc:timer>
 </li>
-<span>Defense duration:</span>
+<span>@Localizer["Defense-Duration"]:</span>
 <li class="nav-item">
     <vc:timer dom-element-id="defense_0" date-time="@Model.CannotBeAttackedUntil"></vc:timer>
 </li>

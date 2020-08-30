@@ -3,13 +3,13 @@
 <div class="col-3 d-inline">
     <div class="text-left m-auto">
         <img src="~/images/icons/health-icon.png" alt="Health" class="col-8 col-sm-6 col-md-4 pb-2 d-lg-inline d-inline m-auto img-rotate">
-        <h4 class="d-lg-inline-block d-none text-center pb-2">Health:</h4>
+        <h4 class="d-lg-inline-block d-none text-center pb-2">@Localizer["Health-Title"]:</h4>
         <img src="~/images/icons/heal-icon.png" alt="heal" class="img-fluid mt-lg-2 mt-0 mr-2 heal-icon" data-toggle="modal" data-target="#heal-modal">
         <div class="modal fade mt-5" id="heal-modal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title text-uppercase">Heal your hero</h5>
+                        <h5 class="modal-title text-uppercase">@Localizer["Heal-Modal-Title"]</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -20,11 +20,11 @@
                                 <img src="~/images/health/pill.png" alt="pill" class="img-fluid">
                             </div>
                             <div class="col-5">
-                                <h4 class="text-uppercase">Pill</h4>
-                                <h5>Health: +200</h5>
-                                <h5>Price: 100 <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></h5>
+                                <h4 class="text-uppercase">@Localizer["Pill-Title"]</h4>
+                                <h5>@Localizer["Health-Title"]: +200</h5>
+                                <h5>@Localizer["Price"]: 100 <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></h5>
                             </div>
-                            <button onclick="heal('Pill')" class="btn btn-success btn-sm col-3 h-100 m-auto text-uppercase">Heal</button>
+                            <button onclick="heal('Pill')" class="btn btn-success btn-sm col-3 h-100 m-auto text-uppercase">@Localizer["Heal-Button-Text"]</button>
                         </div>
                         <hr class="bg-primary w-75">
                         <div class="row align-items-center mb-2">
@@ -32,11 +32,11 @@
                                 <img src="~/images/health/elixir.png" alt="elixir" class="img-fluid">
                             </div>
                             <div class="col-5">
-                                <h4 class="text-uppercase">Elixir</h4>
-                                <h5>Health: +3000</h5>
-                                <h5>Price: 1000 <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></h5>
+                                <h4 class="text-uppercase">@Localizer["Elixir-Title"]</h4>
+                                <h5>@Localizer["Health-Title"]: +3000</h5>
+                                <h5>@Localizer["Price"]: 1000 <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></h5>
                             </div>
-                            <button onclick="heal('Elixir')" class="btn btn-success btn-sm col-3 h-100 m-auto text-uppercase">Heal</button>
+                            <button onclick="heal('Elixir')" class="btn btn-success btn-sm col-3 h-100 m-auto text-uppercase">@Localizer["Heal-Button-Text"]</button>
                         </div>
                         <hr class="bg-primary w-75">
                         <div class="row align-items-center">
@@ -44,11 +44,11 @@
                                 <img src="~/images/health/potion.png" alt="potion" class="img-fluid">
                             </div>
                             <div class="col-5">
-                                <h4 class="text-uppercase">Potion</h4>
-                                <h5>Health: +100%</h5>
-                                <h5>Price: 15 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></h5>
+                                <h4 class="text-uppercase">@Localizer["Potion-Title"]</h4>
+                                <h5>@Localizer["Health-Title"]: +100%</h5>
+                                <h5>@Localizer["Price"]: 15 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></h5>
                             </div>
-                            <button onclick="heal('Potion')" class="btn btn-success btn-sm col-3 h-100 m-auto text-uppercase">Heal</button>
+                            <button onclick="heal('Potion')" class="btn btn-success btn-sm col-3 h-100 m-auto text-uppercase">@Localizer["Heal-Button-Text"]</button>
                         </div>
                     </div>
                 </div>
