@@ -14,19 +14,25 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label>Name</label>
+                <label>@Localizer["Name-Label"]</label>
                 <input type="text" class="form-control" placeholder="@User.Identity.Name" disabled>
-                <small class="form-text text-muted">Your hero name is the same as your username.</small>
+                <small class="form-text text-muted">@Localizer["Name-Info"]</small>
             </div>
-            <label asp-for="Gender">Gender</label>
-            <select asp-for="Gender" class="form-control form-control-sm" asp-items="@Html.GetEnumSelectList<Gender>()">
+            <label asp-for="Gender">@Localizer["Gender-Label"]</label>
+            <select asp-for="Gender" class="form-control form-control-sm">
+                <option selected disabled>@Localizer["Gender-Placeholder"]</option>
+                <option value="@Gender.Male">@Localizer["Gender-Male"]</option>
+                <option value="@Gender.Female">@Localizer["Gender-Female"]</option>
             </select>
             <span asp-validation-for="Gender" class="text-danger"></span>
-            <label asp-for="Fraction">Fraction</label>
-            <select asp-for="Fraction" class="form-control form-control-sm" asp-items="@Html.GetEnumSelectList<Fraction>()">
+            <label asp-for="Fraction">@Localizer["Fraction-Label"]</label>
+            <select asp-for="Fraction" class="form-control form-control-sm">
+                <option selected disabled>@Localizer["Fraction-Placeholder"]</option>
+                <option value="@Fraction.Sheep">@Localizer["Fraction-Sheep"]</option>
+                <option value="@Fraction.Pig">@Localizer["Fraction-Pig"]</option>
             </select>
             <span asp-validation-for="Fraction" class="text-danger"></span>
-            <button type="submit" class="btn btn-primary btn-block mt-3 text-uppercase">Create Hero</button>
+            <button type="submit" class="btn btn-primary btn-block mt-3 text-uppercase">@Localizer["Create-Hero-Button"]</button>
         </form>
     </div>
     <div class="col-4">

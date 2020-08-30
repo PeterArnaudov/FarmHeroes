@@ -5,9 +5,9 @@
 }
 
     <div class="row">
-        <a class="col-4 btn btn-outline-primary border-left-0 border-right-0 nav-link disabled text-uppercase" href="/Hero">Overview</a>
-        <a class="col-4 btn btn-outline-primary nav-link text-uppercase" href="/Inventory">Inventory</a>
-        <a class="col-4 btn btn-outline-primary border-left-0 border-right-0 nav-link text-uppercase" href="/Statistics">Statistics</a>
+        <a class="col-4 btn btn-outline-primary border-left-0 border-right-0 nav-link disabled text-uppercase" href="/Hero">@Localizer["Overview-Tab-Title"]</a>
+        <a class="col-4 btn btn-outline-primary nav-link text-uppercase" href="/Inventory">@Localizer["Inventory-Tab-Title"]</a>
+        <a class="col-4 btn btn-outline-primary border-left-0 border-right-0 nav-link text-uppercase" href="/Statistics">@Localizer["Statistics-Tab-Title"]</a>
     </div>
 <div class="row">
     <div class="col-3 col-sm-2 border-right border-primary m-auto">
@@ -42,37 +42,37 @@
 </div>
 <div class="row p-1">
     <div class="col-6 text-center">
-        <strong class="text-uppercase">characteristics</strong>
+        <strong class="text-uppercase">@Localizer["Characteristics-Title"]</strong>
         <div class="text-left">
             <img src="~/images/icons/attack-icon.png" class="icon">
-            Attack: @Model.CharacteristicsAttack
+            @Localizer["Characteristics-Attack"]: @Model.CharacteristicsAttack
         </div>
         <div class="text-left">
             <img src="~/images/icons/defense-icon.png" class="icon">
-            Defense: @Model.CharacteristicsDefense
+            @Localizer["Characteristics-Defense"]: @Model.CharacteristicsDefense
         </div>
         <div class="text-left">
             <img src="~/images/icons/mastery-icon.png" class="icon">
-            Mastery: @Model.CharacteristicsMastery
+            @Localizer["Characteristics-Mastery"]: @Model.CharacteristicsMastery
         </div>
         <div class="text-left">
             <img src="~/images/icons/mass-icon.png" class="icon">
-            Mass: @Model.CharacteristicsMass
+            @Localizer["Characteristics-Mass"]: @Model.CharacteristicsMass
         </div>
         <div class="text-left">
             <img src="~/images/icons/dexterity-icon.png" class="icon">
-            Dexterity: @Model.CharacteristicsDexterity
+            @Localizer["Characteristics-Dexterity"]: @Model.CharacteristicsDexterity
         </div>
     </div>
     <div class="col-6 text-center">
-        <strong class="text-uppercase">statistics</strong>
+        <strong class="text-uppercase">@Localizer["Statistics-Title"]</strong>
         <div class="text-left">
             <img src="~/images/icons/fights-icon.png" class="icon">
-            Fights: @Model.StatisticsTotalFights
+            @Localizer["Statistics-Fights"]: @Model.StatisticsTotalFights
         </div>
         <div class="text-left">
             <img src="~/images/icons/wins-icon.png" class="icon">
-            Wins: @Model.StatisticsWins
+            @Localizer["Statistics-Wins"]: @Model.StatisticsWins
         </div>
     </div>
 </div>
