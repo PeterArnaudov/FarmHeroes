@@ -24,27 +24,30 @@
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            try
+            if (context.HttpContext.User.Identity.IsAuthenticated)
             {
-                Hero hero = await this.heroService.GetHero();
+                try
+                {
+                    Hero hero = await this.heroService.GetHero();
 
-                if (hero.WorkStatus == WorkStatus.Battlefield && this.CheckIfWorkIsFinished(hero))
-                {
-                    await this.battlefieldService.Collect();
+                    if (hero.WorkStatus == WorkStatus.Battlefield && this.CheckIfWorkIsFinished(hero))
+                    {
+                        await this.battlefieldService.Collect();
+                    }
+                    else if (hero.WorkStatus == WorkStatus.Farm && this.CheckIfWorkIsFinished(hero))
+                    {
+                        await this.farmService.Collect();
+                    }
+                    else if (hero.WorkStatus == WorkStatus.Dungeon && this.CheckIfWorkIsFinished(hero))
+                    {
+                        await this.dungeonService.AttackMonster();
+                    }
                 }
-                else if (hero.WorkStatus == WorkStatus.Farm && this.CheckIfWorkIsFinished(hero))
+                catch
                 {
-                    await this.farmService.Collect();
+                    await next();
+                    return;
                 }
-                else if (hero.WorkStatus == WorkStatus.Dungeon && this.CheckIfWorkIsFinished(hero))
-                {
-                    await this.dungeonService.AttackMonster();
-                }
-            }
-            catch
-            {
-                await next();
-                return;
             }
 
             await next();
