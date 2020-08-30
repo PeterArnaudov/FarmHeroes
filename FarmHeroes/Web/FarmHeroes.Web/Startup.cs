@@ -23,6 +23,7 @@
     using Microsoft.AspNetCore.Mvc;
     using FarmHeroes.Web.Hubs;
     using FarmHeroes.Web.BackgroundTasks;
+    using Microsoft.AspNetCore.Mvc.Razor;
 
     public class Startup
     {
@@ -64,6 +65,13 @@
             services.AddHttpContextAccessor();
 
             services.AddAutoMapper(typeof(FarmHeroesProfile));
+
+            // Localization; multi-language
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            services.AddMvc()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
 
             // Background tasks
             services.AddHostedService<PassiveIncomeTask>();
@@ -120,6 +128,14 @@
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
 
+            // Localization; multi-language
+            string[] supportedCultures = new[] { "en", "bg" };
+            var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
+
+            app.UseRequestLocalization(localizationOptions);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -151,8 +167,12 @@
             app.UseEndpoints(
                 endpoints =>
                     {
-                        endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                        endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                        endpoints.MapControllerRoute(
+                            name: "areaRoute",
+                            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                        endpoints.MapControllerRoute(
+                            name: "default",
+                            pattern: "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
                     });
         }

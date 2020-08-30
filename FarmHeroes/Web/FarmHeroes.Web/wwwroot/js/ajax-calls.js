@@ -12,3 +12,15 @@
             showAlert(error);
         });
 };
+
+function changeLanguage() {
+    let culture = $("#change-language").val();
+
+    $.ajax({
+        method: 'GET',
+        url: `/api/Site/SetLanguage/${culture}`
+    })
+        .done(() => {
+            location.reload();
+        });
+}
