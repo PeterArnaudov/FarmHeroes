@@ -15,9 +15,6 @@
             builder.Property(sa => sa.Name)
                 .IsRequired();
 
-            builder.Property(sa => sa.Description)
-                .IsRequired();
-
             builder.Property(sa => sa.ImageUrl)
                 .IsRequired();
 

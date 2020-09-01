@@ -96,7 +96,6 @@
             HeroAmulet heroAmulet = new HeroAmulet
             {
                 Name = shopAmulet.Name,
-                Description = shopAmulet.Description,
                 ImageUrl = shopAmulet.ImageUrl,
                 InitialPrice = shopAmulet.InitialPrice,
                 InitialBonus = shopAmulet.InitialBonus,

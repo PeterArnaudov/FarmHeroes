@@ -6,8 +6,6 @@
 
         public string Name { get; set; }
 
-        public string Description { get; set; }
-
         public double InitialBonus { get; set; }
 
         public int InitialPrice { get; set; }

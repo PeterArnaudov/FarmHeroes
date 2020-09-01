@@ -24,6 +24,7 @@
     using FarmHeroes.Web.Hubs;
     using FarmHeroes.Web.BackgroundTasks;
     using Microsoft.AspNetCore.Mvc.Razor;
+    using FarmHeroes.Web.Localization;
 
     public class Startup
     {
@@ -68,7 +69,7 @@
 
             // Localization; multi-language
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-
+            services.AddSingleton<LocalizationService>();
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();

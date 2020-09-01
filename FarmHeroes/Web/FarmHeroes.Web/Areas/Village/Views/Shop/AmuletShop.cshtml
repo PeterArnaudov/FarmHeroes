@@ -21,8 +21,8 @@
             <img src="@item.ImageUrl" alt="amulet" class="img-fluid d-block m-auto item-image">
         </div>
         <div class="col-8 m-auto">
-            <p><span class="text-uppercase">@item.Name</span> <small>| Initial chance: @item.InitialBonus% | Maximum chance: @(item.InitialBonus * 200)%</small></p>
-            <p class="m-auto">@item.Description</p>
+            <p><span class="text-uppercase">@SharedLocalizer.AmuletLocalizer(item.Name)</span> <small>| Initial chance: @item.InitialBonus% | Maximum chance: @(item.InitialBonus * 200)%</small></p>
+            <p class="m-auto">@SharedLocalizer.AmuletLocalizer(item.Name + "-Description")</p>
             <p class="m-auto">Price: @item.InitialPrice.ToString("N0") <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
         </div>
         <div class="col-2 m-auto text-center">

@@ -41,7 +41,7 @@ else
                 }
                 @foreach (var amulet in Model.Amulets)
                 {
-                    <option value="@amulet.Id">@amulet.Name</option>
+                    <option value="@amulet.Id">@SharedLocalizer.AmuletLocalizer(amulet.Name)</option>
                 }
             </select>
         </div>
@@ -53,7 +53,7 @@ else
             }
             @foreach (var amulet in Model.Amulets)
             {
-                <option value="@amulet.Id">@amulet.Name</option>
+                <option value="@amulet.Id">@SharedLocalizer.AmuletLocalizer(amulet.Name)</option>
             }
         </select>
         <label asp-for="OnMonsterAttackAmuletId">On monster attack</label>
@@ -64,7 +64,7 @@ else
             }
             @foreach (var amulet in Model.Amulets)
             {
-                <option value="@amulet.Id">@amulet.Name</option>
+                <option value="@amulet.Id">@SharedLocalizer.AmuletLocalizer(amulet.Name)</option>
             }
         </select>
         <label asp-for="OnFarmAmuletId">During work on farm</label>
@@ -75,7 +75,7 @@ else
             }
             @foreach (var amulet in Model.Amulets)
             {
-                <option value="@amulet.Id">@amulet.Name</option>
+                <option value="@amulet.Id">@SharedLocalizer.AmuletLocalizer(amulet.Name)</option>
             }
         </select>
         <label asp-for="OnMineAmuletId">During work in mine</label>
@@ -86,7 +86,7 @@ else
             }
             @foreach (var amulet in Model.Amulets)
             {
-                <option value="@amulet.Id">@amulet.Name</option>
+                <option value="@amulet.Id">@SharedLocalizer.AmuletLocalizer(amulet.Name)</option>
             }
         </select>
         <label asp-for="OnPatrolAmuletId">During patrol</label>
@@ -97,7 +97,7 @@ else
             }
             @foreach (var amulet in Model.Amulets)
             {
-                <option value="@amulet.Id">@amulet.Name</option>
+                <option value="@amulet.Id">@SharedLocalizer.AmuletLocalizer(amulet.Name)</option>
             }
         </select>
         <button type="submit" class="btn btn-success text-uppercase mt-2">Set amulet bag</button>

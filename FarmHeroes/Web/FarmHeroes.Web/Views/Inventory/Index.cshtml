@@ -26,7 +26,7 @@
         foreach (var item in Model.Items)
         {
             <div class="position-relative equipment-box m-2" onclick="showActions(this)">
-                <img src="@item.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="top" title="@item.Name<br><img src='/images/icons/level-icon.png' class='icon'>: @item.Level@if (item.Attack > 0) {<br><span><img src='/images/icons/attack-icon.png' class='icon'>: @item.Attack.ToString("N0")</span>}@if (item.Defense > 0) {<br><span><img src='/images/icons/defense-icon.png' class='icon'>: @item.Defense.ToString("N0")</span>}@if (item.Mastery > 0) {<br><span><img src='/images/icons/mastery-icon.png' class='icon'>: @item.Mastery.ToString("N0")</span>}@if (item.Dexterity > 0) {<br><span><img src='/images/icons/dexterity-icon.png' class='icon'>: @item.Dexterity.ToString("N0")</span>}">
+                <img src="@item.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="top" title="@SharedLocalizer.EquipmentLocalizer(item.Name)<br><img src='/images/icons/level-icon.png' class='icon'>: @item.Level@if (item.Attack > 0) {<br><span><img src='/images/icons/attack-icon.png' class='icon'>: @item.Attack.ToString("N0")</span>}@if (item.Defense > 0) {<br><span><img src='/images/icons/defense-icon.png' class='icon'>: @item.Defense.ToString("N0")</span>}@if (item.Mastery > 0) {<br><span><img src='/images/icons/mastery-icon.png' class='icon'>: @item.Mastery.ToString("N0")</span>}@if (item.Dexterity > 0) {<br><span><img src='/images/icons/dexterity-icon.png' class='icon'>: @item.Dexterity.ToString("N0")</span>}">
                 <div class="d-none">
                     <a href="/Inventory/Equip/@item.Id" class="btn btn-sm btn-primary badge-pill d-block mb-1 text-uppercase">Equip</a>
                     <a href="/Inventory/Trash/@item.Id" class="btn btn-sm btn-danger badge-pill d-block text-uppercase">Trash</a>
@@ -47,7 +47,7 @@
         @foreach (var item in Model.Amulets)
         {
             <div class="position-relative equipment-box m-2" onclick="showActions(this)">
-                <img src="@item.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="top" title="@item.Name<br><img src='/images/icons/level-icon.png' class='icon'>: @item.Level (@item.Bonus%)<br><br>@item.Description">
+                <img src="@item.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="top" title="@SharedLocalizer.AmuletLocalizer(item.Name)<br><img src='/images/icons/level-icon.png' class='icon'>: @item.Level (@item.Bonus%)<br><br>@SharedLocalizer.AmuletLocalizer(item.Name + "-Description")">
                 <div class="d-none">
                     <a class="btn btn-sm btn-primary badge-pill d-block mb-1 text-uppercase" onclick="equipAmulet('@item.Id')">Equip</a>
                     <a href="/Inventory/Trash/@item.Id" class="btn btn-sm btn-danger badge-pill d-block text-uppercase">Trash</a>

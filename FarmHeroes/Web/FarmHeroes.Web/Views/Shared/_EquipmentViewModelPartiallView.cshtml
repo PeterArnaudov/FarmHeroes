@@ -3,7 +3,7 @@
 @if (Model != null)
 {
     <div class="position-relative equipment-box m-2">
-        <img src="@Model.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="left" title="@Model.Name<br><img src='/images/icons/level-icon.png' class='icon'>: @Model.Level @if (Model.Attack != 0) {<br><span><img src='/images/icons/attack-icon.png' class='icon'>: @Model.Attack</span>}@if (Model.Defense != 0) {<br><span><img src='/images/icons/defense-icon.png' class='icon'>: @Model.Defense</span>}@if (Model.Mastery != 0) {<br><span><img src='/images/icons/mastery-icon.png' class='icon'>: @Model.Mastery</span>}@if (Model.Dexterity != 0) {<br><span><img src='/images/icons/dexterity-icon.png' class='icon'>: @Model.Dexterity</span>}">
+        <img src="@Model.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="left" title="@SharedLocalizer.EquipmentLocalizer(Model.Name)<br><img src='/images/icons/level-icon.png' class='icon'>: @Model.Level @if (Model.Attack != 0) {<br><span><img src='/images/icons/attack-icon.png' class='icon'>: @Model.Attack</span>}@if (Model.Defense != 0) {<br><span><img src='/images/icons/defense-icon.png' class='icon'>: @Model.Defense</span>}@if (Model.Mastery != 0) {<br><span><img src='/images/icons/mastery-icon.png' class='icon'>: @Model.Mastery</span>}@if (Model.Dexterity != 0) {<br><span><img src='/images/icons/dexterity-icon.png' class='icon'>: @Model.Dexterity</span>}">
     </div>
 }
 else

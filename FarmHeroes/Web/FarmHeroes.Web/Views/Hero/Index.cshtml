@@ -14,7 +14,7 @@
         @if (Model.HasAmuletEquipped)
         {
             <div class="position-relative equipment-box m-2">
-                <img src="@Model.EquippedSetAmulet.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="left" title="@Model.EquippedSetAmulet.Name<br><img src='/images/icons/level-icon.png' class='icon'>: @Model.EquippedSetAmulet.Level (@Model.EquippedSetAmulet.Bonus%)<br><br>@Model.EquippedSetAmulet.Description">
+                <img src="@Model.EquippedSetAmulet.ImageUrl" alt="item" class="img-fluid d-block mr-auto ml-auto mb-1 item-image" data-toggle="tooltip" data-placement="left" title="@SharedLocalizer.AmuletLocalizer(Model.EquippedSetAmulet.Name)<br><img src='/images/icons/level-icon.png' class='icon'>: @Model.EquippedSetAmulet.Level (@Model.EquippedSetAmulet.Bonus%)<br><br>@SharedLocalizer.AmuletLocalizer(Model.EquippedSetAmulet.Name + "-Description")">
             </div>
         }
         else

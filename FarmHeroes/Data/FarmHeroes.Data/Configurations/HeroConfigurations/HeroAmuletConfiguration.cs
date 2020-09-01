@@ -28,9 +28,6 @@
             builder.Property(ha => ha.Name)
                 .IsRequired();
 
-            builder.Property(ha => ha.Description)
-                .IsRequired();
-
             builder.Property(ha => ha.ImageUrl)
                 .IsRequired();
 
