@@ -1,14 +1,17 @@
 ﻿namespace FarmHeroes.Web.Controllers
 {
+    using System.Threading.Tasks;
+
     using FarmHeroes.Data.Models.Enums;
+    using FarmHeroes.Services.Data.Constants;
     using FarmHeroes.Services.Data.Contracts;
+    using FarmHeroes.Web.Filters;
     using FarmHeroes.Web.ViewModels.DungeonModels;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System;
-    using System.Threading.Tasks;
 
     [Authorize]
+    [LevelRequirement(RequiredLevels.DungeonRequiredLevel)]
     public class DungeonController : BaseController
     {
         private readonly IDungeonService dungeonService;
