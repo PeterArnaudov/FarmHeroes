@@ -24,14 +24,16 @@
         private readonly IResourcePouchService resourcePouchService;
         private readonly FarmHeroesDbContext context;
         private readonly IMapper mapper;
+        private readonly LocalizationService localizationService;
 
-        public AmuletBagService(IHeroService heroService, IEquipmentService equipmentService, IResourcePouchService resourcePouchService, FarmHeroesDbContext context, IMapper mapper)
+        public AmuletBagService(IHeroService heroService, IEquipmentService equipmentService, IResourcePouchService resourcePouchService, FarmHeroesDbContext context, IMapper mapper, LocalizationService localizationService)
         {
             this.heroService = heroService;
             this.equipmentService = equipmentService;
             this.resourcePouchService = resourcePouchService;
             this.context = context;
             this.mapper = mapper;
+            this.localizationService = localizationService;
         }
 
         public async Task<AmuletBagViewModel> GetAmuletBagViewModel()
@@ -85,8 +87,8 @@
             if (idsToSet.Except(hero.Inventory.Amulets.Select(x => x.Id)).Any())
             {
                 throw new FarmHeroesException(
-                    AmuletBagExceptionMessages.HeroDoesNotOwnAmuletsMessage,
-                    AmuletBagExceptionMessages.HeroDoesNotOwnAmuletsInstruction,
+                    this.localizationService.ExceptionLocalizer("Hero-Does-Not-Own-Amulets-Message"),
+                    this.localizationService.ExceptionLocalizer("Hero-Does-Not-Own-Amulets-Instruction"),
                     Redirects.AmuletBagRedirect);
             }
 
@@ -118,8 +120,8 @@
             if (amuletBag.ActiveUntil == DateTime.MaxValue)
             {
                 throw new FarmHeroesException(
-                    AmuletBagExceptionMessages.AmuletBagAlreadyPurchasedMessage,
-                    AmuletBagExceptionMessages.AmuletBagAlreadyPurchasedInstruction,
+                    this.localizationService.ExceptionLocalizer("Amulet-Bag-Already-Purchased-Message"),
+                    this.localizationService.ExceptionLocalizer("Amulet-Bag-Already-Purchased-Instruction"),
                     Redirects.AmuletBagRedirect);
             }
         }

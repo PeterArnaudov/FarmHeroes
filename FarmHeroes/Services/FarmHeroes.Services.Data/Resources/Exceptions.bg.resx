@@ -117,16 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Amulet-Bag-Already-Purchased-Instruction" xml:space="preserve">
+    <value>Чантичката за амулети вече е закупена е активна завинаги.</value>
+  </data>
+  <data name="Amulet-Bag-Already-Purchased-Message" xml:space="preserve">
+    <value>Не можеш да удължиш наема или закупиш.</value>
+  </data>
+  <data name="Cannot-Attack-Message" xml:space="preserve">
+    <value>You cannot attack right now.</value>
+  </data>
+  <data name="Cannot-Attack-While-Working-Instruction" xml:space="preserve">
+    <value>You have to cancel or finish your work before trying to attack.</value>
+  </data>
+  <data name="Cannot-Collect-Reward-Instruction" xml:space="preserve">
+    <value>You have to finish your patrol before trying to collect your reward.</value>
+  </data>
+  <data name="Cannot-Collect-Reward-Message" xml:space="preserve">
+    <value>You cannot collect your reward yet.</value>
+  </data>
+  <data name="Cannot-Patrol-Message" xml:space="preserve">
+    <value>You cannot go on a patrol.</value>
+  </data>
+  <data name="Cannot-Reset-Patrol-Instruction" xml:space="preserve">
+    <value>You have already resetted your patrol limit today.</value>
+  </data>
+  <data name="Cannot-Reset-Patrol-Message" xml:space="preserve">
+    <value>You cannot reset your patrol limit.</value>
+  </data>
   <data name="Exception-Cause" xml:space="preserve">
-    <value>Cause</value>
+    <value>Причина</value>
   </data>
   <data name="Exception-Instructions" xml:space="preserve">
-    <value>Instructions</value>
+    <value>Инструкции</value>
+  </data>
+  <data name="Hero-Does-Not-Own-Amulets-Instruction" xml:space="preserve">
+    <value>Не притежаваш посочения амулет.</value>
+  </data>
+  <data name="Hero-Does-Not-Own-Amulets-Message" xml:space="preserve">
+    <value>Не може да запаметиш настройките.</value>
   </data>
   <data name="Level-Requirement-Instruction" xml:space="preserve">
-    <value>You need level {0} to access this location.</value>
+    <value>Нужно ти е ниво {0}, за да достъпиш тази локация.</value>
   </data>
   <data name="Level-Requirement-Message" xml:space="preserve">
-    <value>Cannot access this location.</value>
+    <value>Не можеш да достъпиш тази локация.</value>
+  </data>
+  <data name="Patrol-Limit-Instruction" xml:space="preserve">
+    <value>You've already been on patrol the maximum allowed times today.</value>
   </data>
 </root>

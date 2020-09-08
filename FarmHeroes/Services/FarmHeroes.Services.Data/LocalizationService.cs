@@ -1,4 +1,4 @@
-﻿namespace FarmHeroes.Web.Localization
+﻿namespace FarmHeroes.Services.Data
 {
     using Microsoft.Extensions.Localization;
     using System.Reflection;

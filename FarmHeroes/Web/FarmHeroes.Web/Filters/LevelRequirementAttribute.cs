@@ -13,7 +13,7 @@
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Services.Data.Constants.ExceptionMessages;
     using FarmHeroes.Services.Data.Constants;
-    using FarmHeroes.Web.Localization;
+    using FarmHeroes.Services.Data;
 
     public class LevelRequirementAttribute : ActionFilterAttribute
     {
