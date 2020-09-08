@@ -1,16 +1,18 @@
 ﻿@model FarmHeroes.Web.ViewModels.ViewComponentsModels.SideMenuTimersViewComponentModel
 
 
-<h4 class="text-uppercase">@Localizer["Timers-Title"]</h4>
-<span>@Localizer["Current-Work"]:</span>
-<li class="nav-item">
-    <vc:timer dom-element-id="work_0" date-time="@Model.WorkUntil"></vc:timer>
-</li>
-<span>@Localizer["Until-Fight"]:</span>
-<li class="nav-item">
-    <vc:timer dom-element-id="attack_0" date-time="@Model.CannotAttackHeroUntil"></vc:timer>
-</li>
-<span>@Localizer["Defense-Duration"]:</span>
-<li class="nav-item">
-    <vc:timer dom-element-id="defense_0" date-time="@Model.CannotBeAttackedUntil"></vc:timer>
-</li>
+<h5 class="text-uppercase" data-toggle="collapse" data-target="#timers" aria-expanded="true">@Localizer["Timers-Title"]<span class="ml-3 h5 badge badge-pill badge-info">⇅</span></h5>
+<div id="timers" class="collapse show">
+    <span>@Localizer["Current-Work"]:</span>
+    <li class="nav-item">
+        <vc:timer dom-element-id="work_0" date-time="@Model.WorkUntil"></vc:timer>
+    </li>
+    <span>@Localizer["Until-Fight"]:</span>
+    <li class="nav-item">
+        <vc:timer dom-element-id="attack_0" date-time="@Model.CannotAttackHeroUntil"></vc:timer>
+    </li>
+    <span>@Localizer["Defense-Duration"]:</span>
+    <li class="nav-item">
+        <vc:timer dom-element-id="defense_0" date-time="@Model.CannotBeAttackedUntil"></vc:timer>
+    </li>
+</div>

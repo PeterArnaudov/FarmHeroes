@@ -4,13 +4,15 @@
 {
     <hr class="bg-primary w-75" />
     <li class="nav-item side-menu-effects">
-        <h5 class="text-uppercase">@Localizer["Effects-Title"]</h5>
-        @foreach (var bonus in Model.ActiveBonuses)
-        {
-            <div class="text-left">
-                <img src="@bonus.ImageUrl" alt="bonus" class="img-fluid amulet-icon" data-toggle="tooltip" data-placement="right" title="@bonus.Name">
-                <small>@($"{(bonus.ActiveUntil - DateTime.UtcNow).Days} d {(bonus.ActiveUntil - DateTime.UtcNow).Hours} h {(bonus.ActiveUntil - DateTime.UtcNow).Minutes} m")</small>
-            </div>
-        }
+        <h5 class="text-uppercase" data-toggle="collapse" data-target="#bonuses" aria-expanded="true">@Localizer["Effects-Title"]<span class="ml-3 h5 badge badge-pill badge-info">⇅</span></h5>
+        <div id="bonuses" class="collapse show">
+            @foreach (var bonus in Model.ActiveBonuses)
+            {
+                <div class="text-left">
+                    <img src="@bonus.ImageUrl" alt="bonus" class="img-fluid amulet-icon" data-toggle="tooltip" data-placement="right" title="@bonus.Name">
+                    <small>@($"{(bonus.ActiveUntil - DateTime.UtcNow).Days} d {(bonus.ActiveUntil - DateTime.UtcNow).Hours} h {(bonus.ActiveUntil - DateTime.UtcNow).Minutes} m")</small>
+                </div>
+            }
+        </div>
     </li>
 }
