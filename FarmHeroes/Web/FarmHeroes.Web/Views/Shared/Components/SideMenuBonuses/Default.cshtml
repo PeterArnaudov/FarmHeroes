@@ -3,7 +3,7 @@
 @if (Model.ActiveBonuses.Length > 0)
 {
     <hr class="bg-primary w-75" />
-    <li class="nav-item side-menu-effects">
+    <li class="nav-item side-menu-element">
         <h5 class="text-uppercase" data-toggle="collapse" data-target="#bonuses" aria-expanded="true">@Localizer["Effects-Title"]<span class="ml-3 h5 badge badge-pill badge-info">⇅</span></h5>
         <div id="bonuses" class="collapse show">
             @foreach (var bonus in Model.ActiveBonuses)

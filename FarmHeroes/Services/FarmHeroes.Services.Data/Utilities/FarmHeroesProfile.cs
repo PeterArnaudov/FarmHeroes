@@ -123,6 +123,8 @@
 
             this.CreateMap<ResourcePouch, HeroResourcesViewComponentModel>();
 
+            this.CreateMap<ResourcePouch, SideMenuResourcesViewComponentModel>();
+
             this.CreateMap<Statistics, StatisticsAllViewModel>();
 
             this.CreateMap<Notification, NotificationViewModel>();

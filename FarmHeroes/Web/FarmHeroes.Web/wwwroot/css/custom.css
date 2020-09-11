@@ -64,7 +64,7 @@
     opacity: 0.3;
 }
 
-.side-menu-effects {
+.side-menu-element {
     height: auto;
     max-height: 150px;
     overflow-y: auto;

@@ -1,0 +1,12 @@
+﻿@model FarmHeroes.Web.ViewModels.ViewComponentsModels.SideMenuResourcesViewComponentModel
+
+<hr class="bg-primary w-75" />
+<li class="nav-item side-menu-element">
+    <h5 class="text-uppercase" data-toggle="collapse" data-target="#resources" aria-expanded="false">@Localizer["Resources-Title"]<span class="ml-3 h5 badge badge-pill badge-info">⇅</span></h5>
+    <div id="resources" class="collapse text-left">
+        <span class="text-left mr-2">
+            <img src="~/images/icons/dungeon-key-icon.png" alt="dungeon-key" class="img-fluid icon">
+            <small>@Model.DungeonKeys</small>
+        </span>
+    </div>
+</li>
