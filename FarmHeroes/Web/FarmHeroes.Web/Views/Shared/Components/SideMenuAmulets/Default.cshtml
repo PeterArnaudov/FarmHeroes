@@ -7,7 +7,7 @@
         <a asp-action="Index" asp-controller="AmuletBag" class="h5 text-uppercase text-white d-block">@Localizer["Amulets-Title"]</a>
         @foreach (var amulet in Model.Amulets)
         {
-            <img src="@amulet.ImageUrl" alt="amulet" class="img-fluid amulet-icon" onclick="equipAmulet('@amulet.Id')" data-toggle="tooltip" data-placement="bottom" title="@SharedLocalizer.AmuletLocalizer(amulet.Name) (@amulet.Bonus%)<br><img src='/images/icons/level-icon.png' class='icon'>@amulet.Level">
+            <img src="@amulet.ImageUrl" alt="amulet" class="img-fluid amulet-icon clickable" onclick="equipAmulet('@amulet.Id')" data-toggle="tooltip" data-placement="bottom" title="@SharedLocalizer.AmuletLocalizer(amulet.Name) (@amulet.Bonus%)<br><img src='/images/icons/level-icon.png' class='icon'>@amulet.Level">
         }
     </li>
 }

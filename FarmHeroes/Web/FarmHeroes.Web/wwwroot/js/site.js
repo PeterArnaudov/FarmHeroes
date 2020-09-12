@@ -75,3 +75,8 @@ function showAlert(error) {
     $("#view-body").prepend($alert);
     $alert.fadeOut(2000, function () { $(this).remove() });
 }
+
+function toggleSideMenuTab(tabId) {
+    $(`.side-menu-element:not(#${tabId})`).addClass("d-none");
+    $(`#${tabId}`).removeClass("d-none");
+}

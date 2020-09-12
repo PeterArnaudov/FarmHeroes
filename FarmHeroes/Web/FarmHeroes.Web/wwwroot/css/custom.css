@@ -7,12 +7,17 @@
     height: 18px;
 }
 
-.amulet-icon {
-    width: 25px;
+.side-menu-icon {
+    width: 24px;
+    height: 24px;
 }
 
-.amulet-icon:hover {
+.clickable:hover {
     opacity: 0.7;
+}
+
+.amulet-icon {
+    width: 25px;
 }
 
 .item-image {
