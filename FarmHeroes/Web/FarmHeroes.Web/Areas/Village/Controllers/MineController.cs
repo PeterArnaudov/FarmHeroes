@@ -11,6 +11,7 @@
     using FarmHeroes.Web.ViewModels.MineModels;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Localization;
 
     [Authorize]
     [Area("Village")]
@@ -18,13 +19,17 @@
     {
         private readonly IHeroService heroService;
         private readonly IMineService mineService;
+        private readonly IChronometerService chronometerService;
         private readonly IMapper mapper;
+        private readonly IStringLocalizer<MineController> stringLocalizer;
 
-        public MineController(IHeroService heroService, IMineService mineService, IMapper mapper)
+        public MineController(IHeroService heroService, IMineService mineService, IChronometerService chronometerService, IMapper mapper, IStringLocalizer<MineController> stringLocalizer)
         {
             this.heroService = heroService;
             this.mineService = mineService;
+            this.chronometerService = chronometerService;
             this.mapper = mapper;
+            this.stringLocalizer = stringLocalizer;
         }
 
         public async Task<IActionResult> Index()
@@ -34,6 +39,47 @@
             MineViewModel viewModel = await this.heroService.GetCurrentHeroViewModel<MineViewModel>();
 
             return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> StartWork()
+        {
+            int seconds = await this.mineService.InitiateDig();
+
+            return this.Json(new
+            {
+                seconds,
+                timeLeftParagraph = this.stringLocalizer["Work-Time-Left-Paragraph"].Value,
+                cancelWorkParagraph = this.stringLocalizer["Cancel-Work-Paragraph"].Value,
+                cancelButton = this.stringLocalizer["Cancel-Button-Text"].Value,
+            });
+        }
+
+        public async Task<IActionResult> Collect()
+        {
+            var result = await this.mineService.Collect();
+
+            return this.Json(new
+            {
+                crystals = result.Crystals,
+                amuletActivated = result.AmuletActivated
+                    ? this.stringLocalizer["Amulet-Activated"].Value
+                    : this.stringLocalizer["Amulet-Not-Activated"].Value,
+                youCollected = this.stringLocalizer["You-Collected"].Value,
+                salaryParagraph = this.stringLocalizer["Current-Salary-Paragraph"].Value,
+                durationParagraph = this.stringLocalizer["Work-Duration-Paragraph"].Value,
+                workButton = this.stringLocalizer["Work-Button-Text"].Value,
+            });
+        }
+
+        public async Task<IActionResult> CancelWork()
+        {
+            await this.chronometerService.NullifyWorkUntil();
+
+            return this.Json(new
+            {
+                durationParagraph = this.stringLocalizer["Work-Duration-Paragraph"].Value,
+                workButton = this.stringLocalizer["Work-Button-Text"].Value,
+            });
         }
     }
 }
