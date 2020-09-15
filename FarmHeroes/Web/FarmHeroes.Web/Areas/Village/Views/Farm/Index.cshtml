@@ -9,26 +9,26 @@
     <div id="work-body">
         @if (!Model.DoesWork)
         {
-            <p>Currently you can work for @Model.Salary.ToString("N0") <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"> per hour.</p>
-            <p>Work duration on the farm is 4 hours. Not less, not more.</p>
-            <button onclick="startWork('farm')" class="btn btn-primary text-uppercase">Work</button>
+            <p>@Localizer["Current-Salary-Paragraph"] @Model.Salary.ToString("N0") <img src="~/images/icons/gold-icon.png" alt="gold" class="icon">.</p>
+            <p>@Localizer["Work-Duration-Paragraph"]</p>
+            <button onclick="startWork()" class="btn btn-primary text-uppercase">@Localizer["Work-Button-Text"]</button>
         }
         else
         {
             if (Model.IsWorkFinished)
             {
-                <p class="text-success">You finished working! Click the button below to collect your salary.</p>
-                <button class="btn btn-success text-uppercase" onclick="collect('farm')">Collect</button>
+                <p class="text-success">@Localizer["Work-Finished-Paragraph"]</p>
+                <button class="btn btn-success text-uppercase" onclick="collect()">@Localizer["Collect-Button-Text"]</button>
             }
             else
             {
-                <p class="mb-1">Time left until you finish work:</p>
+                <p class="mb-1">@Localizer["Work-Time-Left-Paragraph"]</p>
                 <vc:timer dom-element-id="work_1" date-time="@Model.ChronometerWorkUntil"></vc:timer>
-                <p class="text-danger">NOTE: If you cancel the work, you will not receive any rewards.</p>
-                <button class="btn btn-danger text-uppercase" onclick="cancelWork('farm')">Cancel</button>
+                <p class="text-danger">@Localizer["Cancel-Work-Paragraph"]</p>
+                <button class="btn btn-danger text-uppercase" onclick="cancelWork()">@Localizer["Cancel-Button-Text"]</button>
             }
         }
     </div>
 </div>
 
-<script src="~/js/ajax-calls/work.js" asp-append-version="true"></script>
+<script src="~/js/ajax-calls/farm.js" asp-append-version="true"></script>
