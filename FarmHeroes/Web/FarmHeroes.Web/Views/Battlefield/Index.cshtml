@@ -9,25 +9,25 @@
     <div class="row m-auto">
         <div class="col-6 border-right border-primary">
             <img src="~/images/battlefield/fight-icon.png" alt="fight" class="img-fluid d-none d-sm-block ml-2 mt-2 area-icon">
-            <h2 class="text-uppercase d-inline">fights</h2>
-            <img src="~/images/icons/info-icon.png" alt="info" class="img-fluid ml-2 mt-2 info-icon" data-toggle="tooltip" data-placement="bottom" title="Battle consists of 5 rounds. Winner is determined by damage dealt, however if someone has 1 health left, they lose. The winner steals 10% of their enemy's gold.">
+            <h2 class="text-uppercase d-inline">@Localizer["Fights-Title"]</h2>
+            <img src="~/images/icons/info-icon.png" alt="info" class="img-fluid ml-2 mt-2 info-icon" data-toggle="tooltip" data-placement="bottom" title="@Localizer["Fight-Info"]">
             <form method="get" asp-controller="Battlefield" asp-action="GetOpponents">
                 <div class="form-group">
-                    <label for="attackType">Attack type</label>
+                    <label for="attackType">@Localizer["Attack-Type"]</label>
                     <select class="form-control" name="attackType">
-                        <option value="Fraction">Enemy fraction</option>
-                        <option value="Cast" disabled>Enemy cast - Coming soon</option>
+                        <option value="Fraction">@Localizer["Enemy-Fraction"]</option>
+                        <option value="Cast" disabled>@Localizer["Enemy-Cast"]</option>
                     </select>
                 </div>
                 @if (Model.IsOnPatrol)
                 {
-                    <button id="attack-hero-button" type="submit" class="btn btn-primary disabled text-uppercase" disabled>Get opponents</button>
+                    <button id="attack-hero-button" type="submit" class="btn btn-primary disabled text-uppercase" disabled>@Localizer["Get-Opponents-Button"]</button>
                 }
                 else
                 {
                     if (Model.CanAttackHero)
                     {
-                        <button id="attack-hero-button" type="submit" class="btn btn-primary text-uppercase">Get opponents</button>
+                        <button id="attack-hero-button" type="submit" class="btn btn-primary text-uppercase">@Localizer["Get-Opponents-Button"]</button>
                     }
                     else
                     {
@@ -38,9 +38,9 @@
         </div>
         <div class="col-6">
             <img src="~/images/battlefield/patrol-icon.png" alt="patrol" class="img-fluid d-none d-sm-block ml-2 mt-2 area-icon">
-            <h2 class="text-uppercase">patrol</h2>
-            <p class="m-auto">Spend 10 minutes patrolling around and earn some gold.</p>
-            <p>Today you've been on patrol <span id="patrols-done">@Model.DailyLimitsPatrolsDone</span>/3 times.</p>
+            <h2 class="text-uppercase">@Localizer["Patrol-Title"]</h2>
+            <p class="m-auto">@Localizer["Patrol-Info"]</p>
+            <p>@Localizer["Today-Patrols"] <span id="patrols -done">@Model.DailyLimitsPatrolsDone</span>/3 @Localizer["Times"].</p>
             <div id="work-body">
                 @if (Model.CanGoOnPatrol)
                 {
@@ -48,24 +48,24 @@
                     {
                         if (Model.DailyLimitsPatrolResets == 0)
                         {
-                            <p>Price: 100 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
-                            <a href="/Battlefield/ResetPatrol" class="btn btn-primary text-uppercase">Reset Patrol</a>
+                            <p>@Localizer["Price"]: 100 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
+                            <a href="/Battlefield/ResetPatrol" class="btn btn-primary text-uppercase">@Localizer["Reset-Patrol-Button"]</a>
                         }
                         else
                         {
-                            <p>Come back tomorrow!</p>
+                            <p>@Localizer["More-Patrols-Tomorrow"]</p>
                         }
                     }
                     else
                     {
-                        <button onclick="startWork('battlefield')" class="btn btn-primary text-uppercase">Start Patrol</button>
+                        <button onclick="startWork()" class="btn btn-primary text-uppercase">@Localizer["Start-Patrol-Button"]</button>
                     }
                 }
                 else
                 {
                     if (Model.IsPatrolFinished)
                     {
-                        <button onclick="collect('battlefield')" class="btn btn-success text-uppercase">Collect</button>
+                        <button onclick="collect()" class="btn btn-success text-uppercase">@Localizer["Collect-Buttton"]</button>
                     }
                     else
                     {
@@ -79,20 +79,20 @@
     <div class="row mt-2 ml-auto mr-auto">
         <div class="col-12">
             <img src="~/images/battlefield/monster-fight-icon.png" alt="patrol" class="img-fluid d-none d-sm-block ml-2 mt-2 area-icon">
-            <h2 class="text-uppercase">monsters</h2>
+            <h2 class="text-uppercase">@Localizer["Monsters-Title"]</h2>
             <div class="row">
                 <div class="col-6">
-                    <p>Price: 50 <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
-                    <p>Attack a monster with level between 1 and 3.</p>
+                    <p>@Localizer["Price"]: 50 <img src="~/images/icons/gold-icon.png" alt="gold" class="icon"></p>
+                    <p>@Localizer["Monster-Attack-Info"]</p>
                     @if (Model.IsOnPatrol)
                     {
-                        <a id="attack-random-monster-button" asp-controller="Battlefield" asp-action="AttackMonster" class="btn btn-primary disabled text-uppercase" disabled>Attack</a>
+                        <a id="attack-random-monster-button" asp-controller="Battlefield" asp-action="AttackMonster" class="btn btn-primary disabled text-uppercase" disabled>@Localizer["Attack-Button"]</a>
                     }
                     else
                     {
                         if (Model.CanAttackMonster)
                         {
-                            <a id="attack-random-monster-button" asp-controller="Battlefield" asp-action="AttackMonster" class="btn btn-primary text-uppercase">Attack</a>
+                            <a id="attack-random-monster-button" asp-controller="Battlefield" asp-action="AttackMonster" class="btn btn-primary text-uppercase">@Localizer["Attack-Button"]</a>
                         }
                         else
                         {
@@ -101,10 +101,10 @@
                     }
                 </div>
                 <div class="col-6">
-                    <p>Price: 1 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
-                    <p>Attack a monster with level of your choice.</p>
+                    <p>@Localizer["Price"]: 1 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
+                    <p>@Localizer["Monster-Attack-Of-Choice-Info"]</p>
                     <form class="form-inline" asp-controller="Battlefield" asp-action="AttackMonster" asp-antiforgery="false" method="get">
-                        <label for="attackType" class="m-auto">Monster level</label>
+                        <label for="attackType" class="m-auto">@Localizer["Monster-Level"]</label>
                         <select class="form-control-sm m-auto" name="monsterLevel">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -112,13 +112,13 @@
                         </select>
                         @if (Model.IsOnPatrol)
                         {
-                            <button id="attack-monster-button" type="submit" class="btn btn-primary disabled text-uppercase" disabled>Attack</button>
+                            <button id="attack-monster-button" type="submit" class="btn btn-primary disabled text-uppercase" disabled>@Localizer["Attack-Button"]</button>
                         }
                         else
                         {
                             if (Model.CanAttackMonster)
                             {
-                                <button id="attack-monster-button" type="submit" class="btn btn-primary text-uppercase">Attack</button>
+                    <button id="attack-monster-button" type="submit" class="btn btn-primary text-uppercase">@Localizer["Attack-Button"]</button>
                             }
                             else
                             {
@@ -132,4 +132,4 @@
     </div>
 </div>
 
-<script src="~/js/ajax-calls/work.js" asp-append-version="true"></script>
+<script src="~/js/ajax-calls/battlefield.js" asp-append-version="true"></script>
