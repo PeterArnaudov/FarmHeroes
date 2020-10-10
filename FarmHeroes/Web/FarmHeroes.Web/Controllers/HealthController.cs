@@ -3,6 +3,7 @@
     using FarmHeroes.Data.Models.HeroModels;
     using FarmHeroes.Services.Data.Constants;
     using FarmHeroes.Services.Data.Contracts;
+    using FarmHeroes.Web.ViewModels.HealthModels;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
@@ -19,55 +20,55 @@
             this.resourcePouchService = resourcePouchService;
         }
 
-        public async Task<ActionResult<object>> HealPill()
+        public async Task<ActionResult<HealResultModel>> HealPill()
         {
             await this.healthService.HealCurrentHero(HealthConstants.PillHealAmount, HealthConstants.PillCost);
 
             Health health = await this.healthService.GetHealth();
             ResourcePouch resources = await this.resourcePouchService.GetResourcePouch();
 
-            object result = new
+            HealResultModel result = new HealResultModel
             {
-                health.Current,
-                health.Maximum,
-                resources.Gold,
-                resources.Crystals,
+                CurrentHealth = health.Current,
+                MaximumHealth = health.Maximum,
+                Gold = resources.Gold,
+                Crystals = resources.Crystals,
             };
 
             return result;
         }
 
-        public async Task<ActionResult<object>> HealElixir()
+        public async Task<ActionResult<HealResultModel>> HealElixir()
         {
             await this.healthService.HealCurrentHero(HealthConstants.ElixirHealAmount, HealthConstants.ElixirCost);
 
             Health health = await this.healthService.GetHealth();
             ResourcePouch resources = await this.resourcePouchService.GetResourcePouch();
 
-            object result = new
+            HealResultModel result = new HealResultModel
             {
-                health.Current,
-                health.Maximum,
-                resources.Gold,
-                resources.Crystals,
+                CurrentHealth = health.Current,
+                MaximumHealth = health.Maximum,
+                Gold = resources.Gold,
+                Crystals = resources.Crystals,
             };
 
             return result;
         }
 
-        public async Task<ActionResult<object>> HealPotion()
+        public async Task<ActionResult<HealResultModel>> HealPotion()
         {
             await this.healthService.HealCurrentHeroToMaximum(HealthConstants.PotionCost);
 
             Health health = await this.healthService.GetHealth();
             ResourcePouch resources = await this.resourcePouchService.GetResourcePouch();
 
-            object result = new
+            HealResultModel result = new HealResultModel
             {
-                health.Current,
-                health.Maximum,
-                resources.Gold,
-                resources.Crystals,
+                CurrentHealth = health.Current,
+                MaximumHealth = health.Maximum,
+                Gold = resources.Gold,
+                Crystals = resources.Crystals,
             };
 
             return result;
