@@ -1,7 +1,7 @@
 ﻿function practice(stat) {
     $.ajax({
         method: 'GET',
-        url: `/api/Characteristics/Practice${stat}`
+        url: `/Characteristics/Practice${stat}`
     })
         .done((data) => {
             if ($('.alert-success').length == 0) {
