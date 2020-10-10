@@ -1,33 +1,27 @@
-﻿namespace FarmHeroes.Web.ApiControllers
+﻿namespace FarmHeroes.Web.Controllers
 {
+    using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Services.Data.Constants;
+    using FarmHeroes.Services.Data.Contracts;
+    using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
-    using FarmHeroes.Data.Models.HeroModels;
-    using FarmHeroes.Services.Data.Contracts;
-
-    using Microsoft.AspNetCore.Mvc;
-
-    public class HealthController : ApiController
+    public class HealthController : BaseController
     {
-        private const int PillHealAmount = 200;
-        private const int ElixirHealAmount = 3000;
-        private const int PillCost = 100;
-        private const int ElixirCost = 1000;
-        private const int PotionCost = 15;
-
         private readonly IHealthService healthService;
         private readonly IResourcePouchService resourcePouchService;
 
-        public HealthController(IHealthService healthService, IResourcePouchService resourcePouchService)
+        public HealthController(
+            IHealthService healthService,
+            IResourcePouchService resourcePouchService)
         {
             this.healthService = healthService;
             this.resourcePouchService = resourcePouchService;
         }
 
-        [HttpGet("HealPill")]
         public async Task<ActionResult<object>> HealPill()
         {
-            await this.healthService.HealCurrentHero(PillHealAmount, PillCost);
+            await this.healthService.HealCurrentHero(HealthConstants.PillHealAmount, HealthConstants.PillCost);
 
             Health health = await this.healthService.GetHealth();
             ResourcePouch resources = await this.resourcePouchService.GetResourcePouch();
@@ -43,10 +37,9 @@
             return result;
         }
 
-        [HttpGet("HealElixir")]
         public async Task<ActionResult<object>> HealElixir()
         {
-            await this.healthService.HealCurrentHero(ElixirHealAmount, ElixirCost);
+            await this.healthService.HealCurrentHero(HealthConstants.ElixirHealAmount, HealthConstants.ElixirCost);
 
             Health health = await this.healthService.GetHealth();
             ResourcePouch resources = await this.resourcePouchService.GetResourcePouch();
@@ -62,10 +55,9 @@
             return result;
         }
 
-        [HttpGet("HealPotion")]
         public async Task<ActionResult<object>> HealPotion()
         {
-            await this.healthService.HealCurrentHeroToMaximum(PotionCost);
+            await this.healthService.HealCurrentHeroToMaximum(HealthConstants.PotionCost);
 
             Health health = await this.healthService.GetHealth();
             ResourcePouch resources = await this.resourcePouchService.GetResourcePouch();

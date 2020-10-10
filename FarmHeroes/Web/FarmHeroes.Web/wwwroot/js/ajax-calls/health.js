@@ -1,7 +1,7 @@
 ﻿function heal(type) {
     $.ajax({
         method: 'GET',
-        url: `/api/Health/Heal${type}`
+        url: `/Health/Heal${type}`
     })
         .done((data) => {
             if ($('.alert-success').length == 0) {
