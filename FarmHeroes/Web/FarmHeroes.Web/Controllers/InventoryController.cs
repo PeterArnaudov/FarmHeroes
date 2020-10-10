@@ -46,5 +46,12 @@
 
             return this.Redirect("/Inventory");
         }
+
+        public async Task<ActionResult<object>> EquipAmulet(int id)
+        {
+            object result = await this.equipmentService.EquipAmulet(id);
+
+            return result;
+        }
     }
 }
