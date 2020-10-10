@@ -77,7 +77,8 @@
                 throw new FarmHeroesException(
                     MineExceptionMessages.CannotCollectRewardMessage,
                     MineExceptionMessages.CannotCollectRewardInstruction,
-                    Redirects.MineRedirect);
+                    Redirects.MineRedirect,
+                    true);
             }
         }
     }

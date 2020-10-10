@@ -95,7 +95,8 @@
                 throw new FarmHeroesException(
                     FarmExceptionMessages.CannotCollectRewardMessage,
                     FarmExceptionMessages.CannotCollectRewardInstruction,
-                    Redirects.FarmRedirect);
+                    Redirects.FarmRedirect,
+                    true);
             }
         }
     }

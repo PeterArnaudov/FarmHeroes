@@ -166,7 +166,8 @@
                 throw new FarmHeroesException(
                     BattlefieldExceptionMessages.CannotPatrolMessage,
                     BattlefieldExceptionMessages.PatrolLimitInstruction,
-                    Redirects.BattlefieldRedirect);
+                    Redirects.BattlefieldRedirect,
+                    true);
             }
         }
 
@@ -177,7 +178,8 @@
                 throw new FarmHeroesException(
                     BattlefieldExceptionMessages.CannotResetPatrolMessage,
                     BattlefieldExceptionMessages.CannotResetPatrolInstruction,
-                    Redirects.BattlefieldRedirect);
+                    Redirects.BattlefieldRedirect,
+                    true);
             }
         }
 
@@ -207,7 +209,8 @@
                 throw new FarmHeroesException(
                     BattlefieldExceptionMessages.CannotCollectRewardMessage,
                     BattlefieldExceptionMessages.CannotCollectRewardInstruction,
-                    Redirects.BattlefieldRedirect);
+                    Redirects.BattlefieldRedirect,
+                    true);
             }
         }
 

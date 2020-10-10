@@ -108,7 +108,8 @@
                 throw new FarmHeroesException(
                     EquipmentExceptionMessages.DoesNotBelongToHeroMessage,
                     EquipmentExceptionMessages.DoesNotBelongToHeroInstruction,
-                    Redirects.InventoryRedirect);
+                    Redirects.InventoryRedirect,
+                    true);
             }
         }
     }

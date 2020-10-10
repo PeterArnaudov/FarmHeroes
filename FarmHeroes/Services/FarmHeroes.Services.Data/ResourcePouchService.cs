@@ -92,7 +92,8 @@
                 throw new FarmHeroesException(
                     string.Format(ResourcePouchExceptionMessages.NotEnoughResourceMessage, this.SeparateWords(resourceName)),
                     string.Format(ResourcePouchExceptionMessages.NotEnoughResourceInstruction, this.SeparateWords(resourceName)),
-                    string.Empty);
+                    string.Empty,
+                    true);
             }
         }
 

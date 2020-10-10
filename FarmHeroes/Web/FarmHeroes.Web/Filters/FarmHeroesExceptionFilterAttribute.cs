@@ -23,18 +23,12 @@
 
         public void OnException(ExceptionContext context)
         {
-            string[] apiControllerNames = Assembly.GetExecutingAssembly()
-                .GetTypes()
-                .Where(type => typeof(ApiController).IsAssignableFrom(type))
-                .Select(type => type.Name.Replace("Controller", string.Empty))
-                .ToArray();
-
             if (context.Exception is FarmHeroesException)
             {
                 FarmHeroesException exception = context.Exception as FarmHeroesException;
                 context.ExceptionHandled = true;
 
-                if (apiControllerNames.Contains(context.RouteData.Values["Controller"]))
+                if (exception.IsAjax)
                 {
                     context.HttpContext.Response.StatusCode = 400;
                     context.Result = new JsonResult(new { exception.Message, exception.Instructions });
