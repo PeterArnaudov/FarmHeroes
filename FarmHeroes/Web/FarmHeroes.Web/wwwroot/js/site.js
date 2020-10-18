@@ -7,6 +7,8 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip({
         html: true
     })
+
+    toggleSideMenuTab(getCookie("smt"));
 })
 
 $(".disappearing-alert").fadeOut(5000);
@@ -85,6 +87,35 @@ function showAlert(error) {
 }
 
 function toggleSideMenuTab(tabId) {
+    if (tabId == "") {
+        tabId = "resources-side-menu";
+    }
+
+    setCookie("smt", tabId, 1);
     $(`.side-menu-element:not(#${tabId})`).addClass("d-none");
     $(`#${tabId}`).removeClass("d-none");
+}
+
+function setCookie(cookieName, cookieValue, daysValid) {
+    let date = new Date();
+    date.setTime(date.getTime() + (daysValid * 24 * 60 * 60 * 1000));
+    let expires = "expires=" + date.toUTCString();
+    document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+}
+
+function getCookie(cookieName) {
+    let name = cookieName + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let cookies = decodedCookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i];
+        while (cookie.charAt(0) == ' ') {
+            cookie = cookie.substring(1);
+        }
+        if (cookie.indexOf(name) == 0) {
+            return cookie.substring(name.length, cookie.length);
+        }
+    }
+
+    return "";
 }
