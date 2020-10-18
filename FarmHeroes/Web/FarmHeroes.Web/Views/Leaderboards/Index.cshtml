@@ -1,4 +1,5 @@
 ﻿@model FarmHeroes.Web.ViewModels.LeaderboardModels.LeaderboardsViewModel
+@using FarmHeroes.Web.Extensions;
 @{
     ViewData["Title"] = "Leaderboards";
     Layout = "~/Views/Shared/_LoggedLayout.cshtml";
@@ -9,7 +10,7 @@
         <div class="form-group col-6 m-auto">
             <label for="criteria">Sort by:</label>
             <select id="criteria" name="criteria" class="form-control-sm">
-                <option selected hidden value="@Model.Criteria">@Model.Criteria</option>
+                <option selected hidden value="@Model.Criteria">@StringExtensions.ToFriendlyCase(Model.Criteria)</option>
                 <option value="Wins">Wins</option>
                 <option value="Losses">Losses</option>
                 <option value="TotalFights">Fights</option>
@@ -42,7 +43,7 @@
         <tr>
             <th scope="col">№</th>
             <th scope="col">Username</th>
-            <th scope="col">@Model.Criteria</th>
+            <th scope="col">@StringExtensions.ToFriendlyCase(Model.Criteria)</th>
         </tr>
     </thead>
     <tbody>

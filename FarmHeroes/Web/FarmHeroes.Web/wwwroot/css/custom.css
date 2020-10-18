@@ -96,6 +96,10 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.modal-shadow {
+    box-shadow: 0 12px 24px 0 rgb(3, 3, 3), 0 12px 40px 0 rgb(3, 3, 3);
+}
+
 notification-image {
     width: 40px;
 }
