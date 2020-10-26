@@ -16,16 +16,40 @@
         <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/custom.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/animations.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/sun-moon.css" rel="stylesheet" asp-append-version="true" />
     </environment>
     <environment names="Staging,Production">
         <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/superhero/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/custom.css" rel="stylesheet" asp-append-version="true" />
         <link href="~/css/animations.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/css/sun-moon.css" rel="stylesheet" asp-append-version="true" />
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
+    @if (DateTime.UtcNow.Hour < 7 || DateTime.UtcNow.Hour > 18)
+    {
+        <div class="cloud"></div>
+        <div class="moon"></div>
+    }
+    else
+    {
+        <div class="sun">
+            <div class="ray_box">
+                <div class="ray ray1"></div>
+                <div class="ray ray2"></div>
+                <div class="ray ray3"></div>
+                <div class="ray ray4"></div>
+                <div class="ray ray5"></div>
+                <div class="ray ray6"></div>
+                <div class="ray ray7"></div>
+                <div class="ray ray8"></div>
+                <div class="ray ray9"></div>
+                <div class="ray ray10"></div>
+            </div>
+        </div>
+    }
     <div class="wrapper container">
         <div class="text-center">
             <a asp-area="" asp-controller="News" asp-action="Index" class="small">@Localizer["Navbar-News"]</a> |

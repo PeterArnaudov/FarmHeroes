@@ -1,0 +1,252 @@
+﻿.sun {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    margin: auto;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: white;
+    opacity: 0.9;
+    box-shadow: 0px 0px 40px 15px white;
+}
+
+.ray_box {
+    position: absolute;
+    margin: auto;
+    top: 0px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 70px;
+    -webkit-animation: ray_anim 120s linear infinite;
+    animation: ray_anim 120s linear infinite;
+}
+
+.ray {
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+    margin-left: 10px;
+    border-radius: 80% 80% 0 0;
+    position: absolute;
+    opacity: 0.1;
+}
+
+.ray1 {
+    height: 170px;
+    width: 30px;
+    -webkit-transform: rotate(180deg);
+    top: -175px;
+    left: 15px;
+}
+
+.ray2 {
+    height: 100px;
+    width: 8px;
+    -webkit-transform: rotate(220deg);
+    top: -90px;
+    left: 75px;
+}
+
+.ray3 {
+    height: 170px;
+    width: 50px;
+    -webkit-transform: rotate(250deg);
+    top: -80px;
+    left: 100px;
+}
+
+.ray4 {
+    height: 120px;
+    width: 14px;
+    -webkit-transform: rotate(305deg);
+    top: 30px;
+    left: 100px;
+}
+
+.ray5 {
+    height: 140px;
+    width: 30px;
+    -webkit-transform: rotate(-15deg);
+    top: 60px;
+    left: 40px;
+}
+
+.ray6 {
+    height: 90px;
+    width: 50px;
+    -webkit-transform: rotate(30deg);
+    top: 60px;
+    left: -40px;
+}
+
+.ray7 {
+    height: 180px;
+    width: 10px;
+    -webkit-transform: rotate(70deg);
+    top: -35px;
+    left: -40px;
+}
+
+.ray8 {
+    height: 120px;
+    width: 30px;
+    -webkit-transform: rotate(100deg);
+    top: -45px;
+    left: -90px;
+}
+
+.ray9 {
+    height: 80px;
+    width: 10px;
+    -webkit-transform: rotate(120deg);
+    top: -65px;
+    left: -60px;
+}
+
+.ray10 {
+    height: 190px;
+    width: 23px;
+    -webkit-transform: rotate(150deg);
+    top: -185px;
+    left: -60px;
+}
+
+
+@-webkit-keyframes ray_anim {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.moon {
+    position: absolute;
+    margin: auto;
+    top: 2%;
+    left: 2%;
+    width: 100px;
+    height: 100px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 25px 10px 0px 0px #fff;
+    animation-name: rotate-left;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes rotate-left {
+    0% {
+        transform: rotate(0deg);
+        opacity: 0.9;
+    }
+
+    20% {
+        transform: rotate(30deg);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: rotate(0deg);
+        opacity: 0.7;
+    }
+
+    80% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0.9;
+    }
+}
+
+.cloud {
+    position: absolute;
+    margin: auto;
+    top: 10%;
+    left: 1%;
+    width: 35px;
+    height: 12px;
+    background: #ECEFF1;
+    box-shadow: 1px 1px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    animation-name: move-cloud;
+    animation-duration: 50s;
+    animation-iteration-count: infinite;
+}
+
+.cloud::after, .cloud::before {
+    content: "";
+    position: relative;
+    display: inline-block;
+    background: inherit;
+    border-radius: inherit;
+}
+
+.cloud::after {
+    width: 10px;
+    height: 10px;
+    top: -22px;
+    left: 5px;
+}
+
+.cloud::before {
+    width: 18px;
+    height: 18px;
+    top: -7px;
+    left: 13px;
+}
+
+@keyframes move-cloud {
+    10% {
+        left: 3%;
+    }
+
+    20% {
+        top: 12%;
+        left: 5%
+    }
+
+    30% {
+        top: 11%;
+        left: 8%;
+    }
+
+    40% {
+        top: 9%;
+        left: 6%;
+    }
+
+    50% {
+        top: 8%;
+        left: 9%;
+    }
+
+    60% {
+        top: 9%;
+        left: 7%;
+    }
+
+    70% {
+        top: 11%;
+        left: 6%;
+    }
+
+    80% {
+        top: 12%;
+        left: 5%
+    }
+
+    90% {
+        left: 3%;
+    }
+
+    100% {
+        left: 1%;
+    }
+}
