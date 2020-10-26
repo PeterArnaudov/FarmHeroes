@@ -12,9 +12,11 @@
 
         Task<TViewModel> GetCurrentHeroResourcesViewModel<TViewModel>();
 
+        Task<int> GetResource(string resourceName, int id = 0);
+
         Task IncreaseResource(string resource, int amount, int id = 0);
 
-        Task DecreaseResource(string resourceName, int amount, int id = 0);
+        Task<bool> DecreaseResource(string resourceName, int amount, int id = 0);
 
         Task UpdateResourcePouch(ResourcePouchModifyInputModel inputModel);
 

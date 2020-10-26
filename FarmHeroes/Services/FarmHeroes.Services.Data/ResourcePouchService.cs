@@ -31,9 +31,14 @@
 
         public async Task<ResourcePouch> GetResourcePouch(int id = 0)
         {
-            Hero hero = await this.heroService.GetHero(id);
+            if (id == 0)
+            {
+                id = (await this.heroService.GetHero()).ResourcePouchId;
+            }
 
-            return hero.ResourcePouch;
+            ResourcePouch resourcePouch = await this.context.ResourcePouches.FindAsync(id);
+
+            return resourcePouch;
         }
 
         public async Task UpdateResourcePouch(ResourcePouchModifyInputModel inputModel)
@@ -64,7 +69,7 @@
             return viewModel;
         }
 
-        public async Task DecreaseResource(string resourceName, int amount, int id = 0)
+        public async Task<bool> DecreaseResource(string resourceName, int amount, int id = 0)
         {
             ResourcePouch resources = await this.GetResourcePouch(id);
 
@@ -74,6 +79,17 @@
             typeof(ResourcePouch).GetProperty(resourceName).SetValue(resources, currentAmount - amount);
 
             await this.context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<int> GetResource(string resourceName, int id = 0)
+        {
+            ResourcePouch resources = await this.GetResourcePouch(id);
+
+            int currentAmount = (int)typeof(ResourcePouch).GetProperty(resourceName).GetValue(resources);
+
+            return currentAmount;
         }
 
         public async Task GivePassiveIncome()

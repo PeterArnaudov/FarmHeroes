@@ -16,11 +16,11 @@ namespace FarmHeroes.Web.BackgroundTasks
     public class DailyLimitsResetTask : IHostedService, IDisposable
     {
         private int executionCount = 0;
-        private readonly ILogger<PassiveIncomeTask> logger;
+        private readonly ILogger<DailyLimitsResetTask> logger;
         private readonly IServiceScopeFactory scopeFactory;
         private Timer timer;
 
-        public DailyLimitsResetTask(ILogger<PassiveIncomeTask> logger, IServiceScopeFactory scopeFactory)
+        public DailyLimitsResetTask(ILogger<DailyLimitsResetTask> logger, IServiceScopeFactory scopeFactory)
         {
             this.logger = logger;
             this.scopeFactory = scopeFactory;

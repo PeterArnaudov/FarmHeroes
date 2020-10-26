@@ -24,6 +24,8 @@
 
         Task SetCannotDungeonUntil(int seconds, int id = 0);
 
+        Task SetSailingUntil(int seconds, bool setToNull = false, int id = 0);
+
         Task UpdateChronometer(ChronometerModifyInputModel inputModel);
     }
 }

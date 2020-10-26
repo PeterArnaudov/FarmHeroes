@@ -30,9 +30,14 @@
 
         public async Task<Chronometer> GetChronometer(int id = 0)
         {
-            Hero hero = await this.heroService.GetHero(id);
+            if (id == 0)
+            {
+                id = (await this.heroService.GetHero()).ChronometerId;
+            }
 
-            return hero.Chronometer;
+            Chronometer chronometer = await this.context.Chronometers.FindAsync(id);
+
+            return chronometer;
         }
 
         public async Task<TViewModel> GetCurrentHeroChronometerViewModel<TViewModel>()
@@ -97,6 +102,22 @@
         {
             Chronometer chronometer = await this.GetChronometer(id);
             chronometer.CannotDungeonUntil = DateTime.UtcNow.AddSeconds(seconds);
+
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task SetSailingUntil(int seconds, bool setToNull = false, int id = 0)
+        {
+            Chronometer chronometer = await this.GetChronometer(id);
+
+            if (setToNull)
+            {
+                chronometer.SailingUntil = null;
+            }
+            else
+            {
+                chronometer.SailingUntil = DateTime.UtcNow.AddSeconds(seconds);
+            }
 
             await this.context.SaveChangesAsync();
         }
