@@ -9,6 +9,7 @@
         Farm,
         Patrol,
         Dungeon,
+        Harbour,
         Other,
     }
 }

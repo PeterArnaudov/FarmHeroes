@@ -23,6 +23,7 @@
             this.DailyLimits = new DailyLimits();
             this.AmuletBag = new AmuletBag();
             this.DungeonInformation = new DungeonInformation();
+            this.PremiumFeatures = new PremiumFeatures();
         }
 
         public int Id { get; set; }
@@ -84,6 +85,10 @@
         public int DungeonInformationId { get; set; }
 
         public virtual DungeonInformation DungeonInformation { get; set; }
+
+        public int PremiumFeaturesId { get; set; }
+
+        public virtual PremiumFeatures PremiumFeatures { get; set; }
 
         public virtual List<Notification> Notifications { get; set; } = new List<Notification>();
 

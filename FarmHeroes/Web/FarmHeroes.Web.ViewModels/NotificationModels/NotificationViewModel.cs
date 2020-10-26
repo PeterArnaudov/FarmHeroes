@@ -14,6 +14,10 @@
 
         public int? Gold { get; set; }
 
+        public int? Crystals { get; set; }
+
+        public int? Fish { get; set; }
+
         public int? Experience { get; set; }
 
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;

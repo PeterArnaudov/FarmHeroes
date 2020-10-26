@@ -1,0 +1,64 @@
+﻿@model FarmHeroes.Web.ViewModels.HarbourModels.HarbourViewModel
+
+@{
+    ViewData["Title"] = "Harbour";
+    Layout = "~/Views/Shared/_LoggedLayout.cshtml";
+}
+
+<h1 class="text-uppercase text-center">Harbour</h1>
+<img src="~/images/village/harbour/harbour.jpg" alt="harbour-image" class="d-block img-fluid ml-auto mr-auto mb-3">
+<p class="font-italic">You can set your fishing vessel on sail and after an hour you'll get a report about its catch. In this time you can continue doing your heroic deeds. The most efficient vessel you have is automatically selected.</p>
+<div id="work-body" class="text-center">
+    @if (Model.IsSailing)
+    {
+        <p class="mb-1">Time left until the fishing vessel returns:</p>
+        <vc:timer dom-element-id="sail_1" date-time="@Model.ChronometerSailingUntil"></vc:timer>
+    }
+    else
+    {
+        <button onclick="setSail()" class="btn btn-primary text-uppercase">Set sail</button>
+    }
+</div>
+<hr class="bg-primary" />
+<div class="row text-center">
+    <div class="col-3">
+        <img src="~/images/icons/raft-icon.png" alt="raft-icon" class="d-block img-fluid m-auto" data-toggle="tooltip" data-placement="bottom" title="You have unlimited amount of rafts for free. With it your catch is in the range 20-30 <img src='/images/icons/fish-icon.png' alt='boat' class='icon'> per hour." />
+        <p class="small">Raft</p>
+    </div>
+    <div class="col-3">
+        <img src="~/images/icons/boat-icon.png" alt="boat-icon" class="d-block img-fluid m-auto" data-toggle="tooltip" data-placement="bottom" title="With a boat your catch is in the range 40-65 <img src='/images/icons/fish-icon.png' alt='boat' class='icon'> per hour." />
+        <p class="small">Boat (<span id="boats">@Model.ResourcePouchBoats</span>)</p>
+        <p>50 <img src="~/images/icons/boat-icon.png" alt="boat" class="icon"> for 50 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
+        <button onclick="buy('Boats')" class="btn btn-primary text-uppercase">Buy</button>
+    </div>
+    <div class="col-3">
+        <img src="~/images/icons/ship-icon.png" alt="ship-icon" class="d-block img-fluid m-auto" data-toggle="tooltip" data-placement="bottom" title="With a ship your catch is in the range 75-100 <img src='/images/icons/fish-icon.png' alt='boat' class='icon'> per hour." />
+        <p class="small">Ship (<span id="ships">@Model.ResourcePouchShips</span>)</p>
+        <p>50 <img src="~/images/icons/ship-icon.png" alt="ship" class="icon"> for 100 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
+        <button onclick="buy('Ships')" class="btn btn-primary text-uppercase">Buy</button>
+    </div>
+    <div class="col-3">
+        <img src="~/images/icons/submarine-icon.png" alt="submarine-icon" class="d-block img-fluid m-auto" data-toggle="tooltip" data-placement="bottom" title="With a submarine your catch is in the range 200-300 <img src='/images/icons/fish-icon.png' alt='boat' class='icon'> per hour." />
+        <p class="small">Submarine (<span id="submarines">@Model.ResourcePouchSubmarines</span>)</p>
+        <p>50 <img src="~/images/icons/submarine-icon.png" alt="submarine" class="icon"> for 250 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"></p>
+        <button onclick="buy('Submarines')" class="btn btn-primary text-uppercase">Buy</button>
+    </div>
+</div>
+<hr class="bg-primary" />
+<div class="row">
+    <div class="col-4">
+        <img src="~/images/village/harbour/harbour-manager.png" class="img-fluid" />
+        <p class="small text-center">Captain Pirroty</p>
+    </div>
+    <div class="col-8">
+        <h2 class="text-uppercase">Sailing Manager</h2>
+        <p class="font-italic">You can hire a sailing manager that will automatically set your fishing vessels on sail. Captain Pirroty gets paid after each time he does his job. If you don't have enough to pay him, he'll stop working for you until you hire him again.</p>
+        <p>Price: 10 <img src="~/images/icons/crystal-icon.png" alt="crystal" class="icon"> per sail</p>
+        <a  asp-area="Village" asp-controller="Harbour" asp-action="ToggleManager" class="btn btn-primary text-uppercase">
+            @(Model.PremiumFeaturesHarbourManager ? "Fire" : "Hire")
+        </a>
+    </div>
+</div>
+
+
+<script src="~/js/ajax-calls/harbour.js" asp-append-version="true"></script>

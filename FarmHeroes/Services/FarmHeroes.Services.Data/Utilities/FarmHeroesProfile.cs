@@ -21,6 +21,7 @@
     using FarmHeroes.Web.ViewModels.EquipmentModels;
     using FarmHeroes.Web.ViewModels.FarmModels;
     using FarmHeroes.Web.ViewModels.FightModels;
+    using FarmHeroes.Web.ViewModels.HarbourModels;
     using FarmHeroes.Web.ViewModels.HealthModels;
     using FarmHeroes.Web.ViewModels.HeroModels;
     using FarmHeroes.Web.ViewModels.HutModels;
@@ -140,6 +141,8 @@
             this.CreateMap<Hero, DungeonIndexViewModel>();
 
             this.CreateMap<Hero, DungeonWalkingViewModel>();
+
+            this.CreateMap<Hero, HarbourViewModel>();
 
             this.CreateMap<NewsInputModel, News>();
 

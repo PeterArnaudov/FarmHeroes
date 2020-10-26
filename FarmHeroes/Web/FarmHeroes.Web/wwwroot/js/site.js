@@ -68,8 +68,8 @@ let showActions = function (target) {
     }
 };
 
-function numberWithSeparator(target, separator) {
-    return target.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+function numberWithSeparator(target, separator = ".") {
+    return target.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }
 
 function updateGold(gold) {

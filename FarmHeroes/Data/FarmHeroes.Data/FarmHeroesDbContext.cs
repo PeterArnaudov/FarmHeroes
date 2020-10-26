@@ -70,6 +70,8 @@
 
         public virtual DbSet<DungeonInformation> DungeonInformations { get; set; }
 
+        public virtual DbSet<PremiumFeatures> PremiumFeatures { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

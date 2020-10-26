@@ -116,3 +116,8 @@ notification-image {
     scrollbar-width: thin;
     scrollbar-color: #d2c5eb #6610f2;
 }
+
+.left-resource-box {
+    width: 50%;
+    display: inline-block;
+}

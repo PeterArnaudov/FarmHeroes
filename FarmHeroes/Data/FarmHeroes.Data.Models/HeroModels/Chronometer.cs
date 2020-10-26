@@ -16,6 +16,8 @@
 
         public DateTime? CannotDungeonUntil { get; set; } = DateTime.UtcNow;
 
+        public DateTime? SailingUntil { get; set; } = DateTime.UtcNow;
+
         public virtual Hero Hero { get; set; }
     }
 }

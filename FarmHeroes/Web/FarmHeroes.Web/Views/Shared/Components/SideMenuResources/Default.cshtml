@@ -3,9 +3,25 @@
 <li id="resources-side-menu" class="nav-item side-menu-element d-none">
     <h5 class="text-uppercase">@Localizer["Resources-Title"]</h5>
     <div class="text-left">
-        <span class="text-left mr-2">
+        <span class="text-left mr-2 left-resource-box">
             <img src="~/images/icons/dungeon-key-icon.png" alt="dungeon-key" class="img-fluid icon">
             <small>@Model.DungeonKeys</small>
+        </span>
+        <span class="text-left mr-2">
+            <img src="~/images/icons/fish-icon.png" alt="fish" class="img-fluid icon">
+            <small>@Model.Fish</small>
+        </span>
+        <span class="text-left mr-2 left-resource-box">
+            <img src="~/images/icons/boat-icon.png" alt="boat" class="img-fluid icon">
+            <small id="sidemenu-boats">@Model.Boats</small>
+        </span>
+        <span class="text-left mr-2">
+            <img src="~/images/icons/ship-icon.png" alt="ship" class="img-fluid icon">
+            <small id="sidemenu-ships">@Model.Ships</small>
+        </span>
+        <span class="text-left mr-2 left-resource-box">
+            <img src="~/images/icons/submarine-icon.png" alt="submarine" class="img-fluid icon">
+            <small id="sidemenu-submarines">@Model.Submarines</small>
         </span>
     </div>
 </li>

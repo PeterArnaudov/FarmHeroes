@@ -41,6 +41,14 @@ else
                         {
                             @notification.Gold?.ToString("N0") <img src="~/images/icons/gold-icon.png" alt="gold" class="icon img-jump">
                         }
+                        @if (notification.Crystals.HasValue)
+                        {
+                            @notification.Crystals?.ToString("N0") <img src="~/images/icons/crystal-icon.png" alt="crystals" class="icon img-jump">
+                        }
+                        @if (notification.Fish.HasValue)
+                        {
+                            @notification.Fish?.ToString("N0") <img src="~/images/icons/fish-icon.png" alt="Fish" class="icon img-jump">
+                        }
                         @if (notification.Experience.HasValue)
                         {
                             @notification.Experience?.ToString("N0") <img src="~/images/icons/experience-icon.png" alt="experience" class="icon img-jump">

@@ -77,6 +77,7 @@
             services.AddHostedService<PassiveIncomeTask>();
             services.AddHostedService<NotificationDeleteTask>();
             services.AddHostedService<DailyLimitsResetTask>();
+            services.AddHostedService<HarbourTask>();
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
@@ -106,6 +107,8 @@
             services.AddTransient<ILeaderboardsService, LeaderboardsService>();
             services.AddTransient<IChatService, ChatService>();
             services.AddTransient<IDungeonService, DungeonService>();
+            services.AddTransient<IHarbourService, HarbourService>();
+            services.AddTransient<IPremiumFeaturesService, PremiumFeaturesService>();
 
             // Filters
             services.AddTransient<FarmHeroesExceptionFilterAttribute>();
