@@ -121,10 +121,11 @@
 
             if (!chronometer.SailingUntil.HasValue && isManagerEnabled)
             {
-                bool isPaid = await this.resourcePouchService.DecreaseResource(ResourceNames.Crystals, HarbourManagerCost, id);
+                bool hasEnougCrystals = await this.resourcePouchService.GetResource(ResourceNames.Crystals, id) >= HarbourManagerCost;
 
-                if (isPaid)
+                if (hasEnougCrystals)
                 {
+                    await this.resourcePouchService.DecreaseResource(ResourceNames.Crystals, HarbourManagerCost, id);
                     await this.SetSail(id);
                 }
                 else

@@ -69,7 +69,7 @@
             return viewModel;
         }
 
-        public async Task<bool> DecreaseResource(string resourceName, int amount, int id = 0)
+        public async Task DecreaseResource(string resourceName, int amount, int id = 0)
         {
             ResourcePouch resources = await this.GetResourcePouch(id);
 
@@ -79,8 +79,6 @@
             typeof(ResourcePouch).GetProperty(resourceName).SetValue(resources, currentAmount - amount);
 
             await this.context.SaveChangesAsync();
-
-            return true;
         }
 
         public async Task<int> GetResource(string resourceName, int id = 0)
