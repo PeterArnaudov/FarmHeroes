@@ -5,6 +5,7 @@
 
     using AutoMapper;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Services.Data.Constants;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Formulas;
     using FarmHeroes.Web.Filters;
@@ -45,7 +46,7 @@
             {
                 Stat = attack,
                 Price = CharacteristicsFormulas.CalculateAttackPrice(attack),
-                this.resourcePouchService.GetResourcePouch().Result.Gold,
+                Gold = await this.resourcePouchService.GetResource(ResourceNames.Gold),
             };
 
             return result;
@@ -59,7 +60,7 @@
             {
                 Stat = defense,
                 Price = CharacteristicsFormulas.CalculateDefensePrice(defense),
-                this.resourcePouchService.GetResourcePouch().Result.Gold,
+                Gold = await this.resourcePouchService.GetResource(ResourceNames.Gold),
             };
 
             return result;
@@ -74,7 +75,7 @@
             {
                 Stat = mass,
                 Price = CharacteristicsFormulas.CalculateMassPrice(mass),
-                this.resourcePouchService.GetResourcePouch().Result.Gold,
+                Gold = await this.resourcePouchService.GetResource(ResourceNames.Gold),
                 health.Current,
                 health.Maximum,
             };
@@ -90,7 +91,7 @@
             {
                 Stat = mastery,
                 Price = CharacteristicsFormulas.CalculateDefensePrice(mastery),
-                this.resourcePouchService.GetResourcePouch().Result.Gold,
+                Gold = await this.resourcePouchService.GetResource(ResourceNames.Gold),
             };
 
             return result;
@@ -104,7 +105,7 @@
             {
                 Stat = mastery,
                 Price = CharacteristicsFormulas.CalculateDexterityPrice(mastery),
-                this.resourcePouchService.GetResourcePouch().Result.Gold,
+                Gold = await this.resourcePouchService.GetResource(ResourceNames.Gold),
             };
 
             return result;

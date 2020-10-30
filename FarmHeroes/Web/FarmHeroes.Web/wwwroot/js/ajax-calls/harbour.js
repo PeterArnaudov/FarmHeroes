@@ -39,26 +39,6 @@ function buy(vessel) {
         });
 };
 
-function toggleManager() {
-    //$.ajax({
-    //    method: 'GET',
-    //    url: `/Village/Harbour/ToggleManager`
-    //})
-    //    .done(() => {
-    //        let $button = $("#toggle-manager-button");
-
-    //        if ($button.text().includes("Hire")) {
-    //            $button.text("Fire");
-    //        }
-    //        else {
-    //            $button.text("Hire");
-    //        }
-    //    })
-    //    .fail((error) => {
-    //        showAlert(error);
-    //    });
-}
-
 function updateVesselAmount(vessel, amount) {
     $(`#${vessel}`).text(numberWithSeparator(Number(amount)));
     $(`#sidemenu-${vessel}`).text(numberWithSeparator(Number(amount)));

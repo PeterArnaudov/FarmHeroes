@@ -6,6 +6,7 @@
     using AutoMapper;
     using FarmHeroes.Data.Models.Enums;
     using FarmHeroes.Data.Models.HeroModels;
+    using FarmHeroes.Services.Data.Constants;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Web.Filters;
     using FarmHeroes.Web.ViewModels.MineModels;
@@ -22,14 +23,16 @@
         private readonly IChronometerService chronometerService;
         private readonly IMapper mapper;
         private readonly IStringLocalizer<MineController> stringLocalizer;
+        private readonly IResourcePouchService resourcePouchService;
 
-        public MineController(IHeroService heroService, IMineService mineService, IChronometerService chronometerService, IMapper mapper, IStringLocalizer<MineController> stringLocalizer)
+        public MineController(IHeroService heroService, IMineService mineService, IChronometerService chronometerService, IMapper mapper, IStringLocalizer<MineController> stringLocalizer, IResourcePouchService resourcePouchService)
         {
             this.heroService = heroService;
             this.mineService = mineService;
             this.chronometerService = chronometerService;
             this.mapper = mapper;
             this.stringLocalizer = stringLocalizer;
+            this.resourcePouchService = resourcePouchService;
         }
 
         public async Task<IActionResult> Index()
@@ -60,6 +63,7 @@
 
             return this.Json(new
             {
+                totalCrystals = this.resourcePouchService.GetResource(ResourceNames.Crystals),
                 crystals = result.Crystals,
                 amuletActivated = result.AmuletActivated
                     ? this.stringLocalizer["Amulet-Activated"].Value

@@ -12,8 +12,9 @@
             $('#health-status').attr('data-original-title', `${numberWithSeparator(data.currentHealth.toString().replace(/[\s\.,]/g, ""))}/${numberWithSeparator(data.maximumHealth.toString().replace(/[\s\.,]/g, ""))}`);
             $('#health-status > div').css('width', `${Math.floor(data.currentHealth / data.maximumHealth * 100)}%`);
             $('#health-status > div > strong').text(`${Math.floor(data.currentHealth / data.maximumHealth * 100)}%`);
-            $('#current-gold').text(numberWithSeparator(data.gold));
-            $('#current-crystals').text(numberWithSeparator(data.crystals));
+
+            updateGold(data.gold);
+            updateCrystals(data.crystals);
         })
         .fail((error) => {
             showAlert(error);

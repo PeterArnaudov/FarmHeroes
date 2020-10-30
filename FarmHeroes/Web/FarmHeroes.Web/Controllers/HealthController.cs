@@ -25,14 +25,13 @@
             await this.healthService.HealCurrentHero(HealthConstants.PillHealAmount, HealthConstants.PillCost);
 
             Health health = await this.healthService.GetHealth();
-            ResourcePouch resources = await this.resourcePouchService.GetResourcePouch();
 
             HealResultModel result = new HealResultModel
             {
                 CurrentHealth = health.Current,
                 MaximumHealth = health.Maximum,
-                Gold = resources.Gold,
-                Crystals = resources.Crystals,
+                Gold = await this.resourcePouchService.GetResource(ResourceNames.Gold),
+                Crystals = await this.resourcePouchService.GetResource(ResourceNames.Crystals),
             };
 
             return result;
@@ -43,14 +42,13 @@
             await this.healthService.HealCurrentHero(HealthConstants.ElixirHealAmount, HealthConstants.ElixirCost);
 
             Health health = await this.healthService.GetHealth();
-            ResourcePouch resources = await this.resourcePouchService.GetResourcePouch();
 
             HealResultModel result = new HealResultModel
             {
                 CurrentHealth = health.Current,
                 MaximumHealth = health.Maximum,
-                Gold = resources.Gold,
-                Crystals = resources.Crystals,
+                Gold = await this.resourcePouchService.GetResource(ResourceNames.Gold),
+                Crystals = await this.resourcePouchService.GetResource(ResourceNames.Crystals),
             };
 
             return result;
@@ -61,14 +59,13 @@
             await this.healthService.HealCurrentHeroToMaximum(HealthConstants.PotionCost);
 
             Health health = await this.healthService.GetHealth();
-            ResourcePouch resources = await this.resourcePouchService.GetResourcePouch();
 
             HealResultModel result = new HealResultModel
             {
                 CurrentHealth = health.Current,
                 MaximumHealth = health.Maximum,
-                Gold = resources.Gold,
-                Crystals = resources.Crystals,
+                Gold = await this.resourcePouchService.GetResource(ResourceNames.Gold),
+                Crystals = await this.resourcePouchService.GetResource(ResourceNames.Crystals),
             };
 
             return result;

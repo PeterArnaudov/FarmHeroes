@@ -11,7 +11,7 @@
             }
             $(`#current-${stat}`).text(numberWithSeparator(data.stat));
             $(`#${stat}-price`).text(numberWithSeparator(data.price));
-            $('#current-gold').text(numberWithSeparator(data.gold));
+            updateGold(data.gold);
 
             if (stat == 'mass') {
                 $('#health-status').attr('data-original-title', `${numberWithSeparator(data.current.toString().replace(/[\s\.,]/g, ""))}/${numberWithSeparator(data.maximum.toString().replace(/[\s\.,]/g, ""))}`);

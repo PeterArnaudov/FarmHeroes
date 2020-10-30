@@ -72,12 +72,12 @@ function numberWithSeparator(target, separator = ".") {
     return target.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 }
 
-function updateGold(gold) {
-    $('#current-gold').text(numberWithSeparator(Number($('#current-gold').text().replace(/[\s\.,]/g, "")) + Number(gold)));
+function updateGold(amount) {
+    $(`#current-gold`).text(numberWithSeparator(Number(amount)));
 }
 
-function updateCrystals(crystals) {
-    $('#current-crystals').text(numberWithSeparator(Number($('#current-crystals').text().replace(/[\s\.,]/g, "")) + Number(crystals)));
+function updateCrystals(amount) {
+    $(`#current-crystals`).text(numberWithSeparator(Number(amount)));
 }
 
 function showAlert(error) {

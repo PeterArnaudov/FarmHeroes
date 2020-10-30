@@ -64,7 +64,7 @@ function collect() {
             $('#work-body').append($paragraph);
             $('#work-body').append($button);
 
-            updateCrystals(data.crystals);
+            updateCrystals(data.totalCrystals);
         })
         .fail((error) => {
             showAlert(error);
