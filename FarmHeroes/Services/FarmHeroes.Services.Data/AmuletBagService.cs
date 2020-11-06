@@ -105,6 +105,12 @@
         public async Task EquipAmulet(string action)
         {
             Hero hero = await this.heroService.GetHero();
+
+            if (hero.AmuletBag.ActiveUntil < DateTime.UtcNow)
+            {
+                return;
+            }
+
             int amuletId = (int)typeof(AmuletBag).GetProperty("On" + action + "AmuletId").GetValue(hero.AmuletBag);
 
             if (amuletId == 0)
