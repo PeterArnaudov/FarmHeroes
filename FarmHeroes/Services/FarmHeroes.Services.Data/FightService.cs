@@ -22,6 +22,7 @@
 
     public class FightService : IFightService
     {
+        #region Constants
         private const int Rounds = 5;
         private const int ExperiencePerWin = 4;
         private const int SecondsUntilNextHeroAttack = 600;
@@ -38,6 +39,7 @@
         private const string FightNotificationLink = "/Battlefield/FightLog/{0}";
         private const string FightNotificationAttacker = "You attacked {0}.";
         private const string FightNotificationDefender = "{0} attacked you.";
+        #endregion
 
         private readonly IHeroService heroService;
         private readonly IHealthService healthService;
@@ -52,7 +54,19 @@
         private readonly FarmHeroesDbContext context;
         private readonly IMapper mapper;
 
-        public FightService(IHeroService heroService, IHealthService healthService, IResourcePouchService resourcePouchService, IChronometerService chronometerService, ILevelService levelService, IStatisticsService statisticsService, IMonsterService monsterService, INotificationService notificationService, IEquipmentService equipmentService, IAmuletBagService amuletBagService, FarmHeroesDbContext context, IMapper mapper)
+        public FightService(
+            IHeroService heroService,
+            IHealthService healthService,
+            IResourcePouchService resourcePouchService,
+            IChronometerService chronometerService,
+            ILevelService levelService,
+            IStatisticsService statisticsService,
+            IMonsterService monsterService,
+            INotificationService notificationService,
+            IEquipmentService equipmentService,
+            IAmuletBagService amuletBagService,
+            FarmHeroesDbContext context,
+            IMapper mapper)
         {
             this.heroService = heroService;
             this.healthService = healthService;
@@ -78,13 +92,13 @@
             this.CheckIfHeroCanAttackPlayer(attacker);
             this.CheckIfHeroAttackThemselves(attacker, opponentId);
 
-            await this.amuletBagService.EquipAmulet("PlayerAttack");
-
             Hero defender = await this.heroService.GetHero(opponentId);
 
             this.CheckIfOpponentsAreSameFraction(attacker, defender);
             this.CheckIfInLevelBoundary(attacker, defender);
             this.CheckIfHeroCanBeAttacked(defender);
+
+            await this.amuletBagService.EquipAmulet("PlayerAttack");
 
             EquippedSet attackerSet = await this.equipmentService.GetEquippedSet();
             EquippedSet defenderSet = await this.equipmentService.GetEquippedSet(defender.EquippedSetId);
@@ -210,6 +224,7 @@
             await this.chronometerService.SetCannotAttackHeroUntil(SecondsUntilNextHeroAttack, attacker.ChronometerId);
             await this.chronometerService.SetCannotBeAttackedUntil(SecondsDefenseGranted, defender.ChronometerId);
 
+            #region Map Fight model
             fight.WinnerName = winnerName;
             fight.GoldStolen = goldStolen;
             fight.ExperienceGained = ExperiencePerWin;
@@ -259,6 +274,7 @@
             fight.DefenderHitThreeType = defenderHitTypes[2];
             fight.DefenderHitFourType = defenderHitTypes[3];
             fight.DefenderHitFiveType = defenderHitTypes[4];
+            #endregion
 
             Fight fightEntity = this.context.Fights.AddAsync(fight).Result.Entity;
 
@@ -428,6 +444,7 @@
 
             await this.chronometerService.SetCannotAttackMonsterUntil(SecondsUntilNextMonsterAttack, attacker.ChronometerId);
 
+            #region Map Fight entity
             fight.WinnerName = winnerName;
             fight.GoldStolen = goldStolen;
             fight.ExperienceGained = monster.Level;
@@ -476,6 +493,7 @@
             fight.DefenderHitThreeType = defenderHitTypes[2];
             fight.DefenderHitFourType = defenderHitTypes[3];
             fight.DefenderHitFiveType = defenderHitTypes[4];
+            #endregion
 
             Fight fightEntity = this.context.Fights.AddAsync(fight).Result.Entity;
             attacker.HeroFights.Add(new HeroFight { Fight = fightEntity, Hero = attacker });
