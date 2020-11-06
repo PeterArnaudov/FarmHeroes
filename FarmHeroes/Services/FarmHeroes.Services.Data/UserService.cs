@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using FarmHeroes.Data;
     using FarmHeroes.Data.Models;
+    using FarmHeroes.Services.Data.Constants;
     using FarmHeroes.Services.Data.Contracts;
     using FarmHeroes.Services.Data.Exceptions;
     using FarmHeroes.Web.ViewModels.UserModels;
@@ -32,6 +33,21 @@
             return this.httpContext.HttpContext.User?.Identity?.Name;
         }
 
+        public async Task<bool> CheckIfUserExists(string name)
+        {
+            ApplicationUser user = await this.userManager.FindByNameAsync(name);
+
+            if (user == null)
+            {
+                throw new FarmHeroesException(
+                    "Hero with this username was not found.",
+                    "Enter a username of an existing hero.",
+                    string.Empty);
+            }
+
+            return true;
+        }
+
         public async Task<ApplicationUser> GetApplicationUser()
         {
             return await this.userManager.GetUserAsync(this.httpContext.HttpContext.User);
@@ -46,15 +62,9 @@
 
         public async Task BanUserByUsername(BanInputModel inputModel)
         {
-            ApplicationUser user = this.context.Users.SingleOrDefault(u => u.UserName == inputModel.Username);
+            await this.CheckIfUserExists(inputModel.Username);
 
-            if (user == null)
-            {
-                throw new FarmHeroesException(
-                    "Hero with this username not found.",
-                    "Enter a username of an existing hero.",
-                    "/Administration/PlayerControl/Ban");
-            }
+            ApplicationUser user = this.context.Users.SingleOrDefault(u => u.UserName == inputModel.Username);
 
             var lockoutResult = await this.userManager.SetLockoutEndDateAsync(user, inputModel.BanUntil);
 
@@ -68,30 +78,18 @@
 
         public async Task AddUserToRole(string username, string roleName)
         {
-            ApplicationUser user = this.context.Users.SingleOrDefault(u => u.UserName == username);
+            await this.CheckIfUserExists(username);
 
-            if (user == null)
-            {
-                throw new FarmHeroesException(
-                    "Hero with this username not found.",
-                    "Enter a username of an existing hero.",
-                    $"/Administration/PlayerControl/ModifyRole/{roleName}");
-            }
+            ApplicationUser user = this.context.Users.SingleOrDefault(u => u.UserName == username);
 
             await this.userManager.AddToRoleAsync(user, roleName);
         }
 
         public async Task RemoveUserFromRole(string username, string roleName)
         {
-            ApplicationUser user = this.context.Users.SingleOrDefault(u => u.UserName == username);
+            await this.CheckIfUserExists(username);
 
-            if (user == null)
-            {
-                throw new FarmHeroesException(
-                    "Hero with this username not found.",
-                    "Enter a username of an existing hero.",
-                    $"/Administration/PlayerControl/ModifyRole/{roleName}");
-            }
+            ApplicationUser user = this.context.Users.SingleOrDefault(u => u.UserName == username);
 
             await this.userManager.RemoveFromRoleAsync(user, roleName);
         }

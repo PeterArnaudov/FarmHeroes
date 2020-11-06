@@ -82,13 +82,17 @@
             return this.View();
         }
 
-        public IActionResult ModifyHero(string name)
+        public async Task<IActionResult> ModifyHero(string name)
         {
+            await this.userService.CheckIfUserExists(name);
+
             return this.View("ModifyHero", name);
         }
 
         public async Task<IActionResult> ModifyBasicInfo(string name)
         {
+            await this.userService.CheckIfUserExists(name);
+
             HeroModifyBasicInfoInputModel inputModel = await this.heroService.GetHeroViewModelByName<HeroModifyBasicInfoInputModel>(name);
 
             return this.View(inputModel);
@@ -97,6 +101,8 @@
         [HttpPost]
         public async Task<IActionResult> ModifyBasicInfo(HeroModifyBasicInfoInputModel inputModel)
         {
+            await this.userService.CheckIfUserExists(inputModel.Name);
+
             await this.heroService.UpdateBasicInfo(inputModel);
 
             return this.RedirectToAction("ModifyHero", new { inputModel.Name });
@@ -104,6 +110,8 @@
 
         public async Task<IActionResult> ModifyLevel(string name)
         {
+            await this.userService.CheckIfUserExists(name);
+
             LevelModifyInputModel inputModel = await this.heroService.GetHeroViewModelByName<LevelModifyInputModel>(name);
 
             return this.View(inputModel);
@@ -112,6 +120,8 @@
         [HttpPost]
         public async Task<IActionResult> ModifyLevel(LevelModifyInputModel inputModel)
         {
+            await this.userService.CheckIfUserExists(inputModel.Name);
+
             await this.levelService.UpdateLevel(inputModel);
 
             return this.RedirectToAction("ModifyHero", new { inputModel.Name });
@@ -119,6 +129,8 @@
 
         public async Task<IActionResult> ModifyHealth(string name)
         {
+            await this.userService.CheckIfUserExists(name);
+
             HealthModifyInputModel inputModel = await this.heroService.GetHeroViewModelByName<HealthModifyInputModel>(name);
 
             return this.View(inputModel);
@@ -127,6 +139,8 @@
         [HttpPost]
         public async Task<IActionResult> ModifyHealth(HealthModifyInputModel inputModel)
         {
+            await this.userService.CheckIfUserExists(inputModel.Name);
+
             await this.healthService.UpdateHealth(inputModel);
 
             return this.RedirectToAction("ModifyHero", new { inputModel.Name });
@@ -134,6 +148,8 @@
 
         public async Task<IActionResult> ModifyResourcePouch(string name)
         {
+            await this.userService.CheckIfUserExists(name);
+
             ResourcePouchModifyInputModel inputModel = await this.heroService.GetHeroViewModelByName<ResourcePouchModifyInputModel>(name);
 
             return this.View(inputModel);
@@ -142,6 +158,8 @@
         [HttpPost]
         public async Task<IActionResult> ModifyResourcePouch(ResourcePouchModifyInputModel inputModel)
         {
+            await this.userService.CheckIfUserExists(inputModel.Name);
+
             await this.resourcePouchService.UpdateResourcePouch(inputModel);
 
             return this.RedirectToAction("ModifyHero", new { inputModel.Name });
@@ -149,6 +167,8 @@
 
         public async Task<IActionResult> ModifyCharacteristics(string name)
         {
+            await this.userService.CheckIfUserExists(name);
+
             CharacteristicsModifyInputModel inputModel = await this.heroService.GetHeroViewModelByName<CharacteristicsModifyInputModel>(name);
 
             return this.View(inputModel);
@@ -157,6 +177,8 @@
         [HttpPost]
         public async Task<IActionResult> ModifyCharacteristics(CharacteristicsModifyInputModel inputModel)
         {
+            await this.userService.CheckIfUserExists(inputModel.Name);
+
             await this.characteristicsService.UpdateCharacteristics(inputModel);
 
             return this.RedirectToAction("ModifyHero", new { inputModel.Name });
@@ -164,6 +186,8 @@
 
         public async Task<IActionResult> ModifyChronometer(string name)
         {
+            await this.userService.CheckIfUserExists(name);
+
             ChronometerModifyInputModel inputModel = await this.heroService.GetHeroViewModelByName<ChronometerModifyInputModel>(name);
 
             return this.View(inputModel);
@@ -172,6 +196,8 @@
         [HttpPost]
         public async Task<IActionResult> ModifyChronometer(ChronometerModifyInputModel inputModel)
         {
+            await this.userService.CheckIfUserExists(inputModel.Name);
+
             await this.chronometerService.UpdateChronometer(inputModel);
 
             return this.RedirectToAction("ModifyHero", new { inputModel.Name });

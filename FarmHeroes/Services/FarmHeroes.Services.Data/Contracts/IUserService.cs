@@ -12,6 +12,8 @@
 
         Task<ApplicationUser> GetApplicationUser();
 
+        Task<bool> CheckIfUserExists(string name);
+
         Task<bool> CurrentUserHasHero();
 
         Task BanUserByUsername(BanInputModel inputModel);
